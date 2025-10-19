@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3 uid="uid://dkrmxsghhpp3j"]
+
+[ext_resource type="Texture2D" uid="uid://2ywc1droy0gk" path="res://32-A-0_01.jpg" id="1_80nbo"]
+[ext_resource type="Texture2D" uid="uid://hqgyeayyanhk" path="res://retrato.jpg" id="2_e2o6t"]
+
+[node name="MarginContainer" type="MarginContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Mapa" type="TextureRect" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_stretch_ratio = 4.0
+texture = ExtResource("1_80nbo")
+expand_mode = 5
+
+[node name="Fila de agentes" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Agente" type="TextureRect" parent="VBoxContainer/Fila de agentes"]
+layout_mode = 2
+texture = ExtResource("2_e2o6t")
+expand_mode = 5
