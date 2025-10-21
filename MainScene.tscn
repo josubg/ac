@@ -1,0 +1,69 @@
+[gd_scene load_steps=5 format=3 uid="uid://c564q6edin8gb"]
+
+[ext_resource type="Texture2D" uid="uid://2ywc1droy0gk" path="res://32-A-0_01.jpg" id="1_3mqji"]
+[ext_resource type="Texture2D" uid="uid://hqgyeayyanhk" path="res://retrato.jpg" id="2_x4av3"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1305s"]
+bg_color = Color(0.85797924, 0.4590451, 0.5451491, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3mqji"]
+bg_color = Color(0.48675662, 0.63354504, 0.63015836, 1)
+
+[node name="UI" type="CanvasLayer"]
+
+[node name="MainContainer" type="VBoxContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MapPanel" type="Panel" parent="MainContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 4.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_1305s")
+
+[node name="TextureRect" type="TextureRect" parent="MainContainer/MapPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_3mqji")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="AgentPanel" type="Panel" parent="MainContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_3mqji")
+
+[node name="AgentBar" type="HBoxContainer" parent="MainContainer/AgentPanel"]
+layout_mode = 0
+offset_top = 4.0
+offset_right = 1916.0
+offset_bottom = 217.0
+size_flags_vertical = 3
+
+[node name="TextureRect3" type="TextureRect" parent="MainContainer/AgentPanel/AgentBar"]
+layout_mode = 2
+size_flags_horizontal = 0
+texture = ExtResource("2_x4av3")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="TextureRect4" type="TextureRect" parent="MainContainer/AgentPanel/AgentBar"]
+layout_mode = 2
+size_flags_horizontal = 0
+texture = ExtResource("2_x4av3")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="TextureRect5" type="TextureRect" parent="MainContainer/AgentPanel/AgentBar"]
+layout_mode = 2
+size_flags_horizontal = 0
+texture = ExtResource("2_x4av3")
+expand_mode = 3
+stretch_mode = 5
