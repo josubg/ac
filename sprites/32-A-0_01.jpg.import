@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://hqgyeayyanhk"
-path="res://.godot/imported/retrato.jpg-3c81251e10ffc4f9c92e3bb9a13395d0.ctex"
+uid="uid://2ywc1droy0gk"
+path="res://.godot/imported/32-A-0_01.jpg-163306a43a289750978dd407126be708.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://retrato.jpg"
-dest_files=["res://.godot/imported/retrato.jpg-3c81251e10ffc4f9c92e3bb9a13395d0.ctex"]
+source_file="res://sprites/32-A-0_01.jpg"
+dest_files=["res://.godot/imported/32-A-0_01.jpg-163306a43a289750978dd407126be708.ctex"]
 
 [params]
 

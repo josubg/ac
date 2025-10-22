@@ -1,13 +1,15 @@
-[gd_scene load_steps=11 format=3 uid="uid://c564q6edin8gb"]
+[gd_scene load_steps=13 format=3 uid="uid://c564q6edin8gb"]
 
-[ext_resource type="Texture2D" uid="uid://2ywc1droy0gk" path="res://32-A-0_01.jpg" id="1_3mqji"]
-[ext_resource type="Script" uid="uid://tlwyb68pkabk" path="res://nobleza_bar.gd" id="1_a814b"]
-[ext_resource type="Script" uid="uid://dd8o7ya1uey5x" path="res://iglesia_bar.gd" id="2_5crlr"]
-[ext_resource type="PackedScene" uid="uid://cwv4jvnr4bp0n" path="res://mission.tscn" id="2_rpqi1"]
-[ext_resource type="Texture2D" uid="uid://hqgyeayyanhk" path="res://retrato.jpg" id="2_x4av3"]
-[ext_resource type="Script" uid="uid://1q8d243bosxf" path="res://rey_bar.gd" id="3_hbc2u"]
-[ext_resource type="Script" uid="uid://fkx1sf7xoie5" path="res://influencia_bar.gd" id="3_uxrcv"]
-[ext_resource type="Script" uid="uid://r8s07ai2dgdp" path="res://descontento_bar.gd" id="4_rf2cd"]
+[ext_resource type="Script" uid="uid://tlwyb68pkabk" path="res://nobleza_bar.gd" id="1_7ycvg"]
+[ext_resource type="Script" uid="uid://bnccxvtwsp34k" path="res://main_scene.gd" id="1_wr18j"]
+[ext_resource type="Script" uid="uid://dd8o7ya1uey5x" path="res://iglesia_bar.gd" id="2_wr18j"]
+[ext_resource type="Script" uid="uid://1q8d243bosxf" path="res://rey_bar.gd" id="3_qwutr"]
+[ext_resource type="Script" uid="uid://fkx1sf7xoie5" path="res://influencia_bar.gd" id="4_671wp"]
+[ext_resource type="Script" uid="uid://r8s07ai2dgdp" path="res://descontento_bar.gd" id="5_mo76n"]
+[ext_resource type="Texture2D" uid="uid://2ywc1droy0gk" path="res://sprites/32-A-0_01.jpg" id="6_42l1d"]
+[ext_resource type="PackedScene" uid="uid://cwv4jvnr4bp0n" path="res://mission.tscn" id="7_2jcla"]
+[ext_resource type="PackedScene" uid="uid://fntj63gps0ru" path="res://debrief_panel.tscn" id="8_m35m6"]
+[ext_resource type="Texture2D" uid="uid://fj7qp04owxim" path="res://sprites/noble.png" id="9_u0ygc"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1305s"]
 bg_color = Color(0.85797924, 0.4590451, 0.5451491, 1)
@@ -16,6 +18,7 @@ bg_color = Color(0.85797924, 0.4590451, 0.5451491, 1)
 bg_color = Color(0.48675662, 0.63354504, 0.63015836, 1)
 
 [node name="UI" type="CanvasLayer"]
+script = ExtResource("1_wr18j")
 
 [node name="MainContainer" type="VBoxContainer" parent="."]
 anchors_preset = 15
@@ -30,13 +33,25 @@ size_flags_vertical = 3
 size_flags_stretch_ratio = 4.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_1305s")
 
+[node name="DebriefPanel" parent="MainContainer/MapPanel" instance=ExtResource("8_m35m6")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1561.0
+offset_top = 0.0
+offset_right = -2.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+
 [node name="NoblezaBar" type="ProgressBar" parent="MainContainer/MapPanel"]
 layout_mode = 0
 offset_left = 36.0
 offset_top = 313.0
 offset_right = 324.0
 offset_bottom = 359.0
-script = ExtResource("1_a814b")
+script = ExtResource("1_7ycvg")
 
 [node name="NoblezaLabel" type="Label" parent="MainContainer/MapPanel/NoblezaBar"]
 layout_mode = 0
@@ -52,7 +67,7 @@ offset_left = 36.0
 offset_top = 395.0
 offset_right = 324.0
 offset_bottom = 441.0
-script = ExtResource("2_5crlr")
+script = ExtResource("2_wr18j")
 
 [node name="IglesiaLabel" type="Label" parent="MainContainer/MapPanel/IglesiaBar"]
 layout_mode = 0
@@ -68,7 +83,7 @@ offset_left = 36.0
 offset_top = 472.0
 offset_right = 324.0
 offset_bottom = 518.0
-script = ExtResource("3_hbc2u")
+script = ExtResource("3_qwutr")
 
 [node name="ReyLabel" type="Label" parent="MainContainer/MapPanel/ReyBar"]
 layout_mode = 0
@@ -84,7 +99,7 @@ offset_left = 31.0
 offset_top = 126.0
 offset_right = 319.0
 offset_bottom = 172.0
-script = ExtResource("3_uxrcv")
+script = ExtResource("4_671wp")
 
 [node name="InfluenciaLabel" type="Label" parent="MainContainer/MapPanel/InfluenciaBar"]
 layout_mode = 0
@@ -100,7 +115,7 @@ offset_left = 31.0
 offset_top = 205.0
 offset_right = 319.0
 offset_bottom = 251.0
-script = ExtResource("4_rf2cd")
+script = ExtResource("5_mo76n")
 
 [node name="DescontentoLabel" type="Label" parent="MainContainer/MapPanel/DescontentoBar"]
 layout_mode = 0
@@ -117,18 +132,49 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_3mqji")
+texture = ExtResource("6_42l1d")
 expand_mode = 3
 stretch_mode = 5
 
-[node name="TextureRect" parent="MainContainer/MapPanel/Map" instance=ExtResource("2_rpqi1")]
+[node name="M1" parent="MainContainer/MapPanel/Map" instance=ExtResource("7_2jcla")]
 layout_mode = 0
-offset_left = 599.0
-offset_top = 635.0
-offset_right = 656.0
-offset_bottom = 692.0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 678.0
+offset_top = 434.0
+offset_right = 806.0
+offset_bottom = 562.0
+grow_horizontal = 1
+grow_vertical = 1
 start = 5.0
 life = 10.0
+influencia = 5
+descontento = -5
+nobleza = 5
+iglesia = 5
+rey = 5
+debrief = "Sus mercedes han oido  un rumor."
+
+[node name="M2" parent="MainContainer/MapPanel/Map" instance=ExtResource("7_2jcla")]
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 678.0
+offset_top = 434.0
+offset_right = 806.0
+offset_bottom = 562.0
+grow_horizontal = 1
+grow_vertical = 1
+start = 10.0
+life = 10.0
+influencia = 5
+descontento = -5
+nobleza = 5
+iglesia = 5
+rey = 5
+debrief = "Sus mercedes han oido  un rumor."
 
 [node name="AgentPanel" type="Panel" parent="MainContainer"]
 layout_mode = 2
@@ -145,20 +191,20 @@ size_flags_vertical = 3
 [node name="TextureRect3" type="TextureRect" parent="MainContainer/AgentPanel/AgentBar"]
 layout_mode = 2
 size_flags_horizontal = 0
-texture = ExtResource("2_x4av3")
+texture = ExtResource("9_u0ygc")
 expand_mode = 3
 stretch_mode = 5
 
 [node name="TextureRect4" type="TextureRect" parent="MainContainer/AgentPanel/AgentBar"]
 layout_mode = 2
 size_flags_horizontal = 0
-texture = ExtResource("2_x4av3")
+texture = ExtResource("9_u0ygc")
 expand_mode = 3
 stretch_mode = 5
 
 [node name="TextureRect5" type="TextureRect" parent="MainContainer/AgentPanel/AgentBar"]
 layout_mode = 2
 size_flags_horizontal = 0
-texture = ExtResource("2_x4av3")
+texture = ExtResource("9_u0ygc")
 expand_mode = 3
 stretch_mode = 5

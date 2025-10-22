@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://2ywc1droy0gk"
-path="res://.godot/imported/32-A-0_01.jpg-071aa5693c64c6c8af8af1cde5346b99.ctex"
+uid="uid://43uau8e246m"
+path="res://.godot/imported/mission_mark.png-5108601b58d72c74abfe8eaa09c3ad2f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://32-A-0_01.jpg"
-dest_files=["res://.godot/imported/32-A-0_01.jpg-071aa5693c64c6c8af8af1cde5346b99.ctex"]
+source_file="res://sprites/mission_mark.png"
+dest_files=["res://.godot/imported/mission_mark.png-5108601b58d72c74abfe8eaa09c3ad2f.ctex"]
 
 [params]
 

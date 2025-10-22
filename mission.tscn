@@ -1,14 +1,21 @@
 [gd_scene load_steps=3 format=3 uid="uid://cwv4jvnr4bp0n"]
 
 [ext_resource type="Script" uid="uid://cpirpq88jji7" path="res://mission.gd" id="1_egi7e"]
-[ext_resource type="Texture2D" uid="uid://43uau8e246m" path="res://mission_mark.png" id="2_qa2jn"]
+[ext_resource type="Texture2D" uid="uid://divp180031300" path="res://sprites/mission_mark_128.png" id="1_qa2jn"]
 
-[node name="mission" type="TextureRect"]
-offset_left = 648.0
-offset_top = 440.0
-offset_right = 705.0
-offset_bottom = 497.0
-texture = ExtResource("2_qa2jn")
-expand_mode = 5
-stretch_mode = 4
+[node name="mission" type="TextureButton"]
+anchors_preset = -1
+anchor_right = 0.067
+anchor_bottom = 0.119
+offset_right = -0.6399994
+offset_bottom = -0.5200043
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("1_qa2jn")
+stretch_mode = 0
 script = ExtResource("1_egi7e")
+
+[connection signal="focus_entered" from="." to="." method="_on_focus_entered"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
+[connection signal="pressed" from="." to="." method="_on_pressed"]
