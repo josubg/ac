@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://cwv4jvnr4bp0n"]
+
+[ext_resource type="Script" uid="uid://cpirpq88jji7" path="res://mission.gd" id="1_egi7e"]
+[ext_resource type="Texture2D" uid="uid://43uau8e246m" path="res://mission_mark.png" id="2_qa2jn"]
+
+[node name="mission" type="TextureRect"]
+offset_left = 648.0
+offset_top = 440.0
+offset_right = 705.0
+offset_bottom = 497.0
+texture = ExtResource("2_qa2jn")
+expand_mode = 5
+stretch_mode = 4
+script = ExtResource("1_egi7e")

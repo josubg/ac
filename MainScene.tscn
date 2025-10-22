@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://c564q6edin8gb"]
+[gd_scene load_steps=6 format=3 uid="uid://c564q6edin8gb"]
 
 [ext_resource type="Texture2D" uid="uid://2ywc1droy0gk" path="res://32-A-0_01.jpg" id="1_3mqji"]
+[ext_resource type="PackedScene" uid="uid://cwv4jvnr4bp0n" path="res://mission.tscn" id="2_rpqi1"]
 [ext_resource type="Texture2D" uid="uid://hqgyeayyanhk" path="res://retrato.jpg" id="2_x4av3"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1305s"]
@@ -24,7 +25,7 @@ size_flags_vertical = 3
 size_flags_stretch_ratio = 4.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_1305s")
 
-[node name="TextureRect" type="TextureRect" parent="MainContainer/MapPanel"]
+[node name="Map" type="TextureRect" parent="MainContainer/MapPanel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -34,6 +35,16 @@ grow_vertical = 2
 texture = ExtResource("1_3mqji")
 expand_mode = 3
 stretch_mode = 5
+
+[node name="TextureRect" parent="MainContainer/MapPanel/Map" instance=ExtResource("2_rpqi1")]
+visible = false
+layout_mode = 0
+offset_left = 599.0
+offset_top = 635.0
+offset_right = 656.0
+offset_bottom = 692.0
+start = 5.0
+life = 10.0
 
 [node name="AgentPanel" type="Panel" parent="MainContainer"]
 layout_mode = 2
