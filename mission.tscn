@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cwv4jvnr4bp0n"]
 
-[ext_resource type="Script" uid="uid://cpirpq88jji7" path="res://mission.gd" id="1_egi7e"]
+[ext_resource type="Script" uid="uid://cpirpq88jji7" path="res://scripts/mission.gd" id="1_egi7e"]
 [ext_resource type="Texture2D" uid="uid://divp180031300" path="res://sprites/mission_mark_128.png" id="1_qa2jn"]
 
 [node name="mission" type="TextureButton"]

@@ -1,6 +1,6 @@
 extends Node
 
-signal influencia_changed(new_value)
+signal influencia_changed(value)
 signal descontento_changed(value)
 signal nobleza_changed(value)
 signal iglesia_changed(value)

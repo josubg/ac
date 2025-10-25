@@ -2,40 +2,75 @@ extends Panel
 
 class_name MissionWindow
 
-var mission: Mission
-var assigned_agents = []
+
+@export var unselected_portrait: Texture2D
 
 @onready var title = $TitleLabel
 @onready var description = $DescriptionLabel
-@onready var root_panel: Panel= $"."
+@onready var portraits = [$SlotContainer/AgentPortrait, $SlotContainer/AgentPortrait2]
+@onready var drop_panel = $SlotContainer
+
+var mission: Mission
+var assigned_agents = [null,null]
+
+func _ready() -> void:
+	self.hide()
+	for portrait: TextureButton in self.portraits:
+		portrait.texture_disabled = self.unselected_portrait
+		portrait.set_drag_forwarding(self.drag,self.can_drop_data,self.drop_data)
+	self.drop_panel.set_drag_forwarding(self.drag,self.can_drop_data,self.drop_data)
+	
 
 func display_mission(new_mission: Mission):
-	self.show()
+	
 	self.mission = new_mission
 	self.title.text = new_mission.title
 	self.description.text = new_mission.description
-	self.root_panel.set_drag_forwarding(self.drag,self.can_drop_data,self.drop_data)
+	self.show()
 
 
 func drag(_possition):
 	return null
 
 func can_drop_data(_position, data):
-	print("agent droped")
-
 	# "data" es lo que envía el nodo arrastrado (el agente)
-	return data.has("agent_id")
+	return data is Agent
 
-func drop_data(_position, data):
+func drop_data(_position, data: Agent):
 	# Asigna el agente a este slot
 	print("agent droped")
-	self.assigned_agents.append(data)
-	$AgentPortrait.texture = data.texture
-
-
+	for index in self.portraits.size():
+		if self.assigned_agents[index] == null:
+			set_agent(data, self.portraits[index], index)
+			print("Asignado: ", index)
+			break
+		
+	
 func _on_button_closed_pressed() -> void:
 	self.hide()
 
-
 func _on_button_resolver_pressed() -> void:
 	self.mission.resolve(self.assigned_agents)
+	self.mission = null
+	self.hide()
+
+func _on_agent_portrait_pressed() -> void:
+	unset_agent(0)
+
+func _on_agent_portrait2_pressed() -> void:
+	unset_agent(1)
+
+func set_agent(agent:Agent, portrait: TextureButton, index: int):
+	agent.assigned = true
+	portrait.texture_normal = agent.selected
+	portrait.disabled = false
+	self.assigned_agents[index] = agent
+	
+func unset_agent(index: int):
+	if self.assigned_agents[index] != null:
+		self.portraits[index].disabled = true
+		self.assigned_agents[index].assigned = false
+		self.assigned_agents[index] = null
+		
+	
+	

@@ -1,16 +1,20 @@
-[gd_scene load_steps=2 format=3 uid="uid://cy30tn63lifwh"]
+[gd_scene load_steps=3 format=3 uid="uid://cy30tn63lifwh"]
 
 [ext_resource type="Script" uid="uid://xyxl6wblq5h4" path="res://mission_window.gd" id="1_6omtk"]
+[ext_resource type="Texture2D" uid="uid://dp2y4fsidn0yj" path="res://sprites/noble_gray.png" id="2_asjii"]
 
 [node name="Panel" type="Panel"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -1490.0
-offset_bottom = -523.0
+offset_left = -6.0
+offset_top = 9.0
+offset_right = -1496.0
+offset_bottom = -514.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_6omtk")
+unselected_portrait = ExtResource("2_asjii")
 
 [node name="Button" type="Button" parent="."]
 layout_mode = 1
@@ -40,22 +44,28 @@ offset_right = 416.0
 offset_bottom = 246.0
 text = "Descripción de la misión"
 
-[node name="SlotContainer" type="VBoxContainer" parent="."]
+[node name="SlotContainer" type="HBoxContainer" parent="."]
 layout_mode = 0
-offset_left = 2.0
+offset_left = 38.0
 offset_top = 217.0
-offset_right = 438.0
-offset_bottom = 381.0
+offset_right = 403.0
+offset_bottom = 435.0
+alignment = 1
 
-[node name="MissionSlot" type="Control" parent="SlotContainer"]
+[node name="AgentPortrait" type="TextureButton" parent="SlotContainer"]
+custom_minimum_size = Vector2(128, 128)
 layout_mode = 2
-size_flags_vertical = 3
+texture_normal = ExtResource("2_asjii")
+texture_disabled = ExtResource("2_asjii")
+ignore_texture_size = true
+stretch_mode = 5
 
-[node name="AgentPortrait" type="TextureRect" parent="SlotContainer/MissionSlot"]
-layout_mode = 0
-offset_right = 151.0
-offset_bottom = 181.0
-expand_mode = 2
+[node name="AgentPortrait2" type="TextureButton" parent="SlotContainer"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+texture_normal = ExtResource("2_asjii")
+ignore_texture_size = true
+stretch_mode = 5
 
 [node name="enviar" type="Button" parent="."]
 layout_mode = 0
@@ -67,4 +77,6 @@ text = "Enviar Agentes
 "
 
 [connection signal="pressed" from="Button" to="." method="_on_button_closed_pressed"]
+[connection signal="pressed" from="SlotContainer/AgentPortrait" to="." method="_on_agent_portrait_pressed"]
+[connection signal="pressed" from="SlotContainer/AgentPortrait2" to="." method="_on_agent_portrait2_pressed"]
 [connection signal="pressed" from="enviar" to="." method="_on_button_resolver_pressed"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://d2jthyyxw4ua7"]
 
-[ext_resource type="Script" uid="uid://cm21e78x74fw8" path="res://scripts/faccion_bar.gd" id="1_wau7m"]
+[ext_resource type="Script" uid="uid://cm21e78x74fw8" path="res://scripts/faction.gd" id="1_wau7m"]
 
 [node name="Panel" type="Panel"]
 anchors_preset = -1

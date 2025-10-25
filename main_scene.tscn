@@ -1,12 +1,13 @@
-[gd_scene load_steps=10 format=3 uid="uid://c564q6edin8gb"]
+[gd_scene load_steps=11 format=3 uid="uid://c564q6edin8gb"]
 
 [ext_resource type="Script" uid="uid://bnccxvtwsp34k" path="res://main_scene.gd" id="1_wr18j"]
-[ext_resource type="PackedScene" uid="uid://d2jthyyxw4ua7" path="res://faccion_bar.tscn" id="4_7ycvg"]
+[ext_resource type="PackedScene" uid="uid://d2jthyyxw4ua7" path="res://faccion.tscn" id="4_7ycvg"]
 [ext_resource type="Texture2D" uid="uid://2ywc1droy0gk" path="res://sprites/32-A-0_01.jpg" id="6_42l1d"]
+[ext_resource type="PackedScene" uid="uid://dkahlsa41u8ph" path="res://agente.tscn" id="6_hq1ik"]
 [ext_resource type="PackedScene" uid="uid://cwv4jvnr4bp0n" path="res://mission.tscn" id="7_2jcla"]
+[ext_resource type="Texture2D" uid="uid://dp2y4fsidn0yj" path="res://sprites/noble_gray.png" id="8_66tet"]
 [ext_resource type="Texture2D" uid="uid://fj7qp04owxim" path="res://sprites/noble.png" id="9_u0ygc"]
 [ext_resource type="PackedScene" uid="uid://cy30tn63lifwh" path="res://mission_window.tscn" id="10_qwutr"]
-[ext_resource type="Script" uid="uid://bjks1rvtp4sn" path="res://scripts/texture_rect_3.gd" id="12_671wp"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1305s"]
 bg_color = Color(0.85797924, 0.4590451, 0.5451491, 1)
@@ -56,8 +57,7 @@ offset_right = 923.0
 offset_bottom = 371.0
 grow_horizontal = 1
 grow_vertical = 1
-start = 5.0
-life = 10.0
+life = 180.0
 title = "Mission inicial"
 description = "texto super importante"
 influencia = 5
@@ -170,16 +170,7 @@ offset_right = 1916.0
 offset_bottom = 217.0
 size_flags_vertical = 3
 
-[node name="Control" type="Control" parent="MainContainer/AgentPanel/AgentBar"]
+[node name="Agente1" parent="MainContainer/AgentPanel/AgentBar" instance=ExtResource("6_hq1ik")]
 layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="TextureRect3" type="TextureRect" parent="MainContainer/AgentPanel/AgentBar/Control"]
-layout_mode = 0
-offset_right = 197.14821
-offset_bottom = 213.0
-size_flags_horizontal = 0
-texture = ExtResource("9_u0ygc")
-expand_mode = 3
-stretch_mode = 5
-script = ExtResource("12_671wp")
+selected = ExtResource("9_u0ygc")
+unselected = ExtResource("8_66tet")

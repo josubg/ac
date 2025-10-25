@@ -58,8 +58,11 @@ func _on_pressed() -> void:
 	GameManager.show_mission(self)
 	
 func resolve(agents: Array) -> void:
-	var agentes = len(agents)
-	var limit = 100/ (agentes + 1)
+	var limit = 100/ (len(agents) + 1)
 	print( "Probabilidad", limit)
 	self.exito = rng.randf_range(0, 1) > limit
+	print("Exito: ", exito)
+	for agente in agents:
+		if agente != null:
+			agente.assigned= false
 	self.finalize()
