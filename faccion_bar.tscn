@@ -1,0 +1,27 @@
+[gd_scene load_steps=2 format=3 uid="uid://d2jthyyxw4ua7"]
+
+[ext_resource type="Script" uid="uid://cm21e78x74fw8" path="res://scripts/faccion_bar.gd" id="1_wau7m"]
+
+[node name="Panel" type="Panel"]
+anchors_preset = -1
+anchor_right = 0.17500001
+anchor_bottom = 0.095000006
+offset_right = -3.0517578e-05
+offset_bottom = 0.3999939
+script = ExtResource("1_wau7m")
+
+[node name="FactionLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 17.0
+offset_top = 9.0
+offset_right = 146.0
+offset_bottom = 37.0
+theme_override_font_sizes/font_size = 20
+text = "Faccion:"
+
+[node name="Bar" type="ProgressBar" parent="."]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 43.0
+offset_right = 314.0
+offset_bottom = 89.0

@@ -1,0 +1,26 @@
+[gd_scene load_steps=2 format=3 uid="uid://d2jthyyxw4ua7"]
+
+[ext_resource type="Script" uid="uid://cm21e78x74fw8" path="res://descontento_bar.gd" id="1_wau7m"]
+
+[node name="Panel" type="Panel"]
+offset_right = 336.0
+offset_bottom = 103.0
+script = ExtResource("1_wau7m")
+faction_signal = null
+faction_name = null
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 17.0
+offset_top = 9.0
+offset_right = 146.0
+offset_bottom = 37.0
+theme_override_font_sizes/font_size = 20
+text = "Faccion:"
+
+[node name="Bar" type="ProgressBar" parent="."]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 43.0
+offset_right = 314.0
+offset_bottom = 89.0

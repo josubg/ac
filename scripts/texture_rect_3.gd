@@ -2,7 +2,7 @@ extends TextureRect
 
 var agent_id
 
-func _get_drag_data(position):
+func _get_drag_data(_position):
 	var data = {
 		"agent_id": agent_id,
 		"texture": texture

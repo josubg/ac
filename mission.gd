@@ -4,6 +4,9 @@ class_name Mission
 @export var start: float
 @export var life: float
 
+@export var title: String
+@export var description: String
+
 @export var influencia: int
 @export var descontento: int
 @export var nobleza: int
@@ -13,24 +16,25 @@ class_name Mission
 @export var debrief: String
 var exito: bool
 var fin: bool
-
+var rng: RandomNumberGenerator
 
 func _ready():
-	self.visible = false
+	self.rng = RandomNumberGenerator.new()
+	self.hide()
 	await get_tree().create_timer(start).timeout
 	deploy()
 	await get_tree().create_timer(life).timeout
-	retire()
+	finalize()
 	
 	
 func deploy():
 	print("Mission started")
-	self.visible = true
+	self.show()
 	self.exito = false
 	self.fin = false
 	
 	
-func retire():
+func finalize():
 	if not self.fin:
 		if exito:
 			print("Mission succesfull")
@@ -46,23 +50,16 @@ func retire():
 			Global.nobleza -= self.nobleza
 			Global.iglesia -= self.iglesia
 			Global.rey -= self.rey	
-		self.visible = false
+		self.hide()
 		self.fin = true
 
 
-func _on_focus_entered() -> void:
-	GameManager.show_mission(self)
-
-
-func _on_mouse_entered() -> void:
-	GameManager.show_mission(self)
-
-
-func _on_mouse_exited() -> void:
-	GameManager.clear_mission()
-
-
 func _on_pressed() -> void:
-	$"../../../MissionWindow".show()
-	self.exito = true
-	retire()
+	GameManager.show_mission(self)
+	
+func resolve(agents: Array) -> void:
+	var agentes = len(agents)
+	var limit = 100/ (agentes + 1)
+	print( "Probabilidad", limit)
+	self.exito = rng.randf_range(0, 1) > limit
+	self.finalize()

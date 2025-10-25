@@ -1,16 +1,11 @@
-[gd_scene load_steps=15 format=3 uid="uid://c564q6edin8gb"]
+[gd_scene load_steps=10 format=3 uid="uid://c564q6edin8gb"]
 
-[ext_resource type="Script" uid="uid://tlwyb68pkabk" path="res://nobleza_bar.gd" id="1_7ycvg"]
 [ext_resource type="Script" uid="uid://bnccxvtwsp34k" path="res://main_scene.gd" id="1_wr18j"]
-[ext_resource type="Script" uid="uid://dd8o7ya1uey5x" path="res://iglesia_bar.gd" id="2_wr18j"]
-[ext_resource type="Script" uid="uid://1q8d243bosxf" path="res://rey_bar.gd" id="3_qwutr"]
-[ext_resource type="Script" uid="uid://fkx1sf7xoie5" path="res://influencia_bar.gd" id="4_671wp"]
-[ext_resource type="Script" uid="uid://r8s07ai2dgdp" path="res://descontento_bar.gd" id="5_mo76n"]
+[ext_resource type="PackedScene" uid="uid://d2jthyyxw4ua7" path="res://faccion_bar.tscn" id="4_7ycvg"]
 [ext_resource type="Texture2D" uid="uid://2ywc1droy0gk" path="res://sprites/32-A-0_01.jpg" id="6_42l1d"]
 [ext_resource type="PackedScene" uid="uid://cwv4jvnr4bp0n" path="res://mission.tscn" id="7_2jcla"]
-[ext_resource type="PackedScene" uid="uid://fntj63gps0ru" path="res://debrief_panel.tscn" id="8_m35m6"]
 [ext_resource type="Texture2D" uid="uid://fj7qp04owxim" path="res://sprites/noble.png" id="9_u0ygc"]
-[ext_resource type="PackedScene" uid="uid://cy30tn63lifwh" path="res://MissionWindow.tscn" id="10_qwutr"]
+[ext_resource type="PackedScene" uid="uid://cy30tn63lifwh" path="res://mission_window.tscn" id="10_qwutr"]
 [ext_resource type="Script" uid="uid://bjks1rvtp4sn" path="res://scripts/texture_rect_3.gd" id="12_671wp"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1305s"]
@@ -35,103 +30,15 @@ size_flags_vertical = 3
 size_flags_stretch_ratio = 4.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_1305s")
 
-[node name="DebriefPanel" parent="MainContainer/MapPanel" instance=ExtResource("8_m35m6")]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 1561.0
-offset_top = 0.0
-offset_right = -2.0
-offset_bottom = 4.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="NoblezaBar" type="ProgressBar" parent="MainContainer/MapPanel"]
-layout_mode = 0
-offset_left = 36.0
-offset_top = 313.0
-offset_right = 324.0
-offset_bottom = 359.0
-script = ExtResource("1_7ycvg")
-
-[node name="NoblezaLabel" type="Label" parent="MainContainer/MapPanel/NoblezaBar"]
-layout_mode = 0
-offset_left = 5.0
-offset_top = -28.0
-offset_right = 107.0
-theme_override_font_sizes/font_size = 20
-text = "Nobleza:"
-
-[node name="IglesiaBar" type="ProgressBar" parent="MainContainer/MapPanel"]
-layout_mode = 0
-offset_left = 36.0
-offset_top = 395.0
-offset_right = 324.0
-offset_bottom = 441.0
-script = ExtResource("2_wr18j")
-
-[node name="IglesiaLabel" type="Label" parent="MainContainer/MapPanel/IglesiaBar"]
-layout_mode = 0
-offset_left = 5.0
-offset_top = -28.0
-offset_right = 107.0
-theme_override_font_sizes/font_size = 20
-text = "Iglesia:"
-
-[node name="ReyBar" type="ProgressBar" parent="MainContainer/MapPanel"]
-layout_mode = 0
-offset_left = 36.0
-offset_top = 472.0
-offset_right = 324.0
-offset_bottom = 518.0
-script = ExtResource("3_qwutr")
-
-[node name="ReyLabel" type="Label" parent="MainContainer/MapPanel/ReyBar"]
-layout_mode = 0
-offset_left = 5.0
-offset_top = -28.0
-offset_right = 107.0
-theme_override_font_sizes/font_size = 20
-text = "Rey:"
-
-[node name="InfluenciaBar" type="ProgressBar" parent="MainContainer/MapPanel"]
-layout_mode = 0
-offset_left = 31.0
-offset_top = 126.0
-offset_right = 319.0
-offset_bottom = 172.0
-script = ExtResource("4_671wp")
-
-[node name="InfluenciaLabel" type="Label" parent="MainContainer/MapPanel/InfluenciaBar"]
-layout_mode = 0
-offset_left = 5.0
-offset_top = -28.0
-offset_right = 107.0
-theme_override_font_sizes/font_size = 20
-text = "Influencia:"
-
-[node name="DescontentoBar" type="ProgressBar" parent="MainContainer/MapPanel"]
-layout_mode = 0
-offset_left = 31.0
-offset_top = 205.0
-offset_right = 319.0
-offset_bottom = 251.0
-script = ExtResource("5_mo76n")
-
-[node name="DescontentoLabel" type="Label" parent="MainContainer/MapPanel/DescontentoBar"]
-layout_mode = 0
-offset_left = 5.0
-offset_top = -28.0
-offset_right = 107.0
-theme_override_font_sizes/font_size = 20
-text = "Descontento:"
-
 [node name="Map" type="TextureRect" parent="MainContainer/MapPanel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 351.0
+offset_top = 14.0
+offset_right = -354.9392
+offset_bottom = -30.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("6_42l1d")
@@ -143,14 +50,16 @@ layout_mode = 0
 anchors_preset = 0
 anchor_right = 0.0
 anchor_bottom = 0.0
-offset_left = 678.0
-offset_top = 434.0
-offset_right = 806.0
-offset_bottom = 562.0
+offset_left = 795.0
+offset_top = 243.0
+offset_right = 923.0
+offset_bottom = 371.0
 grow_horizontal = 1
 grow_vertical = 1
 start = 5.0
 life = 10.0
+title = "Mission inicial"
+description = "texto super importante"
 influencia = 5
 descontento = -5
 nobleza = 5
@@ -163,14 +72,16 @@ layout_mode = 0
 anchors_preset = 0
 anchor_right = 0.0
 anchor_bottom = 0.0
-offset_left = 678.0
-offset_top = 434.0
-offset_right = 806.0
-offset_bottom = 562.0
+offset_left = 233.0
+offset_top = 477.0
+offset_right = 361.0
+offset_bottom = 605.0
 grow_horizontal = 1
 grow_vertical = 1
 start = 10.0
 life = 10.0
+title = "Segunda mision"
+description = "Texto superimportante 2"
 influencia = 5
 descontento = -5
 nobleza = 5
@@ -178,8 +89,74 @@ iglesia = 5
 rey = 5
 debrief = "Sus mercedes han oido  un rumor."
 
-[node name="MissionWindow" parent="MainContainer" instance=ExtResource("10_qwutr")]
-position = Vector2(711, 209)
+[node name="MissionWindow" parent="MainContainer/MapPanel" instance=ExtResource("10_qwutr")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.23400001
+anchor_top = 0.115
+anchor_right = 0.596
+anchor_bottom = 0.772
+offset_left = 5.7199707
+offset_top = -24.900002
+offset_right = 242.67993
+offset_bottom = 109.08002
+grow_horizontal = 1
+grow_vertical = 1
+
+[node name="Descontento" parent="MainContainer/MapPanel" instance=ExtResource("4_7ycvg")]
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 1556.0
+offset_top = 17.0
+offset_right = 1902.0
+offset_bottom = 148.0
+faction_signal = "descontento_changed"
+faction_name = "Descontento:"
+
+[node name="Influencia" parent="MainContainer/MapPanel" instance=ExtResource("4_7ycvg")]
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 1558.0
+offset_top = 697.0
+offset_right = 1894.0
+offset_bottom = 823.0
+faction_signal = "influencia_changed"
+faction_name = "Influencia:"
+
+[node name="Rey" parent="MainContainer/MapPanel" instance=ExtResource("4_7ycvg")]
+layout_mode = 1
+offset_left = 22.0
+offset_top = 64.0
+offset_right = 23.99997
+offset_bottom = 98.299995
+faction_signal = "rey_changed"
+faction_name = "Rey:"
+
+[node name="Clero" parent="MainContainer/MapPanel" instance=ExtResource("4_7ycvg")]
+layout_mode = 1
+offset_left = 18.0
+offset_top = 191.0
+offset_right = 24.99997
+offset_bottom = 246.29999
+faction_signal = "iglesia_changed"
+faction_name = "Iglesia:"
+
+[node name="Nobleza" parent="MainContainer/MapPanel" instance=ExtResource("4_7ycvg")]
+layout_mode = 1
+anchor_left = 0.008
+anchor_top = 0.374
+anchor_right = 0.18900001
+anchor_bottom = 0.526
+offset_left = -0.3600006
+offset_top = 26.359985
+offset_right = -5.880005
+offset_bottom = 29.639984
+faction_signal = "nobleza_changed"
+faction_name = "Nobleza:"
 
 [node name="AgentPanel" type="Panel" parent="MainContainer"]
 layout_mode = 2
@@ -206,16 +183,3 @@ texture = ExtResource("9_u0ygc")
 expand_mode = 3
 stretch_mode = 5
 script = ExtResource("12_671wp")
-
-[node name="Control2" type="Control" parent="MainContainer/AgentPanel/AgentBar"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="TextureRect3" type="TextureRect" parent="MainContainer/AgentPanel/AgentBar/Control2"]
-layout_mode = 0
-offset_right = 197.14821
-offset_bottom = 213.0
-size_flags_horizontal = 0
-texture = ExtResource("9_u0ygc")
-expand_mode = 3
-stretch_mode = 5
