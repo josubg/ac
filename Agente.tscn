@@ -4,18 +4,23 @@
 [ext_resource type="Script" uid="uid://bjks1rvtp4sn" path="res://scripts/agent.gd" id="2_tv2h4"]
 
 [node name="Panel" type="Panel"]
+clip_contents = true
+custom_minimum_size = Vector2(196, 210)
 anchors_preset = -1
 anchor_right = 0.102000006
 anchor_bottom = 0.19800001
 offset_right = -195.84001
 offset_bottom = -213.84001
+rotation = 0.002709739
 size_flags_horizontal = 3
 script = ExtResource("2_tv2h4")
 
 [node name="Portrait" type="TextureRect" parent="."]
 layout_mode = 0
-offset_right = 197.14821
-offset_bottom = 213.0
+offset_left = -0.0054194704
+offset_top = -1.9999926
+offset_right = 197.14279
+offset_bottom = 211.0
 rotation = -0.0003870568
 size_flags_horizontal = 0
 texture = ExtResource("1_f5in3")

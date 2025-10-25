@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bqdw40rabbtrw"]
 
-[ext_resource type="Texture2D" uid="uid://fj7qp04owxim" path="res://sprites/noble.png" id="1_ots34"]
 [ext_resource type="Script" uid="uid://b3bq7ogy8bp67" path="res://start.gd" id="1_qn1rc"]
+[ext_resource type="Texture2D" uid="uid://bia6vsbksoakh" path="res://sprites/CuatroCortes píldora Negro 690x400 marco old.png" id="2_qn1rc"]
 
 [node name="MarginContainer" type="CanvasLayer"]
 script = ExtResource("1_qn1rc")
@@ -15,7 +15,7 @@ grow_vertical = 2
 
 [node name="Node2D" type="TextureButton" parent="MarginContainer"]
 layout_mode = 2
-texture_normal = ExtResource("1_ots34")
+texture_normal = ExtResource("2_qn1rc")
 ignore_texture_size = true
 stretch_mode = 5
 

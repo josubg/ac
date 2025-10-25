@@ -1,21 +1,22 @@
-[gd_scene load_steps=2 format=3 uid="uid://dn1sv322p711h"]
+[gd_scene load_steps=3 format=3 uid="uid://dn1sv322p711h"]
 
-[ext_resource type="Script" uid="uid://caev636w24rys" path="res://defeat.gd" id="1_888is"]
+[ext_resource type="Script" uid="uid://b3bq7ogy8bp67" path="res://start.gd" id="1_frb4q"]
+[ext_resource type="Texture2D" uid="uid://bia6vsbksoakh" path="res://sprites/CuatroCortes píldora Negro 690x400 marco old.png" id="2_a4708"]
 
-[node name="Control" type="Control"]
-layout_mode = 3
+[node name="MarginContainer" type="CanvasLayer"]
+script = ExtResource("1_frb4q")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_888is")
 
-[node name="Label" type="Label" parent="."]
-layout_mode = 0
-offset_left = 976.0
-offset_top = 381.0
-offset_right = 1016.0
-offset_bottom = 404.0
-rotation = -0.0004516004
-text = "Defeat"
+[node name="Node2D" type="TextureButton" parent="MarginContainer"]
+layout_mode = 2
+texture_normal = ExtResource("2_a4708")
+ignore_texture_size = true
+stretch_mode = 5
+
+[connection signal="pressed" from="MarginContainer/Node2D" to="." method="_on_node_2d_pressed"]
