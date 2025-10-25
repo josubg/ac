@@ -21,9 +21,10 @@ var rng: RandomNumberGenerator
 func _ready():
 	self.rng = RandomNumberGenerator.new()
 	self.hide()
-	await get_tree().create_timer(start).timeout
+	var tree = get_tree() 
+	await tree.create_timer(start).timeout
 	deploy()
-	await get_tree().create_timer(life).timeout
+	await tree.create_timer(life).timeout
 	finalize()
 	
 	
@@ -58,9 +59,30 @@ func _on_pressed() -> void:
 	GameManager.show_mission(self)
 	
 func resolve(agents: Array) -> void:
-	var limit = 100/ (len(agents) + 1)
+	var deploy_agents: int = 0
+	var good_assing: int  = 0
+	var bad_asing: int  = 0
+	for agent: Agent in agents:
+		deploy_agents += 1
+		if agent.iglesia:
+			if self.iglesia > 0:
+				good_assing += 1
+			if self.iglesia < 0:
+				bad_asing += 1
+		if agent.nobleza:
+			if self.nobleza > 0:
+				good_assing += 1
+			if self.nobleza < 0:
+				bad_asing += 1	 
+		#if agent.rey:
+			#if self.rey > 0:
+				#good_assing += 1
+			#if self.rey < 0:
+				#bad_asing += 1	
+	
+	var limit: int = 100 / max(deploy_agents + good_assing - bad_asing + 1, 1)
 	print( "Probabilidad", limit)
-	self.exito = rng.randf_range(0, 1) > limit
+	self.exito = rng.randf_range(0, 100) > limit
 	print("Exito: ", exito)
 	for agente in agents:
 		if agente != null:

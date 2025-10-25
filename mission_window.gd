@@ -50,8 +50,14 @@ func _on_button_closed_pressed() -> void:
 	self.hide()
 
 func _on_button_resolver_pressed() -> void:
-	self.mission.resolve(self.assigned_agents)
+	var valid_agents = []
+	for agent in self.assigned_agents:
+		if agent != null:
+			valid_agents.append(agent)
+	self.mission.resolve(valid_agents)
 	self.mission = null
+	for index in self.portraits.size():
+		self.unset_agent(index)
 	self.hide()
 
 func _on_agent_portrait_pressed() -> void:
@@ -67,8 +73,9 @@ func set_agent(agent:Agent, portrait: TextureButton, index: int):
 	self.assigned_agents[index] = agent
 	
 func unset_agent(index: int):
-	if self.assigned_agents[index] != null:
+	if self.portraits[index] != null:
 		self.portraits[index].disabled = true
+	if self.assigned_agents[index] != null:
 		self.assigned_agents[index].assigned = false
 		self.assigned_agents[index] = null
 		
