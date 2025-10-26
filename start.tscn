@@ -1,22 +1,114 @@
-[gd_scene load_steps=3 format=3 uid="uid://bqdw40rabbtrw"]
+[gd_scene load_steps=7 format=3 uid="uid://bqdw40rabbtrw"]
 
-[ext_resource type="Script" uid="uid://b3bq7ogy8bp67" path="res://start.gd" id="1_qn1rc"]
+[ext_resource type="Script" uid="uid://dl2sdpn7xuahu" path="res://scripts/start.gd" id="1_qn1rc"]
 [ext_resource type="Texture2D" uid="uid://bia6vsbksoakh" path="res://sprites/CuatroCortes píldora Negro 690x400 marco old.png" id="2_qn1rc"]
+[ext_resource type="AudioStream" uid="uid://wchnbdf52l2m" path="res://resources/intro.wav" id="3_1n0d2"]
+
+[sub_resource type="Animation" id="Animation_qn1rc"]
+resource_name = "fate_to_black"
+length = 6.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Logo:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(-0.03333333, 1.4333333, 2.4666667, 4.0333333, 6),
+"transitions": PackedFloat32Array(2, 2, 2, 2, 2),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "audio"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AudioStreamPlayer2D")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("3_1n0d2")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/1/use_blend = true
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AudioStreamPlayer2D:volume_db")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(5.366667, 6),
+"transitions": PackedFloat32Array(3.8637443, 1),
+"update": 0,
+"values": [0.0, -80.0]
+}
+
+[sub_resource type="Animation" id="Animation_1n0d2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Logo:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AudioStreamPlayer2D:volume_db")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_y5hus"]
+_data = {
+&"RESET": SubResource("Animation_1n0d2"),
+&"fate_to_black": SubResource("Animation_qn1rc")
+}
 
 [node name="MarginContainer" type="CanvasLayer"]
 script = ExtResource("1_qn1rc")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+[node name="Background" type="ColorRect" parent="."]
+offset_right = 1959.0
+offset_bottom = 1088.0
+color = Color(0, 0, 0, 1)
+
+[node name="Logo" type="TextureRect" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -480.0
+offset_top = -200.0
+offset_right = 480.0
+offset_bottom = 200.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="Node2D" type="TextureButton" parent="MarginContainer"]
-layout_mode = 2
-texture_normal = ExtResource("2_qn1rc")
-ignore_texture_size = true
+texture = ExtResource("2_qn1rc")
 stretch_mode = 5
 
-[connection signal="pressed" from="MarginContainer/Node2D" to="." method="_on_node_2d_pressed"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_y5hus")
+}
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+max_distance = 1450.0
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
