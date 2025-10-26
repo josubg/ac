@@ -1,0 +1,78 @@
+[gd_scene load_steps=4 format=3 uid="uid://b77x0ajd3qgrw"]
+
+[ext_resource type="Script" uid="uid://c18q3r1v7getd" path="res://scripts/menu_inicio.gd" id="1_aqwrv"]
+[ext_resource type="Texture2D" uid="uid://bia6vsbksoakh" path="res://sprites/CuatroCortes píldora Negro 690x400 marco old.png" id="1_wkv36"]
+[ext_resource type="FontFile" uid="uid://c3utmlxoyyw0n" path="res://resources/Bastarda-K.ttf" id="2_ylpju"]
+
+[node name="MenuInicio" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_aqwrv")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 1921.0
+offset_bottom = 1082.0
+color = Color(0, 0, 0, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 510.0
+offset_top = 79.0
+offset_right = 1470.0
+offset_bottom = 871.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("1_wkv36")
+
+[node name="NewGameButton" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ylpju")
+theme_override_font_sizes/font_size = 50
+text = "Nueva Partida"
+
+[node name="TutorialButton" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ylpju")
+theme_override_font_sizes/font_size = 50
+text = "Tutorial"
+
+[node name="CreditsButton" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ylpju")
+theme_override_font_sizes/font_size = 50
+text = "Créditos"
+
+[node name="ExitButton" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ylpju")
+theme_override_font_sizes/font_size = 50
+text = "Salir"
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+offset_right = 185.0
+offset_bottom = 49.0
+text = "Versión 0.1 - 26/10/2025
+"
