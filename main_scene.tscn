@@ -1,10 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://c564q6edin8gb"]
+[gd_scene load_steps=11 format=3 uid="uid://c564q6edin8gb"]
 
 [ext_resource type="Script" uid="uid://bnccxvtwsp34k" path="res://main_scene.gd" id="1_wr18j"]
 [ext_resource type="PackedScene" uid="uid://d2jthyyxw4ua7" path="res://faccion.tscn" id="4_7ycvg"]
 [ext_resource type="Texture2D" uid="uid://2ywc1droy0gk" path="res://sprites/32-A-0_01.jpg" id="6_42l1d"]
 [ext_resource type="PackedScene" uid="uid://dkahlsa41u8ph" path="res://agente.tscn" id="6_hq1ik"]
-[ext_resource type="PackedScene" uid="uid://cwv4jvnr4bp0n" path="res://mission.tscn" id="7_2jcla"]
 [ext_resource type="Texture2D" uid="uid://dayqo6ocfg7eu" path="res://sprites/CuatroCortes burgués merged.png" id="7_7ycvg"]
 [ext_resource type="Texture2D" uid="uid://dp2y4fsidn0yj" path="res://sprites/noble_gray.png" id="8_66tet"]
 [ext_resource type="Texture2D" uid="uid://lglkqlvsjrt7" path="res://sprites/CuatroCortes Noble 1_0.png" id="9_wr18j"]
@@ -47,50 +46,8 @@ texture = ExtResource("6_42l1d")
 expand_mode = 3
 stretch_mode = 5
 
-[node name="M1" parent="MainContainer/MapPanel/Map" instance=ExtResource("7_2jcla")]
-layout_mode = 0
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 795.0
-offset_top = 243.0
-offset_right = 923.0
-offset_bottom = 371.0
-grow_horizontal = 1
-grow_vertical = 1
-life = 180.0
-title = "Mission inicial"
-description = "texto super importante"
-influencia = 5
-descontento = -5
-nobleza = 5
-iglesia = 5
-rey = 5
-debrief = "Sus mercedes han oido  un rumor."
-
-[node name="M2" parent="MainContainer/MapPanel/Map" instance=ExtResource("7_2jcla")]
-layout_mode = 0
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 233.0
-offset_top = 477.0
-offset_right = 361.0
-offset_bottom = 605.0
-grow_horizontal = 1
-grow_vertical = 1
-start = 10.0
-life = 10.0
-title = "Segunda mision"
-description = "Texto superimportante 2"
-influencia = 5
-descontento = -5
-nobleza = 5
-iglesia = 5
-rey = 5
-debrief = "Sus mercedes han oido  un rumor."
-
 [node name="MissionWindow" parent="MainContainer/MapPanel" instance=ExtResource("10_qwutr")]
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.23400001

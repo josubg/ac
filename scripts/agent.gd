@@ -6,8 +6,9 @@ class_name Agent
 @export var selected: Texture2D
 @export var unselected: Texture2D
 @export var biografy: String
-@export var nobleza: bool
-@export var iglesia: bool
+
+@export var noble: bool
+@export var cura: bool
 @export var malechor: bool
 
  
@@ -23,7 +24,6 @@ var assigned: bool :
 
 func _ready() -> void:
 	self.assigned = false
-
 
 
 func _get_drag_data(_position):
