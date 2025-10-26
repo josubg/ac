@@ -9,7 +9,7 @@ func _ready():
 
 func _on_new_game_pressed():
 	# Carga la escena principal del juego
-	get_tree().change_scene_to_file("res://main_scene.tscn")
+	get_tree().change_scene_to_file("res://Intro_Video.tscn")
 
 func _on_tutorial_pressed():
 	get_tree().change_scene_to_file("res://scenes/Tutorial.tscn")

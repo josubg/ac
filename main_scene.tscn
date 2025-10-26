@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://bnccxvtwsp34k" path="res://main_scene.gd" id="1_wr18j"]
 [ext_resource type="PackedScene" uid="uid://d2jthyyxw4ua7" path="res://faccion.tscn" id="4_7ycvg"]
 [ext_resource type="Texture2D" uid="uid://2ywc1droy0gk" path="res://sprites/32-A-0_01.jpg" id="6_42l1d"]
-[ext_resource type="PackedScene" uid="uid://dkahlsa41u8ph" path="res://agente.tscn" id="6_hq1ik"]
+[ext_resource type="PackedScene" uid="uid://dkahlsa41u8ph" path="res://Agente.tscn" id="6_hq1ik"]
 [ext_resource type="Texture2D" uid="uid://dayqo6ocfg7eu" path="res://sprites/CuatroCortes burgués merged.png" id="7_7ycvg"]
 [ext_resource type="Texture2D" uid="uid://dp2y4fsidn0yj" path="res://sprites/noble_gray.png" id="8_66tet"]
 [ext_resource type="Texture2D" uid="uid://lglkqlvsjrt7" path="res://sprites/CuatroCortes Noble 1_0.png" id="9_wr18j"]
