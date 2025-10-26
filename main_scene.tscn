@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://c564q6edin8gb"]
+[gd_scene load_steps=15 format=3 uid="uid://c564q6edin8gb"]
 
 [ext_resource type="Script" uid="uid://bnccxvtwsp34k" path="res://main_scene.gd" id="1_wr18j"]
 [ext_resource type="PackedScene" uid="uid://d2jthyyxw4ua7" path="res://faccion.tscn" id="4_7ycvg"]
@@ -6,14 +6,25 @@
 [ext_resource type="PackedScene" uid="uid://dkahlsa41u8ph" path="res://Agente.tscn" id="6_hq1ik"]
 [ext_resource type="Texture2D" uid="uid://dayqo6ocfg7eu" path="res://sprites/CuatroCortes burgués merged.png" id="7_7ycvg"]
 [ext_resource type="Texture2D" uid="uid://dp2y4fsidn0yj" path="res://sprites/noble_gray.png" id="8_66tet"]
+[ext_resource type="AudioStream" uid="uid://wchnbdf52l2m" path="res://resources/intro.wav" id="9_qwutr"]
 [ext_resource type="Texture2D" uid="uid://lglkqlvsjrt7" path="res://sprites/CuatroCortes Noble 1_0.png" id="9_wr18j"]
+[ext_resource type="AudioStream" uid="uid://da5yawvb2t4b7" path="res://resources/intro_long.wav" id="10_671wp"]
 [ext_resource type="PackedScene" uid="uid://cy30tn63lifwh" path="res://mission_window.tscn" id="10_qwutr"]
+[ext_resource type="AudioStream" uid="uid://5m764req5vla" path="res://resources/intro 3.wav" id="11_mo76n"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1305s"]
 bg_color = Color(0.85797924, 0.4590451, 0.5451491, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3mqji"]
 bg_color = Color(0.48675662, 0.63354504, 0.63015836, 1)
+
+[sub_resource type="AudioStreamPlaylist" id="AudioStreamPlaylist_42l1d"]
+shuffle = true
+fade_time = 0.68
+stream_count = 3
+stream_0 = ExtResource("9_qwutr")
+stream_1 = ExtResource("10_671wp")
+stream_2 = ExtResource("11_mo76n")
 
 [node name="UI" type="CanvasLayer"]
 script = ExtResource("1_wr18j")
@@ -139,3 +150,7 @@ unselected = ExtResource("8_66tet")
 layout_mode = 2
 selected = ExtResource("9_wr18j")
 unselected = ExtResource("8_66tet")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamPlaylist_42l1d")
+autoplay = true
