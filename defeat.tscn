@@ -1,22 +1,31 @@
-[gd_scene load_steps=3 format=3 uid="uid://dn1sv322p711h"]
+[gd_scene load_steps=4 format=3 uid="uid://dn1sv322p711h"]
 
 [ext_resource type="Script" uid="uid://b3bq7ogy8bp67" path="res://start.gd" id="1_frb4q"]
 [ext_resource type="Texture2D" uid="uid://bia6vsbksoakh" path="res://sprites/CuatroCortes píldora Negro 690x400 marco old.png" id="2_a4708"]
+[ext_resource type="FontFile" uid="uid://m4yynylhaxb7" path="res://resources/AlbertText-Bold.ttf" id="3_a4708"]
 
 [node name="MarginContainer" type="CanvasLayer"]
 script = ExtResource("1_frb4q")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="ColorRect" type="ColorRect" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+color = Color(0, 0, 0, 1)
 
-[node name="Node2D" type="TextureButton" parent="MarginContainer"]
-layout_mode = 2
-texture_normal = ExtResource("2_a4708")
-ignore_texture_size = true
-stretch_mode = 5
+[node name="CuatroCortesPíldoraNegro690x400MarcoOld" type="Sprite2D" parent="."]
+position = Vector2(980, 282)
+texture = ExtResource("2_a4708")
 
-[connection signal="pressed" from="MarginContainer/Node2D" to="." method="_on_node_2d_pressed"]
+[node name="TituloLabel" type="Label" parent="."]
+offset_left = 817.0
+offset_top = 557.0
+offset_right = 1076.0
+offset_bottom = 678.0
+size_flags_horizontal = 4
+size_flags_vertical = 2
+theme_override_fonts/font = ExtResource("3_a4708")
+theme_override_font_sizes/font_size = 90
+text = "Derrota"

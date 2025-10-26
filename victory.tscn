@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://bwdsu7pr6aj0q"]
+[gd_scene load_steps=4 format=3 uid="uid://bwdsu7pr6aj0q"]
 
 [ext_resource type="Script" uid="uid://dgbv23r3gyenv" path="res://victory.gd" id="1_7bnjr"]
+[ext_resource type="Texture2D" uid="uid://bia6vsbksoakh" path="res://sprites/CuatroCortes píldora Negro 690x400 marco old.png" id="2_qr7ta"]
+[ext_resource type="FontFile" uid="uid://m4yynylhaxb7" path="res://resources/AlbertText-Bold.ttf" id="3_v3ap6"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -11,10 +13,24 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_7bnjr")
 
-[node name="Label" type="Label" parent="."]
+[node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 0
-offset_left = 883.0
-offset_top = 494.0
-offset_right = 1164.0
-offset_bottom = 571.0
-text = "A winner is you"
+offset_right = 1919.0
+offset_bottom = 1079.0
+color = Color(0, 0, 0, 1)
+
+[node name="CuatroCortesPíldoraNegro690x400MarcoOld" type="Sprite2D" parent="."]
+position = Vector2(925, 267)
+texture = ExtResource("2_qr7ta")
+
+[node name="TituloLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 806.0
+offset_top = 565.0
+offset_right = 1065.0
+offset_bottom = 686.0
+size_flags_horizontal = 4
+size_flags_vertical = 2
+theme_override_fonts/font = ExtResource("3_v3ap6")
+theme_override_font_sizes/font_size = 90
+text = "Victoria"

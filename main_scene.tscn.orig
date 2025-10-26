@@ -1,0 +1,193 @@
+<<<<<<< HEAD
+[gd_scene load_steps=14 format=3 uid="uid://c564q6edin8gb"]
+=======
+[gd_scene load_steps=15 format=3 uid="uid://c564q6edin8gb"]
+>>>>>>> 7b036911881d9c7bfa72f50d840366d1568f824f
+
+[ext_resource type="Script" uid="uid://bnccxvtwsp34k" path="res://main_scene.gd" id="1_wr18j"]
+[ext_resource type="PackedScene" uid="uid://d2jthyyxw4ua7" path="res://faccion.tscn" id="4_7ycvg"]
+[ext_resource type="Texture2D" uid="uid://2ywc1droy0gk" path="res://sprites/32-A-0_01.jpg" id="6_42l1d"]
+<<<<<<< HEAD
+[ext_resource type="PackedScene" uid="uid://dkahlsa41u8ph" path="res://agente.tscn" id="6_hq1ik"]
+[ext_resource type="Texture2D" uid="uid://fj7qp04owxim" path="res://sprites/noble.png" id="6_qwutr"]
+[ext_resource type="Texture2D" uid="uid://dayqo6ocfg7eu" path="res://sprites/CuatroCortes burgués merged.png" id="7_7ycvg"]
+[ext_resource type="Texture2D" uid="uid://dp2y4fsidn0yj" path="res://sprites/noble_gray.png" id="8_66tet"]
+[ext_resource type="Texture2D" uid="uid://cjra1m6gxtnn3" path="res://sprites/CuatroCortes Noble 1.2.png" id="8_671wp"]
+[ext_resource type="Texture2D" uid="uid://6g08uiubln6o" path="res://sprites/CuatroCortes burgués gris.png" id="10_mo76n"]
+[ext_resource type="PackedScene" uid="uid://cy30tn63lifwh" path="res://mission_window.tscn" id="10_qwutr"]
+[ext_resource type="Texture2D" uid="uid://dcwco7w5ssw8x" path="res://sprites/CuatroCortes burgués 1.2 merged.png" id="11_42l1d"]
+=======
+[ext_resource type="PackedScene" uid="uid://dkahlsa41u8ph" path="res://Agente.tscn" id="6_hq1ik"]
+[ext_resource type="Texture2D" uid="uid://dayqo6ocfg7eu" path="res://sprites/CuatroCortes burgués merged.png" id="7_7ycvg"]
+[ext_resource type="Texture2D" uid="uid://dp2y4fsidn0yj" path="res://sprites/noble_gray.png" id="8_66tet"]
+[ext_resource type="AudioStream" uid="uid://wchnbdf52l2m" path="res://resources/intro.wav" id="9_qwutr"]
+[ext_resource type="Texture2D" uid="uid://lglkqlvsjrt7" path="res://sprites/CuatroCortes Noble 1_0.png" id="9_wr18j"]
+[ext_resource type="AudioStream" uid="uid://da5yawvb2t4b7" path="res://resources/intro_long.wav" id="10_671wp"]
+[ext_resource type="PackedScene" uid="uid://cy30tn63lifwh" path="res://mission_window.tscn" id="10_qwutr"]
+[ext_resource type="AudioStream" uid="uid://5m764req5vla" path="res://resources/intro 3.wav" id="11_mo76n"]
+>>>>>>> 7b036911881d9c7bfa72f50d840366d1568f824f
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1305s"]
+bg_color = Color(0.85797924, 0.4590451, 0.5451491, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3mqji"]
+bg_color = Color(0.48675662, 0.63354504, 0.63015836, 1)
+
+[sub_resource type="AudioStreamPlaylist" id="AudioStreamPlaylist_42l1d"]
+shuffle = true
+fade_time = 0.68
+stream_count = 3
+stream_0 = ExtResource("9_qwutr")
+stream_1 = ExtResource("10_671wp")
+stream_2 = ExtResource("11_mo76n")
+
+[node name="UI" type="CanvasLayer"]
+script = ExtResource("1_wr18j")
+
+[node name="MainContainer" type="VBoxContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="MapPanel" type="Panel" parent="MainContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 4.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_1305s")
+
+[node name="Map" type="TextureRect" parent="MainContainer/MapPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 362.7196
+offset_top = 14.0
+offset_right = -347.0
+offset_bottom = -30.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_42l1d")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="MissionWindow" parent="MainContainer/MapPanel" instance=ExtResource("10_qwutr")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.23400001
+anchor_top = 0.086
+anchor_right = 0.72200006
+anchor_bottom = 0.89900005
+offset_left = 122.71997
+offset_top = 15.040001
+offset_right = -39.240112
+offset_bottom = -2.1400146
+grow_horizontal = 1
+grow_vertical = 1
+
+[node name="Descontento" parent="MainContainer/MapPanel" instance=ExtResource("4_7ycvg")]
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 1556.0
+offset_top = 17.0
+offset_right = 1902.0
+offset_bottom = 148.0
+faction_signal = "descontento_changed"
+faction_name = "Descontento:"
+
+[node name="Influencia" parent="MainContainer/MapPanel" instance=ExtResource("4_7ycvg")]
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 1558.0
+offset_top = 697.0
+offset_right = 1894.0
+offset_bottom = 823.0
+faction_signal = "influencia_changed"
+faction_name = "Influencia:"
+
+[node name="Rey" parent="MainContainer/MapPanel" instance=ExtResource("4_7ycvg")]
+layout_mode = 1
+offset_left = 22.0
+offset_top = 64.0
+offset_right = 23.99997
+offset_bottom = 98.299995
+faction_signal = "rey_changed"
+faction_name = "Rey:"
+
+[node name="Clero" parent="MainContainer/MapPanel" instance=ExtResource("4_7ycvg")]
+layout_mode = 1
+offset_left = 18.0
+offset_top = 191.0
+offset_right = 24.99997
+offset_bottom = 246.29999
+faction_signal = "iglesia_changed"
+faction_name = "Iglesia:"
+
+[node name="Nobleza" parent="MainContainer/MapPanel" instance=ExtResource("4_7ycvg")]
+layout_mode = 1
+anchor_left = 0.008
+anchor_top = 0.374
+anchor_right = 0.18900001
+anchor_bottom = 0.526
+offset_left = -0.3600006
+offset_top = 26.359985
+offset_right = -5.880005
+offset_bottom = 29.639984
+faction_signal = "nobleza_changed"
+faction_name = "Nobleza:"
+
+[node name="AgentPanel" type="Panel" parent="MainContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_3mqji")
+
+[node name="AgentBar" type="HBoxContainer" parent="MainContainer/AgentPanel"]
+layout_mode = 0
+offset_top = 4.0
+offset_right = 1916.0
+offset_bottom = 217.0
+rotation = -0.0023641214
+size_flags_vertical = 3
+
+[node name="Agente1" parent="MainContainer/AgentPanel/AgentBar" instance=ExtResource("6_hq1ik")]
+layout_mode = 2
+size_flags_horizontal = 1
+selected = ExtResource("6_qwutr")
+unselected = ExtResource("8_66tet")
+noble = true
+
+[node name="Agente2" parent="MainContainer/AgentPanel/AgentBar" instance=ExtResource("6_hq1ik")]
+layout_mode = 2
+size_flags_horizontal = 1
+selected = ExtResource("8_671wp")
+unselected = ExtResource("8_66tet")
+<<<<<<< HEAD
+noble = true
+cura = true
+
+[node name="Agente3" parent="MainContainer/AgentPanel/AgentBar" instance=ExtResource("6_hq1ik")]
+layout_mode = 2
+size_flags_horizontal = 1
+selected = ExtResource("7_7ycvg")
+unselected = ExtResource("10_mo76n")
+malechor = true
+
+[node name="Agente4" parent="MainContainer/AgentPanel/AgentBar" instance=ExtResource("6_hq1ik")]
+layout_mode = 2
+selected = ExtResource("11_42l1d")
+unselected = ExtResource("10_mo76n")
+cura = true
+malechor = true
+=======
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamPlaylist_42l1d")
+autoplay = true
+>>>>>>> 7b036911881d9c7bfa72f50d840366d1568f824f
