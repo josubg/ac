@@ -31,7 +31,7 @@ color = Color(0, 0, 0, 0.77254903)
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 400.0
+offset_bottom = 601.0
 grow_horizontal = 2
 
 [node name="TituloLabel" type="Label" parent="VBoxContainer"]
@@ -47,13 +47,32 @@ Créditos"
 [node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_fonts/normal_font = ExtResource("2_alf7g")
-theme_override_font_sizes/normal_font_size = 24
-text = "	Diseño de Narrativa:
-	Diseño de Música
-	Diseño de Interfaces: Archarick
-	Arte e Ilustraciones: 
-	Programación:"
+size_flags_stretch_ratio = 0.56
+theme_override_font_sizes/normal_font_size = 18
+theme_override_font_sizes/bold_font_size = 18
+theme_override_font_sizes/bold_italics_font_size = 18
+theme_override_font_sizes/italics_font_size = 18
+theme_override_font_sizes/mono_font_size = 18
+bbcode_enabled = true
+text = "		[b]Programación:[/b] Josu Bermúdez
+		[b]Arte e Ilustraciones:[/b] Andy Iglesias
+		[b]Diseño de Narrativa:[/b] Pablo C. Ganter y Pablo Sixto
+		[b]Diseño de Música:[/b] Paula Torres
+		[b]Diseño de Interfaces:[/b] Juan Sixto"
+vertical_alignment = 1
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/normal_font_size = 18
+theme_override_font_sizes/italics_font_size = 18
+bbcode_enabled = true
+text = "		Versión adaptada de:
+		[i]\"De esperar, sentir, morir, adorar\" (Juan Hidalgo, 1614–1685) [/i]
+
+		Plano de la Villa de Madrid de 1622 de:
+		[i]Antonio Mancinelli (Dominio público) [/i]
+"
 
 [node name="Button" type="Button" parent="."]
 layout_mode = 1
