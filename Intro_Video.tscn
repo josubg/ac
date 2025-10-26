@@ -1,0 +1,76 @@
+[gd_scene load_steps=7 format=3 uid="uid://b464ibnl4jdmg"]
+
+[ext_resource type="Script" uid="uid://opog75ixok76" path="res://scripts/intro_video.gd" id="1_m1no4"]
+[ext_resource type="FontFile" uid="uid://m4yynylhaxb7" path="res://resources/AlbertText-Bold.ttf" id="2_m1no4"]
+[ext_resource type="AudioStream" uid="uid://da5yawvb2t4b7" path="res://resources/intro_long.wav" id="3_sf2on"]
+
+[sub_resource type="Animation" id="Animation_m1no4"]
+resource_name = "fade"
+length = 8.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Label:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0333333, 3, 5, 7.9666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_sf2on"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Label:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_scbl5"]
+_data = {
+&"RESET": SubResource("Animation_sf2on"),
+&"fade": SubResource("Animation_m1no4")
+}
+
+[node name="IntroVideo" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_m1no4")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 1942.0
+offset_bottom = 1088.0
+color = Color(0, 0, 0, 1)
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 60.0
+offset_top = 2.0
+offset_right = 1860.0
+offset_bottom = 1082.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_m1no4")
+theme_override_font_sizes/font_size = 60
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_scbl5")
+}
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_sf2on")

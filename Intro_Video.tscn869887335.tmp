@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=3 uid="uid://b464ibnl4jdmg"]
+
+[ext_resource type="Script" uid="uid://opog75ixok76" path="res://scripts/intro_video.gd" id="1_m1no4"]
+[ext_resource type="FontFile" uid="uid://m4yynylhaxb7" path="res://resources/AlbertText-Bold.ttf" id="2_m1no4"]
+
+[node name="IntroVideo" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_m1no4")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 1942.0
+offset_bottom = 1088.0
+color = Color(0, 0, 0, 1)
+
+[node name="Label" type="Label" parent="."]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_left = 15.0
+offset_top = 2.0
+offset_right = 1941.0
+offset_bottom = 1083.0
+theme_override_fonts/font = ExtResource("2_m1no4")
+theme_override_font_sizes/font_size = 80
+text = "Año del Señor de 1640."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="Timer" type="Timer" parent="."]
