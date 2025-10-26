@@ -19,7 +19,6 @@ class_name Mission
 
 
 
-@export var debrief: String
 var exito: bool
 var resuelta: bool
 var fin: bool
@@ -34,8 +33,8 @@ func _ready():
 	deploy()
 	await tree.create_timer(life).timeout
 	if not self.resuelta:
+		print("Timeout: ", self.title)
 		finalize()
-	
 	
 func deploy():
 	print("Mission started", self.title)
@@ -44,32 +43,32 @@ func deploy():
 	self.fin = false
 	self.resuelta = false
 	
-	
 func finalize():
 	if not self.fin:
+		self.fin = true
 		if exito:
 			print("Mission succesfull")
 			Global.influencia += self.influencia
-			Global.descontento += self.descontento
-			Global.nobleza += self.nobleza
-			Global.iglesia += self.iglesia
-			Global.rey += self.rey
+			Global.descontento += self.descontento 
+			Global.nobleza += self.nobleza * 10
+			Global.iglesia += self.iglesia * 10
+			Global.rey += self.rey * 10
 		else: 
 			print("Mission failed")
 			Global.influencia-= self.influencia
 			Global.descontento -= self.descontento
-			Global.nobleza -= self.nobleza
-			Global.iglesia -= self.iglesia
-			Global.rey -= self.rey	
+			Global.nobleza -= self.nobleza * 10
+			Global.iglesia -= self.iglesia * 10
+			Global.rey -= self.rey * 10
 		self.hide()
-		self.fin = true
-
 
 func _on_pressed() -> void:
 	GameManager.show_mission(self)
 	
 func resolve(agents: Array) -> void:
 	self.resuelta = true
+	print("Agentes enviados:", self.title)
+	self.hide()
 	var tree = get_tree() 
 	await tree.create_timer(10).timeout
 	var deploy_agents: int = 0
@@ -92,8 +91,11 @@ func resolve(agents: Array) -> void:
 		limit = 75
 	limit += 25 * good_assing
 	print( "Probabilidad", limit)
-	self.exito = rng.randf_range(0, 100) > limit
-	print("Exito: ", exito)
+	self.exito = rng.randf_range(0, 100) < limit
+	if exito:
+		print("Exito:", self.title)
+	else :
+		print("Fracaso:", self.title)
 	for agente in agents:
 		if agente != null:
 			agente.assigned= false

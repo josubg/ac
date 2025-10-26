@@ -1,13 +1,16 @@
-[gd_scene load_steps=11 format=3 uid="uid://c564q6edin8gb"]
+[gd_scene load_steps=14 format=3 uid="uid://c564q6edin8gb"]
 
 [ext_resource type="Script" uid="uid://bnccxvtwsp34k" path="res://main_scene.gd" id="1_wr18j"]
 [ext_resource type="PackedScene" uid="uid://d2jthyyxw4ua7" path="res://faccion.tscn" id="4_7ycvg"]
 [ext_resource type="Texture2D" uid="uid://2ywc1droy0gk" path="res://sprites/32-A-0_01.jpg" id="6_42l1d"]
 [ext_resource type="PackedScene" uid="uid://dkahlsa41u8ph" path="res://agente.tscn" id="6_hq1ik"]
+[ext_resource type="Texture2D" uid="uid://fj7qp04owxim" path="res://sprites/noble.png" id="6_qwutr"]
 [ext_resource type="Texture2D" uid="uid://dayqo6ocfg7eu" path="res://sprites/CuatroCortes burgués merged.png" id="7_7ycvg"]
 [ext_resource type="Texture2D" uid="uid://dp2y4fsidn0yj" path="res://sprites/noble_gray.png" id="8_66tet"]
-[ext_resource type="Texture2D" uid="uid://lglkqlvsjrt7" path="res://sprites/CuatroCortes Noble 1_0.png" id="9_wr18j"]
+[ext_resource type="Texture2D" uid="uid://cjra1m6gxtnn3" path="res://sprites/CuatroCortes Noble 1.2.png" id="8_671wp"]
+[ext_resource type="Texture2D" uid="uid://6g08uiubln6o" path="res://sprites/CuatroCortes burgués gris.png" id="10_mo76n"]
 [ext_resource type="PackedScene" uid="uid://cy30tn63lifwh" path="res://mission_window.tscn" id="10_qwutr"]
+[ext_resource type="Texture2D" uid="uid://dcwco7w5ssw8x" path="res://sprites/CuatroCortes burgués 1.2 merged.png" id="11_42l1d"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1305s"]
 bg_color = Color(0.85797924, 0.4590451, 0.5451491, 1)
@@ -24,6 +27,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="MapPanel" type="Panel" parent="MainContainer"]
 layout_mode = 2
@@ -36,9 +41,9 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 351.0
+offset_left = 362.7196
 offset_top = 14.0
-offset_right = -354.9392
+offset_right = -347.0
 offset_bottom = -30.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -47,17 +52,16 @@ expand_mode = 3
 stretch_mode = 5
 
 [node name="MissionWindow" parent="MainContainer/MapPanel" instance=ExtResource("10_qwutr")]
-visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.23400001
-anchor_top = 0.115
-anchor_right = 0.596
-anchor_bottom = 0.772
-offset_left = 5.7199707
-offset_top = -24.900002
-offset_right = 242.67993
-offset_bottom = 109.08002
+anchor_top = 0.086
+anchor_right = 0.72200006
+anchor_bottom = 0.89900005
+offset_left = 122.71997
+offset_top = 15.040001
+offset_right = -39.240112
+offset_bottom = -2.1400146
 grow_horizontal = 1
 grow_vertical = 1
 
@@ -132,10 +136,28 @@ size_flags_vertical = 3
 [node name="Agente1" parent="MainContainer/AgentPanel/AgentBar" instance=ExtResource("6_hq1ik")]
 layout_mode = 2
 size_flags_horizontal = 1
-selected = ExtResource("7_7ycvg")
+selected = ExtResource("6_qwutr")
 unselected = ExtResource("8_66tet")
+noble = true
 
 [node name="Agente2" parent="MainContainer/AgentPanel/AgentBar" instance=ExtResource("6_hq1ik")]
 layout_mode = 2
-selected = ExtResource("9_wr18j")
+size_flags_horizontal = 1
+selected = ExtResource("8_671wp")
 unselected = ExtResource("8_66tet")
+noble = true
+cura = true
+
+[node name="Agente3" parent="MainContainer/AgentPanel/AgentBar" instance=ExtResource("6_hq1ik")]
+layout_mode = 2
+size_flags_horizontal = 1
+selected = ExtResource("7_7ycvg")
+unselected = ExtResource("10_mo76n")
+malechor = true
+
+[node name="Agente4" parent="MainContainer/AgentPanel/AgentBar" instance=ExtResource("6_hq1ik")]
+layout_mode = 2
+selected = ExtResource("11_42l1d")
+unselected = ExtResource("10_mo76n")
+cura = true
+malechor = true

@@ -76,6 +76,8 @@ func set_agent(agent:Agent, portrait: TextureButton, index: int):
 func clean_agent(index: int):
 	if self.portraits[index] != null:
 		self.portraits[index].disabled = true
+	if self.assigned_agents[index] != null:
+		self.assigned_agents[index] = null
 
 func unset_agent(index: int):
 	if self.portraits[index] != null:
