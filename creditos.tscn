@@ -1,0 +1,67 @@
+[gd_scene load_steps=3 format=3 uid="uid://cn53n1k68xt4m"]
+
+[ext_resource type="Script" uid="uid://cy7mneiq3i1fe" path="res://scripts/tutorial.gd" id="1_7flbs"]
+[ext_resource type="FontFile" uid="uid://m4yynylhaxb7" path="res://resources/AlbertText-Bold.ttf" id="2_alf7g"]
+
+[node name="Tutorial" type="Control"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -500.0
+offset_right = 300.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_7flbs")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.77254903)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 400.0
+grow_horizontal = 2
+
+[node name="TituloLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 2
+size_flags_stretch_ratio = 0.34
+theme_override_fonts/font = ExtResource("2_alf7g")
+theme_override_font_sizes/font_size = 30
+text = "
+Créditos"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_fonts/normal_font = ExtResource("2_alf7g")
+theme_override_font_sizes/normal_font_size = 24
+text = "	Diseño de Narrativa:
+	Diseño de Música
+	Diseño de Interfaces: Archarick
+	Arte e Ilustraciones: 
+	Programación:"
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -18.0
+offset_bottom = 31.0
+grow_horizontal = 0
+theme_override_font_sizes/font_size = 25
+text = "X"

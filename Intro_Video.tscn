@@ -4,9 +4,8 @@
 [ext_resource type="FontFile" uid="uid://m4yynylhaxb7" path="res://resources/AlbertText-Bold.ttf" id="2_m1no4"]
 [ext_resource type="AudioStream" uid="uid://da5yawvb2t4b7" path="res://resources/intro_long.wav" id="3_sf2on"]
 
-[sub_resource type="Animation" id="Animation_m1no4"]
-resource_name = "fade"
-length = 8.0
+[sub_resource type="Animation" id="Animation_sf2on"]
+length = 6.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -14,14 +13,15 @@ tracks/0/path = NodePath("Label:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0.0333333, 3, 5, 7.9666667),
+"times": PackedFloat32Array(0, 2.0333333, 4.1, 6),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_sf2on"]
-length = 0.001
+[sub_resource type="Animation" id="Animation_m1no4"]
+resource_name = "fade"
+length = 6.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -29,10 +29,10 @@ tracks/0/path = NodePath("Label:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0.0333333, 2.0333333, 4, 5.9333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 1)]
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_scbl5"]
@@ -53,6 +53,7 @@ offset_bottom = 1088.0
 color = Color(0, 0, 0, 1)
 
 [node name="Label" type="Label" parent="."]
+modulate = Color(1, 1, 1, 0)
 layout_mode = 0
 offset_left = 60.0
 offset_top = 2.0

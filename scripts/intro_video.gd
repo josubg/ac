@@ -9,8 +9,8 @@ extends Control
 ]
 
 @export var fade_duration := 1.0        # segundos para aparecer/desaparecer
-@export var display_duration := 8     # cuánto tiempo se muestra cada párrafo
-@export var next_scene_path := "res://scenes/MainMenu.tscn"
+@export var display_duration := 6     # cuánto tiempo se muestra cada párrafo
+@export var next_scene_path := "res://main_scene.tscn"
 
 var current_index := 0
 var animating := false

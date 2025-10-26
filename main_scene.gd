@@ -5,6 +5,7 @@ extends CanvasLayer
 @onready var mission_window = $MainContainer/MapPanel/MissionWindow
 
 
+
 func _ready() -> void:
 	GameManager.start_day(map, roster, mission_window)
 
