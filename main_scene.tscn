@@ -1,24 +1,18 @@
-[gd_scene load_steps=15 format=3 uid="uid://c564q6edin8gb"]
+[gd_scene load_steps=18 format=3 uid="uid://c564q6edin8gb"]
 
 [ext_resource type="Script" uid="uid://bnccxvtwsp34k" path="res://main_scene.gd" id="1_wr18j"]
 [ext_resource type="PackedScene" uid="uid://d2jthyyxw4ua7" path="res://faccion.tscn" id="4_7ycvg"]
 [ext_resource type="Texture2D" uid="uid://2ywc1droy0gk" path="res://sprites/32-A-0_01.jpg" id="6_42l1d"]
-
-[ext_resource type="PackedScene" uid="uid://dkahlsa41u8ph" path="res://agente.tscn" id="6_hq1ik"]
+[ext_resource type="PackedScene" uid="uid://dkahlsa41u8ph" path="res://Agente.tscn" id="6_hq1ik"]
 [ext_resource type="Texture2D" uid="uid://fj7qp04owxim" path="res://sprites/noble.png" id="6_qwutr"]
 [ext_resource type="Texture2D" uid="uid://dayqo6ocfg7eu" path="res://sprites/CuatroCortes burgués merged.png" id="7_7ycvg"]
 [ext_resource type="Texture2D" uid="uid://dp2y4fsidn0yj" path="res://sprites/noble_gray.png" id="8_66tet"]
 [ext_resource type="Texture2D" uid="uid://cjra1m6gxtnn3" path="res://sprites/CuatroCortes Noble 1.2.png" id="8_671wp"]
+[ext_resource type="AudioStream" uid="uid://wchnbdf52l2m" path="res://resources/intro.wav" id="9_qwutr"]
+[ext_resource type="AudioStream" uid="uid://da5yawvb2t4b7" path="res://resources/intro_long.wav" id="10_671wp"]
 [ext_resource type="Texture2D" uid="uid://6g08uiubln6o" path="res://sprites/CuatroCortes burgués gris.png" id="10_mo76n"]
 [ext_resource type="PackedScene" uid="uid://cy30tn63lifwh" path="res://mission_window.tscn" id="10_qwutr"]
 [ext_resource type="Texture2D" uid="uid://dcwco7w5ssw8x" path="res://sprites/CuatroCortes burgués 1.2 merged.png" id="11_42l1d"]
-
-[ext_resource type="Texture2D" uid="uid://dayqo6ocfg7eu" path="res://sprites/CuatroCortes burgués merged.png" id="7_7ycvg"]
-[ext_resource type="Texture2D" uid="uid://dp2y4fsidn0yj" path="res://sprites/noble_gray.png" id="8_66tet"]
-[ext_resource type="AudioStream" uid="uid://wchnbdf52l2m" path="res://resources/intro.wav" id="9_qwutr"]
-[ext_resource type="Texture2D" uid="uid://lglkqlvsjrt7" path="res://sprites/CuatroCortes Noble 1_0.png" id="9_wr18j"]
-[ext_resource type="AudioStream" uid="uid://da5yawvb2t4b7" path="res://resources/intro_long.wav" id="10_671wp"]
-[ext_resource type="PackedScene" uid="uid://cy30tn63lifwh" path="res://mission_window.tscn" id="10_qwutr"]
 [ext_resource type="AudioStream" uid="uid://5m764req5vla" path="res://resources/intro 3.wav" id="11_mo76n"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1305s"]
@@ -93,6 +87,7 @@ offset_right = 1902.0
 offset_bottom = 148.0
 faction_signal = "descontento_changed"
 faction_name = "Descontento:"
+faction_inverse = true
 
 [node name="Influencia" parent="MainContainer/MapPanel" instance=ExtResource("4_7ycvg")]
 layout_mode = 0
@@ -153,6 +148,7 @@ size_flags_vertical = 3
 [node name="Agente1" parent="MainContainer/AgentPanel/AgentBar" instance=ExtResource("6_hq1ik")]
 layout_mode = 2
 size_flags_horizontal = 1
+full_name = "Maria Antonia"
 selected = ExtResource("6_qwutr")
 unselected = ExtResource("8_66tet")
 noble = true
@@ -160,6 +156,7 @@ noble = true
 [node name="Agente2" parent="MainContainer/AgentPanel/AgentBar" instance=ExtResource("6_hq1ik")]
 layout_mode = 2
 size_flags_horizontal = 1
+full_name = "Paca"
 selected = ExtResource("8_671wp")
 unselected = ExtResource("8_66tet")
 noble = true
@@ -168,18 +165,24 @@ cura = true
 [node name="Agente3" parent="MainContainer/AgentPanel/AgentBar" instance=ExtResource("6_hq1ik")]
 layout_mode = 2
 size_flags_horizontal = 1
+full_name = "Francisca"
 selected = ExtResource("7_7ycvg")
 unselected = ExtResource("10_mo76n")
 malechor = true
 
 [node name="Agente4" parent="MainContainer/AgentPanel/AgentBar" instance=ExtResource("6_hq1ik")]
 layout_mode = 2
+full_name = "Antonia"
 selected = ExtResource("11_42l1d")
 unselected = ExtResource("10_mo76n")
 cura = true
 malechor = true
 
+[node name="Filler" type="Control" parent="MainContainer/AgentPanel/AgentBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 7.81
+
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamPlaylist_42l1d")
 autoplay = true
->>>>>>> 7b036911881d9c7bfa72f50d840366d1568f824f
