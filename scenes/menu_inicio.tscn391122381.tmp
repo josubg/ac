@@ -1,0 +1,101 @@
+[gd_scene load_steps=9 format=3 uid="uid://br54s0faogtns"]
+
+[ext_resource type="Script" uid="uid://dy0w0akts8wm4" path="res://scripts/menu_inicio.gd" id="1_aqwrv"]
+[ext_resource type="Texture2D" uid="uid://c6660qm8o0ff5" path="res://sprites/CuatroCortes píldora Negro 690x400 marco old.png" id="1_wkv36"]
+[ext_resource type="Texture2D" uid="uid://deluds7e5l7hg" path="res://resources/Mapa.png" id="2_bnklu"]
+[ext_resource type="FontFile" uid="uid://b16lx41ih565r" path="res://resources/Bastarda-K.ttf" id="2_ylpju"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d6xxl"]
+bg_color = Color(0.5019608, 0.39607844, 0.23921569, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bnklu"]
+bg_color = Color(0.5019608, 0.39607844, 0.23921569, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_01a6i"]
+bg_color = Color(0.5019608, 0.39607844, 0.23921569, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v4dt1"]
+bg_color = Color(0.5019608, 0.39607844, 0.23921569, 1)
+
+[node name="MenuInicio" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_aqwrv")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 0
+
+[node name="Parallax2D" type="Parallax2D" parent="CanvasLayer"]
+
+[node name="BackgroundLayer" type="Node2D" parent="CanvasLayer/Parallax2D"]
+
+[node name="Background" type="Sprite2D" parent="CanvasLayer/Parallax2D/BackgroundLayer"]
+modulate = Color(0.5370987, 0.5370987, 0.5370987, 0.36862746)
+texture = ExtResource("2_bnklu")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+offset_right = 185.0
+offset_bottom = 49.0
+text = "Versión 0.2 - 09/12/2025
+"
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="."]
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer2"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -500.0
+offset_top = -755.0
+offset_right = 560.0
+offset_bottom = 105.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer2/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer2/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer2/MarginContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("1_wkv36")
+
+[node name="NewGameButton" type="Button" parent="CanvasLayer2/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ylpju")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxFlat_d6xxl")
+text = "Nueva Partida"
+
+[node name="TutorialButton" type="Button" parent="CanvasLayer2/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ylpju")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxFlat_bnklu")
+text = "Tutorial"
+
+[node name="CreditsButton" type="Button" parent="CanvasLayer2/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ylpju")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxFlat_01a6i")
+text = "Créditos"
+
+[node name="ExitButton" type="Button" parent="CanvasLayer2/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ylpju")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxFlat_v4dt1")
+text = "Salir"

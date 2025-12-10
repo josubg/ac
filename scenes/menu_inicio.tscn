@@ -1,0 +1,189 @@
+[gd_scene load_steps=13 format=3 uid="uid://br54s0faogtns"]
+
+[ext_resource type="Script" uid="uid://735046um6sp1" path="res://scenes/menu_inicio.gd" id="1_bnklu"]
+[ext_resource type="Texture2D" uid="uid://c6660qm8o0ff5" path="res://sprites/CuatroCortes píldora Negro 690x400 marco old.png" id="1_wkv36"]
+[ext_resource type="Texture2D" uid="uid://deluds7e5l7hg" path="res://resources/Mapa.png" id="2_bnklu"]
+[ext_resource type="FontFile" uid="uid://b16lx41ih565r" path="res://resources/Bastarda-K.ttf" id="2_ylpju"]
+[ext_resource type="Texture2D" uid="uid://d046e3k84whiw" path="res://sprites/frame.png" id="5_01a6i"]
+[ext_resource type="FontFile" uid="uid://b5p2nwegcv016" path="res://resources/AlbertText-Bold.ttf" id="6_v4dt1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d6xxl"]
+bg_color = Color(0.5019608, 0.39607844, 0.23921569, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bnklu"]
+bg_color = Color(0.5019608, 0.39607844, 0.23921569, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_01a6i"]
+bg_color = Color(0.5019608, 0.39607844, 0.23921569, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v4dt1"]
+bg_color = Color(0.5019608, 0.39607844, 0.23921569, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_v4dt1"]
+texture = ExtResource("5_01a6i")
+texture_margin_left = 25.0
+texture_margin_top = 177.0
+texture_margin_right = 25.0
+texture_margin_bottom = 167.0
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[sub_resource type="Theme" id="Theme_5psen"]
+
+[node name="MenuInicio" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_bnklu")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 0
+
+[node name="Parallax2D" type="Parallax2D" parent="CanvasLayer"]
+
+[node name="BackgroundLayer" type="Node2D" parent="CanvasLayer/Parallax2D"]
+
+[node name="Background" type="Sprite2D" parent="CanvasLayer/Parallax2D/BackgroundLayer"]
+modulate = Color(0.5370987, 0.5370987, 0.5370987, 0.36862746)
+position = Vector2(995.0333, 796)
+scale = Vector2(0.40287435, 0.40287435)
+texture = ExtResource("2_bnklu")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+offset_right = 185.0
+offset_bottom = 49.0
+text = "Versión 0.2 - 09/12/2025
+"
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="."]
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer2"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -70.0
+offset_right = 70.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 500
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 500
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer2/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer2/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer2/MarginContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("1_wkv36")
+
+[node name="NewGameButton" type="Button" parent="CanvasLayer2/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ylpju")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxFlat_d6xxl")
+text = "Nueva Partida"
+
+[node name="TutorialButton" type="Button" parent="CanvasLayer2/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ylpju")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxFlat_bnklu")
+text = "Tutorial"
+
+[node name="CreditsButton" type="Button" parent="CanvasLayer2/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ylpju")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxFlat_01a6i")
+text = "Créditos"
+
+[node name="ExitButton" type="Button" parent="CanvasLayer2/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ylpju")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxFlat_v4dt1")
+text = "Salir"
+
+[node name="CreditosCanvas" type="CanvasLayer" parent="."]
+layer = 2
+visible = false
+
+[node name="PanelContainer" type="PanelContainer" parent="CreditosCanvas"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -506.5
+offset_top = -453.5
+offset_right = 506.5
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxTexture_v4dt1")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CreditosCanvas/PanelContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CreditosCanvas/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.12
+theme = SubResource("Theme_5psen")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("6_v4dt1")
+theme_override_font_sizes/font_size = 50
+text = "Créditos"
+horizontal_alignment = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CreditosCanvas/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/normal_font_size = 18
+theme_override_font_sizes/bold_font_size = 18
+theme_override_font_sizes/bold_italics_font_size = 18
+theme_override_font_sizes/italics_font_size = 18
+theme_override_font_sizes/mono_font_size = 18
+bbcode_enabled = true
+text = "		[b]Programación:[/b] Josu Bermúdez
+		[b]Arte e Ilustraciones:[/b] Andy Iglesias
+		[b]Diseño de Narrativa:[/b] Pablo C. Ganter y Pablo Sixto
+		[b]Diseño de Música:[/b] Paula Torres
+		[b]Diseño de Interfaces:[/b] Juan Sixto"
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="CreditosCanvas/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/normal_font_size = 18
+theme_override_font_sizes/bold_font_size = 18
+theme_override_font_sizes/bold_italics_font_size = 18
+theme_override_font_sizes/italics_font_size = 18
+theme_override_font_sizes/mono_font_size = 18
+text = "		Versión adaptada de:
+		[i]\"De esperar, sentir, morir, adorar\" (Juan Hidalgo, 1614–1685) [/i]
+
+		Plano de la Villa de Madrid de 1622 de:
+		[i]Antonio Mancinelli (Dominio público) [/i]
+"
+
+[connection signal="pressed" from="CanvasLayer2/MarginContainer/VBoxContainer/CreditsButton" to="." method="_on_credits_button_pressed"]
+[connection signal="pressed" from="CanvasLayer2/MarginContainer/VBoxContainer/ExitButton" to="." method="_on_exit_button_pressed"]
