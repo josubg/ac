@@ -1,7 +1,6 @@
 extends Node
 
 var failed: bool
-var game_time: float = 300
 var mission_window
 
 

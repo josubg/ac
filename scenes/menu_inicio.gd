@@ -55,3 +55,7 @@ func _on_exit_button_pressed() -> void:
 
 func _on_credits_button_pressed() -> void:
 	$CreditosCanvas.visible = true
+
+
+func _on_new_game_button_pressed() -> void:
+	GameManager.start_game()

@@ -185,5 +185,6 @@ text = "		Versión adaptada de:
 		[i]Antonio Mancinelli (Dominio público) [/i]
 "
 
+[connection signal="pressed" from="CanvasLayer2/MarginContainer/VBoxContainer/NewGameButton" to="." method="_on_new_game_button_pressed"]
 [connection signal="pressed" from="CanvasLayer2/MarginContainer/VBoxContainer/CreditsButton" to="." method="_on_credits_button_pressed"]
 [connection signal="pressed" from="CanvasLayer2/MarginContainer/VBoxContainer/ExitButton" to="." method="_on_exit_button_pressed"]
