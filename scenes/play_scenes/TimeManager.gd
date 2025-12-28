@@ -20,7 +20,7 @@ func _check_events():
 
 func _check_descontento(delta):
 	descontento_up += delta*10
-	if descontento_up >= 10:
+	if descontento_up >= 60:
 		descontento_up = 0
 		emit_signal("descontento_sube")
 		

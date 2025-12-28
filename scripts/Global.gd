@@ -1,7 +1,5 @@
 extends Node
 
-var failed: bool
-var mission_window
 
 
 func start():

@@ -4,8 +4,8 @@ class_name Player
 signal death_signal(value)
 
 var rey: int = 50
-var nobleza: int = 50
-var clero: int = 50
+var nobleza: int = 75
+var clero: int = 25
 var descontento: int = 0
 
 func mod_rey(value : int):

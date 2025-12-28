@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://d1rtu2yxplwsa"]
+[gd_scene load_steps=14 format=3 uid="uid://d1rtu2yxplwsa"]
 
 [ext_resource type="Script" uid="uid://b1fnk4f66ycn4" path="res://scenes/play_scenes/main.gd" id="1_53356"]
 [ext_resource type="Texture2D" uid="uid://deluds7e5l7hg" path="res://resources/Mapa.png" id="1_ig7tw"]
@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://dpbqvy8kco6ch" path="res://scenes/play_scenes/TimeManager.tscn" id="2_ub72h"]
 [ext_resource type="Script" uid="uid://b0n4gxk3vqmgv" path="res://scenes/play_scenes/TimeManager.gd" id="3_ub72h"]
 [ext_resource type="PackedScene" uid="uid://ghirfi6nvj51" path="res://scenes/play_scenes/Player.tscn" id="4_bd1e2"]
+[ext_resource type="PackedScene" uid="uid://dndmb8ctvt7mk" path="res://scenes/play_scenes/MissionManager.tscn" id="5_5e6os"]
+[ext_resource type="PackedScene" uid="uid://hfvv1kukfi5c" path="res://scenes/play_scenes/MissionWindow.tscn" id="7_td746"]
 
 [sub_resource type="Theme" id="Theme_ig7tw"]
 
@@ -16,6 +18,11 @@ bg_color = Color(0.9529412, 0.79607844, 0.54509807, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h2yge"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_td746"]
+border_width_left = 13
+shadow_color = Color(0, 0, 0, 1)
+shadow_size = 30
+
 [node name="Main" type="Node"]
 script = ExtResource("1_53356")
 
@@ -23,6 +30,8 @@ script = ExtResource("1_53356")
 script = ExtResource("3_ub72h")
 
 [node name="Player" parent="." instance=ExtResource("4_bd1e2")]
+
+[node name="MissionManager" parent="." instance=ExtResource("5_5e6os")]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(1157, 796)
@@ -212,3 +221,32 @@ horizontal_alignment = 2
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
+
+[node name="PanelMission" type="Panel" parent="."]
+visible = false
+custom_minimum_size = Vector2(750, 450)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -375.0
+offset_top = -225.0
+offset_right = 375.0
+offset_bottom = 225.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_td746")
+
+[node name="MissionWindow" parent="PanelMission" instance=ExtResource("7_td746")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 0.0
+offset_right = 0.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
