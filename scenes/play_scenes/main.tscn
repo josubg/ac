@@ -33,7 +33,7 @@ script = ExtResource("3_ub72h")
 
 [node name="MissionManager" parent="." instance=ExtResource("5_5e6os")]
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="MapLayer" type="Sprite2D" parent="."]
 position = Vector2(1157, 796)
 scale = Vector2(0.43405166, 0.44274455)
 texture = ExtResource("1_ig7tw")
@@ -222,7 +222,16 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 
-[node name="PanelMission" type="Panel" parent="."]
+[node name="MapUI" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_top = 125.0
+offset_right = 1916.0
+offset_bottom = 1301.0
+
+[node name="CanvasLayerMission" type="CanvasLayer" parent="."]
+
+[node name="PanelMission" type="Panel" parent="CanvasLayerMission"]
 visible = false
 custom_minimum_size = Vector2(750, 450)
 anchors_preset = 8
@@ -240,7 +249,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_td746")
 
-[node name="MissionWindow" parent="PanelMission" instance=ExtResource("7_td746")]
+[node name="MissionWindow" parent="CanvasLayerMission/PanelMission" instance=ExtResource("7_td746")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

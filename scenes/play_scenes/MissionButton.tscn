@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://8ycbjiya6iix"]
+
+[ext_resource type="Script" uid="uid://5yqjmn56hfb7" path="res://scenes/play_scenes/mission_button.gd" id="1_8kif8"]
+[ext_resource type="Texture2D" uid="uid://dtxegi1247nry" path="res://sprites/mission_mark_128.png" id="1_drjvo"]
+
+[node name="MissionButton" type="TextureButton"]
+focus_mode = 0
+texture_normal = ExtResource("1_drjvo")
+stretch_mode = 0
+script = ExtResource("1_8kif8")
+
+[connection signal="mission_pressed" from="." to="." method="_on_mission_pressed"]
+[connection signal="pressed" from="." to="." method="_on_pressed"]
