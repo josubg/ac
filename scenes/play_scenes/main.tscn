@@ -259,3 +259,14 @@ offset_right = 0.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
+
+[node name="CloseMissionButton" type="Button" parent="CanvasLayerMission/PanelMission"]
+layout_mode = 0
+offset_left = 643.0
+offset_top = 51.0
+offset_right = 701.0
+offset_bottom = 82.0
+theme_override_colors/font_color = Color(0.87, 0.13920002, 0.13920002, 1)
+text = "Cerrar"
+
+[connection signal="pressed" from="CanvasLayerMission/PanelMission/CloseMissionButton" to="." method="_on_close_mission_button_pressed"]

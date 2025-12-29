@@ -14,3 +14,4 @@ class_name MissionData
 @export var x: int
 @export var y: int
 @export var start: int
+@export var duration_seconds: int = 10

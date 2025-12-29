@@ -10,6 +10,7 @@ func check_for_mission(time: int) -> MissionData:
 		return mission
 	return null
 
+	
 func load_missions(path: String) -> void:
 	scheduled_missions.clear()
 	var file = FileAccess.open(path, FileAccess.READ)

@@ -13,7 +13,9 @@ extends Node
 @onready var descontento_bar: ProgressBar = $CanvasLayer/VBoxContainer/HBoxContainer/PanelContainer/HBoxContainer/DescontentoBar
 @onready var map_ui: Control = $CanvasLayer/MapUI
 
+@onready var active_missions: Dictionary[MissionData, int] = {}
 
+@onready var active_mission_buttons: Dictionary[MissionData, MissionButton] = {}
 @export var mission_button_scene: PackedScene = preload("res://scenes/play_scenes/MissionButton.tscn")
 
 var last_checked_second := -1
@@ -33,8 +35,21 @@ func _process(_delta):
 	#comprobamos misión
 	var mission: MissionData = mission_manager.check_for_mission(seconds)
 	if mission != null:
-		launch_mission(mission)
-		
+		launch_mission(mission, seconds)
+	
+	#comprobamos parpadeo mision
+	for m in active_missions:
+		if active_missions[m] < seconds+5:
+			var button := active_mission_buttons[m]
+			button.start_blinking()
+	#comprobamos fin mision
+	for m in active_missions:
+		if active_missions[m] < seconds:
+			active_missions.erase(m)
+			var button := active_mission_buttons[m]
+			button.queue_free()
+
+				
 	time_label.text = "%02d:%02d" % [minutes, seconds]
 	rey_bar.value = player.rey
 	_update_color(rey_bar, player.rey,false)
@@ -45,7 +60,7 @@ func _process(_delta):
 	descontento_bar.value = player.descontento
 	_update_color(descontento_bar, player.descontento,true)
 
-func launch_mission(mission: MissionData) -> void:
+func launch_mission(mission: MissionData, seconds: int) -> void:
 	#anyadir boton de mision
 	var button: MissionButton = mission_button_scene.instantiate()
 	map_ui.add_child(button)
@@ -53,6 +68,8 @@ func launch_mission(mission: MissionData) -> void:
 	print("Mision:"+str(button.position))
 	button.setup(mission)
 	button.mission_pressed.connect(_on_mission_pressed)
+	active_mission_buttons[mission] = button
+	active_missions[mission] = seconds + mission.duration_seconds
 	
 	
 func _on_descontento_sube():
@@ -70,6 +87,9 @@ func _update_color(faction : ProgressBar, value: float, inverse: bool) -> void:
 	
 func _on_mission_pressed(mission: MissionData) -> void:
 	#actualizar ventana
-	print("Pressed")
 	mission_window.show_mission(mission)
 	panel_mission.show()
+
+
+func _on_close_mission_button_pressed() -> void:
+	panel_mission.hide()
