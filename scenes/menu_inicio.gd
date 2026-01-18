@@ -59,3 +59,11 @@ func _on_credits_button_pressed() -> void:
 
 func _on_new_game_button_pressed() -> void:
 	GameManager.start_game()
+	
+func _unhandled_input(event):
+	if event is InputEventKey:
+		if event.pressed and event.keycode == KEY_ESCAPE:
+			if $CreditosCanvas.visible:
+				$CreditosCanvas.visible = false
+			else:
+				get_tree().quit()

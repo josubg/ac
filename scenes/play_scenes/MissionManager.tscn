@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://dndmb8ctvt7mk"]
-
-[ext_resource type="Script" uid="uid://cmyid0ms22d1u" path="res://scenes/play_scenes/mission_manager.gd" id="1_ten2h"]
-
-[node name="MissionManager" type="Node"]
-script = ExtResource("1_ten2h")

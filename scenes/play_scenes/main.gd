@@ -2,28 +2,27 @@ extends Node
 
 @onready var time_manager: Node = $TimeManager
 @onready var player: Player = $Player
-@onready var mission_manager: Node = $MissionManager
 @onready var mission_window: Control = $CanvasLayerMission/PanelMission/MissionWindow
 @onready var panel_mission: Panel = $CanvasLayerMission/PanelMission
 
-@onready var time_label: Label = $CanvasLayer/VBoxContainer/HBoxContainer/ColorRect/TimeLabel
-@onready var rey_bar: ProgressBar = $CanvasLayer/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/influence_panel/VBoxContainer/HBoxContainer/ReyBar
-@onready var nobleza_bar: ProgressBar = $CanvasLayer/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/influence_panel/VBoxContainer/HBoxContainer2/NoblezaBar
-@onready var clero_bar: ProgressBar = $CanvasLayer/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/influence_panel/VBoxContainer/HBoxContainer3/CleroBar
-@onready var descontento_bar: ProgressBar = $CanvasLayer/VBoxContainer/HBoxContainer/PanelContainer/HBoxContainer/DescontentoBar
-@onready var map_ui: Control = $CanvasLayer/MapUI
+@onready var time_label: Label = $display/VBoxContainer/HBoxContainer/ColorRect/TimeLabel
+@onready var rey_bar: ProgressBar = $display/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/influence_panel/VBoxContainer/HBoxContainer/ReyBar
+@onready var nobleza_bar: ProgressBar = $display/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/influence_panel/VBoxContainer/HBoxContainer2/NoblezaBar
+@onready var clero_bar: ProgressBar = $display/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/influence_panel/VBoxContainer/HBoxContainer3/CleroBar
+@onready var descontento_bar: ProgressBar = $display/VBoxContainer/HBoxContainer/PanelContainer/HBoxContainer/DescontentoBar
+@onready var buttons_layer: Control = $display/ButtonsLayer
 
-@onready var active_missions: Dictionary[MissionData, int] = {}
+@onready var active_missions: Dictionary[Mission, int] = {}
+@onready var active_mission_buttons: Dictionary[Mission, MissionButton] = {}
 
-@onready var active_mission_buttons: Dictionary[MissionData, MissionButton] = {}
-@export var mission_button_scene: PackedScene = preload("res://scenes/play_scenes/MissionButton.tscn")
+@export var mission_button_scene: PackedScene = preload("res://scenes/misions/MissionButton.tscn")
 
 var last_checked_second := -1
 
 func _ready() -> void:
 	time_manager.connect("descontento_sube",Callable(self, "_on_descontento_sube"))
-	mission_manager.load_missions("res://resources/data/missions.txt")
-	print("Misions:"+str(mission_manager.scheduled_missions))
+	MissionManager.load_missions("res://resources/data/missions.txt")
+	print("Misions:"+str(MissionManager.scheduled_missions))
 
 func _process(_delta):
 	var minutes = int(time_manager.current_time)
@@ -33,7 +32,7 @@ func _process(_delta):
 		return
 	last_checked_second = seconds
 	#comprobamos misión
-	var mission: MissionData = mission_manager.check_for_mission(seconds)
+	var mission: Mission = MissionManager.check_for_mission(seconds)
 	if mission != null:
 		launch_mission(mission, seconds)
 	
@@ -48,8 +47,6 @@ func _process(_delta):
 			active_missions.erase(m)
 			var button := active_mission_buttons[m]
 			button.queue_free()
-
-				
 	time_label.text = "%02d:%02d" % [minutes, seconds]
 	rey_bar.value = player.rey
 	_update_color(rey_bar, player.rey,false)
@@ -60,12 +57,12 @@ func _process(_delta):
 	descontento_bar.value = player.descontento
 	_update_color(descontento_bar, player.descontento,true)
 
-func launch_mission(mission: MissionData, seconds: int) -> void:
+func launch_mission(mission: Mission, seconds: int) -> void:
 	#anyadir boton de mision
 	var button: MissionButton = mission_button_scene.instantiate()
-	map_ui.add_child(button)
+	buttons_layer.add_child(button)
 	button.position = Vector2(mission.x, mission.y)
-	print("Mision:"+str(button.position))
+	print("Mision: " + str(button.position))
 	button.setup(mission)
 	button.mission_pressed.connect(_on_mission_pressed)
 	active_mission_buttons[mission] = button
@@ -85,7 +82,7 @@ func _update_color(faction : ProgressBar, value: float, inverse: bool) -> void:
 	style.border_color = Color(0, 0, 0) # opcional, borde negro
 	faction.add_theme_stylebox_override("background", style)
 	
-func _on_mission_pressed(mission: MissionData) -> void:
+func _on_mission_pressed(mission: Mission) -> void:
 	#actualizar ventana
 	mission_window.show_mission(mission)
 	panel_mission.show()
@@ -93,3 +90,8 @@ func _on_mission_pressed(mission: MissionData) -> void:
 
 func _on_close_mission_button_pressed() -> void:
 	panel_mission.hide()
+
+func _unhandled_input(event):
+	if event is InputEventKey:
+		if event.pressed and event.keycode == KEY_ESCAPE:
+			GameManager.go_to_menu()

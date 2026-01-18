@@ -1,8 +1,8 @@
 [gd_scene load_steps=7 format=3 uid="uid://8ycbjiya6iix"]
 
-[ext_resource type="Script" uid="uid://5yqjmn56hfb7" path="res://scenes/play_scenes/mission_button.gd" id="1_8kif8"]
-[ext_resource type="Texture2D" uid="uid://7pvuqc44x556" path="res://sprites/lacre_mision.png" id="1_iid0w"]
-[ext_resource type="Texture2D" uid="uid://ejtx3jg7mryc" path="res://sprites/lacre_mision_on.png" id="2_02qwd"]
+[ext_resource type="Texture2D" uid="uid://7pvuqc44x556" path="res://sprites/lacre_mision.png" id="1_5a82t"]
+[ext_resource type="Texture2D" uid="uid://ejtx3jg7mryc" path="res://sprites/lacre_mision_on.png" id="2_6ex2o"]
+[ext_resource type="Script" uid="uid://5yqjmn56hfb7" path="res://scenes/misions/mission_button.gd" id="3_flque"]
 
 [sub_resource type="Animation" id="Animation_iid0w"]
 length = 0.001
@@ -46,10 +46,10 @@ offset_right = 1003.0
 offset_bottom = 1004.0
 scale = Vector2(0.12, 0.12)
 focus_mode = 0
-texture_normal = ExtResource("1_iid0w")
-texture_hover = ExtResource("2_02qwd")
+texture_normal = ExtResource("1_5a82t")
+texture_hover = ExtResource("2_6ex2o")
 stretch_mode = 0
-script = ExtResource("1_8kif8")
+script = ExtResource("3_flque")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

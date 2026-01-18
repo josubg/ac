@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://d1rtu2yxplwsa"]
+[gd_scene load_steps=15 format=3 uid="uid://d1rtu2yxplwsa"]
 
 [ext_resource type="Script" uid="uid://b1fnk4f66ycn4" path="res://scenes/play_scenes/main.gd" id="1_53356"]
 [ext_resource type="Texture2D" uid="uid://deluds7e5l7hg" path="res://resources/Mapa.png" id="1_ig7tw"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dpbqvy8kco6ch" path="res://scenes/play_scenes/TimeManager.tscn" id="2_ub72h"]
 [ext_resource type="Script" uid="uid://b0n4gxk3vqmgv" path="res://scenes/play_scenes/TimeManager.gd" id="3_ub72h"]
 [ext_resource type="PackedScene" uid="uid://ghirfi6nvj51" path="res://scenes/play_scenes/Player.tscn" id="4_bd1e2"]
+[ext_resource type="PackedScene" uid="uid://dndmb8ctvt7mk" path="res://scenes/misions/MissionManager.tscn" id="5_5e6os"]
 [ext_resource type="PackedScene" uid="uid://hfvv1kukfi5c" path="res://scenes/misions/MissionWindow.tscn" id="7_td746"]
 [ext_resource type="PackedScene" uid="uid://b78s138cf5qgl" path="res://scenes/agents/Noble.tscn" id="8_uynio"]
 
@@ -31,31 +32,33 @@ script = ExtResource("3_ub72h")
 
 [node name="Player" parent="." instance=ExtResource("4_bd1e2")]
 
+[node name="MissionManager" parent="." instance=ExtResource("5_5e6os")]
+
 [node name="MapLayer" type="Sprite2D" parent="."]
 position = Vector2(1157, 796)
 scale = Vector2(0.43405166, 0.44274455)
 texture = ExtResource("1_ig7tw")
 
-[node name="display" type="CanvasLayer" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="VBoxContainer" type="VBoxContainer" parent="display"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="display/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.1
 
-[node name="ColorRect" type="ColorRect" parent="display/VBoxContainer/HBoxContainer"]
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 color = Color(0, 0, 0, 1)
 
-[node name="TimeLabel" type="Label" parent="display/VBoxContainer/HBoxContainer/ColorRect"]
+[node name="TimeLabel" type="Label" parent="CanvasLayer/VBoxContainer/HBoxContainer/ColorRect"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -70,20 +73,20 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "TIME LABEL"
 
-[node name="AspectRatioContainer" type="AspectRatioContainer" parent="display/VBoxContainer/HBoxContainer"]
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="CanvasLayer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.42
 
-[node name="PanelContainer" type="PanelContainer" parent="display/VBoxContainer/HBoxContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="display/VBoxContainer/HBoxContainer/PanelContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/VBoxContainer/HBoxContainer/PanelContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Label" type="Label" parent="display/VBoxContainer/HBoxContainer/PanelContainer/HBoxContainer"]
+[node name="Label" type="Label" parent="CanvasLayer/VBoxContainer/HBoxContainer/PanelContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.5
@@ -92,38 +95,38 @@ theme_override_font_sizes/font_size = 30
 text = "Descontento"
 horizontal_alignment = 2
 
-[node name="DescontentoBar" type="ProgressBar" parent="display/VBoxContainer/HBoxContainer/PanelContainer/HBoxContainer"]
+[node name="DescontentoBar" type="ProgressBar" parent="CanvasLayer/VBoxContainer/HBoxContainer/PanelContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 
-[node name="PanelContainer2" type="PanelContainer" parent="display/VBoxContainer"]
+[node name="PanelContainer2" type="PanelContainer" parent="CanvasLayer/VBoxContainer"]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="PanelContainer3" type="PanelContainer" parent="display/VBoxContainer"]
+[node name="PanelContainer3" type="PanelContainer" parent="CanvasLayer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.25
 theme = SubResource("Theme_ig7tw")
 theme_override_styles/panel = SubResource("StyleBoxFlat_0xm2m")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="display/VBoxContainer/PanelContainer3"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/VBoxContainer/PanelContainer3"]
 layout_mode = 2
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="display/VBoxContainer/PanelContainer3/VBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/VBoxContainer/PanelContainer3/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.25
 
-[node name="Panel" type="Panel" parent="display/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer2"]
+[node name="Panel" type="Panel" parent="CanvasLayer/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_ig7tw")
 
-[node name="Label" type="Label" parent="display/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer2/Panel"]
+[node name="Label" type="Label" parent="CanvasLayer/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer2/Panel"]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
@@ -131,13 +134,13 @@ theme_override_fonts/font = ExtResource("2_0xm2m")
 theme_override_font_sizes/font_size = 30
 text = "Agentes de la Corona"
 
-[node name="Panel2" type="Panel" parent="display/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer2"]
+[node name="Panel2" type="Panel" parent="CanvasLayer/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.3
 theme_override_styles/panel = SubResource("StyleBoxFlat_h2yge")
 
-[node name="Label" type="Label" parent="display/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer2/Panel2"]
+[node name="Label" type="Label" parent="CanvasLayer/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer2/Panel2"]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
@@ -145,32 +148,30 @@ theme_override_fonts/font = ExtResource("2_0xm2m")
 theme_override_font_sizes/font_size = 30
 text = "Cuatro Cortes"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="display/VBoxContainer/PanelContainer3/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/VBoxContainer/PanelContainer3/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="MarginContainer" type="MarginContainer" parent="display/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/margin_left = 12
 theme_override_constants/margin_right = 12
 
-[node name="agent_panel" type="HBoxContainer" parent="display/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/MarginContainer"]
+[node name="agent_panel" type="HBoxContainer" parent="CanvasLayer/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 10
 
-[node name="Panel" parent="display/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/MarginContainer/agent_panel" instance=ExtResource("8_uynio")]
+[node name="Panel" parent="CanvasLayer/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/MarginContainer/agent_panel" instance=ExtResource("8_uynio")]
 layout_mode = 2
-full_name = ""
-biografy = ""
 
-[node name="influence_panel" type="Panel" parent="display/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer"]
+[node name="influence_panel" type="Panel" parent="CanvasLayer/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="display/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/influence_panel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/influence_panel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -178,11 +179,11 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="display/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/influence_panel/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/influence_panel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Label" type="Label" parent="display/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/influence_panel/VBoxContainer/HBoxContainer"]
+[node name="Label" type="Label" parent="CanvasLayer/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/influence_panel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.5
@@ -191,16 +192,16 @@ theme_override_font_sizes/font_size = 30
 text = "Rey"
 horizontal_alignment = 2
 
-[node name="ReyBar" type="ProgressBar" parent="display/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/influence_panel/VBoxContainer/HBoxContainer"]
+[node name="ReyBar" type="ProgressBar" parent="CanvasLayer/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/influence_panel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="display/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/influence_panel/VBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/influence_panel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Label" type="Label" parent="display/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/influence_panel/VBoxContainer/HBoxContainer2"]
+[node name="Label" type="Label" parent="CanvasLayer/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/influence_panel/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.5
@@ -209,16 +210,16 @@ theme_override_font_sizes/font_size = 30
 text = "Nobleza"
 horizontal_alignment = 2
 
-[node name="NoblezaBar" type="ProgressBar" parent="display/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/influence_panel/VBoxContainer/HBoxContainer2"]
+[node name="NoblezaBar" type="ProgressBar" parent="CanvasLayer/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/influence_panel/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="display/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/influence_panel/VBoxContainer"]
+[node name="HBoxContainer3" type="HBoxContainer" parent="CanvasLayer/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/influence_panel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Label" type="Label" parent="display/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/influence_panel/VBoxContainer/HBoxContainer3"]
+[node name="Label" type="Label" parent="CanvasLayer/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/influence_panel/VBoxContainer/HBoxContainer3"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.5
@@ -227,12 +228,12 @@ theme_override_font_sizes/font_size = 30
 text = "Clero"
 horizontal_alignment = 2
 
-[node name="CleroBar" type="ProgressBar" parent="display/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/influence_panel/VBoxContainer/HBoxContainer3"]
+[node name="CleroBar" type="ProgressBar" parent="CanvasLayer/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/influence_panel/VBoxContainer/HBoxContainer3"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 
-[node name="ButtonsLayer" type="Control" parent="display"]
+[node name="MapUI" type="Control" parent="CanvasLayer"]
 layout_mode = 3
 anchors_preset = 0
 offset_top = 125.0

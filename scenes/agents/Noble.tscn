@@ -1,0 +1,11 @@
+[gd_scene load_steps=4 format=3 uid="uid://b78s138cf5qgl"]
+
+[ext_resource type="PackedScene" uid="uid://dkahlsa41u8ph" path="res://scenes/agents/Agent.tscn" id="1_fmyyw"]
+[ext_resource type="Texture2D" uid="uid://ba6me2bhqudbu" path="res://sprites/noble.png" id="2_6knku"]
+[ext_resource type="Texture2D" uid="uid://bhhgkmdfjiqe7" path="res://sprites/noble_gray.png" id="3_me3ck"]
+
+[node name="Panel" instance=ExtResource("1_fmyyw")]
+anchor_bottom = 0.13100001
+offset_bottom = -106.640015
+selected = ExtResource("2_6knku")
+unselected = ExtResource("3_me3ck")

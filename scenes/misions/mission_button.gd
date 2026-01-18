@@ -1,13 +1,13 @@
 extends TextureButton
 class_name MissionButton
 
-signal mission_pressed(mission: MissionData)
+signal mission_pressed(mission: Mission)
 
-var mission: MissionData
+var mission: Mission
 
 @onready var anim: AnimationPlayer = $AnimationPlayer
 
-func setup(m: MissionData) -> void:
+func setup(m: Mission) -> void:
 	mission = m
 
 func _pressed() -> void:

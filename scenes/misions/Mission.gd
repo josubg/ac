@@ -1,5 +1,5 @@
 extends Resource
-class_name MissionData
+class_name Mission
 
 @export var titulo: String
 @export var mision: String
@@ -15,3 +15,6 @@ class_name MissionData
 @export var y: int
 @export var start: int
 @export var duration_seconds: int = 10
+@export var slots: int = 4
+
+var agents : Array[Agent] = []
