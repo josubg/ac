@@ -1,15 +1,35 @@
 extends Node
 
+signal added_mission(mission: Mission)
+signal warning_mission(mission: Mission)
+signal clossed_mission(mission: Mission)
+
 var scheduled_missions := {}
+var active_missions  := {}
+var last_checked_second = -1
 
-func check_for_mission(time: int) -> Mission:
-	if scheduled_missions.has(time):
-		var mission := Mission.new()
-		mission = scheduled_missions[time]
-		scheduled_missions.erase(time)
-		return mission
-	return null
+func _process(_delta: float) -> void:
+	var seconds = int(floor(TimeManager.current_time))
+	if last_checked_second >= seconds:
+		return
+	last_checked_second = seconds
+	print(seconds)
+	if scheduled_missions.has(seconds):
+		var mission = scheduled_missions[seconds]
+		scheduled_missions.erase(seconds)
+		active_missions[mission] = seconds + 10
+		added_mission.emit(mission)
 
+	#comprobamos parpadeo mision
+	for mission in active_missions:
+		if active_missions[mission] < seconds + 5:
+			warning_mission.emit(mission)
+			
+	#comprobamos fin mision
+	for mission in active_missions:
+		if active_missions[mission] < seconds:
+			active_missions.erase(mission)
+			clossed_mission.emit(mission)
 	 
 func load_missions(path: String) -> void:
 	scheduled_missions.clear()
@@ -41,6 +61,8 @@ func load_missions(path: String) -> void:
 		mission.y = int(row[11])
 		mission.start = int(row[12])
 		scheduled_missions[mission.start] = mission
+	TimeManager.run()
+	set_process(true)
 	file.close()
 	
 func set_agent(agent: Agent, mission: Mission) -> void:

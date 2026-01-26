@@ -1,5 +1,4 @@
-extends TextureButton
-class_name MissionButton
+class_name MissionButton extends TextureButton
 
 signal mission_pressed(mission: Mission)
 

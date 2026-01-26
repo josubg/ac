@@ -34,6 +34,7 @@ expand_mode = 3
 stretch_mode = 5
 
 [node name="StatsPanel" type="Panel" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0

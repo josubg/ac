@@ -5,10 +5,15 @@ var descontento_up : float = 0
 var paused: bool = false
 var events: Array = []
 
+func run():
+	self.set_process(true)
+	self.current_time = 0
+	self.paused= false
+	
 func _process(delta):
-	if paused:
+	if self.paused:
 		return
-	current_time += delta / 60.0  # convierte segundos reales a minutos de juego
+	self.current_time += delta # convierte segundos reales a minutos de juego
 	_check_events()
 	_check_descontento(delta)
 

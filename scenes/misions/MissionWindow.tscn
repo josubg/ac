@@ -26,66 +26,69 @@ font_size = 32
 
 [sub_resource type="Theme" id="Theme_yrtqx"]
 
-[node name="MissionWindow" type="Control"]
-layout_mode = 3
-anchors_preset = 0
-offset_left = 1.0
-offset_right = 1.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-script = ExtResource("1_4fb1n")
-
-[node name="Panel" type="Panel" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+[node name="Panel" type="Panel"]
+anchors_preset = -1
+anchor_right = 0.39000002
+anchor_bottom = 0.40500003
+offset_right = -748.80005
+offset_bottom = -648.00006
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_filhx")
+script = ExtResource("1_4fb1n")
 
-[node name="PanelContainer" type="PanelContainer" parent="Panel"]
+[node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 0
 offset_right = 750.0
-offset_bottom = 594.0
+offset_bottom = 649.0
 theme_override_styles/panel = SubResource("StyleBoxTexture_filhx")
 
-[node name="MarginContainer" type="MarginContainer" parent="Panel/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 35
 theme_override_constants/margin_top = 35
 theme_override_constants/margin_right = 35
 theme_override_constants/margin_bottom = 35
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/PanelContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="TitleLabel" type="Label" parent="Panel/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="TitleLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Título"
 label_settings = SubResource("LabelSettings_540ay")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="DescriptionLabel" type="Label" parent="Panel/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="DescriptionLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Excelencia, traigo nuevas que podrían agitar las aguas de la Corte: se murmura que el acero que dio muerte al Conde de Villamediana no fue movido por razón de Estado, sino por celos de amante despechado. El testimonio es reciente, y aún incierto, mas es cosa grave. ¿Ordenáis que se envíe discreto pesquisidor a indagar, o que se deje el rumor morir por sí solo?"
 autowrap_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="Panel/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.27
 
-[node name="AgentRoast" type="HBoxContainer" parent="Panel/PanelContainer/MarginContainer/VBoxContainer/MarginContainer"]
+[node name="AgentRoast" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer"]
 custom_minimum_size = Vector2(0, 320)
 layout_mode = 2
 size_flags_vertical = 0
 theme = SubResource("Theme_yrtqx")
 alignment = 1
 
-[node name="Send" type="Button" parent="Panel/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="Send" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Enviar espias"
 
-[connection signal="pressed" from="Panel/PanelContainer/MarginContainer/VBoxContainer/Send" to="." method="_on_send_pressed"]
+[node name="CloseMissionButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 535.0
+offset_top = 11.0
+offset_right = 622.0
+offset_bottom = 42.0
+theme_override_colors/font_color = Color(0.87, 0.13920002, 0.13920002, 1)
+text = "Cerrar"
+
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/Send" to="." method="_on_send_pressed"]
+[connection signal="pressed" from="CloseMissionButton" to="." method="_on_close_mission_button_pressed"]
