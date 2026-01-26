@@ -8,6 +8,8 @@ class_name Agent extends Panel
 @onready var portrait: TextureRect = $Portrait
 @onready var stats_panel: Panel = $StatsPanel
 
+enum agent_status {READY, DRAGED, ASSIGNED, DEPLOYED, RESTING}
+
 @export_enum(Factions.noble, Factions.cura, Factions.malechor) var faction: String :
 	set(value):
 		stats_panel.text = full_name + "\n" + "("+faction+")"
@@ -28,12 +30,16 @@ func _ready() -> void:
 	if not mouse_exited.is_connected(_on_mouse_exited):
 		mouse_exited.connect(_on_mouse_exited)
 	
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_DRAG_END and not get_viewport().gui_is_drag_successful():
+		# Drag failed
+		print("Drag failed" , self.full_name)
+
 
 func _get_drag_data(_position):
-	print("helo")
 	if self.assigned:
 		return null
-	var drag_portrait = generate_drag_portrait(portrait.texture)
+	var drag_portrait = generate_drag_portrait()
 	set_drag_preview(drag_portrait)
 	return self
 
@@ -54,10 +60,11 @@ func hide_stats():
 	tween.tween_property(stats_panel, "modulate:a", 0.0, 0.3)
 	tween.finished.connect(func(): stats_panel.visible = false)
 	
-func generate_drag_portrait(texture):
+func generate_drag_portrait():
 	var preview = TextureRect.new()
 	preview.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	preview.texture = texture
+	preview.texture = portrait.texture
 	preview.custom_minimum_size = Vector2(64, 64)  # opcional
 	preview.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT
+	preview.z_index= 1000
 	return preview

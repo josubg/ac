@@ -18,3 +18,6 @@ class_name Mission
 @export var slots: int = 4
 
 var agents : Array[Agent] = []
+
+func get_thresshold():
+	return len(agents)

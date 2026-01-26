@@ -47,8 +47,13 @@ func set_agent(agent: Agent, mission: Mission) -> void:
 	if agent not in mission.agents:
 		mission.agents.append(agent)
 
-func clear_agent(agent: Agent, mission: Mission) -> void:
+func clean_agent(agent: Agent, mission: Mission) -> void:
 	mission.agents.erase(agent)
 
 func resolve_mision(mission: Mission) -> void:
-	pass
+	var rng = RandomNumberGenerator.new()
+	var lucky = rng.randf_range(0, 1)
+	if mission.get_thresshold() < lucky: 
+		Player.successul_mission(mission)
+	else:
+		Player.failed_mission(mission)

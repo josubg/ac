@@ -83,3 +83,9 @@ layout_mode = 2
 size_flags_vertical = 0
 theme = SubResource("Theme_yrtqx")
 alignment = 1
+
+[node name="Send" type="Button" parent="Panel/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Enviar espias"
+
+[connection signal="pressed" from="Panel/PanelContainer/MarginContainer/VBoxContainer/Send" to="." method="_on_send_pressed"]

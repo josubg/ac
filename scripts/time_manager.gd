@@ -1,7 +1,4 @@
 extends Node
-class_name TimeManager
-
-signal descontento_sube
 
 @onready var current_time : float = 0.0
 var descontento_up : float = 0
@@ -22,5 +19,4 @@ func _check_descontento(delta):
 	descontento_up += delta*10
 	if descontento_up >= 60:
 		descontento_up = 0
-		emit_signal("descontento_sube")
-		
+		Player.descontento += 1
