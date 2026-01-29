@@ -34,12 +34,12 @@ func _process(_delta):
 	time_label.text = "%02d:%02d" % [minutes, seconds]
 
 func mission_added(mission: Mission) -> void:
-	#anyadir boton de mision
+	print("Mision: " + str(mission.titulo))
 	var button: MissionButton = mission_button_scene.instantiate()
 	buttons.append(button)
 	buttons_layer.add_child(button)
 	button.position = Vector2(mission.x, mission.y)
-	print("Mision: " + str(button.position))
+	
 	button.setup(mission)
 	button.mission_pressed.connect(_on_mission_pressed)
 	

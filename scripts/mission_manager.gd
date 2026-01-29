@@ -19,6 +19,7 @@ func _process(_delta: float) -> void:
 		scheduled_missions.erase(seconds)
 		active_missions[mission] = seconds + 10
 		added_mission.emit(mission)
+		print("Launched mision: ", mission)
 
 	#comprobamos parpadeo mision
 	for mission in active_missions:
