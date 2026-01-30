@@ -5,7 +5,8 @@
 [ext_resource type="Texture2D" uid="uid://bhhgkmdfjiqe7" path="res://sprites/noble_gray.png" id="3_me3ck"]
 
 [node name="Panel" instance=ExtResource("1_fmyyw")]
-anchor_bottom = 0.13100001
-offset_bottom = -106.640015
 selected = ExtResource("2_6knku")
 unselected = ExtResource("3_me3ck")
+
+[node name="StatsPanel" parent="." index="1"]
+visible = true

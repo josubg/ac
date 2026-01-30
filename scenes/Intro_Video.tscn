@@ -43,7 +43,13 @@ _data = {
 
 [node name="IntroVideo" type="Control"]
 layout_mode = 3
-anchors_preset = 0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 script = ExtResource("1_m1no4")
 
 [node name="ColorRect" type="ColorRect" parent="."]
@@ -54,11 +60,12 @@ color = Color(0, 0, 0, 1)
 
 [node name="Label" type="Label" parent="."]
 modulate = Color(1, 1, 1, 0)
-layout_mode = 0
-offset_left = 60.0
-offset_top = 2.0
-offset_right = 1860.0
-offset_bottom = 1082.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("2_m1no4")
 theme_override_font_sizes/font_size = 60

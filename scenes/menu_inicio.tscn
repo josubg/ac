@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://br54s0faogtns"]
+[gd_scene load_steps=15 format=3 uid="uid://br54s0faogtns"]
 
 [ext_resource type="Script" uid="uid://735046um6sp1" path="res://scenes/menu_inicio.gd" id="1_bnklu"]
 [ext_resource type="Texture2D" uid="uid://c6660qm8o0ff5" path="res://sprites/CuatroCortes píldora Negro 690x400 marco old.png" id="1_wkv36"]
@@ -31,6 +31,8 @@ axis_stretch_vertical = 2
 
 [sub_resource type="Theme" id="Theme_5psen"]
 
+[sub_resource type="FontVariation" id="FontVariation_5psen"]
+
 [node name="MenuInicio" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -38,6 +40,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 script = ExtResource("1_bnklu")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
@@ -61,61 +65,77 @@ text = "Versión 0.2 - 09/12/2025
 "
 
 [node name="CanvasLayer2" type="CanvasLayer" parent="."]
+follow_viewport_enabled = true
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer2"]
+[node name="Control" type="Control" parent="CanvasLayer2"]
+layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -70.0
-offset_right = 70.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_constants/margin_left = 500
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 500
-theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer2/MarginContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer2/Control"]
+clip_contents = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -112.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 300
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 300
+theme_override_constants/margin_bottom = 100
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer2/Control/MarginContainer"]
+clip_contents = true
 layout_mode = 2
 theme_override_constants/separation = 30
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer2/MarginContainer/VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer2/Control/MarginContainer/VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 3
 theme_override_constants/margin_left = 50
 theme_override_constants/margin_top = 50
 theme_override_constants/margin_right = 50
-theme_override_constants/margin_bottom = 50
+theme_override_constants/margin_bottom = 20
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer2/MarginContainer/VBoxContainer/MarginContainer"]
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer2/Control/MarginContainer/VBoxContainer/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = ExtResource("1_wkv36")
+expand_mode = 2
+stretch_mode = 3
 
-[node name="NewGameButton" type="Button" parent="CanvasLayer2/MarginContainer/VBoxContainer"]
+[node name="NewGameButton" type="Button" parent="CanvasLayer2/Control/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_ylpju")
 theme_override_font_sizes/font_size = 50
 theme_override_styles/normal = SubResource("StyleBoxFlat_d6xxl")
 text = "Nueva Partida"
 
-[node name="TutorialButton" type="Button" parent="CanvasLayer2/MarginContainer/VBoxContainer"]
+[node name="TutorialButton" type="Button" parent="CanvasLayer2/Control/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_ylpju")
 theme_override_font_sizes/font_size = 50
 theme_override_styles/normal = SubResource("StyleBoxFlat_bnklu")
 text = "Tutorial"
 
-[node name="CreditsButton" type="Button" parent="CanvasLayer2/MarginContainer/VBoxContainer"]
+[node name="CreditsButton" type="Button" parent="CanvasLayer2/Control/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_ylpju")
 theme_override_font_sizes/font_size = 50
 theme_override_styles/normal = SubResource("StyleBoxFlat_01a6i")
 text = "Créditos"
 
-[node name="ExitButton" type="Button" parent="CanvasLayer2/MarginContainer/VBoxContainer"]
+[node name="ExitButton" type="Button" parent="CanvasLayer2/Control/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_ylpju")
 theme_override_font_sizes/font_size = 50
@@ -124,7 +144,6 @@ text = "Salir"
 
 [node name="CreditosCanvas" type="CanvasLayer" parent="."]
 layer = 2
-visible = false
 
 [node name="PanelContainer" type="PanelContainer" parent="CreditosCanvas"]
 anchors_preset = 8
@@ -186,6 +205,19 @@ text = "		Versión adaptada de:
 		[i]Antonio Mancinelli (Dominio público) [/i]
 "
 
+[node name="Button" type="Button" parent="CreditosCanvas"]
+offset_left = 1334.0
+offset_top = 138.0
+offset_right = 1404.0
+offset_bottom = 174.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_colors/font_color = Color(0.88, 0, 0, 1)
+theme_override_fonts/font = SubResource("FontVariation_5psen")
+theme_override_font_sizes/font_size = 20
+text = "Cerrar"
+icon_alignment = 2
+
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0
 offset_left = 134.0
@@ -195,6 +227,7 @@ offset_bottom = 1547.0
 texture = ExtResource("7_5psen")
 expand_mode = 2
 
-[connection signal="pressed" from="CanvasLayer2/MarginContainer/VBoxContainer/NewGameButton" to="." method="_on_new_game_button_pressed"]
-[connection signal="pressed" from="CanvasLayer2/MarginContainer/VBoxContainer/CreditsButton" to="." method="_on_credits_button_pressed"]
-[connection signal="pressed" from="CanvasLayer2/MarginContainer/VBoxContainer/ExitButton" to="." method="_on_exit_button_pressed"]
+[connection signal="pressed" from="CanvasLayer2/Control/MarginContainer/VBoxContainer/NewGameButton" to="." method="_on_new_game_button_pressed"]
+[connection signal="pressed" from="CanvasLayer2/Control/MarginContainer/VBoxContainer/CreditsButton" to="." method="_on_credits_button_pressed"]
+[connection signal="pressed" from="CanvasLayer2/Control/MarginContainer/VBoxContainer/ExitButton" to="." method="_on_exit_button_pressed"]
+[connection signal="pressed" from="CreditosCanvas/Button" to="." method="_on_button_pressed"]

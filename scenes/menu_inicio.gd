@@ -67,3 +67,7 @@ func _unhandled_input(event):
 				$CreditosCanvas.visible = false
 			else:
 				get_tree().quit()
+
+
+func _on_button_pressed() -> void:
+	$CreditosCanvas.visible = false
