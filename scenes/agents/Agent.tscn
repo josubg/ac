@@ -17,8 +17,6 @@ offset_bottom = -106.640015
 rotation = 0.002709739
 size_flags_horizontal = 3
 script = ExtResource("2_tv2h4")
-full_name = null
-biografy = null
 
 [node name="Portrait" type="TextureRect" parent="."]
 layout_mode = 0

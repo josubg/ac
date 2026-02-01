@@ -28,9 +28,9 @@ func drop_data(_position, data: Agent):
 func set_agent(new_agent: Agent):
 	self.agent = new_agent
 	self.portrait.texture = agent.portrait.texture
-	MissionManager.set_agent(agent, mission)
+	mission.set_agent(agent)
 	
 func clean_agent():
 	self.agent = null
 	self.portrait.texture = self.void_texture
-	MissionManager.clean_agent(agent, mission)
+	mission.clean_agent(agent)

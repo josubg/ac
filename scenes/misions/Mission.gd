@@ -1,10 +1,11 @@
-extends Resource
-class_name Mission
+class_name Mission extends Resource
+
+enum MISSION_STATUS {created, deployed, warning, succeded, failed, expired} 
 
 @export var titulo: String
 @export var mision: String
 @export var rey: int
-@export var iglesia: int
+@export var clero: int
 @export var nobleza: int
 @export var descontento: int
 @export var influencia: int
@@ -18,6 +19,21 @@ class_name Mission
 @export var slots: int = 4
 
 var agents : Array[Agent] = []
+var status: MISSION_STATUS = MISSION_STATUS.created
 
-func get_thresshold():
+
+func resolved():
+	return self.status in [ MISSION_STATUS.succeded, MISSION_STATUS.failed]
+	
+	
+func get_probabity():
 	return len(agents)
+
+func set_agent(agent: Agent) -> void:
+	if agent not in self.agents:
+		self.agents.append(agent)
+		agent.status = agent.AGENT_STATUS.ASSIGNED
+
+func clean_agent(agent: Agent) -> void:
+	self.agents.erase(agent)
+	agent.status = agent.AGENT_STATUS.READY

@@ -39,14 +39,16 @@ func mission_added(mission: Mission) -> void:
 	buttons.append(button)
 	buttons_layer.add_child(button)
 	button.position = Vector2(mission.x, mission.y)
-	
-	button.setup(mission)
+	button.mission = mission
 	button.mission_pressed.connect(_on_mission_pressed)
 	
 func mission_updated(mission: Mission):
 	for button in buttons: 
 		if button.mission == mission: 
-			button.start_blinking()
+			if mission.resolved():
+				button.set_gold()
+			else:
+				button.start_blinking()
 
 func mission_removed(mission: Mission):
 	for button in buttons: 
@@ -82,7 +84,11 @@ func _update_color(faction : ProgressBar, value: float, inverse: bool) -> void:
 	faction.add_theme_stylebox_override("background", style)
 	
 func _on_mission_pressed(mission: Mission) -> void:
-	mission_window.show_mission(mission)
+	if mission.resolved():
+		# TODO SHOW resolve dialog()
+		pass
+	else:
+		mission_window.show_mission(mission)
 	
 func _unhandled_input(event):
 	if event is InputEventKey:

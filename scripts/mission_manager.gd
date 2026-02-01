@@ -15,22 +15,12 @@ func _process(_delta: float) -> void:
 	last_checked_second = seconds
 	print(seconds)
 	if scheduled_missions.has(seconds):
-		var mission = scheduled_missions[seconds]
-		scheduled_missions.erase(seconds)
-		active_missions[mission] = seconds + 10
-		added_mission.emit(mission)
-		print("Launched mision: ", mission)
-
-	#comprobamos parpadeo mision
+		deploy_mission(scheduled_missions[seconds])
 	for mission in active_missions:
 		if active_missions[mission] < seconds + 5:
-			warning_mission.emit(mission)
-			
-	#comprobamos fin mision
-	for mission in active_missions:
+			warn_mission(mission)
 		if active_missions[mission] < seconds:
-			active_missions.erase(mission)
-			clossed_mission.emit(mission)
+			expire_mission(mission)
 	 
 func load_missions(path: String) -> void:
 	scheduled_missions.clear()
@@ -47,11 +37,11 @@ func load_missions(path: String) -> void:
 				push_warning("Discarded row", row)
 			continue
 		var mission := Mission.new()
-		#Titulo,Mision,Rey,Iglesia,Nobleza,Descontento,Influencia,cura,noble,malechor,x,y,start
+		#Titulo,Mision,Rey,clero,Nobleza,Descontento,Influencia,cura,noble,malechor,x,y,start
 		mission.titulo = row[0]
 		mission.mision = row[1]
 		mission.rey = int(row[2])
-		mission.iglesia = int(row[3])
+		mission.clero = int(row[3])
 		mission.nobleza = int(row[4])
 		mission.descontento = int(row[5])
 		mission.influencia = int(row[6])
@@ -65,18 +55,40 @@ func load_missions(path: String) -> void:
 	TimeManager.run()
 	set_process(true)
 	file.close()
-	
-func set_agent(agent: Agent, mission: Mission) -> void:
-	if agent not in mission.agents:
-		mission.agents.append(agent)
 
-func clean_agent(agent: Agent, mission: Mission) -> void:
-	mission.agents.erase(agent)
+func deploy_mission(mission: Mission):
+	scheduled_missions.erase(last_checked_second)
+	mission.status = Mission.MISSION_STATUS.deployed
+	active_missions[mission] = last_checked_second + 10
+	added_mission.emit(mission)
+	print("Launched mision: ", mission)
+	
+func warn_mission(mission: Mission):
+	mission.status = Mission.MISSION_STATUS.warning
+	warning_mission.emit(mission)
+	print("Warned mision: ", mission)
+
+func expire_mission(mission: Mission):
+	active_missions.erase(mission)
+	mission.status = Mission.MISSION_STATUS.expired
+	clossed_mission.emit(mission)
+	print("Expired mision: ", mission)
 
 func resolve_mision(mission: Mission) -> void:
+	active_missions.erase(mission)
 	var rng = RandomNumberGenerator.new()
 	var lucky = rng.randf_range(0, 1)
-	if mission.get_thresshold() < lucky: 
-		Player.successul_mission(mission)
+	if mission.get_probabity() < lucky: 
+		mission.status = Mission.MISSION_STATUS.succeded
 	else:
+		mission.status = Mission.MISSION_STATUS.failed
+	warning_mission.emit(mission)
+	print("Resolved mision: ", mission)
+	
+func review_mision(mission: Mission) -> void:
+	if mission.status == Mission.MISSION_STATUS.succeded:
+		Player.successul_mission(mission)
+	elif mission.status == Mission.MISSION_STATUS.failed:
 		Player.failed_mission(mission)
+	print("Reviewed mision: ", mission)
+	clossed_mission.emit(mission)

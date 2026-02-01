@@ -1,5 +1,6 @@
 class_name Agent extends Panel
 
+enum AGENT_STATUS {READY, DRAGED, ASSIGNED, DEPLOYED, RESTING}
 @export var full_name: String
 @export var selected: Texture2D
 @export var unselected: Texture2D
@@ -8,7 +9,8 @@ class_name Agent extends Panel
 @onready var portrait: TextureRect = $Portrait
 @onready var stats_panel: Panel = $StatsPanel
 
-enum agent_status {READY, DRAGED, ASSIGNED, DEPLOYED, RESTING}
+var status: AGENT_STATUS = AGENT_STATUS.READY
+
 
 @export_enum(Factions.noble, Factions.cura, Factions.malechor) var faction: String :
 	set(value):
@@ -22,7 +24,6 @@ var assigned: bool :
 		else:
 			$Portrait.texture = self.selected
 
-
 func _ready() -> void:
 	self.assigned = false
 	if not mouse_entered.is_connected(_on_mouse_entered):
@@ -34,7 +35,6 @@ func _notification(what: int) -> void:
 	if what == NOTIFICATION_DRAG_END and not get_viewport().gui_is_drag_successful():
 		# Drag failed
 		print("Drag failed" , self.full_name)
-
 
 func _get_drag_data(_position):
 	if self.assigned:
