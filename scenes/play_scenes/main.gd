@@ -7,7 +7,7 @@ extends Node
 @onready var nobleza_bar: ProgressBar = $CanvasLayerMission/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/influence_panel/VBoxContainer/HBoxContainer2/NoblezaBar
 @onready var clero_bar: ProgressBar = $CanvasLayerMission/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/influence_panel/VBoxContainer/HBoxContainer3/CleroBar
 @onready var descontento_bar: ProgressBar = $CanvasLayerMission/VBoxContainer/HBoxContainer/PanelContainer/HBoxContainer/DescontentoBar
-@onready var buttons_layer: Control = $CanvasLayerMission/ButtonsLayer
+@onready var buttons_layer: Control = $CanvasLayerMission/VBoxContainer/ButtonsLayer
 
 @onready var active_missions: Dictionary[Mission, int] = {}
 @onready var active_mission_buttons: Dictionary[Mission, MissionButton] = {}

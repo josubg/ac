@@ -84,8 +84,8 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 
-[node name="PanelContainer2" type="PanelContainer" parent="CanvasLayerMission/VBoxContainer"]
-modulate = Color(1, 1, 1, 0)
+[node name="ButtonsLayer" type="Control" parent="CanvasLayerMission/VBoxContainer"]
+clip_contents = true
 layout_mode = 2
 size_flags_vertical = 3
 
@@ -222,16 +222,11 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 
-[node name="ButtonsLayer" type="Control" parent="CanvasLayerMission"]
-layout_mode = 3
-anchors_preset = 0
-offset_top = 125.0
-offset_right = 1916.0
-offset_bottom = 1301.0
-
 [node name="MissionWindow" parent="CanvasLayerMission" instance=ExtResource("7_td746")]
 offset_left = 638.0
 offset_top = 314.0
 offset_right = -110.80005
 offset_bottom = -334.00006
+size_flags_horizontal = 4
+size_flags_vertical = 4
 metadata/_edit_use_anchors_ = true
