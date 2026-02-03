@@ -83,14 +83,14 @@ theme_override_constants/margin_bottom = 5
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="MisionStatus" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+[node name="OutcomeLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("4_80knw")
 theme_override_font_sizes/font_size = 26
 text = "Misión completada con éxito"
 horizontal_alignment = 1
 
-[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+[node name="OutcomeDescription" type="RichTextLabel" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 bbcode_enabled = true

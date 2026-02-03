@@ -5,7 +5,8 @@ signal clero_updated(value)
 signal nobleza_updated(value)
 signal descontentoy_updated(value)
 
-var  started = false
+
+var started = false
 
 var rey = 50: 
 	set(value):
@@ -31,6 +32,13 @@ var descontento: int = 0:
 		descontentoy_updated.emit(descontento)
 		check_factions()
 
+func start():
+	self.started = true
+	rey_updated.emit(self.rey)
+	nobleza_updated.emit(self.nobleza)
+	clero_updated.emit(self.clero)
+	descontentoy_updated.emit(self.descontento)
+	
 func successul_mission(mission: Mission):
 	print("Succesfull mission: ", mission)
 	clero += mission.clero

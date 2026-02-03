@@ -17,6 +17,8 @@ enum MISSION_STATUS {created, deployed, warning, succeded, failed, expired}
 @export var start: int
 @export var duration_seconds: int = 10
 @export var slots: int = 4
+@export var success_text : String
+@export var failed_text : String
 
 var agents : Array[Agent] = []
 var status: MISSION_STATUS = MISSION_STATUS.created
@@ -26,7 +28,7 @@ func resolved():
 	return self.status in [MISSION_STATUS.succeded, MISSION_STATUS.failed]
 	
 func success():
-	return 	self.status == MISSION_STATUS.succeded
+	return self.status == MISSION_STATUS.succeded
 	
 func get_probabity():
 	return len(agents)

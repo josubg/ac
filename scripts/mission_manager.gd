@@ -6,6 +6,7 @@ signal clossed_mission(mission: Mission)
 
 var scheduled_missions := {}
 var active_missions  := {}
+var resolved_missions := []
 var last_checked_second = -1
 
 func _process(_delta: float) -> void:
@@ -51,10 +52,36 @@ func load_missions(path: String) -> void:
 		mission.x = int(row[10])
 		mission.y = int(row[11])
 		mission.start = int(row[12])
+		if row.size() >= 15:
+			mission.success_text = row[13]
+			mission.failed_text = row[14]
+		else:
+			mission.success_text = " Excelencia, tenemos controlada la situación y adjuntamos informes sobre lo sucedido."
+			mission.failed_text = ""
 		scheduled_missions[mission.start] = mission
 	TimeManager.run()
 	set_process(true)
 	file.close()
+	
+func get_test_mission() -> Mission:
+	var mission := Mission.new()
+	mission.titulo = "MISION DE PRUEBA"
+	mission.mision = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+	mission.rey = 10
+	mission.clero = 10
+	mission.nobleza = 10
+	mission.descontento = 10
+	mission.influencia = 10
+	mission.cura = 1
+	mission.noble = 1
+	mission.malechor = 0
+	mission.x = 500
+	mission.y = 500
+	mission.start = 0
+	mission.success_text = "Todo ha salido a pedir de Millhouse"
+	mission.failed_text = "Ay caramba"
+	scheduled_missions[mission.start] = mission
+	return mission
 
 func deploy_mission(mission: Mission):
 	scheduled_missions.erase(last_checked_second)
@@ -77,18 +104,21 @@ func expire_mission(mission: Mission):
 func resolve_mision(mission: Mission) -> void:
 	active_missions.erase(mission)
 	var rng = RandomNumberGenerator.new()
-	var lucky = rng.randf_range(0, 1)
-	if mission.get_probabity() < lucky: 
-		mission.status = Mission.MISSION_STATUS.succeded
+	var luck = rng.randf_range(0, 1)
+	var confidence = mission.get_probabity()
+	if luck > confidence: 
+		mission.status = Mission.MISSION_STATUS.failed	
 	else:
-		mission.status = Mission.MISSION_STATUS.failed
+		mission.status = Mission.MISSION_STATUS.succeded
+	print("Resolved mision( %s):  %s>%s  %s" % [mission, confidence, luck , mission.status])
 	warning_mission.emit(mission)
-	print("Resolved mision: ", mission)
+	resolved_missions.append(mission)
+	
 	
 func review_mision(mission: Mission) -> void:
-	if mission.status == Mission.MISSION_STATUS.succeded:
+	if mission.success():
 		Player.successul_mission(mission)
-	elif mission.status == Mission.MISSION_STATUS.failed:
+	else:
 		Player.failed_mission(mission)
 	print("Reviewed mision: ", mission)
 	clossed_mission.emit(mission)

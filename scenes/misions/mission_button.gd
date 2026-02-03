@@ -2,7 +2,7 @@ class_name MissionButton extends TextureButton
 
 signal mission_pressed(mission: Mission)
 
-var mission: Mission
+@export var mission: Mission
 
 @onready var anim: AnimationPlayer = $AnimationPlayer
 

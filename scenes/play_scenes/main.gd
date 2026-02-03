@@ -26,13 +26,13 @@ func _ready() -> void:
 	MissionManager.warning_mission.connect(mission_updated)
 	MissionManager.clossed_mission.connect(mission_removed)
 	MissionManager.load_missions("res://resources/data/missions.txt")
-	print("Misions: "+str(MissionManager.scheduled_missions))
+	print("Misions: " + str(MissionManager.scheduled_missions))
+	# Test_Mission
+	mission_added(MissionManager.get_test_mission())
+	Player.start()
 
 func _process(_delta):
-	var minutes = int(TimeManager.current_time)
-	var seconds = int((TimeManager.current_time - minutes) * 60)
-	
-	time_label.text = "%02d:%02d" % [minutes, seconds]
+	time_label.text = TimeManager.get_date()
 
 func mission_added(mission: Mission) -> void:
 	print("Mision: " + str(mission.titulo))
