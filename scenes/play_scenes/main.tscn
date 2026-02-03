@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://d1rtu2yxplwsa"]
+[gd_scene load_steps=11 format=3 uid="uid://d1rtu2yxplwsa"]
 
 [ext_resource type="Script" uid="uid://b1fnk4f66ycn4" path="res://scenes/play_scenes/main.gd" id="1_53356"]
 [ext_resource type="Texture2D" uid="uid://deluds7e5l7hg" path="res://resources/Mapa.png" id="1_ig7tw"]
 [ext_resource type="FontFile" uid="uid://b16lx41ih565r" path="res://resources/Bastarda-K.ttf" id="2_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://jvho4fxquili" path="res://scenes/misions/MissionResolutionWindow.tscn" id="5_bd1e2"]
 [ext_resource type="PackedScene" uid="uid://hfvv1kukfi5c" path="res://scenes/misions/MissionWindow.tscn" id="7_td746"]
 [ext_resource type="PackedScene" uid="uid://b78s138cf5qgl" path="res://scenes/agents/Noble.tscn" id="8_uynio"]
 
@@ -222,7 +223,16 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 
+[node name="MissionResolutionWindow" parent="CanvasLayerMission" instance=ExtResource("5_bd1e2")]
+offset_left = 641.0
+offset_top = 221.0
+offset_right = -107.80005
+offset_bottom = -216.40002
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
 [node name="MissionWindow" parent="CanvasLayerMission" instance=ExtResource("7_td746")]
+visible = false
 offset_left = 638.0
 offset_top = 314.0
 offset_right = -110.80005

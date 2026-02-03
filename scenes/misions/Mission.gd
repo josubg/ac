@@ -23,8 +23,10 @@ var status: MISSION_STATUS = MISSION_STATUS.created
 
 
 func resolved():
-	return self.status in [ MISSION_STATUS.succeded, MISSION_STATUS.failed]
+	return self.status in [MISSION_STATUS.succeded, MISSION_STATUS.failed]
 	
+func success():
+	return 	self.status == MISSION_STATUS.succeded
 	
 func get_probabity():
 	return len(agents)

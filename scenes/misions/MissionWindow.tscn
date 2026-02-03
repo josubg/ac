@@ -83,10 +83,10 @@ text = "Enviar espias"
 
 [node name="CloseMissionButton" type="Button" parent="."]
 layout_mode = 0
-offset_left = 535.0
-offset_top = 11.0
-offset_right = 622.0
-offset_bottom = 42.0
+offset_left = 616.0
+offset_top = 56.30002
+offset_right = 703.0
+offset_bottom = 87.30002
 theme_override_colors/font_color = Color(0.87, 0.13920002, 0.13920002, 1)
 text = "Cerrar"
 

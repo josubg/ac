@@ -9,9 +9,6 @@ var mission: Mission
 func _pressed() -> void:
 	emit_signal("mission_pressed", mission)
 
-func _on_pressed() -> void:
-	emit_signal("mission_pressed", mission)
-
 func start_blinking() -> void:
 	if anim.is_playing():
 		return

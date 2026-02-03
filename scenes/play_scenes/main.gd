@@ -1,6 +1,7 @@
 extends Node
 
 @onready var mission_window: Control = $CanvasLayerMission/MissionWindow
+@onready var mission_resolution_window: Control = $CanvasLayerMission/MissionResolutionWindow
 
 @onready var time_label: Label = $CanvasLayerMission/VBoxContainer/HBoxContainer/ColorRect/TimeLabel
 @onready var rey_bar: ProgressBar = $CanvasLayerMission/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/influence_panel/VBoxContainer/HBoxContainer/ReyBar
@@ -43,9 +44,11 @@ func mission_added(mission: Mission) -> void:
 	button.mission_pressed.connect(_on_mission_pressed)
 	
 func mission_updated(mission: Mission):
+	print("MISION UPDATED!")
 	for button in buttons: 
 		if button.mission == mission: 
 			if mission.resolved():
+				print(mission.resolved())
 				button.set_gold()
 			else:
 				button.start_blinking()
@@ -85,8 +88,7 @@ func _update_color(faction : ProgressBar, value: float, inverse: bool) -> void:
 	
 func _on_mission_pressed(mission: Mission) -> void:
 	if mission.resolved():
-		# TODO SHOW resolve dialog()
-		pass
+		mission_resolution_window.show_mission(mission)
 	else:
 		mission_window.show_mission(mission)
 	
