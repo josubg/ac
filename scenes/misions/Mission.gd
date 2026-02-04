@@ -40,4 +40,8 @@ func set_agent(agent: Agent) -> void:
 
 func clean_agent(agent: Agent) -> void:
 	self.agents.erase(agent)
-	agent.status = agent.AGENT_STATUS.READY
+	agent.unselect()
+	
+func send_agents_home() -> void:
+	for agent in self.agents:
+		agent.send_home()

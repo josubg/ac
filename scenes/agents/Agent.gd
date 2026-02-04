@@ -1,47 +1,66 @@
 class_name Agent extends Panel
 
-enum AGENT_STATUS {READY, DRAGED, ASSIGNED, DEPLOYED, RESTING}
+enum AGENT_STATUS {AVAILABLE, DRAGGED, ASSIGNED, DEPLOYED, RESTING}
+
 @export var full_name: String
-@export var selected: Texture2D
-@export var unselected: Texture2D
+@export var assigned_texture: Texture2D
+@export var available_texture: Texture2D
 @export var biografy: String
+@export var rest_time: int = 30
 
 @onready var portrait: TextureRect = $Portrait
 @onready var stats_panel: Panel = $StatsPanel
+@onready var timer: Timer = $Timer
 
-var status: AGENT_STATUS = AGENT_STATUS.READY
 
+var status: AGENT_STATUS = AGENT_STATUS.AVAILABLE :
+	set(value):
+		status = value
+		if value == AGENT_STATUS.AVAILABLE:
+			$Portrait.texture = self.available_texture
+		else:
+			$Portrait.texture = self.assigned_texture
+
+var available: bool: 
+	get():
+		return self.status == AGENT_STATUS.AVAILABLE
 
 @export_enum(Factions.noble, Factions.cura, Factions.malechor) var faction: String :
 	set(value):
 		stats_panel.text = full_name + "\n" + "("+faction+")"
 
-var assigned: bool :
-	set(value):
-		assigned = value
-		if value:
-			$Portrait.texture = self.unselected
-		else:
-			$Portrait.texture = self.selected
-
 func _ready() -> void:
-	self.assigned = false
 	if not mouse_entered.is_connected(_on_mouse_entered):
 		mouse_entered.connect(_on_mouse_entered)
 	if not mouse_exited.is_connected(_on_mouse_exited):
 		mouse_exited.connect(_on_mouse_exited)
+
+func unselect():
+	# When agent is removed from unstarted mission
+	self.status = AGENT_STATUS.AVAILABLE
 	
+func send_home():
+	self.status = AGENT_STATUS.RESTING
+	timer.timeout.connect(self.rested)
+	timer.start(rest_time)
+	TimeManager.add_timer(timer)
+
+func rested():
+	TimeManager.remove_timer(timer)
+	self.status = AGENT_STATUS.AVAILABLE
+
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_DRAG_END and not get_viewport().gui_is_drag_successful():
 		# Drag failed
 		print("Drag failed" , self.full_name)
+		self.status = AGENT_STATUS.AVAILABLE
 
 func _get_drag_data(_position):
-	if self.assigned:
-		return null
-	var drag_portrait = generate_drag_portrait()
-	set_drag_preview(drag_portrait)
-	return self
+	if self.available:
+		var drag_portrait = generate_drag_portrait()
+		set_drag_preview(drag_portrait)
+		self.status = AGENT_STATUS.DRAGGED
+		return self
 
 func _on_mouse_entered():
 	show_stats()

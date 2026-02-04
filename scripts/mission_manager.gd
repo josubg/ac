@@ -121,4 +121,5 @@ func review_mision(mission: Mission) -> void:
 	else:
 		Player.failed_mission(mission)
 	print("Reviewed mision: ", mission)
+	mission.send_agents_home()
 	clossed_mission.emit(mission)

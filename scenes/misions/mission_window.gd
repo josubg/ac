@@ -12,6 +12,7 @@ func _ready() -> void:
 	self.hide()
 
 func show_mission(new_mission: Mission) -> void:
+	TimeManager.pause()
 	print("show mission: ", mission)
 	if mission != new_mission:
 		for agent_slot in agent_roast.get_children():
@@ -29,7 +30,9 @@ func show_mission(new_mission: Mission) -> void:
 func _on_send_pressed() -> void:
 	MissionManager.resolve_mision(self.mission)
 	self.mission = null
+	TimeManager.resume()
 	self.hide()
 
 func _on_close_mission_button_pressed() -> void:
+	TimeManager.resume()
 	self.hide()

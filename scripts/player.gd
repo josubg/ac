@@ -5,28 +5,27 @@ signal clero_updated(value)
 signal nobleza_updated(value)
 signal descontentoy_updated(value)
 
-
 var started = false
 
-var rey = 50: 
+var rey: int : 
 	set(value):
 		rey = clamp(value, 0, 100)
 		rey_updated.emit(rey)
 		check_factions()
 
-var nobleza: int = 75: 
+var nobleza: int : 
 	set(value):
 		nobleza = clamp(value, 0, 100)
 		nobleza_updated.emit(nobleza)
 		check_factions()
 
-var clero: int = 25: 
+var clero: int : 
 	set(value):
 		clero = clamp(value, 0, 100)
 		clero_updated.emit(clero)
 		check_factions()
 
-var descontento: int = 0: 
+var descontento: int :
 	set(value):
 		descontento = clamp(value, 0, 100)
 		descontentoy_updated.emit(descontento)
@@ -34,10 +33,10 @@ var descontento: int = 0:
 
 func start():
 	self.started = true
-	rey_updated.emit(self.rey)
-	nobleza_updated.emit(self.nobleza)
-	clero_updated.emit(self.clero)
-	descontentoy_updated.emit(self.descontento)
+	self.rey = 50
+	self.nobleza = 50
+	self.clero = 50
+	self.descontento = 10
 	
 func successul_mission(mission: Mission):
 	print("Succesfull mission: ", mission)
