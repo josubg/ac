@@ -7,11 +7,13 @@ enum AGENT_STATUS {AVAILABLE, DRAGGED, ASSIGNED, DEPLOYED, RESTING}
 @export var available_texture: Texture2D
 @export var biografy: String
 @export var rest_time: int = 30
+@export_enum(Factions.noble, Factions.cura, Factions.malechor) var faction: String
 
 @onready var label: Label = $StatsPanel/Label
 @onready var portrait: TextureRect = $Portrait
 @onready var stats_panel: Panel = $StatsPanel
 @onready var timer: Timer = $Timer
+@onready var label_2: Label = $StatsPanel/Label2
 
 
 var status: AGENT_STATUS = AGENT_STATUS.AVAILABLE :
@@ -26,12 +28,10 @@ var available: bool:
 	get():
 		return self.status == AGENT_STATUS.AVAILABLE
 
-@export_enum(Factions.noble, Factions.cura, Factions.malechor) var faction: String :
-	set(value):
-		stats_panel.text = full_name + "\n" + "("+faction+")"
-
 func _ready() -> void:
 	label.text = full_name
+	label_2.text = faction
+	portrait.texture = available_texture
 	if not mouse_entered.is_connected(_on_mouse_entered):
 		mouse_entered.connect(_on_mouse_entered)
 	if not mouse_exited.is_connected(_on_mouse_exited):

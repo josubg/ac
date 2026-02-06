@@ -1,9 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://d1rtu2yxplwsa"]
+[gd_scene load_steps=13 format=3 uid="uid://d1rtu2yxplwsa"]
 
 [ext_resource type="Script" uid="uid://b1fnk4f66ycn4" path="res://scenes/play_scenes/main.gd" id="1_53356"]
 [ext_resource type="Texture2D" uid="uid://deluds7e5l7hg" path="res://resources/Mapa.png" id="1_ig7tw"]
 [ext_resource type="FontFile" uid="uid://b16lx41ih565r" path="res://resources/Bastarda-K.ttf" id="2_0xm2m"]
+[ext_resource type="Texture2D" uid="uid://cm5n4rm6uvxua" path="res://sprites/CuatroCortes burgués gris.png" id="5_5e6os"]
 [ext_resource type="PackedScene" uid="uid://jvho4fxquili" path="res://scenes/misions/MissionResolutionWindow.tscn" id="5_bd1e2"]
+[ext_resource type="Texture2D" uid="uid://csdwdx7tlbqj7" path="res://sprites/CuatroCortes burgués 1.2 merged.png" id="6_uynio"]
 [ext_resource type="PackedScene" uid="uid://hfvv1kukfi5c" path="res://scenes/misions/MissionWindow.tscn" id="7_td746"]
 [ext_resource type="PackedScene" uid="uid://b78s138cf5qgl" path="res://scenes/agents/Noble.tscn" id="8_uynio"]
 
@@ -20,8 +22,8 @@ bg_color = Color(0.9529412, 0.79607844, 0.54509807, 1)
 script = ExtResource("1_53356")
 
 [node name="MapLayer" type="Sprite2D" parent="."]
-position = Vector2(1157, 796)
-scale = Vector2(0.43405166, 0.44274455)
+position = Vector2(959.32764, 538.72943)
+scale = Vector2(0.99965876, 1.137538)
 texture = ExtResource("1_ig7tw")
 
 [node name="CanvasLayerMission" type="CanvasLayer" parent="."]
@@ -152,10 +154,19 @@ theme_override_constants/separation = 10
 [node name="noble" parent="CanvasLayerMission/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/MarginContainer/agent_panel" instance=ExtResource("8_uynio")]
 layout_mode = 2
 full_name = "Paca"
+faction = "Noble"
 
 [node name="noble2" parent="CanvasLayerMission/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/MarginContainer/agent_panel" instance=ExtResource("8_uynio")]
 layout_mode = 2
 full_name = "Ana"
+faction = "Malechor"
+
+[node name="noble3" parent="CanvasLayerMission/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/MarginContainer/agent_panel" instance=ExtResource("8_uynio")]
+layout_mode = 2
+full_name = "Amparo"
+assigned_texture = ExtResource("5_5e6os")
+available_texture = ExtResource("6_uynio")
+faction = "Religiosa"
 
 [node name="influence_panel" type="Panel" parent="CanvasLayerMission/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer"]
 layout_mode = 2

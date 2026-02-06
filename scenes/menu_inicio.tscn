@@ -53,15 +53,15 @@ layer = 0
 
 [node name="Background" type="Sprite2D" parent="CanvasLayer/Parallax2D/BackgroundLayer"]
 modulate = Color(0.5370987, 0.5370987, 0.5370987, 0.36862746)
-position = Vector2(995.0333, 796)
-scale = Vector2(0.40287435, 0.40287435)
+position = Vector2(957, 540)
+scale = Vector2(1.25, 1.25)
 texture = ExtResource("2_bnklu")
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 1
 offset_right = 185.0
 offset_bottom = 49.0
-text = "Versión 0.2 - 09/12/2025
+text = "Versión 0.3 - 06/02/2026
 "
 
 [node name="CanvasLayer2" type="CanvasLayer" parent="."]

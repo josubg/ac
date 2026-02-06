@@ -10,6 +10,6 @@ assigned_texture = ExtResource("3_me3ck")
 available_texture = ExtResource("2_6knku")
 
 [node name="StatsPanel" parent="." index="1"]
-visible = true
+visible = false
 
 [node name="Timer" type="Timer" parent="." index="2"]

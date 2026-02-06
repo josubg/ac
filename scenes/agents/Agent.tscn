@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://dkahlsa41u8ph"]
+[gd_scene load_steps=6 format=3 uid="uid://dkahlsa41u8ph"]
 
 [ext_resource type="Texture2D" uid="uid://ba6me2bhqudbu" path="res://sprites/noble.png" id="1_f5in3"]
 [ext_resource type="Script" uid="uid://bdmwg7ejti1lc" path="res://scenes/agents/Agent.gd" id="2_tv2h4"]
 [ext_resource type="Texture2D" uid="uid://bhhgkmdfjiqe7" path="res://sprites/noble_gray.png" id="3_hdfbc"]
+[ext_resource type="FontFile" uid="uid://b5p2nwegcv016" path="res://resources/AlbertText-Bold.ttf" id="4_k65ak"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i0enj"]
 bg_color = Color(0.07058824, 0.07058824, 0.07058824, 0.8784314)
@@ -35,13 +36,14 @@ expand_mode = 3
 stretch_mode = 5
 
 [node name="StatsPanel" type="Panel" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -67.00249
+offset_top = -109.01588
+offset_right = 3.0027466
+offset_bottom = 0.99728394
 grow_horizontal = 2
 grow_vertical = 0
 mouse_filter = 2
@@ -56,5 +58,15 @@ offset_left = -28.0
 offset_right = 28.0
 offset_bottom = 23.0
 grow_horizontal = 2
+theme_override_fonts/font = ExtResource("4_k65ak")
+theme_override_font_sizes/font_size = 20
 text = "Prueba"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="StatsPanel"]
+layout_mode = 0
+offset_left = 2.376646
+offset_top = 38.009953
+offset_right = 197.5089
+offset_bottom = 61.009953
 horizontal_alignment = 1
