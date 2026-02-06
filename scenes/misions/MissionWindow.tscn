@@ -34,6 +34,8 @@ offset_right = -748.80005
 offset_bottom = -648.00006
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 theme_override_styles/panel = SubResource("StyleBoxFlat_filhx")
 script = ExtResource("1_4fb1n")
 
@@ -69,9 +71,10 @@ autowrap_mode = 2
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.27
+theme_override_constants/margin_top = 50
 
 [node name="AgentRoast" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer"]
-custom_minimum_size = Vector2(0, 320)
+custom_minimum_size = Vector2(784, 210)
 layout_mode = 2
 size_flags_vertical = 0
 theme = SubResource("Theme_yrtqx")
@@ -83,10 +86,10 @@ text = "Enviar espias"
 
 [node name="CloseMissionButton" type="Button" parent="."]
 layout_mode = 0
-offset_left = 616.0
-offset_top = 56.30002
-offset_right = 703.0
-offset_bottom = 87.30002
+offset_left = 766.0
+offset_top = 58.30002
+offset_right = 853.0
+offset_bottom = 89.30002
 theme_override_colors/font_color = Color(0.87, 0.13920002, 0.13920002, 1)
 text = "Cerrar"
 

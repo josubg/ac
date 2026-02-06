@@ -8,7 +8,7 @@ var state : State = State.NONE
 @export var intro_scene_path  : String = "res://scenes/Intro_Video.tscn"
 @export var menu_scene_path   : String = "res://scenes/menu_inicio.tscn"
 @export var game_scene_path   : String = "res://scenes/play_scenes/main.tscn"
-@export var gameover_scene_path : String = "res://Scenes/GameOver.tscn"
+@export var gameover_scene_path : String = "res://Scenes/game_over.tscn"
 
 # Señales que otras partes del proyecto pueden escuchar
 signal scene_changed(new_scene_name : String)

@@ -8,6 +8,7 @@ enum AGENT_STATUS {AVAILABLE, DRAGGED, ASSIGNED, DEPLOYED, RESTING}
 @export var biografy: String
 @export var rest_time: int = 30
 
+@onready var label: Label = $StatsPanel/Label
 @onready var portrait: TextureRect = $Portrait
 @onready var stats_panel: Panel = $StatsPanel
 @onready var timer: Timer = $Timer
@@ -30,6 +31,7 @@ var available: bool:
 		stats_panel.text = full_name + "\n" + "("+faction+")"
 
 func _ready() -> void:
+	label.text = full_name
 	if not mouse_entered.is_connected(_on_mouse_entered):
 		mouse_entered.connect(_on_mouse_entered)
 	if not mouse_exited.is_connected(_on_mouse_exited):

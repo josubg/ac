@@ -103,7 +103,6 @@ layout_mode = 2
 [node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayerMission/VBoxContainer/PanelContainer3/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-size_flags_stretch_ratio = 0.25
 
 [node name="Panel" type="Panel" parent="CanvasLayerMission/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
@@ -112,6 +111,7 @@ size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_ig7tw")
 
 [node name="Label" type="Label" parent="CanvasLayerMission/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer2/Panel"]
+visible = false
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
@@ -126,6 +126,7 @@ size_flags_stretch_ratio = 0.3
 theme_override_styles/panel = SubResource("StyleBoxFlat_h2yge")
 
 [node name="Label" type="Label" parent="CanvasLayerMission/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer2/Panel2"]
+visible = false
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
@@ -224,19 +225,16 @@ size_flags_horizontal = 3
 size_flags_vertical = 1
 
 [node name="MissionResolutionWindow" parent="CanvasLayerMission" instance=ExtResource("5_bd1e2")]
-offset_left = 641.0
-offset_top = 221.0
-offset_right = -107.80005
-offset_bottom = -216.40002
+offset_left = 643.0
+offset_top = 135.0
+offset_right = -105.80005
+offset_bottom = -302.40002
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
 [node name="MissionWindow" parent="CanvasLayerMission" instance=ExtResource("7_td746")]
-visible = false
-offset_left = 638.0
-offset_top = 314.0
-offset_right = -110.80005
-offset_bottom = -334.00006
-size_flags_horizontal = 4
-size_flags_vertical = 4
+offset_left = 568.0
+offset_top = 137.0
+offset_right = -180.80005
+offset_bottom = -300.40002
 metadata/_edit_use_anchors_ = true

@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://bhhgkmdfjiqe7" path="res://sprites/noble_gray.png" id="3_me3ck"]
 
 [node name="Panel" instance=ExtResource("1_fmyyw")]
+size_flags_horizontal = 1
 assigned_texture = ExtResource("3_me3ck")
 available_texture = ExtResource("2_6knku")
 
