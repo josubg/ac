@@ -57,6 +57,7 @@ func load_missions(path: String) -> void:
 		mission.y = int(row[11])
 		mission.start = int(row[12])
 		if row.size() >= 15:
+			print("EXITO TEXT: "+row[13])
 			mission.success_text = row[13]
 			mission.failed_text = row[14]
 		else:

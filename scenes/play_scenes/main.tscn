@@ -1,13 +1,17 @@
-[gd_scene load_steps=13 format=3 uid="uid://d1rtu2yxplwsa"]
+[gd_scene load_steps=17 format=3 uid="uid://d1rtu2yxplwsa"]
 
 [ext_resource type="Script" uid="uid://b1fnk4f66ycn4" path="res://scenes/play_scenes/main.gd" id="1_53356"]
 [ext_resource type="Texture2D" uid="uid://deluds7e5l7hg" path="res://resources/Mapa.png" id="1_ig7tw"]
 [ext_resource type="FontFile" uid="uid://b16lx41ih565r" path="res://resources/Bastarda-K.ttf" id="2_0xm2m"]
 [ext_resource type="Texture2D" uid="uid://cm5n4rm6uvxua" path="res://sprites/CuatroCortes burgués gris.png" id="5_5e6os"]
 [ext_resource type="PackedScene" uid="uid://jvho4fxquili" path="res://scenes/misions/MissionResolutionWindow.tscn" id="5_bd1e2"]
+[ext_resource type="Texture2D" uid="uid://cv1jwl37ujgsw" path="res://sprites/pobre_marron.png" id="5_nck21"]
+[ext_resource type="Texture2D" uid="uid://c2gt7w838ciud" path="res://sprites/pobre_gray.png" id="6_k70x2"]
 [ext_resource type="Texture2D" uid="uid://csdwdx7tlbqj7" path="res://sprites/CuatroCortes burgués 1.2 merged.png" id="6_uynio"]
 [ext_resource type="PackedScene" uid="uid://hfvv1kukfi5c" path="res://scenes/misions/MissionWindow.tscn" id="7_td746"]
 [ext_resource type="PackedScene" uid="uid://b78s138cf5qgl" path="res://scenes/agents/Noble.tscn" id="8_uynio"]
+[ext_resource type="Texture2D" uid="uid://b6ywn0w4q0vkm" path="res://sprites/Monja_marron.png" id="9_jeb2x"]
+[ext_resource type="Texture2D" uid="uid://bbpblvs7wbjch" path="res://sprites/monja_grey.png" id="10_iml5s"]
 
 [sub_resource type="Theme" id="Theme_ig7tw"]
 
@@ -158,7 +162,9 @@ faction = "Noble"
 
 [node name="noble2" parent="CanvasLayerMission/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/MarginContainer/agent_panel" instance=ExtResource("8_uynio")]
 layout_mode = 2
-full_name = "Ana"
+full_name = "Juanito"
+assigned_texture = ExtResource("6_k70x2")
+available_texture = ExtResource("5_nck21")
 faction = "Malechor"
 
 [node name="noble3" parent="CanvasLayerMission/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/MarginContainer/agent_panel" instance=ExtResource("8_uynio")]
@@ -166,6 +172,13 @@ layout_mode = 2
 full_name = "Amparo"
 assigned_texture = ExtResource("5_5e6os")
 available_texture = ExtResource("6_uynio")
+faction = "Religiosa"
+
+[node name="noble4" parent="CanvasLayerMission/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/MarginContainer/agent_panel" instance=ExtResource("8_uynio")]
+layout_mode = 2
+full_name = "Sor María"
+assigned_texture = ExtResource("10_iml5s")
+available_texture = ExtResource("9_jeb2x")
 faction = "Religiosa"
 
 [node name="influence_panel" type="Panel" parent="CanvasLayerMission/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer"]
