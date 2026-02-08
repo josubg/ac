@@ -49,7 +49,7 @@ func clean_agent(agent: Agent) -> void:
 func send_agents_home() -> void:
 	print("Mission: Sending agents to home")
 	for agent in self.agents:
-		agent.send_home()
+		agent.send_home(self.status == MISSION_STATUS.succeded)
 
 func send_agents_mission():
 	print("Mission: Sending agents to mission")

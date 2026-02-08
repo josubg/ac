@@ -2,7 +2,11 @@ class_name MissionButton extends TextureButton
 
 signal mission_pressed(mission: Mission)
 
-@export var mission: Mission
+var mission: Mission
+
+
+@export var on_course_texture : Texture2D 
+@export var on_course_texture_hover : Texture2D
 
 @onready var anim: AnimationPlayer = $AnimationPlayer
 
@@ -16,17 +20,16 @@ func start_blinking() -> void:
 	
 func stop_blinking() -> void:
 	anim.stop()
-	modulate = Color.WHITE
 
 func set_on_course() -> void:
 	start_blinking()
 	self.disabled = true
-	self.modulate = Color(0.459, 0.18, 0.18)
+	self.texture_normal = self.on_course_texture
+	self.texture_hover = self.on_course_texture_hover
 
 func set_resolved() -> void:
 	stop_blinking()
 	self.disabled = false
-	self.modulate= Color(0.0, 7.307, 6.021)	
 
 func set_warning() -> void:
 	start_blinking()
