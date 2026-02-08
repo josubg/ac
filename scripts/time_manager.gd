@@ -26,6 +26,11 @@ func resume():
 	self.paused = false
 	for timer in self.timers:
 		timer.paused = false
+		
+func get_timer(seconds) -> SceneTreeTimer:
+	var timer = get_tree().create_timer(seconds)
+	#self.timers.append(timer)
+	return timer
 
 func add_timer(timer: Timer):
 	self.timers.append(timer)

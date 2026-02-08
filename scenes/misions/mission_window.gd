@@ -28,7 +28,7 @@ func show_mission(new_mission: Mission) -> void:
 
 
 func _on_send_pressed() -> void:
-	MissionManager.resolve_mision(self.mission)
+	MissionManager.send_agents(self.mission)
 	self.mission = null
 	TimeManager.resume()
 	self.hide()

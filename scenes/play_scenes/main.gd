@@ -44,14 +44,14 @@ func mission_added(mission: Mission) -> void:
 	button.mission_pressed.connect(_on_mission_pressed)
 	
 func mission_updated(mission: Mission):
-	print("MISION UPDATED!")
 	for button in buttons: 
 		if button.mission == mission: 
+			if mission.on_course():
+				button.set_on_course()
 			if mission.resolved():
-				print(mission.resolved())
-				button.set_gold()
+				button.set_resolved()
 			else:
-				button.start_blinking()
+				button.set_warning()
 
 func mission_removed(mission: Mission):
 	for button in buttons: 

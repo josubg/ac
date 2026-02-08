@@ -1,6 +1,6 @@
 class_name Mission extends Resource
 
-enum MISSION_STATUS {created, deployed, warning, succeded, failed, expired} 
+enum MISSION_STATUS {created, deployed, warning, expired, on_course, succeded, failed} 
 
 @export var titulo: String
 @export var mision: String
@@ -16,14 +16,18 @@ enum MISSION_STATUS {created, deployed, warning, succeded, failed, expired}
 @export var y: int
 @export var start: int
 @export var duration_seconds: int = 10
+@export var resolve_time: int = 5
 @export var slots: int = 4
 @export var success_text : String
 @export var failed_text : String
 
+var timer: SceneTreeTimer
 var agents : Array[Agent] = []
 var status: MISSION_STATUS = MISSION_STATUS.created
 
-
+func on_course():
+	return self.status == MISSION_STATUS.on_course
+	
 func resolved():
 	return self.status in [MISSION_STATUS.succeded, MISSION_STATUS.failed]
 	
@@ -43,5 +47,24 @@ func clean_agent(agent: Agent) -> void:
 	agent.unselect()
 	
 func send_agents_home() -> void:
+	print("Mission: Sending agents to home")
 	for agent in self.agents:
 		agent.send_home()
+
+func send_agents_mission():
+	print("Mission: Sending agents to mission")
+	timer = TimeManager.get_timer(resolve_time)
+	self.status = MISSION_STATUS.on_course
+	timer.timeout.connect(self.resolve_mission)
+
+	
+func resolve_mission():
+	print("Mission: resolving mission")
+	var rng = RandomNumberGenerator.new()
+	var luck = rng.randf_range(0, 1)
+	var confidence = self.get_probabity()
+	if luck > confidence: 
+		self.status = MISSION_STATUS.failed
+	else:
+		self.status = MISSION_STATUS.succeded
+	print("Mission: Resolved mision( %s):  %s>%s  %s" % [self.titulo, confidence, luck , self.status])

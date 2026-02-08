@@ -4,9 +4,9 @@ signal added_mission(mission: Mission)
 signal warning_mission(mission: Mission)
 signal clossed_mission(mission: Mission)
 
-var scheduled_missions := {}
-var active_missions  := {}
-var resolved_missions := []
+var scheduled_missions = {}
+var active_missions  = {}
+var on_course_missions = []
 var last_checked_second = -1
 
 func _process(_delta: float) -> void:
@@ -22,6 +22,10 @@ func _process(_delta: float) -> void:
 			warn_mission(mission)
 		if active_missions[mission] < seconds:
 			expire_mission(mission)
+	for mission in on_course_missions:
+		if mission.resolved():
+			resolve_mision(mission)
+			
 	 
 func load_missions(path: String) -> void:
 	scheduled_missions.clear()
@@ -88,38 +92,36 @@ func deploy_mission(mission: Mission):
 	mission.status = Mission.MISSION_STATUS.deployed
 	active_missions[mission] = last_checked_second + 10
 	added_mission.emit(mission)
-	print("Launched mision: ", mission)
+	print("Mission Manager: Launched mision: ", mission)
 	
 func warn_mission(mission: Mission):
 	mission.status = Mission.MISSION_STATUS.warning
 	warning_mission.emit(mission)
-	print("Warned mision: ", mission)
+	print("Mission Manager: Warned mision: ", mission)
 
 func expire_mission(mission: Mission):
 	active_missions.erase(mission)
 	mission.status = Mission.MISSION_STATUS.expired
 	clossed_mission.emit(mission)
-	print("Expired mision: ", mission)
-
-func resolve_mision(mission: Mission) -> void:
-	active_missions.erase(mission)
-	var rng = RandomNumberGenerator.new()
-	var luck = rng.randf_range(0, 1)
-	var confidence = mission.get_probabity()
-	if luck > confidence: 
-		mission.status = Mission.MISSION_STATUS.failed	
-	else:
-		mission.status = Mission.MISSION_STATUS.succeded
-	print("Resolved mision( %s):  %s>%s  %s" % [mission, confidence, luck , mission.status])
-	warning_mission.emit(mission)
-	resolved_missions.append(mission)
+	print("Mission Manager: Expired mision: ", mission)
 	
+func send_agents(mission: Mission):
+	active_missions.erase(mission)
+	on_course_missions.append(mission)
+	mission.send_agents_mission()
+	warning_mission.emit(mission)
+	print("Mission Manager: Agents sent: ", mission)
+	
+func resolve_mision(mission: Mission) -> void:
+	warning_mission.emit(mission)
+	on_course_missions.erase(mission)
+	print("Mission Manager: Mission Acomplished: ", mission)
 	
 func review_mision(mission: Mission) -> void:
 	if mission.success():
 		Player.successul_mission(mission)
 	else:
 		Player.failed_mission(mission)
-	print("Reviewed mision: ", mission)
 	mission.send_agents_home()
 	clossed_mission.emit(mission)
+	print("Mission Manager: Reviewed mision: ", mission)

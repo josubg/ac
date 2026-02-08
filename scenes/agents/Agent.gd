@@ -42,13 +42,14 @@ func unselect():
 	self.status = AGENT_STATUS.AVAILABLE
 	
 func send_home():
-	self.status = AGENT_STATUS.RESTING
-	timer.timeout.connect(self.rested)
-	timer.start(rest_time)
-	TimeManager.add_timer(timer)
+	self.rested()
+	#self.status = AGENT_STATUS.RESTING
+	#timer.timeout.connect(self.rested)
+	#timer.start(rest_time)
+	#TimeManager.add_timer(timer)
 
 func rested():
-	TimeManager.remove_timer(timer)
+	#TimeManager.remove_timer(timer)
 	self.status = AGENT_STATUS.AVAILABLE
 
 func _notification(what: int) -> void:
