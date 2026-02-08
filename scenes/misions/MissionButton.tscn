@@ -3,24 +3,8 @@
 [ext_resource type="Texture2D" uid="uid://7pvuqc44x556" path="res://sprites/lacre_mision.png" id="1_5a82t"]
 [ext_resource type="Texture2D" uid="uid://ejtx3jg7mryc" path="res://sprites/lacre_mision_on.png" id="2_6ex2o"]
 [ext_resource type="Script" uid="uid://5yqjmn56hfb7" path="res://scenes/misions/mission_button.gd" id="3_flque"]
-[ext_resource type="Script" uid="uid://t3df8qy86ik5" path="res://scenes/misions/Mission.gd" id="4_6ex2o"]
-
-[sub_resource type="Resource" id="Resource_flque"]
-script = ExtResource("4_6ex2o")
-titulo = "test"
-mision = "go where nobody goes before"
-rey = 1
-clero = 1
-nobleza = 1
-descontento = 1
-influencia = 1
-cura = 1
-noble = 1
-malechor = 1
-x = 500
-y = 500
-duration_seconds = 20
-metadata/_custom_type_script = "uid://t3df8qy86ik5"
+[ext_resource type="Texture2D" uid="uid://ca1s175fwtsq4" path="res://sprites/lacre azul.png" id="4_flque"]
+[ext_resource type="Texture2D" uid="uid://dmxepurr6fgom" path="res://sprites/lacre  brillo azul.png" id="5_g23r0"]
 
 [sub_resource type="Animation" id="Animation_iid0w"]
 length = 0.001
@@ -40,6 +24,7 @@ tracks/0/keys = {
 [sub_resource type="Animation" id="Animation_drjvo"]
 resource_name = "blink"
 length = 0.5
+loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -68,7 +53,8 @@ texture_normal = ExtResource("1_5a82t")
 texture_hover = ExtResource("2_6ex2o")
 stretch_mode = 0
 script = ExtResource("3_flque")
-mission = SubResource("Resource_flque")
+on_course_texture = ExtResource("4_flque")
+on_course_texture_hover = ExtResource("5_g23r0")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
