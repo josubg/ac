@@ -15,6 +15,12 @@ enum AGENT_STATUS {AVAILABLE, DRAGGED, ASSIGNED, DEPLOYED, RESTING}
 @onready var timer: Timer = $Timer
 @onready var label_2: Label = $StatsPanel/Label2
 
+var experiencia : int = 0
+var missiones_veterano: int =  4
+
+var veterano: bool :
+	get(): 
+		return experiencia > missiones_veterano
 
 var status: AGENT_STATUS = AGENT_STATUS.AVAILABLE :
 	set(value):
@@ -41,7 +47,9 @@ func unselect():
 	# When agent is removed from unstarted mission
 	self.status = AGENT_STATUS.AVAILABLE
 	
-func send_home():
+func send_home(exito: bool):
+	if exito:
+		self.experiencia += 1
 	self.rested()
 	#self.status = AGENT_STATUS.RESTING
 	#timer.timeout.connect(self.rested)
