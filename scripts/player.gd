@@ -20,6 +20,8 @@ var noble_strike_3 = true
 var iglesia_strike_1 = true
 var iglesia_strike_2 = true
 var iglesia_strike_3 = true
+var penalizacion = 10
+var bono = 5
 
 var rey: int : 
 	set(value):
@@ -54,17 +56,17 @@ func start():
 	
 func successul_mission(mission: Mission):
 	print("Succesfull mission: ", mission)
-	clero += mission.clero
-	rey += mission.rey
-	nobleza += mission.nobleza
-	descontento -= mission.descontento
+	clero += mission.clero * bono
+	rey += mission.rey * bono
+	nobleza += mission.nobleza * bono
+	descontento -= mission.descontento * bono
 	
 func failed_mission(mission):
 	print("Unsuccesfull mission: ", mission)
-	clero -= mission.clero
-	rey -= mission.rey
-	nobleza -= mission.nobleza
-	descontento += mission.descontento
+	clero -= mission.clero * penalizacion
+	rey -= mission.rey * penalizacion
+	nobleza -= mission.nobleza * penalizacion
+	descontento += mission.descontento * penalizacion
 
 func check_factions():
 	if started:

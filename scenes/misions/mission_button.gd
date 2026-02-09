@@ -17,12 +17,15 @@ func start_blinking() -> void:
 	if anim.is_playing():
 		return
 	anim.play("blink")
+	anim.speed_scale = 1
+	
 	
 func stop_blinking() -> void:
 	anim.stop()
 
 func set_on_course() -> void:
 	start_blinking()
+	anim.speed_scale = 0.5
 	self.disabled = true
 	self.texture_normal = self.on_course_texture
 	self.texture_hover = self.on_course_texture_hover

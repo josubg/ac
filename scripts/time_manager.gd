@@ -45,7 +45,7 @@ func _process(delta):
 
 func get_date():
 	var date_map = Time.get_date_dict_from_unix_time(
-		self.start_date + (self.current_time * 86400)
+		self.start_date + (self.current_time * 86400) / 3
 	)
 	return "%s, %s de %s de %s" % [
 		dias[date_map["weekday"]],
