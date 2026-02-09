@@ -103,6 +103,7 @@ func warn_mission(mission: Mission):
 func expire_mission(mission: Mission):
 	active_missions.erase(mission)
 	mission.status = Mission.MISSION_STATUS.expired
+	Player.failed_mission(mission)
 	clossed_mission.emit(mission)
 	print("Mission Manager: Expired mision: ", mission)
 	

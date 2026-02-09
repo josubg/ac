@@ -25,6 +25,11 @@ var timer: SceneTreeTimer
 var agents : Array[Agent] = []
 var status: MISSION_STATUS = MISSION_STATUS.created
 
+var bono_agente: int = 30
+var bono_faccion: int = 30
+var bono_veterano: int = 10
+var penalizacion: int = 10
+
 func on_course():
 	return self.status == MISSION_STATUS.on_course
 	
@@ -34,8 +39,20 @@ func resolved():
 func success():
 	return self.status == MISSION_STATUS.succeded
 	
-func get_probabity():
-	return len(agents)
+func get_probabity()-> float:
+	var  prob = 0
+	for agent in agents:
+		prob += bono_agente
+		if agent.faction == Factions.cura:
+			prob += bono_faccion * self.cura
+		if agent.faction == Factions.malechor:
+			prob += bono_faccion * self.malechor
+		if agent.faction == Factions.noble:
+			prob += bono_faccion * self.noble
+		if agent.veterano:
+			prob += bono_veterano
+	prob -= penalizacion * (len(agents) - 1)
+	return float(prob) / 100
 
 func set_agent(agent: Agent) -> void:
 	if agent not in self.agents:
