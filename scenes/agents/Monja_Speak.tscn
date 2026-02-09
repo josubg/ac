@@ -1,0 +1,44 @@
+[gd_scene load_steps=7 format=3 uid="uid://cqhiguhygaf3d"]
+
+[ext_resource type="Texture2D" uid="uid://gois0e1yi5qq" path="res://sprites/monja.png" id="1_8rvmv"]
+[ext_resource type="Script" uid="uid://dswcfychuyb06" path="res://scenes/agents/monja_speak.gd" id="1_go6ub"]
+[ext_resource type="Texture2D" uid="uid://bxrwgjm81442e" path="res://sprites/paper-papyrus-text-others.png" id="2_2uk77"]
+[ext_resource type="FontFile" uid="uid://b5p2nwegcv016" path="res://resources/AlbertText-Bold.ttf" id="4_16yg8"]
+
+[sub_resource type="Theme" id="Theme_go6ub"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_07m0t"]
+font = ExtResource("4_16yg8")
+font_size = 34
+font_color = Color(0, 0, 0, 1)
+
+[node name="MonjaSpeak" type="Node"]
+script = ExtResource("1_go6ub")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_left = 349.0
+offset_top = 495.0
+offset_right = 2756.0
+offset_bottom = 3130.7043
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("1_8rvmv")
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+offset_left = 264.0
+offset_top = -36.0
+offset_right = 964.0
+offset_bottom = 430.0
+scale = Vector2(1.53, 1.53)
+theme = SubResource("Theme_go6ub")
+texture = ExtResource("2_2uk77")
+
+[node name="Label" type="Label" parent="."]
+offset_left = 453.0
+offset_top = 63.0
+offset_right = 1163.0
+offset_bottom = 512.0
+text = " Por vuestras infinitas gestiones me quedo sin monterías, sin comedias y, lo que más duele, sin comediantas. Si he de ser rey de papeles y despachos, será porque vos habéis matado el campo, el teatro y la risa."
+label_settings = SubResource("LabelSettings_07m0t")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2

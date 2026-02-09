@@ -1,8 +1,9 @@
-[gd_scene load_steps=17 format=3 uid="uid://d1rtu2yxplwsa"]
+[gd_scene load_steps=18 format=3 uid="uid://d1rtu2yxplwsa"]
 
 [ext_resource type="Script" uid="uid://b1fnk4f66ycn4" path="res://scenes/play_scenes/main.gd" id="1_53356"]
 [ext_resource type="Texture2D" uid="uid://deluds7e5l7hg" path="res://resources/Mapa.png" id="1_ig7tw"]
 [ext_resource type="FontFile" uid="uid://b16lx41ih565r" path="res://resources/Bastarda-K.ttf" id="2_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://cqhiguhygaf3d" path="res://scenes/agents/Monja_Speak.tscn" id="3_iml5s"]
 [ext_resource type="Texture2D" uid="uid://cm5n4rm6uvxua" path="res://sprites/CuatroCortes burgués gris.png" id="5_5e6os"]
 [ext_resource type="PackedScene" uid="uid://jvho4fxquili" path="res://scenes/misions/MissionResolutionWindow.tscn" id="5_bd1e2"]
 [ext_resource type="Texture2D" uid="uid://cv1jwl37ujgsw" path="res://sprites/pobre_marron.png" id="5_nck21"]
@@ -248,7 +249,10 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 
+[node name="MonjaSpeak" parent="CanvasLayerMission" instance=ExtResource("3_iml5s")]
+
 [node name="MissionResolutionWindow" parent="CanvasLayerMission" instance=ExtResource("5_bd1e2")]
+visible = false
 offset_left = 643.0
 offset_top = 135.0
 offset_right = -105.80005
@@ -257,6 +261,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 
 [node name="MissionWindow" parent="CanvasLayerMission" instance=ExtResource("7_td746")]
+visible = false
 offset_left = 568.0
 offset_top = 137.0
 offset_right = -180.80005

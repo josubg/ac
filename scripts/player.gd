@@ -5,7 +5,21 @@ signal clero_updated(value)
 signal nobleza_updated(value)
 signal descontentoy_updated(value)
 
+signal rey_strike(n : int)
+signal noble_strike(n : int)
+signal iglesia_strike(n : int)
+
 var started = false
+
+var rey_strike_1 = true
+var rey_strike_2 = true
+var rey_strike_3 = true
+var noble_strike_1 = true
+var noble_strike_2 = true
+var noble_strike_3 = true
+var iglesia_strike_1 = true
+var iglesia_strike_2 = true
+var iglesia_strike_3 = true
 
 var rey: int : 
 	set(value):
@@ -54,23 +68,54 @@ func failed_mission(mission):
 
 func check_factions():
 	if started:
-		if rey < 0:
+		if rey < 40 and rey_strike_1:
+			emit_signal("rey_strike",1)
+			rey_strike_1 = false
+		elif rey < 25 and rey_strike_2:
+			emit_signal("rey_strike",2)
+			rey_strike_2 = false
+		if rey < 10 and rey_strike_3:
+			emit_signal("rey_strike",3)
+			rey_strike_3 = false	
+		elif rey < 0:
 			GameManager.go_to_gameover()
+			print("GAME OVER REY")
 		elif rey > 75:
 			pass
 			#Activate extra agent
+		if clero < 40 and iglesia_strike_1:
+			emit_signal("iglesia_strike",1)
+			iglesia_strike_1 = false
+		elif clero < 25 and iglesia_strike_2:
+			emit_signal("iglesia_strike",2)
+			iglesia_strike_2 = false
+		if clero < 10 and iglesia_strike_3:
+			emit_signal("iglesia_strike",3)
+			iglesia_strike_1 = false	
 		if clero < 0:
 			GameManager.go_to_gameover()
-		elif nobleza > 75:
+			print("GAME OVER CLERO")
+		elif clero > 75:
 			pass
 			#Activate extra agent
+		if nobleza < 40 and noble_strike_1:
+			emit_signal("noble_strike",1)
+			noble_strike_1 = false
+		elif nobleza < 25 and noble_strike_2:
+			emit_signal("noble_strike",2)
+			noble_strike_2 = false
+		elif nobleza < 10 and noble_strike_3:
+			emit_signal("noble_strike",3)
+			noble_strike_3 = false
 		if nobleza < 0:
 			GameManager.go_to_gameover()
+			print("GAME OVER NOBLE")
 		elif nobleza > 75:
 			pass
 			#Activate extra agent
 		if descontento >  99:
 			GameManager.go_to_gameover()
+			print("GAME OVER DESCONTENTO")
 		elif descontento < 1:
 			pass
 			#Activate extra agent

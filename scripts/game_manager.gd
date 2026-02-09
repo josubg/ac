@@ -9,6 +9,7 @@ var state : State = State.NONE
 @export var menu_scene_path   : String = "res://scenes/menu_inicio.tscn"
 @export var game_scene_path   : String = "res://scenes/play_scenes/main.tscn"
 @export var gameover_scene_path : String = "res://Scenes/game_over.tscn"
+@export var gameend_scene_path : String = "res://Scenes/game_end.tscn"
 
 # Señales que otras partes del proyecto pueden escuchar
 signal scene_changed(new_scene_name : String)
@@ -45,6 +46,11 @@ func go_to_gameover(score := 0) -> void:
 	emit_signal("game_over", score)
 	emit_signal("scene_changed", "GameOver")
 
+func go_to_gameend(score := 0) -> void:
+	_change_scene_to_file(gameend_scene_path)
+	state = State.GAMEOVER
+	emit_signal("game_over", score)
+	emit_signal("scene_changed", "GameEnd")
 # -------------------------
 # Funciones internas
 # -------------------------
