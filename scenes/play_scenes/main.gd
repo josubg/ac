@@ -33,7 +33,7 @@ func _ready() -> void:
 	MissionManager.warning_mission.connect(mission_updated)
 	MissionManager.clossed_mission.connect(mission_removed)
 	MissionManager.load_missions("res://resources/data/missions.txt")
-	print("Misions: " + str(MissionManager.scheduled_missions))
+	print("Main: %s" % str(MissionManager.scheduled_missions))
 	# Test_Mission
 	#mission_added(MissionManager.get_test_mission())
 	Player.start()
@@ -58,18 +58,15 @@ func _input(event):
 			set_process_input(false)
 			
 func mission_added(mission: Mission) -> void:
-	print("Mision: " + str(mission.titulo))
+	print("Main: Mision added:  [%s]" % mission.titulo)
 	var button: MissionButton = mission_button_scene.instantiate()
 	buttons.append(button)
 	buttons_layer.add_child(button)
 	var vp_size = get_viewport().get_visible_rect().size
 	var pos = Vector2((mission.x / BASE_RES.x) * vp_size.x,(mission.y / BASE_RES.y) * vp_size.y)
 	button.position = pos
-	print("X"+str(mission.x))
-	print("Y"+str(mission.y))
-	print("X"+str(pos.x))
-	print("Y"+str(pos.y))
-	print("__________________")
+	print("Main: [X %i, Y %i] --> [X %i, Y %i]" % 
+		[mission.x, ]+str(mission.x,mission.y,pos.x,pos.y))
 	button.mission = mission
 	button.mission_pressed.connect(_on_mission_pressed)
 	

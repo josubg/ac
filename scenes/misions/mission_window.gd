@@ -13,7 +13,7 @@ func _ready() -> void:
 
 func show_mission(new_mission: Mission) -> void:
 	TimeManager.pause()
-	print("show mission: ", mission)
+	print("Mission window: show mission [%s]" % mission)
 	if mission != new_mission:
 		for agent_slot in agent_roast.get_children():
 			agent_roast.remove_child(agent_slot)
@@ -25,7 +25,6 @@ func show_mission(new_mission: Mission) -> void:
 			agent_slot.mission = mission
 			agent_roast.add_child(agent_slot)
 	self.show()
-
 
 func _on_send_pressed() -> void:
 	MissionManager.send_agents(self.mission)

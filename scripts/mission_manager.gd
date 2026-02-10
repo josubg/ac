@@ -9,12 +9,16 @@ var active_missions  = {}
 var on_course_missions = []
 var last_checked_second = -1
 
+
+func _ready() -> void:
+	set_process(false)
+
 func _process(_delta: float) -> void:
 	var seconds = int(floor(TimeManager.current_time))
 	if last_checked_second >= seconds:
 		return
 	last_checked_second = seconds
-	print(seconds)
+	print("Mission Manager: second [%s]" % seconds)
 	if scheduled_missions.has(seconds):
 		deploy_mission(scheduled_missions[seconds])
 	for mission in active_missions:
@@ -25,9 +29,9 @@ func _process(_delta: float) -> void:
 	for mission in on_course_missions:
 		if mission.resolved():
 			resolve_mision(mission)
-			
 	 
 func load_missions(path: String) -> void:
+	set_process(false)
 	scheduled_missions.clear()
 	var file = FileAccess.open(path, FileAccess.READ)
 	if file == null:
@@ -57,12 +61,12 @@ func load_missions(path: String) -> void:
 		mission.y = int(row[11])
 		mission.start = int(row[12])
 		if row.size() >= 15:
-			print("EXITO TEXT: "+row[13])
 			mission.success_text = row[13]
 			mission.failed_text = row[14]
 		else:
-			mission.success_text = " Excelencia, tenemos controlada la situación y adjuntamos informes sobre lo sucedido."
-			mission.failed_text = ""
+			print("Mission Manager: WARNING MISSION SIN TEXTOS DE RESULTADO [%s]" % mission.titulo)
+			mission.success_text = "Excelencia, tenemos controlada la situación y adjuntamos informes sobre lo sucedido."
+			mission.failed_text = "Excelencia, ha sido un fracaso"
 		scheduled_missions[mission.start] = mission
 	TimeManager.run()
 	set_process(true)
@@ -93,31 +97,31 @@ func deploy_mission(mission: Mission):
 	mission.status = Mission.MISSION_STATUS.deployed
 	active_missions[mission] = last_checked_second + 10
 	added_mission.emit(mission)
-	print("Mission Manager: Launched mision: ", mission)
+	print("Mission Manager: Launched mision: [%s]" % mission.titulo)
 	
 func warn_mission(mission: Mission):
 	mission.status = Mission.MISSION_STATUS.warning
 	warning_mission.emit(mission)
-	print("Mission Manager: Warned mision: ", mission)
+	print("Mission Manager: Warned mision: [%s]" % mission.titulo)
 
 func expire_mission(mission: Mission):
 	active_missions.erase(mission)
 	mission.status = Mission.MISSION_STATUS.expired
 	Player.failed_mission(mission)
 	clossed_mission.emit(mission)
-	print("Mission Manager: Expired mision: ", mission)
+	print("Mission Manager: Expired mision: [%s]" % mission.titulo)
 	
 func send_agents(mission: Mission):
 	active_missions.erase(mission)
 	on_course_missions.append(mission)
 	mission.send_agents_mission()
 	warning_mission.emit(mission)
-	print("Mission Manager: Agents sent: ", mission)
+	print("Mission Manager: Agents sent: [%s]" % mission.titulo)
 	
 func resolve_mision(mission: Mission) -> void:
 	warning_mission.emit(mission)
 	on_course_missions.erase(mission)
-	print("Mission Manager: Mission Acomplished: ", mission)
+	print("Mission Manager: Mission Acomplished: [%s]" % mission.titulo)
 	
 func review_mision(mission: Mission) -> void:
 	if mission.success():
@@ -126,4 +130,4 @@ func review_mision(mission: Mission) -> void:
 		Player.failed_mission(mission)
 	mission.send_agents_home()
 	clossed_mission.emit(mission)
-	print("Mission Manager: Reviewed mision: ", mission)
+	print("Mission Manager: Reviewed mision: [%s]" % mission.titulo)

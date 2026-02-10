@@ -62,8 +62,7 @@ func rested():
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_DRAG_END and not get_viewport().gui_is_drag_successful():
-		# Drag failed
-		print("Drag failed" , self.full_name)
+		print("Agent: Drag failed [%s]" % self.full_name)
 		self.status = AGENT_STATUS.AVAILABLE
 
 func _get_drag_data(_position):

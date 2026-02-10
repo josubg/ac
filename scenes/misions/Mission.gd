@@ -64,19 +64,19 @@ func clean_agent(agent: Agent) -> void:
 	agent.unselect()
 	
 func send_agents_home() -> void:
-	print("Mission: Sending agents to home")
+	print("Mission: Sending agents to home [%s]" % self.titulo)
 	for agent in self.agents:
 		agent.send_home(self.status == MISSION_STATUS.succeded)
 
 func send_agents_mission():
-	print("Mission: Sending agents to mission")
+	print("Mission: Sending agents to mission [%s]" % self.titulo)
 	timer = TimeManager.get_timer(resolve_time)
 	self.status = MISSION_STATUS.on_course
 	timer.timeout.connect(self.resolve_mission)
 
 	
 func resolve_mission():
-	print("Mission: resolving mission")
+	print("Mission: resolving mission[%s]" % self.titulo)
 	var rng = RandomNumberGenerator.new()
 	var luck = rng.randf_range(0, 1)
 	var confidence = self.get_probabity()
@@ -84,4 +84,4 @@ func resolve_mission():
 		self.status = MISSION_STATUS.failed
 	else:
 		self.status = MISSION_STATUS.succeded
-	print("Mission: Resolved mision( %s):  %s>%s  %s" % [self.titulo, confidence, luck , self.status])
+	print("Mission: Resolved mision[%s]  %s > %s  %s" % [self.titulo, confidence, luck , self.status])

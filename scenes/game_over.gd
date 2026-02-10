@@ -25,8 +25,8 @@ func _ready():
 	
 
 func _show_paragraph(index: int):
-	print(str(index) + "-->" + str(paragraphs.size()))
-	print(index >= paragraphs.size())
+	print("Game over: %i --> %i [%b]" % 
+		[index, paragraphs.size(), index >= paragraphs.size()])
 	if index >= paragraphs.size():
 		label_go.show()
 		intro_label.hide()

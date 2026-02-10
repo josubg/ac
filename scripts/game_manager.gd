@@ -28,30 +28,33 @@ func playing() -> bool:
 	return state == State.PLAYING
 	
 func go_to_intro() -> void:
+	print("Game Manager: Intro")
 	_change_scene_to_file(intro_scene_path)
 	state = State.INTRO
 	emit_signal("scene_changed", "Intro")
 
 func go_to_menu() -> void:
-	print("Cambio a Menu")
+	print("Game Manager: Menu")
 	_change_scene_to_file(menu_scene_path)
 	state = State.MENU
 	emit_signal("scene_changed", "Menu")
 
 func start_game() -> void:
+	print("Game Manager: Start game")
 	# limpia estado de partida si es necesario
 	_change_scene_to_file(game_scene_path)
 	state = State.PLAYING
 	emit_signal("game_started")
 
 func go_to_gameover(score := 0) -> void:
-	print("GO TO GAMEOVER")
+	print("Game Manager: GAME OVER")
 	_change_scene_to_file(gameover_scene_path)
 	state = State.GAMEOVER
 	emit_signal("game_over", score)
 	emit_signal("scene_changed", "GameOver")
 
 func go_to_gameend(score := 0) -> void:
+	print("Game Manager: Game end")
 	_change_scene_to_file(gameend_scene_path)
 	state = State.GAMEOVER
 	emit_signal("game_over", score)
