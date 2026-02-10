@@ -199,6 +199,7 @@ theme_override_font_sizes/bold_font_size = 18
 theme_override_font_sizes/bold_italics_font_size = 18
 theme_override_font_sizes/italics_font_size = 18
 theme_override_font_sizes/mono_font_size = 18
+bbcode_enabled = true
 text = "		Versión adaptada de:
 		[i]\"De esperar, sentir, morir, adorar\" (Juan Hidalgo, 1614–1685) [/i]
 
@@ -207,6 +208,79 @@ text = "		Versión adaptada de:
 "
 
 [node name="Button" type="Button" parent="CreditosCanvas"]
+offset_left = 1334.0
+offset_top = 138.0
+offset_right = 1404.0
+offset_bottom = 174.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_colors/font_color = Color(0.88, 0, 0, 1)
+theme_override_fonts/font = SubResource("FontVariation_5psen")
+theme_override_font_sizes/font_size = 20
+text = "Cerrar"
+icon_alignment = 2
+
+[node name="TutorialCanvas" type="CanvasLayer" parent="."]
+layer = 2
+visible = false
+
+[node name="PanelContainer" type="PanelContainer" parent="TutorialCanvas"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -506.5
+offset_top = -453.5
+offset_right = 506.5
+offset_bottom = 446.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxTexture_v4dt1")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TutorialCanvas/PanelContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TutorialCanvas/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.12
+theme = SubResource("Theme_5psen")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("6_v4dt1")
+theme_override_font_sizes/font_size = 50
+text = "TUTORIAL"
+horizontal_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="TutorialCanvas/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_right = 50
+
+[node name="RichTextLabel" type="RichTextLabel" parent="TutorialCanvas/PanelContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/normal_font_size = 18
+theme_override_font_sizes/bold_font_size = 18
+theme_override_font_sizes/bold_italics_font_size = 18
+theme_override_font_sizes/italics_font_size = 18
+theme_override_font_sizes/mono_font_size = 18
+bbcode_enabled = true
+text = "[b]Cómo jugar esta demo:[/b]
+Decide entre alternativas, gestiona recursos humanos y políticos, y observa las consecuencias de tus elecciones.
+
+• [b]Estate atento a los rumores[/b] que surgen por la ciudad de Madrid. Podrás acceder a ellos clickando sobre el lacre rojo que aparece en el mapa. 
+• [b]Envía a tus agentes a investigar[/b], los tienes en la barra de abajo, para obtener información y resolver la situación. Solo tienes que arrastrar su retrato al cuadro de las misiones. Pero ten en cuenta que cada agente tiene un origen distinto (Religioso, Malechor, Noble...) y eso influye en sus posibilidades de éxito. 
+• [b]Gestiona tu reputación[/b] con la Familia Real, la Iglesia y la Nobleza; perder influencia con una facción puede ser mortal.
+
+Observa además el [b]marcador de descontento[/b],  un descuido y podrían volverse contra ti.
+
+¡Madrid depende de ti!"
+
+[node name="Button" type="Button" parent="TutorialCanvas"]
 offset_left = 1334.0
 offset_top = 138.0
 offset_right = 1404.0
@@ -229,6 +303,8 @@ texture = ExtResource("7_5psen")
 expand_mode = 2
 
 [connection signal="pressed" from="CanvasLayer2/Control/MarginContainer/VBoxContainer/NewGameButton" to="." method="_on_new_game_button_pressed"]
+[connection signal="pressed" from="CanvasLayer2/Control/MarginContainer/VBoxContainer/TutorialButton" to="." method="_on_tutorial_button_pressed"]
 [connection signal="pressed" from="CanvasLayer2/Control/MarginContainer/VBoxContainer/CreditsButton" to="." method="_on_credits_button_pressed"]
 [connection signal="pressed" from="CanvasLayer2/Control/MarginContainer/VBoxContainer/ExitButton" to="." method="_on_exit_button_pressed"]
 [connection signal="pressed" from="CreditosCanvas/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="TutorialCanvas/Button" to="." method="_on_button_pressed_tutorial"]

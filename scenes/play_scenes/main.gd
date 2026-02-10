@@ -15,6 +15,7 @@ extends Node
 @onready var monja_speak: Node = $CanvasLayerMission/MonjaSpeak
 
 @onready var mission_button_scene: PackedScene = load("res://scenes/misions/MissionButton.tscn")
+const BASE_RES = Vector2(1920, 1080)
 
 var buttons: Array[MissionButton]= []
 var monja_mensaje = false
@@ -39,7 +40,8 @@ func _ready() -> void:
 	monja_speak.ocultar()
 
 func _process(_delta):
-	time_label.text = TimeManager.get_date()
+	if GameManager.playing():
+		time_label.text = TimeManager.get_date()
 
 func _input(event):
 	if event is InputEventKey and event.pressed:
@@ -60,7 +62,14 @@ func mission_added(mission: Mission) -> void:
 	var button: MissionButton = mission_button_scene.instantiate()
 	buttons.append(button)
 	buttons_layer.add_child(button)
-	button.position = Vector2(mission.x, mission.y)
+	var vp_size = get_viewport().get_visible_rect().size
+	var pos = Vector2((mission.x / BASE_RES.x) * vp_size.x,(mission.y / BASE_RES.y) * vp_size.y)
+	button.position = pos
+	print("X"+str(mission.x))
+	print("Y"+str(mission.y))
+	print("X"+str(pos.x))
+	print("Y"+str(pos.y))
+	print("__________________")
 	button.mission = mission
 	button.mission_pressed.connect(_on_mission_pressed)
 	

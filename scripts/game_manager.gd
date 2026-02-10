@@ -23,6 +23,10 @@ func _ready() -> void:
 # -------------------------
 # API pública
 # -------------------------
+
+func playing() -> bool:
+	return state == State.PLAYING
+	
 func go_to_intro() -> void:
 	_change_scene_to_file(intro_scene_path)
 	state = State.INTRO
@@ -41,6 +45,7 @@ func start_game() -> void:
 	emit_signal("game_started")
 
 func go_to_gameover(score := 0) -> void:
+	print("GO TO GAMEOVER")
 	_change_scene_to_file(gameover_scene_path)
 	state = State.GAMEOVER
 	emit_signal("game_over", score)

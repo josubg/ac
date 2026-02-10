@@ -48,11 +48,11 @@ var descontento: int :
 		check_factions()
 
 func start():
-	self.started = true
 	self.rey = 50
 	self.nobleza = 50
 	self.clero = 50
 	self.descontento = 10
+	self.started = true
 	
 func successul_mission(mission: Mission):
 	print("Succesfull mission: ", mission)
@@ -79,7 +79,7 @@ func check_factions():
 		if rey < 10 and rey_strike_3:
 			emit_signal("rey_strike",3)
 			rey_strike_3 = false	
-		elif rey < 0:
+		if rey == 0:
 			GameManager.go_to_gameover()
 			print("GAME OVER REY")
 		elif rey > 75:
@@ -94,7 +94,7 @@ func check_factions():
 		if clero < 10 and iglesia_strike_3:
 			emit_signal("iglesia_strike",3)
 			iglesia_strike_1 = false	
-		if clero < 0:
+		if clero == 0:
 			GameManager.go_to_gameover()
 			print("GAME OVER CLERO")
 		elif clero > 75:
@@ -109,7 +109,7 @@ func check_factions():
 		elif nobleza < 10 and noble_strike_3:
 			emit_signal("noble_strike",3)
 			noble_strike_3 = false
-		if nobleza < 0:
+		if nobleza == 0:
 			GameManager.go_to_gameover()
 			print("GAME OVER NOBLE")
 		elif nobleza > 75:

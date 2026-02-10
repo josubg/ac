@@ -49,7 +49,7 @@ func get_results_text(mission: Mission) -> String:
 	elif mission.nobleza < 0:
 		text = text + "Algunos nobles se han resentido de nuestros actos. \n" 
 	if mission.descontento < 0:
-		text = text + "El descontento popular se ha reducido. \n" 
-	elif mission.descontento > 0:
 		text = text + "El descontento popular se ha incrementado. \n" 
+	elif mission.descontento > 0:
+		text = text + "El descontento popular se ha reducido. \n" 
 	return text

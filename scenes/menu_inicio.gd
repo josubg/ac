@@ -71,3 +71,11 @@ func _unhandled_input(event):
 
 func _on_button_pressed() -> void:
 	$CreditosCanvas.visible = false
+
+
+func _on_tutorial_button_pressed() -> void:
+	$TutorialCanvas.visible = true
+
+
+func _on_button_pressed_tutorial() -> void:
+	$TutorialCanvas.visible = false
