@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://hfvv1kukfi5c"]
+[gd_scene load_steps=9 format=3 uid="uid://hfvv1kukfi5c"]
 
 [ext_resource type="Script" uid="uid://b4vfbvoub2w7g" path="res://scenes/misions/mission_window.gd" id="1_4fb1n"]
 [ext_resource type="Texture2D" uid="uid://d046e3k84whiw" path="res://sprites/frame.png" id="2_353q8"]
 [ext_resource type="FontFile" uid="uid://b16lx41ih565r" path="res://resources/Bastarda-K.ttf" id="3_filhx"]
+[ext_resource type="AudioStream" uid="uid://dfqxrd4o4u128" path="res://resources/mision_papel.mp3" id="4_yrtqx"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_filhx"]
 bg_color = Color(0, 0, 0, 1)
@@ -92,6 +93,10 @@ offset_right = 853.0
 offset_bottom = 89.30002
 theme_override_colors/font_color = Color(0.87, 0.13920002, 0.13920002, 1)
 text = "Cerrar"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_yrtqx")
+volume_db = -3.817
 
 [connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/Send" to="." method="_on_send_pressed"]
 [connection signal="pressed" from="CloseMissionButton" to="." method="_on_close_mission_button_pressed"]

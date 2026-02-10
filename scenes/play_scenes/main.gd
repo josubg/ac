@@ -13,12 +13,14 @@ extends Node
 @onready var active_missions: Dictionary[Mission, int] = {}
 @onready var active_mission_buttons: Dictionary[Mission, MissionButton] = {}
 @onready var monja_speak: Node = $CanvasLayerMission/MonjaSpeak
+@onready var audio_descontento: AudioStreamPlayer = $AudioDescontento
 
 @onready var mission_button_scene: PackedScene = load("res://scenes/misions/MissionButton.tscn")
 const BASE_RES = Vector2(1920, 1080)
 
 var buttons: Array[MissionButton]= []
 var monja_mensaje = false
+var descontento_playing = false
 
 func _ready() -> void:
 	Player.clero_updated.connect(update_clero)
@@ -42,6 +44,7 @@ func _ready() -> void:
 func _process(_delta):
 	if GameManager.playing():
 		time_label.text = TimeManager.get_date()
+		print("Mision_Count"+str(MissionManager.mission_count))
 		if MissionManager.mission_count == 0:
 			GameManager.go_to_gameend()
 
@@ -103,6 +106,14 @@ func update_clero(value):
 	
 func update_descontento(value):
 	descontento_bar.value = value
+	audio_descontento.volume_db == value-116
+	print("VOLUME:"+str(audio_descontento.volume_db))
+	if descontento_bar.value > 70 and not descontento_playing:
+		audio_descontento.play()
+		descontento_playing = true
+	elif descontento_bar.value < 70:
+		audio_descontento.stop()
+		descontento_playing = false
 	_update_color(descontento_bar,value,true)
 
 func _update_color(faction : ProgressBar, value: float, inverse: bool) -> void:

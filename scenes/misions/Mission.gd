@@ -52,7 +52,8 @@ func get_probabity()-> float:
 		if agent.veterano:
 			prob += bono_veterano
 	prob -= penalizacion * (len(agents) - 1)
-	return float(prob) / 100
+	#return float(prob) / 100
+	return 1
 
 func set_agent(agent: Agent) -> void:
 	if agent not in self.agents:

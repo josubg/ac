@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bggdh3ueqdk7a" path="res://scenes/game_end.gd" id="1_hr20t"]
 [ext_resource type="FontFile" uid="uid://b5p2nwegcv016" path="res://resources/AlbertText-Bold.ttf" id="2_tqrak"]
-[ext_resource type="AudioStream" uid="uid://dsvh6bj3omnj3" path="res://resources/intro_long.wav" id="3_bjp3d"]
+[ext_resource type="AudioStream" uid="uid://c4b811k1fw816" path="res://resources/victoria_1.mp3" id="3_hr20t"]
 
 [sub_resource type="Animation" id="Animation_sf2on"]
 length = 8.0
@@ -125,4 +125,4 @@ libraries = {
 [node name="Timer" type="Timer" parent="."]
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("3_bjp3d")
+stream = ExtResource("3_hr20t")

@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://blfwdxaq7el5v" path="res://scripts/intro_video.gd" id="1_m1no4"]
 [ext_resource type="FontFile" uid="uid://b5p2nwegcv016" path="res://resources/AlbertText-Bold.ttf" id="2_m1no4"]
-[ext_resource type="AudioStream" uid="uid://dsvh6bj3omnj3" path="res://resources/intro_long.wav" id="3_sf2on"]
+[ext_resource type="AudioStream" uid="uid://cm06lmd3rlgf1" path="res://resources/intro 3.wav" id="3_86yvy"]
 
 [sub_resource type="Animation" id="Animation_sf2on"]
 length = 6.0
@@ -83,6 +83,6 @@ libraries = {
 [node name="Timer" type="Timer" parent="."]
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("3_sf2on")
+stream = ExtResource("3_86yvy")
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

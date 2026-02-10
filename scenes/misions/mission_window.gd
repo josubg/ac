@@ -3,6 +3,7 @@ class_name MissionWindow extends Control
 @onready var title_label: Label = $PanelContainer/MarginContainer/VBoxContainer/TitleLabel
 @onready var description_label: Label = $PanelContainer/MarginContainer/VBoxContainer/DescriptionLabel
 @onready var agent_roast: HBoxContainer = $PanelContainer/MarginContainer/VBoxContainer/MarginContainer/AgentRoast
+@onready var audio_stream_player: AudioStreamPlayer = $AudioStreamPlayer
 
 
 const AGENT_SLOT = preload("res://scenes/agents/AgentSlot.tscn")
@@ -13,6 +14,7 @@ func _ready() -> void:
 
 func show_mission(new_mission: Mission) -> void:
 	TimeManager.pause()
+	audio_stream_player.play()
 	print("Mission window: show mission [%s]" % mission)
 	if mission != new_mission:
 		for agent_slot in agent_roast.get_children():

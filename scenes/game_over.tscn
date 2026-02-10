@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://clfu68y6fdh78" path="res://scenes/game_over.gd" id="1_tbwuq"]
 [ext_resource type="FontFile" uid="uid://b5p2nwegcv016" path="res://resources/AlbertText-Bold.ttf" id="1_wqhvx"]
-[ext_resource type="AudioStream" uid="uid://dsvh6bj3omnj3" path="res://resources/intro_long.wav" id="2_tbwuq"]
+[ext_resource type="AudioStream" uid="uid://d1jj4pglphcti" path="res://resources/game_over.mp3" id="3_tbwuq"]
 
 [sub_resource type="Animation" id="Animation_sf2on"]
 length = 8.0
@@ -125,4 +125,4 @@ libraries = {
 [node name="Timer" type="Timer" parent="."]
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("2_tbwuq")
+stream = ExtResource("3_tbwuq")

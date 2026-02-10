@@ -54,7 +54,7 @@ func start():
 	self.rey = 50
 	self.nobleza = 50
 	self.clero = 50
-	self.descontento = 10
+	self.descontento = 50
 	self.started = true
 	
 func successul_mission(mission: Mission):
@@ -74,7 +74,7 @@ func failed_mission(mission):
 func check_factions():
 	if started:
 		if rey == 0 or clero == 0 or nobleza == 0 or descontento > 99:
-			#GameManager.go_to_gameover()
+			GameManager.go_to_gameover()
 			pass
 			
 		if rey < strike_1 and rey_strike_1:

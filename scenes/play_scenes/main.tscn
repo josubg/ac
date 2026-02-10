@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://d1rtu2yxplwsa"]
+[gd_scene load_steps=20 format=3 uid="uid://d1rtu2yxplwsa"]
 
 [ext_resource type="Script" uid="uid://b1fnk4f66ycn4" path="res://scenes/play_scenes/main.gd" id="1_53356"]
 [ext_resource type="Texture2D" uid="uid://deluds7e5l7hg" path="res://resources/Mapa.png" id="1_ig7tw"]
@@ -13,6 +13,8 @@
 [ext_resource type="PackedScene" uid="uid://b78s138cf5qgl" path="res://scenes/agents/Noble.tscn" id="8_uynio"]
 [ext_resource type="Texture2D" uid="uid://b6ywn0w4q0vkm" path="res://sprites/Monja_marron.png" id="9_jeb2x"]
 [ext_resource type="Texture2D" uid="uid://bbpblvs7wbjch" path="res://sprites/monja_grey.png" id="10_iml5s"]
+[ext_resource type="AudioStream" uid="uid://dsvh6bj3omnj3" path="res://resources/intro_long.wav" id="14_2j01o"]
+[ext_resource type="AudioStream" uid="uid://8t8xayoaqkv1" path="res://resources/furiosos.mp3" id="15_eq487"]
 
 [sub_resource type="Theme" id="Theme_ig7tw"]
 
@@ -267,3 +269,12 @@ offset_top = 137.0
 offset_right = -180.80005
 offset_bottom = -300.40002
 metadata/_edit_use_anchors_ = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("14_2j01o")
+volume_db = -5.0
+autoplay = true
+
+[node name="AudioDescontento" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("15_eq487")
+volume_db = -16.0
