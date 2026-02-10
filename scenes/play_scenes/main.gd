@@ -35,7 +35,7 @@ func _ready() -> void:
 	MissionManager.load_missions("res://resources/data/missions.txt")
 	print("Misions: " + str(MissionManager.scheduled_missions))
 	# Test_Mission
-	mission_added(MissionManager.get_test_mission())
+	#mission_added(MissionManager.get_test_mission())
 	Player.start()
 	monja_speak.ocultar()
 
