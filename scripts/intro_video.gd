@@ -21,7 +21,6 @@ var animating := false
 func _ready():
 	$AudioStreamPlayer.play()
 	_show_paragraph(current_index)
-	
 
 func _show_paragraph(index: int):
 	print("Intro video: %i --> %i [%b]" % 
@@ -34,13 +33,14 @@ func _show_paragraph(index: int):
 	await animation_player.animation_finished
 	_on_next_paragraph()
 
-
 func _on_next_paragraph():
 	current_index += 1
 	_show_paragraph(current_index)
-
-
+	
 func _unhandled_input(event):
 	# detectamos la pulsación de la acción skip (mejor en un handled/unhandled para UI)
+	if event is InputEventMouseButton:
+		if event.pressed:
+			_on_next_paragraph()
 	if event.is_action_pressed(skip_action):
 		GameManager.go_to_menu()

@@ -42,6 +42,8 @@ func _ready() -> void:
 func _process(_delta):
 	if GameManager.playing():
 		time_label.text = TimeManager.get_date()
+		if MissionManager.mission_count == 0:
+			GameManager.go_to_gameend()
 
 func _input(event):
 	if event is InputEventKey and event.pressed:

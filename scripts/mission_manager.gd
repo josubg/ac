@@ -7,8 +7,12 @@ signal clossed_mission(mission: Mission)
 var scheduled_missions = {}
 var active_missions  = {}
 var on_course_missions = []
+var review_missions = []
 var last_checked_second = -1
 
+var mission_count :int: 
+	get():
+		return len(scheduled_missions) + len(active_missions) + len(on_course_missions) + len(review_missions)
 
 func _ready() -> void:
 	set_process(false)
@@ -121,9 +125,11 @@ func send_agents(mission: Mission):
 func resolve_mision(mission: Mission) -> void:
 	warning_mission.emit(mission)
 	on_course_missions.erase(mission)
+	review_missions.append(mission)
 	print("Mission Manager: Mission Acomplished: [%s]" % mission.titulo)
 	
 func review_mision(mission: Mission) -> void:
+	review_missions.erase(mission)
 	if mission.success():
 		Player.successul_mission(mission)
 	else:
