@@ -36,7 +36,11 @@ func _process(_delta: float) -> void:
 	 
 func load_missions(path: String) -> void:
 	set_process(false)
+	last_checked_second = 0
 	scheduled_missions.clear()
+	active_missions.clear()
+	on_course_missions.clear()
+	review_missions.clear()
 	var file = FileAccess.open(path, FileAccess.READ)
 	if file == null:
 		push_error("No se pudo abrir el CSV: " + path)
@@ -137,3 +141,11 @@ func review_mision(mission: Mission) -> void:
 	mission.send_agents_home()
 	clossed_mission.emit(mission)
 	print("Mission Manager: Reviewed mision: [%s]" % mission.titulo)
+
+func end():
+	TimeManager.end()
+	scheduled_missions.clear()
+	active_missions.clear()
+	on_course_missions.clear()
+	review_missions.clear()
+	set_process(false)

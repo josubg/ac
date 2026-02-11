@@ -23,7 +23,7 @@ func _ready():
 	_show_paragraph(current_index)
 
 func _show_paragraph(index: int):
-	print("Intro video: %i --> %i [%b]" % 
+	print("Intro video: %s --> %s [%s]" % 
 		[index, paragraphs.size(), index >= paragraphs.size()])
 	if index >= paragraphs.size():
 		GameManager.go_to_menu()

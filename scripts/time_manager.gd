@@ -11,11 +11,21 @@ var dias = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domi
 var meses =["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre",
  "Octubre", "Noviembre", "Diciembre"]
 var timers : Array[Timer] = []
+var timers_s : Array[Timer] = []
 
 func run():
 	self.set_process(true)
 	self.current_time = 0
 	self.resume()
+	
+func  end():
+	self.set_process(false)
+	self.current_time = 0
+	for timer in timers:
+		timer.stop()
+	for timer in timers_s:
+		timer.stop()
+	self.timers.clear()
 
 func pause():
 	self.paused = true
@@ -26,10 +36,12 @@ func resume():
 	self.paused = false
 	for timer in self.timers:
 		timer.paused = false
+	for timer in self.timers_s:
+		timer.paused = false
 		
 func get_timer(seconds) -> SceneTreeTimer:
 	var timer = get_tree().create_timer(seconds)
-	#self.timers.append(timer)
+	self.timers_s.append(timer)
 	return timer
 
 func add_timer(timer: Timer):

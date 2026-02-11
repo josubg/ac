@@ -74,35 +74,36 @@ func failed_mission(mission):
 func check_factions():
 	if started:
 		if rey == 0 or clero == 0 or nobleza == 0 or descontento > 99:
+			MissionManager.end()
 			GameManager.go_to_gameover()
-			pass
-			
-		if rey < strike_1 and rey_strike_1:
-			emit_signal("rey_strike",1)
-			rey_strike_1 = false
-		elif rey < strike_2 and rey_strike_2:
-			emit_signal("rey_strike",2)
-			rey_strike_2 = false
-		elif rey < strike_3 and rey_strike_3:
-			emit_signal("rey_strike",3)
-			rey_strike_3 = false	
+			started = false
+		else:
+			if rey < strike_1 and rey_strike_1:
+				emit_signal("rey_strike",1)
+				rey_strike_1 = false
+			elif rey < strike_2 and rey_strike_2:
+				emit_signal("rey_strike",2)
+				rey_strike_2 = false
+			elif rey < strike_3 and rey_strike_3:
+				emit_signal("rey_strike",3)
+				rey_strike_3 = false	
 
-		if clero < strike_1 and iglesia_strike_1:
-			emit_signal("iglesia_strike",1)
-			iglesia_strike_1 = false
-		elif clero < strike_2 and iglesia_strike_2:
-			emit_signal("iglesia_strike",2)
-			iglesia_strike_2 = false
-		elif clero < strike_3 and iglesia_strike_3:
-			emit_signal("iglesia_strike",3)
-			iglesia_strike_1 = false	
+			if clero < strike_1 and iglesia_strike_1:
+				emit_signal("iglesia_strike",1)
+				iglesia_strike_1 = false
+			elif clero < strike_2 and iglesia_strike_2:
+				emit_signal("iglesia_strike",2)
+				iglesia_strike_2 = false
+			elif clero < strike_3 and iglesia_strike_3:
+				emit_signal("iglesia_strike",3)
+				iglesia_strike_1 = false	
 
-		if nobleza < strike_1 and noble_strike_1:
-			emit_signal("noble_strike",1)
-			noble_strike_1 = false
-		elif nobleza < strike_2 and noble_strike_2:
-			emit_signal("noble_strike",2)
-			noble_strike_2 = false
-		elif nobleza < strike_3 and noble_strike_3:
-			emit_signal("noble_strike",3)
-			noble_strike_3 = false
+			if nobleza < strike_1 and noble_strike_1:
+				emit_signal("noble_strike",1)
+				noble_strike_1 = false
+			elif nobleza < strike_2 and noble_strike_2:
+				emit_signal("noble_strike",2)
+				noble_strike_2 = false
+			elif nobleza < strike_3 and noble_strike_3:
+				emit_signal("noble_strike",3)
+				noble_strike_3 = false

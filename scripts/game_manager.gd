@@ -8,8 +8,8 @@ var state : State = State.NONE
 @export var intro_scene_path  : String = "res://scenes/Intro_Video.tscn"
 @export var menu_scene_path   : String = "res://scenes/menu_inicio.tscn"
 @export var game_scene_path   : String = "res://scenes/play_scenes/main.tscn"
-@export var gameover_scene_path : String = "res://Scenes/game_over.tscn"
-@export var gameend_scene_path : String = "res://Scenes/game_end.tscn"
+@export var gameover_scene_path : String = "res://scenes/game_over.tscn"
+@export var gameend_scene_path : String = "res://scenes/game_end.tscn"
 
 # Señales que otras partes del proyecto pueden escuchar
 signal scene_changed(new_scene_name : String)
@@ -45,6 +45,10 @@ func start_game() -> void:
 	_change_scene_to_file(game_scene_path)
 	state = State.PLAYING
 	emit_signal("game_started")
+	MissionManager.load_missions("res://resources/data/missions.txt")
+	print("Main: %s" % str(MissionManager.scheduled_missions))
+	Player.start()
+
 
 func go_to_gameover(score := 0) -> void:
 	print("Game Manager: GAME OVER")

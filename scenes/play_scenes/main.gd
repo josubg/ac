@@ -34,17 +34,13 @@ func _ready() -> void:
 	MissionManager.added_mission.connect(mission_added)
 	MissionManager.warning_mission.connect(mission_updated)
 	MissionManager.clossed_mission.connect(mission_removed)
-	MissionManager.load_missions("res://resources/data/missions.txt")
-	print("Main: %s" % str(MissionManager.scheduled_missions))
-	# Test_Mission
-	#mission_added(MissionManager.get_test_mission())
-	Player.start()
 	monja_speak.ocultar()
+
+
 
 func _process(_delta):
 	if GameManager.playing():
 		time_label.text = TimeManager.get_date()
-		print("Mision_Count"+str(MissionManager.mission_count))
 		if MissionManager.mission_count == 0:
 			GameManager.go_to_gameend()
 
@@ -70,8 +66,8 @@ func mission_added(mission: Mission) -> void:
 	var vp_size = get_viewport().get_visible_rect().size
 	var pos = Vector2((mission.x / BASE_RES.x) * vp_size.x,(mission.y / BASE_RES.y) * vp_size.y)
 	button.position = pos
-	print("Main: [X %i, Y %i] --> [X %i, Y %i]" % 
-		[mission.x, ]+str(mission.x,mission.y,pos.x,pos.y))
+	print("Main: [X %s, Y %s] --> [X %s, Y %s]" % 
+		[mission.x,mission.y,pos.x,pos.y])
 	button.mission = mission
 	button.mission_pressed.connect(_on_mission_pressed)
 	
