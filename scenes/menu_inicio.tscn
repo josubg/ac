@@ -185,11 +185,11 @@ theme_override_font_sizes/bold_italics_font_size = 18
 theme_override_font_sizes/italics_font_size = 18
 theme_override_font_sizes/mono_font_size = 18
 bbcode_enabled = true
-text = "		[b]Programación:[/b] Juan Sixto, Josu Bermúdez y Manuel J. Sueiro
+text = "		[b]Programación:[/b] Juan Sixto y Manuel J. Sueiro
 		[b]Arte e Ilustraciones:[/b] Andy Iglesias
 		[b]Diseño de Narrativa:[/b] Pablo C. Ganter y Pablo Sixto
 		[b]Diseño de Música:[/b] Paula Torres
-		[b]Diseño de Interfaces:[/b] Juan Sixto
+		[b]Diseño de Interfaces:[/b] Josu Bermúdez
 		[b]Publicación:[/b] Nosolorol SL"
 
 [node name="RichTextLabel2" type="RichTextLabel" parent="CreditosCanvas/PanelContainer/VBoxContainer" unique_id=1585768802]
