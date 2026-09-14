@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://br54s0faogtns"]
+[gd_scene format=3 uid="uid://br54s0faogtns"]
 
 [ext_resource type="Script" uid="uid://735046um6sp1" path="res://scenes/menu_inicio.gd" id="1_bnklu"]
 [ext_resource type="Texture2D" uid="uid://c6660qm8o0ff5" path="res://sprites/CuatroCortes píldora Negro 690x400 marco old.png" id="1_wkv36"]
@@ -34,7 +34,7 @@ axis_stretch_vertical = 2
 
 [sub_resource type="FontVariation" id="FontVariation_5psen"]
 
-[node name="MenuInicio" type="Control"]
+[node name="MenuInicio" type="Control" unique_id=1775949271]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -45,30 +45,30 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_bnklu")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1032848463]
 layer = 0
 
-[node name="Parallax2D" type="Parallax2D" parent="CanvasLayer"]
+[node name="Parallax2D" type="Parallax2D" parent="CanvasLayer" unique_id=890121691]
 
-[node name="BackgroundLayer" type="Node2D" parent="CanvasLayer/Parallax2D"]
+[node name="BackgroundLayer" type="Node2D" parent="CanvasLayer/Parallax2D" unique_id=851066690]
 
-[node name="Background" type="Sprite2D" parent="CanvasLayer/Parallax2D/BackgroundLayer"]
+[node name="Background" type="Sprite2D" parent="CanvasLayer/Parallax2D/BackgroundLayer" unique_id=467389821]
 modulate = Color(0.5370987, 0.5370987, 0.5370987, 0.36862746)
 position = Vector2(957, 540)
 scale = Vector2(1.25, 1.25)
 texture = ExtResource("2_bnklu")
 
-[node name="Label" type="Label" parent="."]
+[node name="Label" type="Label" parent="." unique_id=1983590420]
 layout_mode = 1
 offset_right = 185.0
 offset_bottom = 49.0
 text = "Versión 0.3 - 06/02/2026
 "
 
-[node name="CanvasLayer2" type="CanvasLayer" parent="."]
+[node name="CanvasLayer2" type="CanvasLayer" parent="." unique_id=1004538075]
 follow_viewport_enabled = true
 
-[node name="Control" type="Control" parent="CanvasLayer2"]
+[node name="Control" type="Control" parent="CanvasLayer2" unique_id=1555565266]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -78,7 +78,7 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer2/Control"]
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer2/Control" unique_id=1750363955]
 clip_contents = true
 layout_mode = 1
 anchors_preset = 15
@@ -94,12 +94,12 @@ theme_override_constants/margin_top = 40
 theme_override_constants/margin_right = 300
 theme_override_constants/margin_bottom = 100
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer2/Control/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer2/Control/MarginContainer" unique_id=1360099885]
 clip_contents = true
 layout_mode = 2
 theme_override_constants/separation = 30
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer2/Control/MarginContainer/VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer2/Control/MarginContainer/VBoxContainer" unique_id=1491440884]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/margin_left = 50
@@ -107,7 +107,7 @@ theme_override_constants/margin_top = 50
 theme_override_constants/margin_right = 50
 theme_override_constants/margin_bottom = 20
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer2/Control/MarginContainer/VBoxContainer/MarginContainer"]
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer2/Control/MarginContainer/VBoxContainer/MarginContainer" unique_id=2064506606]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -115,39 +115,38 @@ texture = ExtResource("1_wkv36")
 expand_mode = 2
 stretch_mode = 3
 
-[node name="NewGameButton" type="Button" parent="CanvasLayer2/Control/MarginContainer/VBoxContainer"]
+[node name="NewGameButton" type="Button" parent="CanvasLayer2/Control/MarginContainer/VBoxContainer" unique_id=166001896]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_ylpju")
 theme_override_font_sizes/font_size = 50
 theme_override_styles/normal = SubResource("StyleBoxFlat_d6xxl")
 text = "Nueva Partida"
 
-[node name="TutorialButton" type="Button" parent="CanvasLayer2/Control/MarginContainer/VBoxContainer"]
+[node name="TutorialButton" type="Button" parent="CanvasLayer2/Control/MarginContainer/VBoxContainer" unique_id=1346130070]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_ylpju")
 theme_override_font_sizes/font_size = 50
 theme_override_styles/normal = SubResource("StyleBoxFlat_bnklu")
 text = "Tutorial"
 
-[node name="CreditsButton" type="Button" parent="CanvasLayer2/Control/MarginContainer/VBoxContainer"]
+[node name="CreditsButton" type="Button" parent="CanvasLayer2/Control/MarginContainer/VBoxContainer" unique_id=853728562]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_ylpju")
 theme_override_font_sizes/font_size = 50
 theme_override_styles/normal = SubResource("StyleBoxFlat_01a6i")
 text = "Créditos"
 
-[node name="ExitButton" type="Button" parent="CanvasLayer2/Control/MarginContainer/VBoxContainer"]
+[node name="ExitButton" type="Button" parent="CanvasLayer2/Control/MarginContainer/VBoxContainer" unique_id=1266093841]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_ylpju")
 theme_override_font_sizes/font_size = 50
 theme_override_styles/normal = SubResource("StyleBoxFlat_v4dt1")
 text = "Salir"
 
-[node name="CreditosCanvas" type="CanvasLayer" parent="."]
+[node name="CreditosCanvas" type="CanvasLayer" parent="." unique_id=1392105101]
 layer = 2
-visible = false
 
-[node name="PanelContainer" type="PanelContainer" parent="CreditosCanvas"]
+[node name="PanelContainer" type="PanelContainer" parent="CreditosCanvas" unique_id=1682528996]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -156,17 +155,17 @@ anchor_bottom = 0.5
 offset_left = -506.5
 offset_top = -453.5
 offset_right = 506.5
-offset_bottom = 250.0
+offset_bottom = 318.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxTexture_v4dt1")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CreditosCanvas/PanelContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CreditosCanvas/PanelContainer" unique_id=238671535]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="CreditosCanvas/PanelContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="CreditosCanvas/PanelContainer/VBoxContainer" unique_id=523205164]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.12
@@ -177,7 +176,7 @@ theme_override_font_sizes/font_size = 50
 text = "Créditos"
 horizontal_alignment = 1
 
-[node name="RichTextLabel" type="RichTextLabel" parent="CreditosCanvas/PanelContainer/VBoxContainer"]
+[node name="RichTextLabel" type="RichTextLabel" parent="CreditosCanvas/PanelContainer/VBoxContainer" unique_id=1907287183]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_font_sizes/normal_font_size = 18
@@ -186,13 +185,14 @@ theme_override_font_sizes/bold_italics_font_size = 18
 theme_override_font_sizes/italics_font_size = 18
 theme_override_font_sizes/mono_font_size = 18
 bbcode_enabled = true
-text = "		[b]Programación:[/b] Josu Bermúdez
+text = "		[b]Programación:[/b] Juan Sixto, Josu Bermúdez y Manuel J. Sueiro
 		[b]Arte e Ilustraciones:[/b] Andy Iglesias
 		[b]Diseño de Narrativa:[/b] Pablo C. Ganter y Pablo Sixto
 		[b]Diseño de Música:[/b] Paula Torres
-		[b]Diseño de Interfaces:[/b] Juan Sixto"
+		[b]Diseño de Interfaces:[/b] Juan Sixto
+		[b]Publicación:[/b] Nosolorol SL"
 
-[node name="RichTextLabel2" type="RichTextLabel" parent="CreditosCanvas/PanelContainer/VBoxContainer"]
+[node name="RichTextLabel2" type="RichTextLabel" parent="CreditosCanvas/PanelContainer/VBoxContainer" unique_id=1585768802]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_font_sizes/normal_font_size = 18
@@ -208,7 +208,7 @@ text = "		Versión adaptada de:
 		[i]Antonio Mancinelli (Dominio público) [/i]
 "
 
-[node name="Button" type="Button" parent="CreditosCanvas"]
+[node name="Button" type="Button" parent="CreditosCanvas" unique_id=1700424614]
 offset_left = 1334.0
 offset_top = 138.0
 offset_right = 1404.0
@@ -221,11 +221,11 @@ theme_override_font_sizes/font_size = 20
 text = "Cerrar"
 icon_alignment = 2
 
-[node name="TutorialCanvas" type="CanvasLayer" parent="."]
+[node name="TutorialCanvas" type="CanvasLayer" parent="." unique_id=1285537298]
 layer = 2
 visible = false
 
-[node name="PanelContainer" type="PanelContainer" parent="TutorialCanvas"]
+[node name="PanelContainer" type="PanelContainer" parent="TutorialCanvas" unique_id=1841360596]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -241,10 +241,10 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxTexture_v4dt1")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="TutorialCanvas/PanelContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="TutorialCanvas/PanelContainer" unique_id=2085755324]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="TutorialCanvas/PanelContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="TutorialCanvas/PanelContainer/VBoxContainer" unique_id=1095293011]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.12
@@ -255,13 +255,13 @@ theme_override_font_sizes/font_size = 50
 text = "TUTORIAL"
 horizontal_alignment = 1
 
-[node name="MarginContainer" type="MarginContainer" parent="TutorialCanvas/PanelContainer/VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="TutorialCanvas/PanelContainer/VBoxContainer" unique_id=312108455]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/margin_left = 50
 theme_override_constants/margin_right = 50
 
-[node name="RichTextLabel" type="RichTextLabel" parent="TutorialCanvas/PanelContainer/VBoxContainer/MarginContainer"]
+[node name="RichTextLabel" type="RichTextLabel" parent="TutorialCanvas/PanelContainer/VBoxContainer/MarginContainer" unique_id=1679191829]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_font_sizes/normal_font_size = 18
@@ -281,7 +281,7 @@ Observa además el [b]marcador de descontento[/b],  un descuido y podrían volve
 
 ¡Madrid depende de ti!"
 
-[node name="Button" type="Button" parent="TutorialCanvas"]
+[node name="Button" type="Button" parent="TutorialCanvas" unique_id=684014007]
 offset_left = 1334.0
 offset_top = 138.0
 offset_right = 1404.0
@@ -294,7 +294,7 @@ theme_override_font_sizes/font_size = 20
 text = "Cerrar"
 icon_alignment = 2
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1911391086]
 layout_mode = 0
 offset_left = 134.0
 offset_top = 1047.0
@@ -303,7 +303,7 @@ offset_bottom = 1547.0
 texture = ExtResource("7_5psen")
 expand_mode = 2
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=373944624]
 stream = ExtResource("8_euaya")
 autoplay = true
 
