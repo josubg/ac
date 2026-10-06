@@ -4,6 +4,7 @@ signal rey_updated(value)
 signal clero_updated(value)
 signal nobleza_updated(value)
 signal descontentoy_updated(value)
+signal riqueza_updated(value)
 
 signal rey_strike(n : int)
 signal noble_strike(n : int)
@@ -50,12 +51,18 @@ var descontento: int :
 		descontentoy_updated.emit(descontento)
 		check_factions()
 
+var riqueza: int :
+	set(value):
+		riqueza = max(0, int(value))
+		riqueza_updated.emit(riqueza)
+
 func start():
 	self.rey = 50
 	self.nobleza = 50
 	self.clero = 50
 	self.descontento = 50
 	self.started = true
+	self.riqueza = 0
 	
 func successul_mission(mission: Mission):
 	print("Player: Succesfull mission: ", mission)

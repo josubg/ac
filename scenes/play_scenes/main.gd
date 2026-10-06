@@ -9,6 +9,7 @@ extends Node
 @onready var clero_bar: ProgressBar = $CanvasLayerMission/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/influence_panel/VBoxContainer/HBoxContainer3/CleroBar
 @onready var descontento_bar: ProgressBar = $CanvasLayerMission/VBoxContainer/HBoxContainer/PanelContainer/HBoxContainer/DescontentoBar
 @onready var buttons_layer: Control = $CanvasLayerMission/VBoxContainer/ButtonsLayer
+@onready var riqueza_label: Label = $CanvasLayerMission/VBoxContainer/HBoxContainer/PanelContainer2/HBoxContainer/RiquezaLabel
 
 @onready var active_missions: Dictionary[Mission, int] = {}
 @onready var active_mission_buttons: Dictionary[Mission, MissionButton] = {}
@@ -30,10 +31,20 @@ func _ready() -> void:
 	Player.rey_strike.connect(rey_strikes)
 	Player.noble_strike.connect(nobleza_strikes)
 	Player.iglesia_strike.connect(iglesia_strikes)
+	Player.riqueza_updated.connect(update_riqueza)
 	
 	MissionManager.added_mission.connect(mission_added)
 	MissionManager.warning_mission.connect(mission_updated)
 	MissionManager.clossed_mission.connect(mission_removed)
+	
+	Player.start()
+
+	update_rey(Player.rey)
+	update_nobleza(Player.nobleza)
+	update_clero(Player.clero)
+	update_descontento(Player.descontento)
+	update_riqueza()
+	
 	monja_speak.ocultar()
 
 
@@ -99,6 +110,9 @@ func update_nobleza(value):
 func update_clero(value):
 	clero_bar.value = value
 	_update_color(clero_bar, value,false)
+
+func update_riqueza():
+	riqueza_label.text = str(Player.riqueza)
 	
 func update_descontento(value):
 	descontento_bar.value = value

@@ -145,6 +145,7 @@ text = "Salir"
 
 [node name="CreditosCanvas" type="CanvasLayer" parent="." unique_id=1392105101]
 layer = 2
+visible = false
 
 [node name="PanelContainer" type="PanelContainer" parent="CreditosCanvas" unique_id=1682528996]
 anchors_preset = 8

@@ -65,12 +65,14 @@ func _notification(what: int) -> void:
 		print("Agent: Drag failed [%s]" % self.full_name)
 		self.status = AGENT_STATUS.AVAILABLE
 
-func _get_drag_data(_position):
-	if self.available:
-		var drag_portrait = generate_drag_portrait()
-		set_drag_preview(drag_portrait)
-		self.status = AGENT_STATUS.DRAGGED
-		return self
+func _get_drag_data(_position) -> Variant:
+	if not available:
+		return null
+
+	var drag_portrait = generate_drag_portrait()
+	set_drag_preview(drag_portrait)
+	self.status = AGENT_STATUS.DRAGGED
+	return self
 
 func _on_mouse_entered():
 	show_stats()

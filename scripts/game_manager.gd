@@ -46,6 +46,7 @@ func start_game() -> void:
 	state = State.PLAYING
 	emit_signal("game_started")
 	MissionManager.load_missions("res://resources/data/missions.txt")
+	BuildingManager.load_buildings()
 	print("Main: %s" % str(MissionManager.scheduled_missions))
 	Player.start()
 
