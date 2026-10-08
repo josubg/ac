@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://4cxpb4m84ky3"]
+
+[ext_resource type="Script" uid="uid://dg230j6w3k2lb" path="res://scenes/buildings/building_node.gd" id="1_tnbil"]
+[ext_resource type="Texture2D" uid="uid://dv2lurwjt5xn8" path="res://resources/teatro.png" id="2_f3di6"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_f3di6"]
+radius = 83.14
+
+[node name="Area2D" type="Area2D" unique_id=16144083]
+script = ExtResource("1_tnbil")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1735519086]
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("2_f3di6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1350869507]
+position = Vector2(0.5, -7.5)
+shape = SubResource("CircleShape2D_f3di6")

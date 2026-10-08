@@ -13,6 +13,8 @@ var meses =["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Ago
 var timers : Array[Timer] = []
 var timers_s : Array[Timer] = []
 
+var last_day: int = -1
+
 func run():
 	self.set_process(true)
 	self.current_time = 0
@@ -54,6 +56,8 @@ func _process(delta):
 	if not self.paused:
 		self.current_time += delta # convierte segundos reales a segundos de partida
 		_check_descontento(delta)
+		_check_day_change()
+		
 
 func get_date():
 	var date_map = Time.get_date_dict_from_unix_time(
@@ -71,3 +75,16 @@ func _check_descontento(delta):
 	if descontento_up >= self.descontento_delta:
 		descontento_up -= self.descontento_delta
 		Player.descontento += 1
+
+func _check_day_change():
+	var date_map = get_date_map()
+	if date_map["day"] != last_day:
+		last_day = date_map["day"]
+		Player.riqueza += BuildingManager.get_player_income_per_turn()
+		print("Riqueza: "+str(Player.riqueza))
+		BuildingManager.get_player_income_breakdown()
+
+func get_date_map() -> Dictionary:
+	return Time.get_date_dict_from_unix_time(
+		self.start_date + (self.current_time * 86400) / 3
+	)

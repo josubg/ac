@@ -36,6 +36,10 @@ enum Status {
 @export var faction_influence: StringName
 @export var donation_influence: StringName
 
+@export_category("Map")
+@export var x: float = 0.0
+@export var y: float = 0.0
+
 var reconstruction_cost: int:
 	get:
 		return purchase_cost / 2

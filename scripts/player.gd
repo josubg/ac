@@ -27,6 +27,7 @@ var strike_1 = 40
 var strike_2 = 20
 var strike_3 = 10
 
+
 var rey: int : 
 	set(value):
 		rey = clamp(int(value), -1, 101)
@@ -63,6 +64,7 @@ func start():
 	self.descontento = 50
 	self.started = true
 	self.riqueza = 0
+	BuildingManager.buy_building("0")
 	
 func successul_mission(mission: Mission):
 	print("Player: Succesfull mission: ", mission)

@@ -10,11 +10,19 @@ extends Node
 @onready var descontento_bar: ProgressBar = $CanvasLayerMission/VBoxContainer/HBoxContainer/PanelContainer/HBoxContainer/DescontentoBar
 @onready var buttons_layer: Control = $CanvasLayerMission/VBoxContainer/ButtonsLayer
 @onready var riqueza_label: Label = $CanvasLayerMission/VBoxContainer/HBoxContainer/PanelContainer2/HBoxContainer/RiquezaLabel
+@onready var riqueza_mod_label: Label = $CanvasLayerMission/VBoxContainer/HBoxContainer/PanelContainer2/HBoxContainer/RiquezaModLabel
 
 @onready var active_missions: Dictionary[Mission, int] = {}
 @onready var active_mission_buttons: Dictionary[Mission, MissionButton] = {}
 @onready var monja_speak: Node = $CanvasLayerMission/MonjaSpeak
 @onready var audio_descontento: AudioStreamPlayer = $AudioDescontento
+
+#Buildings
+@onready var buildings_container: Node2D = $Buildings
+@onready var building_node_scene: PackedScene = load(
+	"res://scenes/buildings/BuildingNode.tscn"
+)
+
 
 @onready var mission_button_scene: PackedScene = load("res://scenes/misions/MissionButton.tscn")
 const BASE_RES = Vector2(1920, 1080)
@@ -38,16 +46,15 @@ func _ready() -> void:
 	MissionManager.clossed_mission.connect(mission_removed)
 	
 	Player.start()
+	create_buildings()
 
 	update_rey(Player.rey)
 	update_nobleza(Player.nobleza)
 	update_clero(Player.clero)
 	update_descontento(Player.descontento)
-	update_riqueza()
+	update_riqueza(Player.riqueza)
 	
 	monja_speak.ocultar()
-
-
 
 func _process(_delta):
 	if GameManager.playing():
@@ -55,14 +62,42 @@ func _process(_delta):
 		if MissionManager.mission_count == 0:
 			GameManager.go_to_gameend()
 
-func _input(event):
+func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed:
 		if monja_mensaje:
 			monja_speak.ocultar()
 			TimeManager.resume()
 			monja_mensaje = false
 			set_process_input(false)
+
 	elif event is InputEventMouseButton and event.pressed:
+		var mouse_world: Vector2 = (
+			get_viewport().get_canvas_transform().affine_inverse()
+			* event.position
+		)
+
+		var query := PhysicsPointQueryParameters2D.new()
+		query.position = mouse_world
+		query.collision_mask = 1
+		query.collide_with_areas = true
+		query.collide_with_bodies = false
+
+		var results: Array[Dictionary] = (
+			get_viewport()
+			.get_world_2d()
+			.direct_space_state
+			.intersect_point(query)
+		)
+
+		for result in results:
+			var collider = result["collider"]
+
+			if collider.get_script() == preload(
+				"res://scenes/buildings/building_node.gd"
+			):
+				_on_building_pressed(collider.building)
+				break
+
 		if monja_mensaje:
 			monja_speak.ocultar()
 			TimeManager.resume()
@@ -111,8 +146,14 @@ func update_clero(value):
 	clero_bar.value = value
 	_update_color(clero_bar, value,false)
 
-func update_riqueza():
-	riqueza_label.text = str(Player.riqueza)
+func update_riqueza(value):
+	riqueza_label.text = str(value)
+	update_mod_riqueza()
+	
+func update_mod_riqueza():
+	var breakdown = BuildingManager.get_player_income_breakdown()
+	if breakdown != {}:
+		riqueza_mod_label.text = "(+"+str(breakdown["total"])+"/día)"
 	
 func update_descontento(value):
 	descontento_bar.value = value
@@ -198,3 +239,25 @@ func iglesia_strikes(number):
 		monja_speak.mensaje("Ya no basta con misas ni con cilicios: todos saben lo que sois. Brujo de medianoche, judeizante de día, amigo de luteranos y mahometanos siempre. La Iglesia observa, y el fuego siempre aguarda paciente. Conviene que os guardéis con Dios, porque las lenguas son brasas y las brasas se han tornado para su Excelencia en una hoguera.")	
 		monja_mensaje = true
 		set_process_input(true)	
+
+func create_buildings() -> void:
+	var vp_size = get_viewport().get_visible_rect().size
+	
+	for building in BuildingManager.buildings:
+		var building_node: BuildingNode = building_node_scene.instantiate()
+
+		var pos = Vector2(
+			(building.x / BASE_RES.x) * vp_size.x,
+			(building.y / BASE_RES.y) * vp_size.y
+		)
+
+		building_node.position = pos
+		building_node.building = building
+
+		buildings_container.add_child(building_node)
+
+func _on_building_pressed(building: Building) -> void:
+	print("Building pulsado: ", building.building_name)
+	print("ID: ", building.id)
+	print("Coste: ", building.purchase_cost)
+	print("Ingresos: ", building.income_per_turn)

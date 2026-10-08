@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://deluds7e5l7hg" path="res://resources/Mapa.png" id="1_ig7tw"]
 [ext_resource type="FontFile" uid="uid://b16lx41ih565r" path="res://resources/Bastarda-K.ttf" id="2_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://cqhiguhygaf3d" path="res://scenes/agents/Monja_Speak.tscn" id="3_iml5s"]
+[ext_resource type="Texture2D" uid="uid://dv2lurwjt5xn8" path="res://resources/teatro.png" id="3_sm81j"]
 [ext_resource type="Texture2D" uid="uid://cm5n4rm6uvxua" path="res://sprites/CuatroCortes burgués gris.png" id="5_5e6os"]
 [ext_resource type="PackedScene" uid="uid://jvho4fxquili" path="res://scenes/misions/MissionResolutionWindow.tscn" id="5_bd1e2"]
 [ext_resource type="Texture2D" uid="uid://cv1jwl37ujgsw" path="res://sprites/pobre_marron.png" id="5_nck21"]
@@ -15,6 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://bbpblvs7wbjch" path="res://sprites/monja_grey.png" id="10_iml5s"]
 [ext_resource type="AudioStream" uid="uid://dsvh6bj3omnj3" path="res://resources/intro_long.wav" id="14_2j01o"]
 [ext_resource type="AudioStream" uid="uid://8t8xayoaqkv1" path="res://resources/furiosos.mp3" id="15_eq487"]
+[ext_resource type="Texture2D" uid="uid://b2hlllpmsyy0u" path="res://resources/convento.png" id="16_3nlru"]
 
 [sub_resource type="Theme" id="Theme_ig7tw"]
 
@@ -33,7 +35,23 @@ position = Vector2(959.32764, 538.72943)
 scale = Vector2(0.99965876, 1.137538)
 texture = ExtResource("1_ig7tw")
 
-[node name="Buildings" type="Node2D" parent="." unique_id=1455148206]
+[node name="BuildingCanvasLayer" type="CanvasLayer" parent="." unique_id=149768183]
+
+[node name="TextureRect2" type="TextureRect" parent="BuildingCanvasLayer" unique_id=2005018297]
+offset_left = 1571.0001
+offset_top = 128.0
+offset_right = 2071.0
+offset_bottom = 628.0
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("3_sm81j")
+
+[node name="TextureRect" type="TextureRect" parent="BuildingCanvasLayer" unique_id=1838344613]
+offset_left = 1235.0
+offset_top = 435.0
+offset_right = 1735.0
+offset_bottom = 935.0
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("16_3nlru")
 
 [node name="CanvasLayerMission" type="CanvasLayer" parent="." unique_id=1196988158]
 
@@ -43,7 +61,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayerMission/VBoxContainer" unique_id=1531970683]
 layout_mode = 2
@@ -144,7 +161,6 @@ size_flags_vertical = 3
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.25
-mouse_filter = 2
 theme = SubResource("Theme_ig7tw")
 theme_override_styles/panel = SubResource("StyleBoxFlat_0xm2m")
 
