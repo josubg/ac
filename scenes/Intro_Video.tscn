@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://d1metcul8y0yi"]
+[gd_scene format=3 uid="uid://d1metcul8y0yi"]
 
 [ext_resource type="Script" uid="uid://blfwdxaq7el5v" path="res://scripts/intro_video.gd" id="1_m1no4"]
 [ext_resource type="FontFile" uid="uid://b5p2nwegcv016" path="res://resources/AlbertText-Bold.ttf" id="2_m1no4"]
@@ -41,7 +41,7 @@ _data = {
 &"fade": SubResource("Animation_m1no4")
 }
 
-[node name="IntroVideo" type="Control"]
+[node name="IntroVideo" type="Control" unique_id=1339463182]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -53,13 +53,13 @@ size_flags_vertical = 3
 mouse_filter = 1
 script = ExtResource("1_m1no4")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1467978364]
 layout_mode = 0
 offset_right = 1942.0
 offset_bottom = 1088.0
 color = Color(0, 0, 0, 1)
 
-[node name="Label" type="Label" parent="."]
+[node name="Label" type="Label" parent="." unique_id=468902299]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 1
 anchors_preset = 15
@@ -75,14 +75,12 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_scbl5")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=384740143]
+libraries/ = SubResource("AnimationLibrary_scbl5")
 
-[node name="Timer" type="Timer" parent="."]
+[node name="Timer" type="Timer" parent="." unique_id=569187770]
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1045579135]
 stream = ExtResource("3_86yvy")
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

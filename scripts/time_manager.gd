@@ -42,7 +42,7 @@ func resume():
 		timer.paused = false
 		
 func get_timer(seconds) -> SceneTreeTimer:
-	var timer = get_tree().create_timer(seconds)
+	var timer = get_tree().create_timer(seconds, false)
 	self.timers_s.append(timer)
 	return timer
 
@@ -61,7 +61,7 @@ func _process(delta):
 
 func get_date():
 	var date_map = Time.get_date_dict_from_unix_time(
-		self.start_date + (self.current_time * 86400) / 3
+		self.start_date + (self.current_time * 86400) 
 	)
 	return "%s, %s de %s de %s" % [
 		dias[date_map["weekday"]],
@@ -81,6 +81,7 @@ func _check_day_change():
 	if date_map["day"] != last_day:
 		last_day = date_map["day"]
 		Player.riqueza += BuildingManager.get_player_income_per_turn()
+		BuildingManager.apply_player_building_influence()
 		print("Riqueza: "+str(Player.riqueza))
 		BuildingManager.get_player_income_breakdown()
 

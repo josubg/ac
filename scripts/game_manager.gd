@@ -6,6 +6,7 @@ var state : State = State.NONE
 
 # Rutas a escenas (ajusta según tu proyecto)
 @export var intro_scene_path  : String = "res://scenes/Intro_Video.tscn"
+@export var logo_scene_path : String = "res://scenes/logos_intro.tscn"
 @export var menu_scene_path   : String = "res://scenes/menu_inicio.tscn"
 @export var game_scene_path   : String = "res://scenes/play_scenes/main.tscn"
 @export var gameover_scene_path : String = "res://scenes/game_over.tscn"
@@ -28,8 +29,10 @@ func playing() -> bool:
 	return state == State.PLAYING
 	
 func go_to_intro() -> void:
+	_change_scene_to_file(logo_scene_path)
+	#_change_scene_to_file(intro_scene_path)
 	print("Game Manager: Intro")
-	_change_scene_to_file(intro_scene_path)
+	#_change_scene_to_file(intro_scene_path)
 	state = State.INTRO
 	emit_signal("scene_changed", "Intro")
 

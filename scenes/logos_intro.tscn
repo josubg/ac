@@ -1,0 +1,101 @@
+[gd_scene format=3 uid="uid://co0n44fpalaa3"]
+
+[ext_resource type="Script" uid="uid://bvevcxi33qmy4" path="res://scenes/logos_intro.gd" id="1_38les"]
+[ext_resource type="Texture2D" uid="uid://b83ccg136y4qp" path="res://resources/LogoMadrid.svg" id="1_d8l21"]
+[ext_resource type="Texture2D" uid="uid://deluds7e5l7hg" path="res://resources/Mapa.png" id="2_7rqhc"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_38les"]
+load_path = "res://.godot/imported/LogoNosolorol.png-a66bb002ea1ff31539b5aec0b4a96964.ctex"
+
+[sub_resource type="Animation" id="Animation_d8l21"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ComunidadLogo:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_38les"]
+resource_name = "fade"
+length = 8.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ComunidadLogo:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.1333333, 1.9333333, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TextureRect:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.0333333, 4.0333333, 5.1, 6.0333333, 6.9666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7rqhc"]
+_data = {
+&"RESET": SubResource("Animation_d8l21"),
+&"fade": SubResource("Animation_38les")
+}
+
+[node name="LogosIntro" type="Node2D" unique_id=1295953964]
+script = ExtResource("1_38les")
+
+[node name="Background" type="Sprite2D" parent="." unique_id=1497510048]
+modulate = Color(0.5370987, 0.5370987, 0.5370987, 0.36862746)
+position = Vector2(957, 540)
+scale = Vector2(1.25, 1.25)
+texture = ExtResource("2_7rqhc")
+
+[node name="ComunidadLogo" type="TextureRect" parent="." unique_id=1181338522]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 701.5
+offset_top = 204.5
+offset_right = 1221.5
+offset_bottom = 880.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("1_d8l21")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=468348904]
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 701.0
+offset_top = 460.0
+offset_right = 4209.0
+offset_bottom = 1598.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.15, 0.15)
+texture = SubResource("CompressedTexture2D_38les")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=966433060]
+libraries/ = SubResource("AnimationLibrary_7rqhc")

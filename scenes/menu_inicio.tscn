@@ -6,20 +6,21 @@
 [ext_resource type="FontFile" uid="uid://b16lx41ih565r" path="res://resources/Bastarda-K.ttf" id="2_ylpju"]
 [ext_resource type="Texture2D" uid="uid://d046e3k84whiw" path="res://sprites/frame.png" id="5_01a6i"]
 [ext_resource type="FontFile" uid="uid://b5p2nwegcv016" path="res://resources/AlbertText-Bold.ttf" id="6_v4dt1"]
+[ext_resource type="Texture2D" uid="uid://b83ccg136y4qp" path="res://resources/LogoMadrid.svg" id="7_5p85s"]
 [ext_resource type="Texture2D" uid="uid://7pvuqc44x556" path="res://sprites/lacre_mision.png" id="7_5psen"]
 [ext_resource type="AudioStream" uid="uid://cdy22wr1w0ecr" path="res://resources/intro.wav" id="8_euaya"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d6xxl"]
-bg_color = Color(0.5019608, 0.39607844, 0.23921569, 1)
+bg_color = Color(0.050554395, 0.030409938, 0.010180563, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bnklu"]
-bg_color = Color(0.5019608, 0.39607844, 0.23921569, 1)
+bg_color = Color(0.050980393, 0.03137255, 0.011764706, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_01a6i"]
-bg_color = Color(0.5019608, 0.39607844, 0.23921569, 1)
+bg_color = Color(0.050980393, 0.03137255, 0.011764706, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v4dt1"]
-bg_color = Color(0.5019608, 0.39607844, 0.23921569, 1)
+bg_color = Color(0.050980393, 0.03137255, 0.011764706, 1)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_v4dt1"]
 texture = ExtResource("5_01a6i")
@@ -62,7 +63,7 @@ texture = ExtResource("2_bnklu")
 layout_mode = 1
 offset_right = 185.0
 offset_bottom = 49.0
-text = "Versión 0.3 - 06/02/2026
+text = "Versión 0.4 - 04/11/2026
 "
 
 [node name="CanvasLayer2" type="CanvasLayer" parent="." unique_id=1004538075]
@@ -89,9 +90,9 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_constants/margin_left = 300
+theme_override_constants/margin_left = 600
 theme_override_constants/margin_top = 40
-theme_override_constants/margin_right = 300
+theme_override_constants/margin_right = 600
 theme_override_constants/margin_bottom = 100
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer2/Control/MarginContainer" unique_id=1360099885]
@@ -154,9 +155,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -506.5
-offset_top = -453.5
+offset_top = -499.0
 offset_right = 506.5
-offset_bottom = 318.0
+offset_bottom = 498.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
@@ -187,9 +188,9 @@ theme_override_font_sizes/italics_font_size = 18
 theme_override_font_sizes/mono_font_size = 18
 bbcode_enabled = true
 text = "		[b]Programación:[/b] Juan Sixto y Manuel J. Sueiro
-		[b]Arte e Ilustraciones:[/b] Andy Iglesias
-		[b]Diseño de Narrativa:[/b] Pablo C. Ganter y Pablo Sixto
-		[b]Diseño de Música:[/b] Paula Torres
+		[b]Arte e Ilustraciones:[/b] Rocío Peirano y Andy Iglesias
+		[b]Diseño de Narrativa:[/b] Héctor Gómez, Pablo C. Ganter y Pablo Sixto
+		[b]Diseño de Música:[/b] Elena Alonso y Paula Torres
 		[b]Diseño de Interfaces:[/b] Josu Bermúdez
 		[b]Publicación:[/b] Nosolorol SL"
 
@@ -208,6 +209,22 @@ text = "		Versión adaptada de:
 		Plano de la Villa de Madrid de 1622 de:
 		[i]Antonio Mancinelli (Dominio público) [/i]
 "
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CreditosCanvas/PanelContainer/VBoxContainer" unique_id=1143915300]
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+
+[node name="Control" type="Control" parent="CreditosCanvas/PanelContainer/VBoxContainer/HBoxContainer" unique_id=951076729]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="CreditosCanvas/PanelContainer/VBoxContainer/HBoxContainer" unique_id=1367844134]
+custom_maximum_size = Vector2(150, -1)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+texture = ExtResource("7_5p85s")
+expand_mode = 5
 
 [node name="Button" type="Button" parent="CreditosCanvas" unique_id=1700424614]
 offset_left = 1334.0

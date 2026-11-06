@@ -14,7 +14,9 @@
 [ext_resource type="Texture2D" uid="uid://b6ywn0w4q0vkm" path="res://sprites/Monja_marron.png" id="9_jeb2x"]
 [ext_resource type="Texture2D" uid="uid://bbpblvs7wbjch" path="res://sprites/monja_grey.png" id="10_iml5s"]
 [ext_resource type="AudioStream" uid="uid://dsvh6bj3omnj3" path="res://resources/intro_long.wav" id="14_2j01o"]
+[ext_resource type="PackedScene" uid="uid://lrc86eeo27pf" path="res://scenes/buildings/BuildingWindow.tscn" id="14_3nlru"]
 [ext_resource type="AudioStream" uid="uid://8t8xayoaqkv1" path="res://resources/furiosos.mp3" id="15_eq487"]
+[ext_resource type="PackedScene" uid="uid://b1m6fhr2enk04" path="res://scenes/buildings/PropertiesWindow.tscn" id="15_sm81j"]
 
 [sub_resource type="Theme" id="Theme_ig7tw"]
 
@@ -83,6 +85,10 @@ theme_override_fonts/font = ExtResource("2_0xm2m")
 theme_override_font_sizes/font_size = 24
 text = "(+0/día)"
 
+[node name="PropertiesButton" type="Button" parent="CanvasLayerMission/VBoxContainer/HBoxContainer/PanelContainer2/HBoxContainer" unique_id=1622359107]
+layout_mode = 2
+text = "Mis Propiedades"
+
 [node name="AspectRatioContainer2" type="AspectRatioContainer" parent="CanvasLayerMission/VBoxContainer/HBoxContainer" unique_id=1425957261]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -134,6 +140,9 @@ horizontal_alignment = 2
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
+
+[node name="ColorRect2" type="ColorRect" parent="CanvasLayerMission/VBoxContainer/HBoxContainer" unique_id=1498697415]
+layout_mode = 2
 
 [node name="ButtonsLayer" type="Control" parent="CanvasLayerMission/VBoxContainer" unique_id=1635859801]
 clip_contents = true
@@ -311,6 +320,19 @@ offset_top = 137.0
 offset_right = -180.80005
 offset_bottom = -300.40002
 metadata/_edit_use_anchors_ = true
+
+[node name="BuildingWindow" parent="CanvasLayerMission" unique_id=1054651019 instance=ExtResource("14_3nlru")]
+offset_left = -133.0
+offset_top = -221.0
+offset_right = -133.0
+offset_bottom = -221.0
+
+[node name="PropertiesWindow" parent="CanvasLayerMission" unique_id=934365827 instance=ExtResource("15_sm81j")]
+visible = false
+offset_left = -1.0
+offset_top = -2.0
+offset_right = -1.0
+offset_bottom = -2.0
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1628111680]
 stream = ExtResource("14_2j01o")

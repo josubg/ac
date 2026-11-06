@@ -1,0 +1,97 @@
+[gd_scene format=3 uid="uid://lrc86eeo27pf"]
+
+[ext_resource type="Script" uid="uid://caeffebbk5tl6" path="res://scenes/buildings/building_window.gd" id="1_nmc64"]
+[ext_resource type="Texture2D" uid="uid://b2hlllpmsyy0u" path="res://resources/convento.png" id="1_ns24i"]
+[ext_resource type="FontFile" uid="uid://b5p2nwegcv016" path="res://resources/AlbertText-Bold.ttf" id="2_8o0vv"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s2yjo"]
+bg_color = Color(0, 0, 0, 1)
+
+[node name="BuildingWindow" type="Control" unique_id=1054651019]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_nmc64")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1087817297]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -38.5
+offset_top = -71.5
+offset_right = 381.5
+offset_bottom = 428.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_s2yjo")
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=451848318]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer" unique_id=46401037]
+layout_mode = 2
+
+[node name="Header" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=131418507]
+layout_mode = 2
+
+[node name="NameLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/Header" unique_id=1149898901]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_stretch_ratio = 20.0
+theme_override_fonts/font = ExtResource("2_8o0vv")
+theme_override_font_sizes/font_size = 37
+text = "Convento de San Placido"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CloseButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/Header" unique_id=679965673]
+layout_mode = 2
+size_flags_horizontal = 10
+text = "X"
+
+[node name="BuildingImage" type="TextureRect" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=572784116]
+custom_minimum_size = Vector2(120, 120)
+custom_maximum_size = Vector2(180, 180)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("1_ns24i")
+expand_mode = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1399432865]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_right = 20
+
+[node name="DescrLabel" type="RichTextLabel" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer" unique_id=1635390298]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/normal_font_size = 20
+text = "El Convento de San Plácido, fundado en 1624 por Jerónimo de Villanueva para una comunidad de monjas benedictinas, es uno de los edificios religiosos más singulares del Madrid de los Austrias. Su iglesia, construida en el siglo XVII bajo la dirección de fray Lorenzo de San Nicolás, conserva intacta su arquitectura de transición entre el Renacimiento y el Barroco. Sin embargo, la fama del convento se debe también al célebre proceso inquisitorial que lo sacudió en 1628, cuando varias religiosas, incluida su fundadora Teresa Valle de la Cerda, afirmaron sufrir posesiones demoníacas y protagonizaron episodios místicos que suscitaron una gran controversia. La Inquisición investigó el caso y procesó a las monjas, a sus confesores y a diversos personajes vinculados al convento, entre ellos su protector Jerónimo de Villanueva. El principal acusado fue fray Francisco García Calderón, confesor de la comunidad, condenado finalmente por delitos relacionados con las corrientes alumbradistas y por conductas impropias en el ejercicio de su ministerio."
+
+[node name="CostLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1417822382]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Coste: 25000 reales"
+horizontal_alignment = 1
+
+[node name="IncomeLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1706378300]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Ganancias: 100 reales/año"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BuyButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1496953470]
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+text = "Comprar"

@@ -22,7 +22,10 @@ extends Node
 @onready var building_node_scene: PackedScene = load(
 	"res://scenes/buildings/BuildingNode.tscn"
 )
+@onready var properties_button: Button = $CanvasLayerMission/VBoxContainer/HBoxContainer/PanelContainer2/HBoxContainer/PropertiesButton
+@onready var properties_window: PropertiesWindow = $CanvasLayerMission/PropertiesWindow
 
+@onready var building_window: Control = $CanvasLayerMission/BuildingWindow
 
 @onready var mission_button_scene: PackedScene = load("res://scenes/misions/MissionButton.tscn")
 const BASE_RES = Vector2(1920, 1080)
@@ -55,6 +58,7 @@ func _ready() -> void:
 	update_riqueza(Player.riqueza)
 	
 	monja_speak.ocultar()
+	properties_button.pressed.connect(_on_properties_button_pressed)
 
 func _process(_delta):
 	if GameManager.playing():
@@ -257,7 +261,7 @@ func create_buildings() -> void:
 		buildings_container.add_child(building_node)
 
 func _on_building_pressed(building: Building) -> void:
-	print("Building pulsado: ", building.building_name)
-	print("ID: ", building.id)
-	print("Coste: ", building.purchase_cost)
-	print("Ingresos: ", building.income_per_turn)
+	building_window.setup(building)
+
+func _on_properties_button_pressed() -> void:
+	properties_window.setup()

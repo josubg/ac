@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://b1m6fhr2enk04"]
+
+[ext_resource type="Script" uid="uid://byuwbqfdwsbi5" path="res://scenes/buildings/properties_window.gd" id="1_1q5kb"]
+
+[node name="PropertiesWindow" type="Control" unique_id=934365827]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_1q5kb")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1133400675]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=2137007755]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer" unique_id=369334458]
+layout_mode = 2
+alignment = 1
+
+[node name="TitleLabel" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer" unique_id=233161069]
+layout_mode = 2
+text = "Titulo de la movida"
+
+[node name="CloseButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer" unique_id=730012105]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "X"
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer" unique_id=939780987]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/VBoxContainer" unique_id=480646032]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="PropertiesList" type="VBoxContainer" parent="PanelContainer/VBoxContainer/ScrollContainer" unique_id=98875701]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[connection signal="pressed" from="PanelContainer/VBoxContainer/HBoxContainer/CloseButton" to="." method="_on_close_button_pressed"]

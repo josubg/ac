@@ -63,6 +63,7 @@ func load_buildings() -> void:
 		building.description = data[7].strip_edges().trim_prefix('"').trim_suffix('"')
 		building.x = int(data[8].strip_edges())
 		building.y = int(data[9].strip_edges())
+		building.image = load("res://resources/%s.png" % StringName(data[10].strip_edges())) as Texture2D
 		add_building(building)
 	file.close()
 	print(str(buildings.size())+" edificios cargados.")
@@ -114,3 +115,53 @@ func buy_building(building_id: String) -> bool:
 	building.owner = Building.Owner.PLAYER
 	
 	return true
+
+func donate_building(building_id: String) -> bool:
+	var building := get_building_by_id(building_id)
+
+	if building == null:
+		return false
+
+	if building.owner != Building.Owner.PLAYER:
+		return false
+
+	if building.owner == Building.Owner.FACTION:
+		return false
+
+	if building.faction_influence == &"":
+		return false
+
+	building.owner = Building.Owner.FACTION
+	
+	match building.faction_influence:
+		&"rey":
+			Player.rey += building.donation_value
+		&"nobleza":
+			Player.nobleza += building.donation_value
+		&"clero":
+			Player.clero += building.donation_value
+		&"descontento":
+			Player.descontento += building.donation_value
+
+	return true
+
+func apply_player_building_influence() -> void:
+	for building in buildings:
+		if building.owner != Building.Owner.PLAYER:
+			continue
+
+		if building.influence_per_turn <= 0:
+			continue
+
+		match building.faction_influence:
+			&"rey":
+				Player.rey += building.influence_per_turn
+
+			&"nobleza":
+				Player.nobleza += building.influence_per_turn
+
+			&"clero":
+				Player.clero += building.influence_per_turn
+
+			&"descontento":
+				Player.descontento += building.influence_per_turn
