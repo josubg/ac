@@ -1,11 +1,14 @@
 extends Node
 
+const SECONDS_PER_GAME_DAY: float = 10.0
+
 @onready var current_time : float = 0.0
 var descontento_up : float = 0
 var paused: bool = false
 var events: Array = []
 var start_date = -10413788339
 var descontento_delta = 600
+
 
 var dias = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo",]
 var meses =["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre",
@@ -18,7 +21,9 @@ var last_day: int = -1
 func run():
 	self.set_process(true)
 	self.current_time = 0
+	self.last_day = -1
 	self.resume()
+	
 	
 func  end():
 	self.set_process(false)
@@ -55,14 +60,12 @@ func remove_timer(timer: Timer):
 func _process(delta):
 	if not self.paused:
 		self.current_time += delta # convierte segundos reales a segundos de partida
-		_check_descontento(delta)
 		_check_day_change()
 		
 
 func get_date():
-	var date_map = Time.get_date_dict_from_unix_time(
-		self.start_date + (self.current_time * 86400) 
-	)
+	var date_map = get_date_map()
+	
 	return "%s, %s de %s de %s" % [
 		dias[date_map["weekday"]],
 		date_map["day"],
@@ -70,22 +73,19 @@ func get_date():
 		date_map["year"],
 	]
 
-func _check_descontento(delta):
-	descontento_up += delta 
-	if descontento_up >= self.descontento_delta:
-		descontento_up -= self.descontento_delta
-		Player.descontento += 1
-
 func _check_day_change():
 	var date_map = get_date_map()
 	if date_map["day"] != last_day:
 		last_day = date_map["day"]
+		Player.descontento += 1
 		Player.riqueza += BuildingManager.get_player_income_per_turn()
 		BuildingManager.apply_player_building_influence()
 		print("Riqueza: "+str(Player.riqueza))
 		BuildingManager.get_player_income_breakdown()
 
 func get_date_map() -> Dictionary:
+	var elapsed_game_days = current_time / SECONDS_PER_GAME_DAY
+
 	return Time.get_date_dict_from_unix_time(
-		self.start_date + (self.current_time * 86400) / 3
+		start_date + int(elapsed_game_days * 86400)
 	)

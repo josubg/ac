@@ -4,11 +4,12 @@ signal added_mission(mission: Mission)
 signal warning_mission(mission: Mission)
 signal clossed_mission(mission: Mission)
 
-var scheduled_missions = {}
+var scheduled_missions: Dictionary = {}
 var active_missions  = {}
 var on_course_missions = []
 var review_missions = []
 var last_checked_second = -1
+var last_checked_day = -1
 
 var mission_count :int: 
 	get():
@@ -19,66 +20,98 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	var seconds = int(floor(TimeManager.current_time))
+	
 	if last_checked_second >= seconds:
 		return
+	
 	last_checked_second = seconds
-	print("Mission Manager: second [%s]" % seconds)
-	if scheduled_missions.has(seconds):
-		deploy_mission(scheduled_missions[seconds])
-	for mission in active_missions:
-		if active_missions[mission] < seconds + 5:
+	
+	# Día de juego transcurrido.
+	var game_day = int(floor(TimeManager.current_time / TimeManager.SECONDS_PER_GAME_DAY))
+	# Comprobar aparición de misiones.
+	if last_checked_day != game_day:
+		last_checked_day = game_day
+
+		if scheduled_missions.has(game_day):
+			var missions_today: Array = scheduled_missions[game_day]
+			scheduled_missions.erase(game_day)
+
+			for mission in missions_today:
+				deploy_mission(mission)
+			
+	for mission in active_missions.keys():
+		var deadline = active_missions[mission]
+
+		if deadline <= seconds + 5 and mission.status != Mission.MISSION_STATUS.warning:
 			warn_mission(mission)
-		if active_missions[mission] < seconds:
+
+		if deadline <= seconds:
 			expire_mission(mission)
-	for mission in on_course_missions:
+
+	for mission in on_course_missions.duplicate():
+		if mission.on_course() and TimeManager.current_time >= mission.resolve_at:
+			mission.resolve_mission()
+
 		if mission.resolved():
 			resolve_mision(mission)
 	 
 func load_missions(path: String) -> void:
 	set_process(false)
-	last_checked_second = 0
+	
+	last_checked_second = -1
+	last_checked_day = -1
+	
 	scheduled_missions.clear()
 	active_missions.clear()
 	on_course_missions.clear()
 	review_missions.clear()
+	
 	var file = FileAccess.open(path, FileAccess.READ)
 	if file == null:
 		push_error("No se pudo abrir el CSV: " + path)
 		return
-	 # Saltar cabecera
+		
+	# Saltar cabecera
 	file.get_csv_line()
+	
 	while not file.eof_reached():
 		var row := file.get_csv_line()
-		if row.size() < 13:
-			if row.size()> 1:
-				push_warning("Discarded row", row)
+		if row.size() < 16:
 			continue
+			
 		var mission := Mission.new()
-		#Titulo,Mision,Rey,clero,Nobleza,Descontento,Influencia,cura,noble,malechor,x,y,start
 		mission.titulo = row[0]
 		mission.mision = row[1]
+		
 		mission.rey = int(row[2])
 		mission.clero = int(row[3])
 		mission.nobleza = int(row[4])
 		mission.descontento = int(row[5])
-		mission.influencia = int(row[6])
-		mission.cura = int(row[7])
-		mission.noble = int(row[8])
-		mission.malechor = int(row[9])
-		mission.x = int(row[10])
-		mission.y = int(row[11])
-		mission.start = int(row[12])
-		if row.size() >= 15:
-			mission.success_text = row[13]
-			mission.failed_text = row[14]
-		else:
-			print("Mission Manager: WARNING MISSION SIN TEXTOS DE RESULTADO [%s]" % mission.titulo)
-			mission.success_text = "Excelencia, tenemos controlada la situación y adjuntamos informes sobre lo sucedido."
-			mission.failed_text = "Excelencia, ha sido un fracaso"
-		scheduled_missions[mission.start] = mission
+		
+		mission.cura = int(row[6])
+		mission.noble = int(row[7])
+		mission.malechor = int(row[8])
+		
+		mission.x = int(row[9])
+		mission.y = int(row[10])
+		
+		mission.start = int(row[11])
+		mission.resolve_time = int(row[12])
+		mission.dificultad = int(row[13])
+		
+		mission.success_text = row[14]
+		mission.failed_text = row[15]
+		# Guardar la misión en el día correspondiente
+		if not scheduled_missions.has(mission.start):
+			scheduled_missions[mission.start] = []
+			
+		scheduled_missions[mission.start].append(mission)
+	
+	file.close()
 	TimeManager.run()
 	set_process(true)
-	file.close()
+	
+	
 	
 func get_test_mission() -> Mission:
 	var mission := Mission.new()
@@ -88,7 +121,6 @@ func get_test_mission() -> Mission:
 	mission.clero = 10
 	mission.nobleza = 10
 	mission.descontento = 10
-	mission.influencia = 10
 	mission.cura = 1
 	mission.noble = 1
 	mission.malechor = 0
@@ -101,11 +133,11 @@ func get_test_mission() -> Mission:
 	return mission
 
 func deploy_mission(mission: Mission):
-	scheduled_missions.erase(last_checked_second)
+	scheduled_missions.erase(mission.start)
 	mission.status = Mission.MISSION_STATUS.deployed
-	active_missions[mission] = last_checked_second + 10
+	active_missions[mission] = int(floor(TimeManager.current_time)) + 15
 	added_mission.emit(mission)
-	print("Mission Manager: Launched mision: [%s]" % mission.titulo)
+	print("Mission Manager: Launched mission: [%s] - Día [%s]" % [mission.titulo, mission.start])
 	
 func warn_mission(mission: Mission):
 	mission.status = Mission.MISSION_STATUS.warning

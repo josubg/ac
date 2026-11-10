@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://wcio6esgfo65"
+
+[deps]
+
+files=["res://resources/data/missions_v2.Mision.translation", "res://resources/data/missions_v2.Rey.translation", "res://resources/data/missions_v2.Iglesia.translation", "res://resources/data/missions_v2.Nobleza.translation", "res://resources/data/missions_v2.Descontento.translation", "res://resources/data/missions_v2.cura.translation", "res://resources/data/missions_v2.noble.translation", "res://resources/data/missions_v2.malechor.translation", "res://resources/data/missions_v2.x.translation", "res://resources/data/missions_v2.y.translation", "res://resources/data/missions_v2.start.translation", "res://resources/data/missions_v2.duracion.translation", "res://resources/data/missions_v2.dificultad.translation", "res://resources/data/missions_v2.exito.translation", "res://resources/data/missions_v2.fallo.translation"]
+
+source_file="res://resources/data/missions_v2.csv"
+dest_files=["res://resources/data/missions_v2.Mision.translation", "res://resources/data/missions_v2.Rey.translation", "res://resources/data/missions_v2.Iglesia.translation", "res://resources/data/missions_v2.Nobleza.translation", "res://resources/data/missions_v2.Descontento.translation", "res://resources/data/missions_v2.cura.translation", "res://resources/data/missions_v2.noble.translation", "res://resources/data/missions_v2.malechor.translation", "res://resources/data/missions_v2.x.translation", "res://resources/data/missions_v2.y.translation", "res://resources/data/missions_v2.start.translation", "res://resources/data/missions_v2.duracion.translation", "res://resources/data/missions_v2.dificultad.translation", "res://resources/data/missions_v2.exito.translation", "res://resources/data/missions_v2.fallo.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

@@ -48,7 +48,7 @@ func start_game() -> void:
 	_change_scene_to_file(game_scene_path)
 	state = State.PLAYING
 	emit_signal("game_started")
-	MissionManager.load_missions("res://resources/data/missions.txt")
+	MissionManager.load_missions("res://resources/data/missions_v2.csv")
 	BuildingManager.load_buildings()
 	print("Main: %s" % str(MissionManager.scheduled_missions))
 	Player.start()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://jvho4fxquili"]
+[gd_scene format=3 uid="uid://jvho4fxquili"]
 
 [ext_resource type="Script" uid="uid://m61d06e3bm43" path="res://scenes/misions/mission_resolution_window.gd" id="1_80knw"]
 [ext_resource type="Texture2D" uid="uid://d046e3k84whiw" path="res://sprites/frame.png" id="2_80knw"]
@@ -32,7 +32,7 @@ border_width_top = 1
 border_width_right = 1
 border_width_bottom = 1
 
-[node name="Panel" type="Panel"]
+[node name="Panel" type="Panel" unique_id=1021064680]
 anchors_preset = -1
 anchor_right = 0.39000002
 anchor_bottom = 0.40500003
@@ -43,61 +43,61 @@ grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_filhx")
 script = ExtResource("1_80knw")
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1499410861]
 layout_mode = 0
 offset_right = 750.0
 offset_bottom = 649.0
 theme_override_styles/panel = SubResource("StyleBoxTexture_filhx")
 
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=1242032649]
 layout_mode = 2
 theme_override_constants/margin_left = 35
 theme_override_constants/margin_top = 35
 theme_override_constants/margin_right = 35
 theme_override_constants/margin_bottom = 35
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer" unique_id=436861984]
 layout_mode = 2
 
-[node name="TitleLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer"]
+[node name="TitleLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=514950865]
 layout_mode = 2
 text = "Título"
 label_settings = SubResource("LabelSettings_540ay")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="DescriptionLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer"]
+[node name="DescriptionLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1613043368]
 layout_mode = 2
 text = "Texto de resolución, dependiendo de si hay ido bien o mal. 
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent magna urna, vehicula sit amet scelerisque id, molestie at magna. Quisque feugiat justo et pulvinar ultricies. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In blandit nibh nulla, vitae ornare felis tincidunt sit amet. Praesent sed elit facilisis, tristique orci nec, lacinia dolor. Duis vel hendrerit eros. In quis sem iaculis, mattis dui at, egestas leo. Aenean bibendum venenatis sem. "
 autowrap_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=681161932]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.27
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_bottom = 5
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer" unique_id=562677451]
 layout_mode = 2
 
-[node name="OutcomeLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+[node name="OutcomeLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer" unique_id=1981233414]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("4_80knw")
 theme_override_font_sizes/font_size = 26
 text = "Misión completada con éxito"
 horizontal_alignment = 1
 
-[node name="OutcomeDescription" type="RichTextLabel" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+[node name="OutcomeDescription" type="RichTextLabel" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer" unique_id=841521273]
 layout_mode = 2
 size_flags_vertical = 3
 bbcode_enabled = true
 text = "El rey está satisfecho
 "
 
-[node name="EndMissionButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+[node name="EndMissionButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer" unique_id=461725715]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_jrjin")
 theme_override_font_sizes/font_size = 24
