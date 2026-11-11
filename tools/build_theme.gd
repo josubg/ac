@@ -95,7 +95,6 @@ func _build() -> void:
 	var cifras := _font("res://assets/ui/fonts/ebgaramond/EBGaramond-VF.ttf", "garamond_cifras", 600, 0, true)
 	var canon := _font("res://assets/ui/fonts/imfellfrenchcanon/IMFeFCrm28P.ttf", "fell_canon")
 	var canon_cursiva := _font("res://assets/ui/fonts/imfellfrenchcanon/IMFeFCit28P.ttf", "fell_canon_cursiva")
-	var fraktur := _font("res://assets/ui/fonts/unifrakturmaguntia/UnifrakturMaguntia-Book.ttf", "fraktur_titular")
 
 	t.default_font = garamond
 	t.default_font_size = 22
@@ -184,8 +183,8 @@ func _build() -> void:
 	t.set_constant("line_spacing", "Soneto", 10)
 
 	_variation("TitularFinal", "Label")
-	t.set_font("font", "TitularFinal", fraktur)
-	t.set_font_size("font_size", "TitularFinal", 160)
+	t.set_font("font", "TitularFinal", canon)
+	t.set_font_size("font_size", "TitularFinal", 150)
 	t.set_color("font_color", "TitularFinal", ORO_CLARO)
 	t.set_color("font_shadow_color", "TitularFinal", Color(0, 0, 0, 0.8))
 	t.set_constant("shadow_offset_y", "TitularFinal", 5)

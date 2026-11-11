@@ -124,6 +124,7 @@ func _on_options_close_pressed() -> void:
 
 func _on_idioma_pressed(locale: String) -> void:
 	LocaleSettings.set_and_save(locale)
+	_marcar_idioma(locale)
 
 
 func _marcar_idioma(locale: String) -> void:

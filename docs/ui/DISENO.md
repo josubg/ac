@@ -19,7 +19,7 @@ Colores heráldicos de las barras: Rey oro `#B8913F`, Nobleza azul `#33548C`, Ig
 - **IM Fell English SC**: títulos de carta, botones y rótulos del HUD. Tipos de imprenta del XVII; versalitas reales, no mayúsculas forzadas.
 - **EB Garamond** (variable, peso 460): texto de misiones, edificios y créditos. Numerales de caja alta (`lnum`) en las barras.
 - **IM Fell English cursiva**: lo que alguien *dice* (la monja, los sonetos finales) e indicaciones al jugador.
-- **UnifrakturMaguntia**: solo la palabra final («Fin», «Desterrado»).
+- **IM Fell French Canon**: rótulo del título y palabra final («Fin», «Desterrado»). Sin letra gótica: la UnifrakturMaguntia es de capitulares y no se lee en palabras enteras.
 
 ## Variaciones del tema
 

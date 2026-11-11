@@ -4,10 +4,11 @@ extends SceneTree
 ##
 ## Uso:
 ##   Godot --path . --resolution 1920x1080 --script res://tools/ui_capture.gd -- --out=/ruta/salida
-##   (opcional) --only=menu,main,...
+##   (opcional) --only=menu,main,...  --lang=en
 
 var out_dir := "user://ui_capture"
 var only: PackedStringArray = []
+var lang := ""
 
 
 func _initialize() -> void:
@@ -16,6 +17,8 @@ func _initialize() -> void:
 			out_dir = arg.substr(6)
 		elif arg.begins_with("--only="):
 			only = arg.substr(7).split(",")
+		elif arg.begins_with("--lang="):
+			lang = arg.substr(7)
 	DirAccess.make_dir_recursive_absolute(out_dir)
 	_run()
 
@@ -42,11 +45,15 @@ func _shot(name: String) -> void:
 func _goto(path: String) -> Node:
 	change_scene_to_file(path)
 	await process_frame
+	if lang != "":
+		TranslationServer.set_locale(lang)
 	await process_frame
 	return current_scene
 
 
 func _run() -> void:
+	if lang != "":
+		TranslationServer.set_locale(lang)
 	await _wait(0.5)
 	var gm = root.get_node("GameManager")
 	var mm = root.get_node("MissionManager")
@@ -122,6 +129,7 @@ func _run() -> void:
 			b.owner = b.Owner.CITY
 
 		main.get_node("CanvasLayerMission/MonjaSpeak").mensaje("MONJA_REY_3")
+		await _wait(1.0)
 		await _shot("11_monja")
 		mm.end()
 

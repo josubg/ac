@@ -6,9 +6,9 @@ UI_MENU_CREDITS,Créditos,Credits
 UI_MENU_EXIT,Salir,Quit
 UI_CREDITS_TITLE,Créditos,Credits
 UI_CREDITS_TEAM,"\t\t[b]Programación:[/b] Juan Sixto y Manuel J. Sueiro\n\t\t[b]Arte e Ilustraciones:[/b] Rocío Peirano y Andy Iglesias\n\t\t[b]Diseño de Narrativa:[/b] Héctor Gómez, Pablo C. Ganter y Pablo Sixto\n\t\t[b]Diseño de Música:[/b] Elena Alonso y Paula Torres\n\t\t[b]Diseño de Interfaces:[/b] Josu Bermúdez\n\t\t[b]Publicación:[/b] Nosolorol SL","\t\t[b]Programming:[/b] Juan Sixto and Manuel J. Sueiro\n\t\t[b]Art and Illustrations:[/b] Rocío Peirano and Andy Iglesias\n\t\t[b]Narrative Design:[/b] Héctor Gómez, Pablo C. Ganter and Pablo Sixto\n\t\t[b]Music Design:[/b] Elena Alonso and Paula Torres\n\t\t[b]Interface Design:[/b] Josu Bermúdez\n\t\t[b]Publisher:[/b] Nosolorol SL"
-UI_CREDITS_SOURCES,"\t\tVersión adaptada de:\n\t\t[i]""De esperar, sentir, morir, adorar"" (Juan Hidalgo, 1614–1685) [/i]\n\n\t\tPlano de la Villa de Madrid de 1622 de:\n\t\t[i]Antonio Mancinelli (Dominio público) [/i]\n","\t\tAdapted from:\n\t\t[i]""De esperar, sentir, morir, adorar"" (Juan Hidalgo, 1614–1685) [/i]\n\n\t\tMap of the Villa de Madrid (1622) by:\n\t\t[i]Antonio Mancinelli (Public domain) [/i]\n"
+UI_CREDITS_SOURCES,"\t\tVersión adaptada de:\n\t\t[i]""De esperar, sentir, morir, adorar"" (Juan Hidalgo, 1614–1685) [/i]\n\n\t\tPlano de la Villa de Madrid de 1622 de:\n\t\t[i]Antonio Mancinelli (Dominio público) [/i]\n\n\t\tIconos de [i]game-icons.net[/i] por Lorc y Delapouite (CC BY 3.0)\n\t\tTipografías IM Fell y EB Garamond (SIL OFL 1.1)\n\t\tTexturas de papel y cuero de [i]ambientCG.com[/i] (CC0)\n","\t\tAdapted from:\n\t\t[i]""De esperar, sentir, morir, adorar"" (Juan Hidalgo, 1614–1685) [/i]\n\n\t\tMap of the Villa de Madrid (1622) by:\n\t\t[i]Antonio Mancinelli (Public domain) [/i]\n\n\t\tIcons from [i]game-icons.net[/i] by Lorc and Delapouite (CC BY 3.0)\n\t\tIM Fell and EB Garamond typefaces (SIL OFL 1.1)\n\t\tPaper and leather textures from [i]ambientCG.com[/i] (CC0)\n"
 UI_CLOSE,Cerrar,Close
-UI_TUTORIAL_TITLE,TUTORIAL,TUTORIAL
+UI_TUTORIAL_TITLE,Tutorial,Tutorial
 UI_TUTORIAL_BODY,"[b]Cómo jugar esta demo:[/b]\nDecide entre alternativas, gestiona recursos humanos y políticos, y observa las consecuencias de tus elecciones.\n\n• [b]Estate atento a los rumores[/b] que surgen por la ciudad de Madrid. Podrás acceder a ellos clickando sobre el lacre rojo que aparece en el mapa. \n• [b]Envía a tus agentes a investigar[/b], los tienes en la barra de abajo, para obtener información y resolver la situación. Solo tienes que arrastrar su retrato al cuadro de las misiones. Pero ten en cuenta que cada agente tiene un origen distinto (Religioso, Malechor, Noble...) y eso influye en sus posibilidades de éxito. \n• [b]Gestiona tu reputación[/b] con la Familia Real, la Iglesia y la Nobleza; perder influencia con una facción puede ser mortal.\n\nObserva además el [b]marcador de descontento[/b],  un descuido y podrían volverse contra ti.\n\n¡Madrid depende de ti!","[b]How to play this demo:[/b]\nChoose between alternatives, manage human and political resources, and watch the consequences of your decisions.\n\n• [b]Keep an ear out for the rumours[/b] that spring up around the city of Madrid. Open them by clicking the red wax seal that appears on the map. \n• [b]Send your agents to investigate[/b] (you'll find them in the bar below) to gather information and resolve the situation. Just drag their portrait onto the mission box. But bear in mind that each agent has a different background (Religious, Rogue, Noble...) and that affects their chances of success. \n• [b]Manage your reputation[/b] with the Royal Family, the Church and the Nobility; losing influence with a faction can be deadly.\n\nKeep an eye on the [b]discontent meter[/b] as well: one slip and they could turn against you.\n\nMadrid is counting on you!"
 INTRO_1,Año del Señor de 1640.,The Year of Our Lord 1640.
 INTRO_2,"En la augusta corte de Su Majestad Felipe IV, el Imperio Español, otrora vasto y temido, comienza a crujir bajo el peso de su propia grandeza. ","In the august court of His Majesty Philip IV, the Spanish Empire, once vast and feared, begins to creak under the weight of its own greatness. "
@@ -23,8 +23,8 @@ GAME_END_1,"No me destierran, sigo en mi destino, la Corte me sostiene en su qui
 GAME_END_2,"De Valido pasé a señor divino, con títulos, favores y bandera;\n pero la nave imperial ya desespera, se pudre el mástil, se corrompe el lino.","From Favourite I rose to lord divine, with titles, favours, banners on display;\n but the imperial ship despairs today, the mast is rotting, frayed is every line."
 GAME_END_3,"Los grandes callan, el vulgo se lamenta,\n España se consume en su desgracia,\n la gloria antigua es sombra que se ausenta.","The grandees hush, the common folk lament,\n Spain is consumed by its own misfortune,\n its ancient glory a shadow, fading, spent."
 GAME_END_4,"Y yo, aún con poder, guardo mi audacia:\n si el Imperio se hunde y nada lo sustenta,\n no es mi caída: es su propia falacia.","And I, still powerful, keep my audacity:\n if the Empire sinks with nothing to sustain it,\n it is not my fall: it is its own fallacy."
-GAME_OVER_TITLE,GAME OVER,GAME OVER
-GAME_END_TITLE,FIN,THE END
+GAME_OVER_TITLE,Desterrado,Exiled
+GAME_END_TITLE,Fin,The End
 UI_HUD_CURRENCY,Reales,Reales
 UI_HUD_INCOME_ZERO,(+0/día),(+0/day)
 UI_HUD_PROPERTIES,Mis Propiedades,My Properties
@@ -67,7 +67,7 @@ MONTH_NOVEMBER,Noviembre,November
 MONTH_DECEMBER,Diciembre,December
 DATE_FORMAT,"%s, %s de %s de %s","%s, %s %s %s"
 UI_MISSION_SEND,Enviar espias,Send spies
-UI_RESOLUTION_SUCCESS,Misión completada con Exito,Mission accomplished
+UI_RESOLUTION_SUCCESS,Misión completada con éxito,Mission accomplished
 UI_RESOLUTION_FAILURE,La misión ha sido un Fracaso,The mission has failed
 RESULT_KING_PLEASED,El Rey está satisfecho.,The King is satisfied.
 RESULT_KING_DISPLEASED,El Rey no está satisfecho.,The King is not satisfied.
@@ -94,7 +94,7 @@ UI_PROPERTIES_NO_FACTION_ASSIGNED,Sin facción asignada,No faction assigned
 UI_PROPERTIES_DONATE,Donar,Donate
 FACTION_NONE,Sin facción,No faction
 UI_PROPERTIES_TOTAL_INCOME,INGRESOS TOTALES DIARIOS: %d,TOTAL DAILY INCOME: %d
-UI_PROPERTIES_TITLE,Titulo de la movida,My Properties
+UI_PROPERTIES_TITLE,Mis propiedades,My Properties
 AGENT_FACTION_NOBLE,Noble,Noble
 AGENT_FACTION_RELIGIOSA,Religiosa,Religious
 AGENT_FACTION_MALECHOR,Malechor,Rogue
