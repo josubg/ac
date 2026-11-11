@@ -205,6 +205,100 @@ def vignette(path, size=512):
     print("ok", os.path.relpath(path, ROOT))
 
 
+def gilt_molding(path, size, thick, shadow):
+    """Marco dorado tallado: perfil con bocel, escocia y junquillo, luz desde arriba-izquierda."""
+    ss = 2
+    S = size * ss
+    T = thick * ss
+    yy, xx = np.mgrid[0:S, 0:S].astype(np.float32)
+    dl, dr, dt, db = xx, S - 1 - xx, yy, S - 1 - yy
+    d = np.minimum(np.minimum(dl, dr), np.minimum(dt, db))
+    u = np.clip(d / T, 0, 1.0001)  # 0 = borde exterior, 1 = borde interior
+    # Perfil de luminancia a lo ancho de la moldura
+    prof = np.interp(u, [0, .06, .16, .30, .42, .52, .60, .70, .78, .88, .95, 1.0],
+                        [.15, .55, .95, .75, .45, .25, .55, .90, .60, .35, .70, .20])
+    # Iluminación: lados superior/izquierdo más claros, inferior/derecho más oscuros
+    side = np.select([d == dt, d == dl, d == db], [1.15, 1.05, 0.72], 0.82)
+    n = smooth_noise(S, S, 6 * ss, 3)
+    lum = np.clip(prof * side * (0.9 + 0.2 * n), 0, 1.2)
+    dark = np.array([0.20, 0.12, 0.05]); mid = np.array([0.66, 0.50, 0.22]); hi = np.array([0.98, 0.88, 0.62])
+    l = lum[..., None]
+    rgb = np.where(l < 0.6, dark + (mid - dark) * (l / 0.6), mid + (hi - mid) * np.clip((l - 0.6) / 0.5, 0, 1))
+    a = (u < 1.0).astype(np.float32)
+    # Sombra interior que cae sobre el retrato
+    inner = np.clip((d - T) / (shadow * ss), 0, 1)
+    sh_a = (1 - inner) ** 2 * 0.65 * (d >= T)
+    # Rosetas en las esquinas (bollones dorados)
+    rr = T * 0.62
+    for cx, cy in [(T / 2, T / 2), (S - T / 2, T / 2), (T / 2, S - T / 2), (S - T / 2, S - T / 2)]:
+        dist = np.sqrt((xx - cx) ** 2 + (yy - cy) ** 2) / rr
+        boss = dist < 1
+        bl = np.clip(1.05 - 0.6 * dist - 0.35 * ((yy - cy) + (xx - cx)) / rr, 0.1, 1.3)
+        bl = bl * (1 - 0.5 * np.exp(-((dist - 0.55) ** 2) / 0.004))
+        bl3 = bl[..., None]
+        brgb = np.where(bl3 < 0.6, dark + (mid - dark) * (bl3 / 0.6), mid + (hi - mid) * np.clip((bl3 - 0.6) / 0.5, 0, 1))
+        rgb = np.where(boss[..., None], brgb, rgb)
+        a = np.maximum(a, boss.astype(np.float32))
+    rgb = np.where(a[..., None] > 0, rgb, 0.0)
+    alpha = np.maximum(a, sh_a)
+    img = to_img(np.clip(rgb, 0, 1), alpha).resize((size, size), Image.LANCZOS)
+    img.save(path, optimize=True)
+    print("ok", os.path.relpath(path, ROOT))
+
+
+def wax_disc(path, size):
+    """Tirador de deslizador: gota de lacre con brillo."""
+    ss = 4
+    S = size * ss
+    yy, xx = np.mgrid[0:S, 0:S].astype(np.float32)
+    c = S / 2
+    n = smooth_noise(S, S, 4 * ss, 2)
+    ang = np.arctan2(yy - c, xx - c)
+    r = np.sqrt((xx - c) ** 2 + (yy - c) ** 2) / (c * 0.92 * (1 + 0.05 * np.sin(ang * 7) + 0.03 * (n - .5)))
+    a = np.clip((1 - r) * S / 6, 0, 1)
+    shade = np.clip(1.0 - 0.55 * ((yy - c * 0.6) / S) - 0.35 * r ** 3, 0.3, 1.3)
+    base = np.array([0.55, 0.11, 0.09])
+    rgb = base * shade[..., None]
+    hl = np.exp(-(((xx - c * 0.75) ** 2 + (yy - c * 0.65) ** 2) / (2 * (S * 0.12) ** 2)))
+    rgb = rgb + hl[..., None] * np.array([0.45, 0.30, 0.25])
+    # sello: anillo interior
+    ring = np.exp(-((r - 0.55) ** 2) / (2 * 0.03 ** 2)) * 0.35
+    rgb = rgb * (1 - ring[..., None])
+    to_img(np.clip(rgb, 0, 1), a).resize((size, size), Image.LANCZOS).save(path, optimize=True)
+    print("ok", os.path.relpath(path, ROOT))
+
+
+def checkbox(path, size, checked):
+    def fn(d, s):
+        m = 3 * s
+        d.rounded_rectangle([m, m, size * s - m, size * s - m], 4 * s, outline=TINTA + (230,), width=int(2 * s),
+                            fill=(LACRE + (255,)) if checked else (TINTA + (18,)))
+        if checked:
+            pts = [(size * s * .26, size * s * .52), (size * s * .43, size * s * .70), (size * s * .76, size * s * .30)]
+            d.line(pts, fill=PERGAMINO + (255,), width=int(3.2 * s), joint="curve")
+    draw_overlay((size, size), fn, 4).save(path, optimize=True)
+    print("ok", os.path.relpath(path, ROOT))
+
+
+def speech_tail(path, w, h):
+    """Cola del bocadillo: cuña de pergamino que apunta abajo a la izquierda, con filete dorado."""
+    rgb = parchment_base(w, h, 200, 300)
+    pts = [(w, h * 0.05), (0, h), (w, h * 0.62)]
+    mask = Image.new("L", (w * 4, h * 4), 0)
+    ImageDraw.Draw(mask).polygon([(x * 4, y * 4) for x, y in pts], fill=255)
+    mask = mask.resize((w, h), Image.LANCZOS)
+    img = to_img(rgb)
+    img.putalpha(mask)
+
+    def fn(d, s):
+        c = ORO + (235,)
+        d.line([(pts[0][0] * s, pts[0][1] * s), (pts[1][0] * s, pts[1][1] * s)], fill=c, width=int(2.2 * s))
+        d.line([(pts[1][0] * s, pts[1][1] * s), (pts[2][0] * s, pts[2][1] * s)], fill=c, width=int(2.2 * s))
+    img = Image.alpha_composite(img, draw_overlay((w, h), fn, 4))
+    img.save(path, optimize=True)
+    print("ok", os.path.relpath(path, ROOT))
+
+
 def main():
     os.makedirs(OUT, exist_ok=True)
     o = lambda n: os.path.join(OUT, n)
@@ -223,6 +317,12 @@ def main():
     wax_button(o("boton_lacre_pulsado.png"), 96, 48, (96, 20, 16), (128, 30, 24), (40, 8, 6), (150, 70, 60))
     wax_button(o("boton_lacre_inactivo.png"), 96, 48, (128, 108, 92), (100, 84, 72), (70, 58, 50), (170, 150, 130), alpha=0.75, noise=0.03)
     vignette(o("vineta.png"))
+    gilt_molding(o("marco_dorado.png"), 128, 15, 9)
+    wax_disc(o("tirador_lacre.png"), 40)
+    wax_disc(o("tirador_lacre_hover.png"), 44)
+    speech_tail(o("cola_bocadillo.png"), 90, 70)
+    checkbox(o("casilla.png"), 46, False)
+    checkbox(o("casilla_marcada.png"), 46, True)
 
 
 if __name__ == "__main__":

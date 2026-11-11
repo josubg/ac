@@ -93,6 +93,8 @@ func _build() -> void:
 	var fell_cursiva := _font("res://assets/ui/fonts/imfellenglish/IMFeENit28P.ttf", "fell_cursiva")
 	var fell_redonda := _font("res://assets/ui/fonts/imfellenglish/IMFeENrm28P.ttf", "fell_redonda")
 	var cifras := _font("res://assets/ui/fonts/ebgaramond/EBGaramond-VF.ttf", "garamond_cifras", 600, 0, true)
+	var canon := _font("res://assets/ui/fonts/imfellfrenchcanon/IMFeFCrm28P.ttf", "fell_canon")
+	var canon_cursiva := _font("res://assets/ui/fonts/imfellfrenchcanon/IMFeFCit28P.ttf", "fell_canon_cursiva")
 	var fraktur := _font("res://assets/ui/fonts/unifrakturmaguntia/UnifrakturMaguntia-Book.ttf", "fraktur_titular")
 
 	t.default_font = garamond
@@ -136,6 +138,15 @@ func _build() -> void:
 	t.set_color("font_color", "Voz", TINTA)
 	t.set_constant("line_spacing", "Voz", 4)
 
+	# Bocadillo de diálogo: la propia etiqueta lleva el pergamino y se ajusta al texto
+	_variation("Bocadillo", "Label")
+	t.set_font("font", "Bocadillo", fell_cursiva)
+	t.set_font_size("font_size", "Bocadillo", 30)
+	t.set_color("font_color", "Bocadillo", TINTA)
+	t.set_constant("line_spacing", "Bocadillo", 4)
+	var bocadillo := _tex_box("pergamino_carta.png", 64, Vector4(62, 46, 62, 46))
+	t.set_stylebox("normal", "Bocadillo", bocadillo)
+
 	# Etiquetas sobre cuero (HUD)
 	_variation("EtiquetaCuero", "Label")
 	t.set_font("font", "EtiquetaCuero", fell_versalitas)
@@ -178,6 +189,20 @@ func _build() -> void:
 	t.set_color("font_color", "TitularFinal", ORO_CLARO)
 	t.set_color("font_shadow_color", "TitularFinal", Color(0, 0, 0, 0.8))
 	t.set_constant("shadow_offset_y", "TitularFinal", 5)
+
+	# Rótulo del juego (menú): RichTextLabel para rubricar las capitales en lacre
+	_variation("Rotulo", "RichTextLabel")
+	t.set_font("normal_font", "Rotulo", canon)
+	t.set_font("italics_font", "Rotulo", canon_cursiva)
+	t.set_font_size("normal_font_size", "Rotulo", 150)
+	t.set_font_size("italics_font_size", "Rotulo", 40)
+	t.set_color("default_color", "Rotulo", PERGAMINO_CLARO)
+	t.set_color("font_shadow_color", "Rotulo", Color(0, 0, 0, 0.75))
+	t.set_constant("shadow_offset_x", "Rotulo", 0)
+	t.set_constant("shadow_offset_y", "Rotulo", 5)
+	t.set_constant("shadow_outline_size", "Rotulo", 14)
+	t.set_constant("line_separation", "Rotulo", -10)
+	t.set_stylebox("normal", "Rotulo", StyleBoxEmpty.new())
 
 	# --- Paneles (por defecto, vacíos: el pergamino se pide explícitamente)
 	t.set_stylebox("panel", "PanelContainer", StyleBoxEmpty.new())
@@ -320,6 +345,38 @@ func _build() -> void:
 	t.set_color("font_color", "ProgressBar", PERGAMINO_CLARO)
 	t.set_color("font_outline_color", "ProgressBar", Color(NOGAL, 0.9))
 	t.set_constant("outline_size", "ProgressBar", 4)
+
+	# --- Deslizadores (volumen): surco de tinta, recorrido en lacre, tirador de cera
+	var surco := _flat(Color(TINTA, 0.22), Color(TINTA, 0.55), 1, 3)
+	surco.content_margin_top = 4
+	surco.content_margin_bottom = 4
+	t.set_stylebox("slider", "HSlider", surco)
+	var recorrido := _flat(LACRE, Color(0, 0, 0, 0), 0, 3)
+	recorrido.content_margin_top = 4
+	recorrido.content_margin_bottom = 4
+	t.set_stylebox("grabber_area", "HSlider", recorrido)
+	t.set_stylebox("grabber_area_highlight", "HSlider", _flat(LACRE_VIVO, Color(0, 0, 0, 0), 0, 3))
+	t.set_icon("grabber", "HSlider", load(TEX + "tirador_lacre.png"))
+	t.set_icon("grabber_highlight", "HSlider", load(TEX + "tirador_lacre_hover.png"))
+	t.set_constant("center_grabber", "HSlider", 0)
+	t.set_stylebox("focus", "HSlider", StyleBoxEmpty.new())
+
+	# --- Casillas
+	t.set_icon("checked", "CheckBox", load(TEX + "casilla_marcada.png"))
+	t.set_icon("unchecked", "CheckBox", load(TEX + "casilla.png"))
+	t.set_icon("checked_disabled", "CheckBox", load(TEX + "casilla_marcada.png"))
+	t.set_icon("unchecked_disabled", "CheckBox", load(TEX + "casilla.png"))
+	for st in ["normal", "hover", "pressed", "hover_pressed", "focus", "disabled"]:
+		t.set_stylebox(st, "CheckBox", StyleBoxEmpty.new())
+	t.set_constant("icon_max_width", "CheckBox", 0)
+	t.set_constant("h_separation", "CheckBox", 12)
+	t.set_font("font", "CheckBox", garamond)
+	t.set_font_size("font_size", "CheckBox", 22)
+	t.set_color("font_color", "CheckBox", TINTA)
+	t.set_color("font_hover_color", "CheckBox", LACRE)
+	t.set_color("font_pressed_color", "CheckBox", TINTA)
+	t.set_color("font_hover_pressed_color", "CheckBox", LACRE)
+	t.set_color("font_focus_color", "CheckBox", TINTA)
 
 	# --- Separadores, scroll, tooltip
 	var regla := StyleBoxLine.new()
