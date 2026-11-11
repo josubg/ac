@@ -3,6 +3,23 @@
 [ext_resource type="Texture2D" uid="uid://gois0e1yi5qq" path="res://sprites/monja.png" id="1_8rvmv"]
 [ext_resource type="Script" uid="uid://dswcfychuyb06" path="res://scenes/agents/monja_speak.gd" id="1_go6ub"]
 [ext_resource type="Texture2D" path="res://assets/ui/textures/vineta.png" id="3_vineta"]
+[ext_resource type="Texture2D" path="res://assets/ui/textures/marco_dorado.png" id="4_marco"]
+[ext_resource type="Texture2D" path="res://assets/ui/textures/cola_bocadillo.png" id="5_cola"]
+[ext_resource type="Script" path="res://scenes/ui/bocadillo.gd" id="6_bocadillo"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_monja"]
+atlas = ExtResource("1_8rvmv")
+region = Rect2(70, 90, 2060, 2150)
+
+[sub_resource type="Gradient" id="Gradient_fondo"]
+offsets = PackedFloat32Array(0, 1)
+colors = PackedColorArray(0.47, 0.33, 0.22, 1, 0.13, 0.08, 0.05, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_fondo"]
+gradient = SubResource("Gradient_fondo")
+fill = 1
+fill_from = Vector2(0.5, 0.35)
+fill_to = Vector2(1.1, 1.1)
 
 [node name="MonjaSpeak" type="Node" unique_id=1549428370]
 script = ExtResource("1_go6ub")
@@ -37,38 +54,87 @@ mouse_filter = 2
 texture = ExtResource("3_vineta")
 expand_mode = 1
 
-[node name="Carta" type="PanelContainer" parent="TextureRect2"]
-layout_mode = 0
-offset_left = 440.0
-offset_top = 250.0
-offset_right = 1260.0
-offset_bottom = 720.0
-mouse_filter = 2
-theme_type_variation = &"PanelPergamino"
-
-[node name="Pie" type="Label" parent="TextureRect2/Carta"]
-layout_mode = 2
-size_flags_horizontal = 8
-size_flags_vertical = 8
-theme_type_variation = &"NotaCarta"
-text = "Pulsad cualquier tecla para continuar"
-
 [node name="TextureRect" type="TextureRect" parent="." unique_id=2099921406]
 offset_left = 110.0
-offset_top = 470.0
-offset_right = 2257.0
-offset_bottom = 2821.0
-scale = Vector2(0.17, 0.17)
+offset_top = 400.0
+offset_right = 420.0
+offset_bottom = 723.0
 mouse_filter = 2
-texture = ExtResource("1_8rvmv")
+texture = SubResource("AtlasTexture_monja")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Fondo" type="TextureRect" parent="TextureRect"]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_fondo")
+
+[node name="Marco" type="NinePatchRect" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -6.0
+offset_top = -6.0
+offset_right = 6.0
+offset_bottom = 6.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("4_marco")
+patch_margin_left = 30
+patch_margin_top = 30
+patch_margin_right = 30
+patch_margin_bottom = 30
 
 [node name="Label" type="Label" parent="." unique_id=1062866101]
-offset_left = 504.0
-offset_top = 306.0
-offset_right = 1196.0
-offset_bottom = 640.0
-theme_type_variation = &"Voz"
+offset_left = 480.0
+offset_top = 400.0
+offset_right = 1300.0
+offset_bottom = 700.0
+theme_type_variation = &"Bocadillo"
 text = "Excelencia, el Rey le ha enviado un mensaje: 
  Por vuestras infinitas gestiones me quedo sin monterías, sin comedias y, lo que más duele, sin comediantas."
-vertical_alignment = 1
 autowrap_mode = 3
+script = ExtResource("6_bocadillo")
+base_y = 690.0
+
+[node name="Cola" type="TextureRect" parent="Label"]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = -70.0
+offset_top = -128.0
+offset_right = 26.0
+offset_bottom = -54.0
+grow_vertical = 0
+mouse_filter = 2
+texture = ExtResource("5_cola")
+expand_mode = 1
+
+[node name="Pie" type="Label" parent="Label"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -560.0
+offset_top = 10.0
+offset_bottom = 44.0
+grow_horizontal = 0
+theme_type_variation = &"NotaCuero"
+text = "Pulsad cualquier tecla para continuar"
+horizontal_alignment = 2
