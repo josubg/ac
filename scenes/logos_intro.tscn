@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://bvevcxi33qmy4" path="res://scenes/logos_intro.gd" id="1_38les"]
 [ext_resource type="Texture2D" uid="uid://deluds7e5l7hg" path="res://resources/Mapa.png" id="2_7rqhc"]
 [ext_resource type="Texture2D" path="res://assets/ui/textures/vineta.png" id="3_vineta"]
+[ext_resource type="Texture2D" path="res://assets/ui/logos/logoTH_blanco400x435.png" id="4_twisted"]
 
 [sub_resource type="Animation" id="Animation_d8l21"]
 length = 0.001
@@ -57,19 +58,16 @@ mouse_filter = 2
 texture = ExtResource("3_vineta")
 expand_mode = 1
 
-[node name="Estudio" type="Label" parent="."]
+[node name="Estudio" type="TextureRect" parent="."]
 modulate = Color(1, 1, 1, 0)
-auto_translate_mode = 2
-offset_left = 360.0
-offset_top = 470.0
-offset_right = 1560.0
-offset_bottom = 610.0
-theme_type_variation = &"TituloCarta"
-theme_override_colors/font_color = Color(0.902, 0.827, 0.659, 1)
-theme_override_font_sizes/font_size = 84
-text = "The Twisted House"
-horizontal_alignment = 1
-vertical_alignment = 1
+self_modulate = Color(0.902, 0.827, 0.659, 1)
+offset_left = 800.0
+offset_top = 344.0
+offset_right = 1120.0
+offset_bottom = 692.0
+texture = ExtResource("4_twisted")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=966433060]
 libraries/ = SubResource("AnimationLibrary_7rqhc")
