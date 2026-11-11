@@ -2,42 +2,73 @@
 
 [ext_resource type="Texture2D" uid="uid://gois0e1yi5qq" path="res://sprites/monja.png" id="1_8rvmv"]
 [ext_resource type="Script" uid="uid://dswcfychuyb06" path="res://scenes/agents/monja_speak.gd" id="1_go6ub"]
-[ext_resource type="Texture2D" uid="uid://bxrwgjm81442e" path="res://sprites/paper-papyrus-text-others.png" id="2_2uk77"]
-[ext_resource type="FontFile" uid="uid://b5p2nwegcv016" path="res://resources/AlbertText-Bold.ttf" id="4_16yg8"]
-
-[sub_resource type="Theme" id="Theme_go6ub"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_07m0t"]
-font = ExtResource("4_16yg8")
-font_size = 26
-font_color = Color(0, 0, 0, 1)
+[ext_resource type="Texture2D" path="res://assets/ui/textures/vineta.png" id="3_vineta"]
 
 [node name="MonjaSpeak" type="Node" unique_id=1549428370]
 script = ExtResource("1_go6ub")
 
+[node name="TextureRect2" type="Control" parent="." unique_id=1150104573]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Velo" type="ColorRect" parent="TextureRect2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.08, 0.05, 0.03, 0.5)
+
+[node name="VeloBorde" type="TextureRect" parent="TextureRect2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("3_vineta")
+expand_mode = 1
+
+[node name="Carta" type="PanelContainer" parent="TextureRect2"]
+layout_mode = 0
+offset_left = 440.0
+offset_top = 250.0
+offset_right = 1260.0
+offset_bottom = 720.0
+mouse_filter = 2
+theme_type_variation = &"PanelPergamino"
+
+[node name="Pie" type="Label" parent="TextureRect2/Carta"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme_type_variation = &"NotaCarta"
+text = "Pulsad cualquier tecla para continuar"
+
 [node name="TextureRect" type="TextureRect" parent="." unique_id=2099921406]
-offset_left = 129.0
-offset_top = 545.0
-offset_right = 2536.0
-offset_bottom = 3180.7043
-scale = Vector2(0.15, 0.15)
+offset_left = 110.0
+offset_top = 470.0
+offset_right = 2257.0
+offset_bottom = 2821.0
+scale = Vector2(0.17, 0.17)
+mouse_filter = 2
 texture = ExtResource("1_8rvmv")
 
-[node name="TextureRect2" type="TextureRect" parent="." unique_id=1150104573]
-offset_left = 76.0
-offset_top = 171.0
-offset_right = 776.0
-offset_bottom = 637.0
-theme = SubResource("Theme_go6ub")
-texture = ExtResource("2_2uk77")
-
 [node name="Label" type="Label" parent="." unique_id=1062866101]
-offset_left = 210.0
-offset_top = 167.0
-offset_right = 664.0
-offset_bottom = 616.0
-text = " Por vuestras infinitas gestiones me quedo sin monterías, sin comedias y, lo que más duele, sin comediantas. Si he de ser rey de papeles y despachos, será porque vos habéis matado el campo, el teatro y la risa."
-label_settings = SubResource("LabelSettings_07m0t")
-horizontal_alignment = 1
+offset_left = 504.0
+offset_top = 306.0
+offset_right = 1196.0
+offset_bottom = 640.0
+theme_type_variation = &"Voz"
+text = "Excelencia, el Rey le ha enviado un mensaje: 
+ Por vuestras infinitas gestiones me quedo sin monterías, sin comedias y, lo que más duele, sin comediantas."
 vertical_alignment = 1
-autowrap_mode = 2
+autowrap_mode = 3

@@ -171,15 +171,19 @@ func update_descontento(value):
 		descontento_playing = false
 	_update_color(descontento_bar,value,true)
 
+const COLOR_PELIGRO := Color("9a2a22")
+
 func _update_color(faction : ProgressBar, value: float, inverse: bool) -> void:
-	var color_ratio = value / 100.0
-	var color = Color.RED.lerp(Color.GREEN, color_ratio)
-	if inverse:
-		color = Color.GREEN.lerp(Color.RED, color_ratio)
-	var style = StyleBoxFlat.new()
-	style.bg_color = color
-	style.border_color = Color(0, 0, 0) # opcional, borde negro
-	faction.add_theme_stylebox_override("background", style)
+	# Cada barra conserva su color heráldico (definido en main.tscn) y vira
+	# hacia el rojo lacre a medida que la situación se vuelve peligrosa.
+	if not faction.has_meta("relleno_base"):
+		faction.set_meta("relleno_base", faction.get_theme_stylebox("fill"))
+	var base: StyleBoxFlat = faction.get_meta("relleno_base")
+	var ratio := value / 100.0
+	var peligro := ratio if inverse else 1.0 - ratio
+	var style: StyleBoxFlat = base.duplicate()
+	style.bg_color = base.bg_color.lerp(COLOR_PELIGRO, clampf((peligro - 0.5) / 0.35, 0.0, 1.0))
+	faction.add_theme_stylebox_override("fill", style)
 	
 func _on_mission_pressed(mission: Mission) -> void:
 	if mission.resolved():
