@@ -60,11 +60,11 @@ func get_probability()-> float:
 
 	probability += 10 * veterans
 	probability -= dificultad
-	print("N: ", n)
-	print("Veterans: ", veterans)
-	print("Affinity: ", has_affinity)
-	print("Difficulty: ", dificultad)
-	print("Probability calculated: ", probability)
+	DebugLog.log("N: ", n)
+	DebugLog.log("Veterans: ", veterans)
+	DebugLog.log("Affinity: ", has_affinity)
+	DebugLog.log("Difficulty: ", dificultad)
+	DebugLog.log("Probability calculated: ", probability)
 	
 	return clampf(float(probability), 10.0, 90.0)
 
@@ -81,23 +81,23 @@ func clean_agent(agent: Agent) -> void:
 		agents_changed.emit()
 	
 func send_agents_home() -> void:
-	print("Mission: Sending agents to home [%s]" % self.titulo)
+	DebugLog.log("Mission: Sending agents to home [%s]" % self.titulo)
 	for agent in self.agents:
 		agent.send_home(self.status == MISSION_STATUS.succeded)
 
 func send_agents_mission():
-	print("Mission: Sending agents to mission [%s]" % self.titulo)
+	DebugLog.log("Mission: Sending agents to mission [%s]" % self.titulo)
 	resolve_at = TimeManager.current_time + (resolve_time * TimeManager.SECONDS_PER_GAME_DAY)
 	self.status = MISSION_STATUS.on_course
-	print("Mission: Will resolve in %d game days" % resolve_time)
+	DebugLog.log("Mission: Will resolve in %d game days" % resolve_time)
 
 	
 func resolve_mission():
-	print("Mission: resolving mission[%s]" % self.titulo)
-	print("Agents: ", agents.size())
-	print("Difficulty: ", dificultad)
+	DebugLog.log("Mission: resolving mission[%s]" % self.titulo)
+	DebugLog.log("Agents: ", agents.size())
+	DebugLog.log("Difficulty: ", dificultad)
 	var probability := get_probability()
-	print("Probability before roll: ", probability)
+	DebugLog.log("Probability before roll: ", probability)
 	var rng = RandomNumberGenerator.new()
 	var luck := rng.randf()
 	if luck < probability/100.0:
@@ -105,7 +105,7 @@ func resolve_mission():
 	else:
 		status = MISSION_STATUS.failed
 
-	print(
+	DebugLog.log(
 		"Mission: Resolved [%s] | Probability: %.1f%% | Roll: %.1f%% | Result: %s"
 		% [titulo, probability, luck * 100.0, status]
 	)

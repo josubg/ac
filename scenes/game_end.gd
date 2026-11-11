@@ -26,7 +26,7 @@ func _ready():
 	
 
 func _show_paragraph(index: int):
-	print("Game end: %i --> %i [%b]" % 
+	DebugLog.log("Game end: %d --> %d [%s]" % 
 		[index, paragraphs.size(), index >= paragraphs.size()])
 	if index >= paragraphs.size():
 		label_go.show()

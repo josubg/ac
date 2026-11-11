@@ -30,20 +30,21 @@ func playing() -> bool:
 	
 func go_to_intro() -> void:
 	_change_scene_to_file(logo_scene_path)
-	#_change_scene_to_file(intro_scene_path)
-	print("Game Manager: Intro")
-	#_change_scene_to_file(intro_scene_path)
 	state = State.INTRO
 	emit_signal("scene_changed", "Intro")
 
+func go_to_intro_video() -> void:
+	_change_scene_to_file(intro_scene_path)
+	state = State.INTRO
+
 func go_to_menu() -> void:
-	print("Game Manager: Menu")
+	DebugLog.log("Game Manager: Menu")
 	_change_scene_to_file(menu_scene_path)
 	state = State.MENU
 	emit_signal("scene_changed", "Menu")
 
 func start_game() -> void:
-	print("Game Manager: Start game")
+	DebugLog.log("Game Manager: Start game")
 	# Si no se cargan las misiones no se entra en la partida: con 0 misiones
 	# main.gd daría la victoria al instante y el fallo parecería un final.
 	if not MissionManager.load_missions("res://resources/data/missions_v2.csv"):
@@ -54,19 +55,19 @@ func start_game() -> void:
 	state = State.PLAYING
 	emit_signal("game_started")
 	BuildingManager.load_buildings()
-	print("Main: %s" % str(MissionManager.scheduled_missions))
+	DebugLog.log("Main: %s" % str(MissionManager.scheduled_missions))
 	Player.start()
 
 
 func go_to_gameover(score := 0) -> void:
-	print("Game Manager: GAME OVER")
+	DebugLog.log("Game Manager: GAME OVER")
 	_change_scene_to_file(gameover_scene_path)
 	state = State.GAMEOVER
 	emit_signal("game_over", score)
 	emit_signal("scene_changed", "GameOver")
 
 func go_to_gameend(score := 0) -> void:
-	print("Game Manager: Game end")
+	DebugLog.log("Game Manager: Game end")
 	_change_scene_to_file(gameend_scene_path)
 	state = State.GAMEOVER
 	emit_signal("game_over", score)

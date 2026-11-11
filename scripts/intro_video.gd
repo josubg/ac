@@ -10,7 +10,6 @@ extends Control
 
 @export var fade_duration := 1.0        # segundos para aparecer/desaparecer
 @export var display_duration := 6     # cuánto tiempo se muestra cada párrafo
-@export var next_scene_path := "res://main_scene.tscn"
 @export var skip_action : String = "skip_intro"
 @onready var intro_label: Label = $Label
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
@@ -23,7 +22,7 @@ func _ready():
 	_show_paragraph(current_index)
 
 func _show_paragraph(index: int):
-	print("Intro video: %s --> %s [%s]" % 
+	DebugLog.log("Intro video: %s --> %s [%s]" % 
 		[index, paragraphs.size(), index >= paragraphs.size()])
 	if index >= paragraphs.size():
 		GameManager.go_to_menu()
@@ -31,7 +30,9 @@ func _show_paragraph(index: int):
 	intro_label.text = paragraphs[index]
 	animation_player.play("fade")
 	await animation_player.animation_finished
-	_on_next_paragraph()
+	# Si el jugador ya ha pasado de párrafo con un clic, esta espera ya no vale.
+	if index == current_index:
+		_on_next_paragraph()
 
 func _on_next_paragraph():
 	current_index += 1

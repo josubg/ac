@@ -143,26 +143,26 @@ func deploy_mission(mission: Mission):
 	mission.status = Mission.MISSION_STATUS.deployed
 	active_missions[mission] = int(floor(TimeManager.current_time)) + 15
 	added_mission.emit(mission)
-	print("Mission Manager: Launched mission: [%s] - Día [%s]" % [mission.titulo, mission.start])
+	DebugLog.log("Mission Manager: Launched mission: [%s] - Día [%s]" % [mission.titulo, mission.start])
 	
 func warn_mission(mission: Mission):
 	mission.status = Mission.MISSION_STATUS.warning
 	warning_mission.emit(mission)
-	print("Mission Manager: Warned mision: [%s]" % mission.titulo)
+	DebugLog.log("Mission Manager: Warned mision: [%s]" % mission.titulo)
 
 func expire_mission(mission: Mission):
 	active_missions.erase(mission)
 	mission.status = Mission.MISSION_STATUS.expired
 	Player.failed_mission(mission)
 	clossed_mission.emit(mission)
-	print("Mission Manager: Expired mision: [%s]" % mission.titulo)
+	DebugLog.log("Mission Manager: Expired mision: [%s]" % mission.titulo)
 	
 func send_agents(mission: Mission):
 	active_missions.erase(mission)
 	on_course_missions.append(mission)
 	mission.send_agents_mission()
 	warning_mission.emit(mission)
-	print("Mission Manager: Agents sent: [%s]" % mission.titulo)
+	DebugLog.log("Mission Manager: Agents sent: [%s]" % mission.titulo)
 	
 func resolve_mision(mission: Mission) -> void:
 	warning_mission.emit(mission)
@@ -172,13 +172,13 @@ func resolve_mision(mission: Mission) -> void:
 		Player.successul_mission(mission)
 	else:
 		Player.failed_mission(mission)
-	print("Mission Manager: Mission Acomplished: [%s]" % mission.titulo)
+	DebugLog.log("Mission Manager: Mission Acomplished: [%s]" % mission.titulo)
 	
 func review_mision(mission: Mission) -> void:
 	review_missions.erase(mission)
 	mission.send_agents_home()
 	clossed_mission.emit(mission)
-	print("Mission Manager: Reviewed mision: [%s]" % mission.titulo)
+	DebugLog.log("Mission Manager: Reviewed mision: [%s]" % mission.titulo)
 
 func end():
 	TimeManager.end()

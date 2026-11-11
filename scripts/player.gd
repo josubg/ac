@@ -68,14 +68,14 @@ func start():
 	BuildingManager.buy_building("0")
 	
 func successul_mission(mission: Mission):
-	print("Player: Succesfull mission: ", mission)
+	DebugLog.log("Player: Succesfull mission: ", mission)
 	clero += mission.clero * bono
 	rey += mission.rey * bono
 	nobleza += mission.nobleza * bono
 	descontento -= mission.descontento * bono
 	
 func failed_mission(mission):
-	print("Player: Unsuccesfull mission: ", mission)
+	DebugLog.log("Player: Unsuccesfull mission: ", mission)
 	clero -= mission.clero * penalizacion
 	rey -= mission.rey * penalizacion
 	nobleza -= mission.nobleza * penalizacion

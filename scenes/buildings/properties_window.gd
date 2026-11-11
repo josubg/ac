@@ -13,7 +13,7 @@ func refresh() -> void:
 	# Obtener propiedades del jugador
 	var player_buildings := BuildingManager.get_player_buildings()
 
-	print("Propiedades encontradas: ", player_buildings.size())
+	DebugLog.log("Propiedades encontradas: ", player_buildings.size())
 
 	# Calcular ingresos totales
 	var total_income := 0
@@ -109,7 +109,7 @@ func _on_donate_pressed(building_id: String) -> void:
 	if BuildingManager.donate_building(building_id):
 		refresh()
 	else:
-		print("No se ha podido realizar la donación.")
+		DebugLog.log("No se ha podido realizar la donación.")
 
 func _get_faction_name(faction: StringName) -> String:
 	match faction:

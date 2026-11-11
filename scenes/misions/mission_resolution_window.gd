@@ -15,7 +15,7 @@ func _ready() -> void:
 func show_mission(new_mission: Mission) -> void:
 	TimeManager.pause(self)
 	self.mission = new_mission
-	print("Mission resolution window: show mission [%s]" % self.mission.status)
+	DebugLog.log("Mission resolution window: show mission [%s]" % self.mission.status)
 	title_label.text = self.mission.titulo
 	description_label.text = self.mission.mision
 	if self.mission.success():

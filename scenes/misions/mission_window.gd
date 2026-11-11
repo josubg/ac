@@ -17,7 +17,7 @@ func show_mission(new_mission: Mission) -> void:
 	TimeManager.pause(self)
 	audio_stream_player.play()
 
-	print("Mission window: show mission [%s]" % new_mission.titulo)
+	DebugLog.log("Mission window: show mission [%s]" % new_mission.titulo)
 
 	if mission != new_mission:
 		if mission and mission.agents_changed.is_connected(update_send_button):

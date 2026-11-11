@@ -81,7 +81,7 @@ func _check_day_change():
 			days_since_discontent = 0
 		Player.riqueza += BuildingManager.get_player_income_per_turn()
 		BuildingManager.apply_player_building_influence()
-		print("Riqueza: "+str(Player.riqueza))
+		DebugLog.log("Riqueza: "+str(Player.riqueza))
 		BuildingManager.get_player_income_breakdown()
 
 func get_date_map() -> Dictionary:

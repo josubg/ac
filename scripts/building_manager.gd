@@ -64,12 +64,15 @@ func load_buildings() -> void:
 		building.description = data[7].strip_edges().trim_prefix('"').trim_suffix('"')
 		building.x = int(data[8].strip_edges())
 		building.y = int(data[9].strip_edges())
+		# Un edificio sin coste es casa propia: el Conde-Duque ya lo posee.
+		if building.purchase_cost == 0:
+			building.owner = Building.Owner.PLAYER
 		building.image = load("res://resources/%s.png" % StringName(data[10].strip_edges())) as Texture2D
 		add_building(building)
 	file.close()
-	print(str(buildings.size())+" edificios cargados.")
+	DebugLog.log(str(buildings.size())+" edificios cargados.")
 	for build in buildings:
-		print(build.building_name)
+		DebugLog.log(build.building_name)
 
 func parse_csv_line(line: String) -> Array[String]:
 	var result: Array[String] = []
@@ -98,7 +101,7 @@ func get_player_income_breakdown() -> Dictionary:
 			breakdown["buildings"][building.building_name] = building.income_per_turn
 			breakdown["total"] += building.income_per_turn
 
-	print("FINAL BREAKDOWN: ", breakdown)
+	DebugLog.log("FINAL BREAKDOWN: ", breakdown)
 
 	return breakdown
 
@@ -129,7 +132,7 @@ func donate_building(building_id: String) -> bool:
 	if building.owner == Building.Owner.FACTION:
 		return false
 
-	if building.faction_influence == &"":
+	if building.donation_influence not in [&"rey", &"nobleza", &"clero", &"descontento"]:
 		return false
 
 	building.owner = Building.Owner.FACTION
@@ -165,4 +168,5 @@ func apply_player_building_influence() -> void:
 				Player.clero += building.influence_per_turn
 
 			&"descontento":
-				Player.descontento += building.influence_per_turn
+				# Una influencia sobre el Descontento lo calma (igual que al donar).
+				Player.descontento -= building.influence_per_turn

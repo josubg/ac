@@ -3,14 +3,14 @@ extends Node
 @onready var mission_window: Control = $CanvasLayerMission/MissionWindow
 @onready var mission_resolution_window: Control = $CanvasLayerMission/MissionResolutionWindow
 
-@onready var time_label: Label = $CanvasLayerMission/VBoxContainer/HBoxContainer/ColorRect/TimeLabel
-@onready var rey_bar: ProgressBar = $CanvasLayerMission/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/influence_panel/VBoxContainer/HBoxContainer/ReyBar
-@onready var nobleza_bar: ProgressBar = $CanvasLayerMission/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/influence_panel/VBoxContainer/HBoxContainer2/NoblezaBar
-@onready var clero_bar: ProgressBar = $CanvasLayerMission/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/influence_panel/VBoxContainer/HBoxContainer3/CleroBar
-@onready var descontento_bar: ProgressBar = $CanvasLayerMission/VBoxContainer/HBoxContainer/PanelContainer/HBoxContainer/DescontentoBar
-@onready var buttons_layer: Control = $CanvasLayerMission/VBoxContainer/ButtonsLayer
-@onready var riqueza_label: Label = $CanvasLayerMission/VBoxContainer/HBoxContainer/PanelContainer2/HBoxContainer/RiquezaLabel
-@onready var riqueza_mod_label: Label = $CanvasLayerMission/VBoxContainer/HBoxContainer/PanelContainer2/HBoxContainer/RiquezaModLabel
+@onready var time_label: Label = $CanvasLayerMission/HUD/TopBar/DatePanel/TimeLabel
+@onready var rey_bar: ProgressBar = $CanvasLayerMission/HUD/BottomPanel/BottomRows/BottomBar/InfluencePanel/InfluenceRows/KingRow/ReyBar
+@onready var nobleza_bar: ProgressBar = $CanvasLayerMission/HUD/BottomPanel/BottomRows/BottomBar/InfluencePanel/InfluenceRows/NobilityRow/NoblezaBar
+@onready var clero_bar: ProgressBar = $CanvasLayerMission/HUD/BottomPanel/BottomRows/BottomBar/InfluencePanel/InfluenceRows/ClergyRow/CleroBar
+@onready var descontento_bar: ProgressBar = $CanvasLayerMission/HUD/TopBar/DiscontentPanel/DiscontentRow/DescontentoBar
+@onready var buttons_layer: Control = $CanvasLayerMission/HUD/ButtonsLayer
+@onready var riqueza_label: Label = $CanvasLayerMission/HUD/TopBar/WealthPanel/WealthRow/RiquezaLabel
+@onready var riqueza_mod_label: Label = $CanvasLayerMission/HUD/TopBar/WealthPanel/WealthRow/RiquezaModLabel
 
 @onready var active_missions: Dictionary[Mission, int] = {}
 @onready var active_mission_buttons: Dictionary[Mission, MissionButton] = {}
@@ -22,7 +22,7 @@ extends Node
 @onready var building_node_scene: PackedScene = load(
 	"res://scenes/buildings/buildingNode.tscn"
 )
-@onready var properties_button: Button = $CanvasLayerMission/VBoxContainer/HBoxContainer/PanelContainer2/HBoxContainer/PropertiesButton
+@onready var properties_button: Button = $CanvasLayerMission/HUD/TopBar/WealthPanel/WealthRow/PropertiesButton
 @onready var properties_window: PropertiesWindow = $CanvasLayerMission/PropertiesWindow
 
 @onready var building_window: Control = $CanvasLayerMission/BuildingWindow
@@ -32,6 +32,7 @@ const BASE_RES = Vector2(1920, 1080)
 
 var buttons: Array[MissionButton]= []
 var monja_mensaje = false
+var monja_cola: Array[String] = []
 var descontento_playing = false
 
 func _ready() -> void:
@@ -114,18 +115,25 @@ func _is_pointer_over_ui() -> bool:
 	var hovered: Control = get_viewport().gui_get_hovered_control()
 	return hovered != null and hovered != buttons_layer
 
+# Si ya hay un mensaje en pantalla, el nuevo espera su turno.
 func _show_monja_message(text: String) -> void:
+	if monja_mensaje:
+		monja_cola.append(text)
+		return
 	TimeManager.pause(monja_speak)
 	monja_speak.mensaje(text)
 	monja_mensaje = true
 
 func _close_monja_message() -> void:
 	monja_speak.ocultar()
-	TimeManager.resume(monja_speak)
 	monja_mensaje = false
+	if not monja_cola.is_empty():
+		_show_monja_message(monja_cola.pop_front())
+		return
+	TimeManager.resume(monja_speak)
 
 func mission_added(mission: Mission) -> void:
-	print("Main: Mision added:  [%s]" % mission.titulo)
+	DebugLog.log("Main: Mision added:  [%s]" % mission.titulo)
 	var button: MissionButton = mission_button_scene.instantiate()
 	buttons.append(button)
 	buttons_layer.add_child(button)
@@ -133,7 +141,7 @@ func mission_added(mission: Mission) -> void:
 	var pos = Vector2((mission.x / BASE_RES.x) * vp_size.x,(mission.y / BASE_RES.y) * vp_size.y)
 	pos = _free_button_position(pos, button)
 	button.position = pos
-	print("Main: [X %s, Y %s] --> [X %s, Y %s]" % 
+	DebugLog.log("Main: [X %s, Y %s] --> [X %s, Y %s]" % 
 		[mission.x,mission.y,pos.x,pos.y])
 	button.mission = mission
 	button.mission_pressed.connect(_on_mission_pressed)
@@ -195,7 +203,7 @@ func update_mod_riqueza():
 func update_descontento(value):
 	descontento_bar.value = value
 	audio_descontento.volume_db = value-116
-	print("VOLUME:"+str(audio_descontento.volume_db))
+	DebugLog.log("VOLUME:"+str(audio_descontento.volume_db))
 	if descontento_bar.value > 70 and not descontento_playing:
 		audio_descontento.play()
 		descontento_playing = true
