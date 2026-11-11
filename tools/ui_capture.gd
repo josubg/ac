@@ -121,8 +121,7 @@ func _run() -> void:
 		for b in bm.buildings.slice(0, 2):
 			b.owner = b.Owner.CITY
 
-		main.get_node("CanvasLayerMission/MonjaSpeak").mensaje(
-			"Excelencia, el Rey le ha enviado un mensaje: \n Por vuestras infinitas gestiones me quedo sin monterías, sin comedias y, lo que más duele, sin comediantas. Si he de ser rey de papeles y despachos, será porque vos habéis matado el campo, el teatro y la risa.")
+		main.get_node("CanvasLayerMission/MonjaSpeak").mensaje("MONJA_REY_3")
 		await _shot("11_monja")
 		mm.end()
 

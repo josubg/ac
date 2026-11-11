@@ -106,7 +106,7 @@ func set_reduce_motion(value: bool) -> void:
 
 func toggle_reduce_motion() -> void:
 	reduce_motion = not reduce_motion
-	toast(tr("Movimiento reducido: activado") if reduce_motion else tr("Movimiento reducido: desactivado"))
+	toast(tr("TOAST_REDUCE_MOTION_ON") if reduce_motion else tr("TOAST_REDUCE_MOTION_OFF"))
 
 
 func _load_settings() -> void:

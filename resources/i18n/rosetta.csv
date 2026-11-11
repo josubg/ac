@@ -253,8 +253,8 @@ BUILDING_SAN_PLACIDO_DESC,"El Convento de San Plácido, fundado en 1624 por Jer�
 BUILDING_TABERNA_FUNDADORES_NAME,Taberna de los fundadores,The Founders' Tavern
 BUILDING_TABERNA_FUNDADORES_DESC,"La Taberna de los Fundadores, situada en la antigua calle de Barrionuevo, hoy Conde de Romanones, fue una de las bodegas más populares del Madrid histórico. Su origen estuvo ligado a unos propietarios vinícolas de Arganda que, tras fundar una capilla en la iglesia de Santo Tomás, cedieron sus bienes y su gran bodega para el culto religioso, conservando el derecho a ser enterrados en su panteón. Para comercializar sus vinos construyeron una segunda bodega en Madrid, que pronto se convirtió en un lugar de gran afluencia.","The Founders' Tavern, on the old Calle de Barrionuevo, today Conde de Romanones, was one of the most popular wine cellars of historic Madrid. It owed its origin to some vineyard owners from Arganda who, after founding a chapel in the church of Santo Tomás, gave their property and their great cellar over to religious worship, keeping the right to be buried in its vault. To sell their wines they built a second cellar in Madrid, which soon became a very crowded spot."
 UI_MONJA_CONTINUE,Pulsad cualquier tecla o haced clic para continuar,Press any key or click to continue
-UI_PROPERTIES_SUMMARY,"Cada propiedad os rinde reales y favor todos los días. Si la donáis, pasa a su facción a cambio de un favor inmediato.","Each property yields you reales and favour every day. If you donate it, it passes to its faction in exchange for an immediate favour."
-UI_MISSION_DRAG_HINT,Arrastrad aquí los retratos de los agentes que enviaréis,Drag here the portraits of the agents you will send
+UI_PROPERTIES_SUMMARY,"Cada propiedad os rinde reales y favor todos los días. Si la donáis, pasa a su facción a cambio de un favor inmediato.","Each property brings you reales and favour every day. Donate it, and it passes to its faction in exchange for immediate favour."
+UI_MISSION_DRAG_HINT,Arrastrad aquí los retratos de los agentes que enviaréis,Drag here the portraits of the agents you wish to send
 UI_MENU_OPTIONS,Opciones,Options
 UI_OPTIONS_TITLE,Opciones,Options
 UI_OPTIONS_LANGUAGE,Idioma,Language
@@ -262,3 +262,5 @@ UI_OPTIONS_VOLUME_MASTER,Volumen general,Master volume
 UI_OPTIONS_VOLUME_MUSIC,Música,Music
 UI_OPTIONS_VOLUME_SFX,Efectos,Sound effects
 UI_OPTIONS_FULLSCREEN,Pantalla completa,Fullscreen
+TOAST_REDUCE_MOTION_ON,Movimiento reducido: activado,Reduced motion: on
+TOAST_REDUCE_MOTION_OFF,Movimiento reducido: desactivado,Reduced motion: off
