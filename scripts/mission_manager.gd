@@ -162,14 +162,14 @@ func resolve_mision(mission: Mission) -> void:
 	warning_mission.emit(mission)
 	on_course_missions.erase(mission)
 	review_missions.append(mission)
-	print("Mission Manager: Mission Acomplished: [%s]" % mission.titulo)
-	
-func review_mision(mission: Mission) -> void:
-	review_missions.erase(mission)
 	if mission.success():
 		Player.successul_mission(mission)
 	else:
 		Player.failed_mission(mission)
+	print("Mission Manager: Mission Acomplished: [%s]" % mission.titulo)
+	
+func review_mision(mission: Mission) -> void:
+	review_missions.erase(mission)
 	mission.send_agents_home()
 	clossed_mission.emit(mission)
 	print("Mission Manager: Reviewed mision: [%s]" % mission.titulo)

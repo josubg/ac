@@ -16,6 +16,7 @@ func _ready() -> void:
 	hide()
 
 func setup(building_data: Building) -> void:
+	TimeManager.pause()
 	building = building_data
 	refresh()
 	show()
@@ -52,11 +53,10 @@ func refresh() -> void:
 
 func _on_close_pressed() -> void:
 	hide()
+	TimeManager.resume()
 
 func _on_buy_pressed() -> void:
 	if building == null:
 		return
 	if BuildingManager.buy_building(building.id):
-		refresh()
-	else:
 		refresh()

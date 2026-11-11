@@ -8,9 +8,10 @@ var paused: bool = false
 var events: Array = []
 var start_date = -10413788339
 var descontento_delta = 600
+var days_since_discontent: int = 0
 
 
-var dias = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo",]
+var dias = [ "Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"]
 var meses =["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre",
  "Octubre", "Noviembre", "Diciembre"]
 var timers : Array[Timer] = []
@@ -77,7 +78,10 @@ func _check_day_change():
 	var date_map = get_date_map()
 	if date_map["day"] != last_day:
 		last_day = date_map["day"]
-		Player.descontento += 1
+		days_since_discontent += 1
+		if days_since_discontent >= 2:
+			Player.descontento += 1
+			days_since_discontent = 0
 		Player.riqueza += BuildingManager.get_player_income_per_turn()
 		BuildingManager.apply_player_building_influence()
 		print("Riqueza: "+str(Player.riqueza))

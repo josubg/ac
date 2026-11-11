@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://hfvv1kukfi5c"]
+[gd_scene format=3 uid="uid://hfvv1kukfi5c"]
 
 [ext_resource type="Script" uid="uid://b4vfbvoub2w7g" path="res://scenes/misions/mission_window.gd" id="1_4fb1n"]
 [ext_resource type="Texture2D" uid="uid://d046e3k84whiw" path="res://sprites/frame.png" id="2_353q8"]
@@ -27,7 +27,7 @@ font_size = 32
 
 [sub_resource type="Theme" id="Theme_yrtqx"]
 
-[node name="Panel" type="Panel"]
+[node name="Panel" type="Panel" unique_id=1198513917]
 anchors_preset = -1
 anchor_right = 0.39000002
 anchor_bottom = 0.40500003
@@ -40,52 +40,52 @@ size_flags_vertical = 4
 theme_override_styles/panel = SubResource("StyleBoxFlat_filhx")
 script = ExtResource("1_4fb1n")
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=632641278]
 layout_mode = 0
 offset_right = 750.0
 offset_bottom = 649.0
 theme_override_styles/panel = SubResource("StyleBoxTexture_filhx")
 
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=102503588]
 layout_mode = 2
 theme_override_constants/margin_left = 35
 theme_override_constants/margin_top = 35
 theme_override_constants/margin_right = 35
 theme_override_constants/margin_bottom = 35
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer" unique_id=1971283872]
 layout_mode = 2
 
-[node name="TitleLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer"]
+[node name="TitleLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=984847803]
 layout_mode = 2
 text = "Título"
 label_settings = SubResource("LabelSettings_540ay")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="DescriptionLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer"]
+[node name="DescriptionLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=183806906]
 layout_mode = 2
 text = "Excelencia, traigo nuevas que podrían agitar las aguas de la Corte: se murmura que el acero que dio muerte al Conde de Villamediana no fue movido por razón de Estado, sino por celos de amante despechado. El testimonio es reciente, y aún incierto, mas es cosa grave. ¿Ordenáis que se envíe discreto pesquisidor a indagar, o que se deje el rumor morir por sí solo?"
 autowrap_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1071925167]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.27
 theme_override_constants/margin_top = 50
 
-[node name="AgentRoast" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer"]
+[node name="AgentRoast" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer" unique_id=2032614169]
 custom_minimum_size = Vector2(784, 210)
 layout_mode = 2
 size_flags_vertical = 0
 theme = SubResource("Theme_yrtqx")
 alignment = 1
 
-[node name="Send" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer"]
+[node name="Send" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1556539309]
 layout_mode = 2
 text = "Enviar espias"
 
-[node name="CloseMissionButton" type="Button" parent="."]
+[node name="CloseMissionButton" type="Button" parent="." unique_id=1300608335]
 layout_mode = 0
 offset_left = 766.0
 offset_top = 58.30002
@@ -94,7 +94,7 @@ offset_bottom = 89.30002
 theme_override_colors/font_color = Color(0.87, 0.13920002, 0.13920002, 1)
 text = "Cerrar"
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=936578291]
 stream = ExtResource("4_yrtqx")
 volume_db = -3.817
 

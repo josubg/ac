@@ -58,6 +58,7 @@ var riqueza: int :
 		riqueza_updated.emit(riqueza)
 
 func start():
+	reset_strikes()
 	self.rey = 50
 	self.nobleza = 50
 	self.clero = 50
@@ -82,7 +83,7 @@ func failed_mission(mission):
 
 func check_factions():
 	if started:
-		if rey == 0 or clero == 0 or nobleza == 0 or descontento > 99:
+		if rey <= 0 or clero <= 0 or nobleza <= 0 or descontento > 99:
 			MissionManager.end()
 			GameManager.go_to_gameover()
 			started = false
@@ -105,7 +106,7 @@ func check_factions():
 				iglesia_strike_2 = false
 			elif clero < strike_3 and iglesia_strike_3:
 				emit_signal("iglesia_strike",3)
-				iglesia_strike_1 = false	
+				iglesia_strike_3 = false	
 
 			if nobleza < strike_1 and noble_strike_1:
 				emit_signal("noble_strike",1)
@@ -116,3 +117,16 @@ func check_factions():
 			elif nobleza < strike_3 and noble_strike_3:
 				emit_signal("noble_strike",3)
 				noble_strike_3 = false
+
+func reset_strikes() -> void:
+	rey_strike_1 = true
+	rey_strike_2 = true
+	rey_strike_3 = true
+
+	noble_strike_1 = true
+	noble_strike_2 = true
+	noble_strike_3 = true
+
+	iglesia_strike_1 = true
+	iglesia_strike_2 = true
+	iglesia_strike_3 = true

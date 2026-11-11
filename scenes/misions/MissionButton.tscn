@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://8ycbjiya6iix"]
+[gd_scene format=3 uid="uid://8ycbjiya6iix"]
 
 [ext_resource type="Texture2D" uid="uid://7pvuqc44x556" path="res://sprites/lacre_mision.png" id="1_5a82t"]
 [ext_resource type="Texture2D" uid="uid://ejtx3jg7mryc" path="res://sprites/lacre_mision_on.png" id="2_6ex2o"]
@@ -44,7 +44,7 @@ _data = {
 &"blink": SubResource("Animation_drjvo")
 }
 
-[node name="MissionButton" type="TextureButton"]
+[node name="MissionButton" type="TextureButton" unique_id=419233889]
 offset_right = 1003.0
 offset_bottom = 1004.0
 scale = Vector2(0.12, 0.12)
@@ -56,10 +56,8 @@ script = ExtResource("3_flque")
 on_course_texture = ExtResource("4_flque")
 on_course_texture_hover = ExtResource("5_g23r0")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_02qwd")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=205670136]
+libraries/ = SubResource("AnimationLibrary_02qwd")
 
 [connection signal="mission_pressed" from="." to="." method="_on_mission_pressed"]
 [connection signal="pressed" from="." to="." method="_on_pressed"]

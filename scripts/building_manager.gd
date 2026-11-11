@@ -38,6 +38,7 @@ func get_player_income_per_turn() -> int:
 	return total_income
 
 func load_buildings() -> void:
+	buildings.clear()
 	var file := FileAccess.open(BUILDINGS_FILE_PATH, FileAccess.READ)
 	if file == null:
 		push_error("BuildingManager: No se pudo abrir %s" % BUILDINGS_FILE_PATH)
@@ -111,7 +112,7 @@ func buy_building(building_id: String) -> bool:
 		return false
 	if Player.riqueza < building.purchase_cost:
 		return false
-		Player.riqueza -= building.purchase_cost
+	Player.riqueza -= building.purchase_cost
 	building.owner = Building.Owner.PLAYER
 	
 	return true
@@ -133,7 +134,7 @@ func donate_building(building_id: String) -> bool:
 
 	building.owner = Building.Owner.FACTION
 	
-	match building.faction_influence:
+	match building.donation_influence:
 		&"rey":
 			Player.rey += building.donation_value
 		&"nobleza":
@@ -141,7 +142,7 @@ func donate_building(building_id: String) -> bool:
 		&"clero":
 			Player.clero += building.donation_value
 		&"descontento":
-			Player.descontento += building.donation_value
+			Player.descontento -= building.donation_value
 
 	return true
 

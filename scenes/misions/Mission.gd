@@ -20,6 +20,8 @@ enum MISSION_STATUS {created, deployed, warning, expired, on_course, succeded, f
 @export var success_text : String
 @export var failed_text : String
 
+signal agents_changed
+
 var resolve_at: float = 0.0
 var agents : Array[Agent] = []
 var status: MISSION_STATUS = MISSION_STATUS.created
@@ -35,6 +37,8 @@ func success():
 	
 func get_probability()-> float:
 	var n := agents.size()
+	if n == 0:
+		return 0.0
 	var veterans := 0
 	var has_affinity := false
 
@@ -68,10 +72,13 @@ func set_agent(agent: Agent) -> void:
 	if agent not in self.agents:
 		self.agents.append(agent)
 		agent.status = agent.AGENT_STATUS.ASSIGNED
+		agents_changed.emit()
 
 func clean_agent(agent: Agent) -> void:
-	self.agents.erase(agent)
-	agent.unselect()
+	if agent in agents:
+		agents.erase(agent)
+		agent.unselect()
+		agents_changed.emit()
 	
 func send_agents_home() -> void:
 	print("Mission: Sending agents to home [%s]" % self.titulo)

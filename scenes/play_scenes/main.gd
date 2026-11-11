@@ -48,7 +48,6 @@ func _ready() -> void:
 	MissionManager.warning_mission.connect(mission_updated)
 	MissionManager.clossed_mission.connect(mission_removed)
 	
-	Player.start()
 	create_buildings()
 
 	update_rey(Player.rey)
@@ -72,9 +71,10 @@ func _input(event: InputEvent) -> void:
 			monja_speak.ocultar()
 			TimeManager.resume()
 			monja_mensaje = false
-			set_process_input(false)
 
 	elif event is InputEventMouseButton and event.pressed:
+		if monja_mensaje:
+			return
 		var mouse_world: Vector2 = (
 			get_viewport().get_canvas_transform().affine_inverse()
 			* event.position
@@ -161,7 +161,7 @@ func update_mod_riqueza():
 	
 func update_descontento(value):
 	descontento_bar.value = value
-	audio_descontento.volume_db == value-116
+	audio_descontento.volume_db = value-116
 	print("VOLUME:"+str(audio_descontento.volume_db))
 	if descontento_bar.value > 70 and not descontento_playing:
 		audio_descontento.play()
@@ -190,6 +190,7 @@ func _on_mission_pressed(mission: Mission) -> void:
 func _unhandled_input(event):
 	if event is InputEventKey:
 		if event.pressed and event.keycode == KEY_ESCAPE:
+			MissionManager.end()
 			GameManager.go_to_menu()
 
 func rey_strikes(number):
