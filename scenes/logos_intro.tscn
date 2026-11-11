@@ -61,10 +61,10 @@ expand_mode = 1
 [node name="Estudio" type="TextureRect" parent="."]
 modulate = Color(1, 1, 1, 0)
 self_modulate = Color(0.902, 0.827, 0.659, 1)
-offset_left = 800.0
-offset_top = 344.0
-offset_right = 1120.0
-offset_bottom = 692.0
+offset_left = 848.0
+offset_top = 396.0
+offset_right = 1072.0
+offset_bottom = 640.0
 texture = ExtResource("4_twisted")
 expand_mode = 1
 stretch_mode = 5
