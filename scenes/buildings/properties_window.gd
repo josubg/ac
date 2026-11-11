@@ -4,7 +4,6 @@ extends Control
 @onready var close_button: Button = $PanelContainer/VBoxContainer/HBoxContainer/CloseButton
 
 @onready var properties_list: VBoxContainer = $PanelContainer/VBoxContainer/ScrollContainer/PropertiesList
-@onready var summary_label: Label = $PanelContainer/VBoxContainer/SummaryLabel
 
 func refresh() -> void:
 	# Limpiar la lista anterior
@@ -100,11 +99,11 @@ func refresh() -> void:
 func setup() -> void:
 	refresh()
 	show()
-	TimeManager.pause()
+	TimeManager.pause(self)
 
 func _on_close_button_pressed() -> void:
 	hide()
-	TimeManager.resume()
+	TimeManager.resume(self)
 
 func _on_donate_pressed(building_id: String) -> void:
 	if BuildingManager.donate_building(building_id):

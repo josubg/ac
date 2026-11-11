@@ -19,7 +19,7 @@ signal game_over(score : int)
 
 func _ready() -> void:
 	# si quieres arrancar en Intro:
-	go_to_intro()
+	go_to_intro.call_deferred()
 
 # -------------------------
 # API pública
@@ -44,11 +44,15 @@ func go_to_menu() -> void:
 
 func start_game() -> void:
 	print("Game Manager: Start game")
-	# limpia estado de partida si es necesario
+	# Si no se cargan las misiones no se entra en la partida: con 0 misiones
+	# main.gd daría la victoria al instante y el fallo parecería un final.
+	if not MissionManager.load_missions("res://resources/data/missions_v2.csv"):
+		push_error("GameManager: no se pudieron cargar las misiones; se vuelve al menú")
+		MissionManager.end()
+		return
 	_change_scene_to_file(game_scene_path)
 	state = State.PLAYING
 	emit_signal("game_started")
-	MissionManager.load_missions("res://resources/data/missions_v2.csv")
 	BuildingManager.load_buildings()
 	print("Main: %s" % str(MissionManager.scheduled_missions))
 	Player.start()

@@ -3,19 +3,18 @@ extends Node
 const SECONDS_PER_GAME_DAY: float = 10.0
 
 @onready var current_time : float = 0.0
-var descontento_up : float = 0
 var paused: bool = false
-var events: Array = []
 var start_date = -10413788339
-var descontento_delta = 600
 var days_since_discontent: int = 0
+# Quién ha pedido la pausa (ventanas, mensaje de la monja...). El tiempo solo
+# corre cuando no queda ninguna, así cerrar una ventana no reanuda con otra abierta.
+var _pause_sources: Dictionary = {}
 
 
 var dias = [ "Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"]
 var meses =["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre",
  "Octubre", "Noviembre", "Diciembre"]
 var timers : Array[Timer] = []
-var timers_s : Array[Timer] = []
 
 var last_day: int = -1
 
@@ -23,7 +22,9 @@ func run():
 	self.set_process(true)
 	self.current_time = 0
 	self.last_day = -1
-	self.resume()
+	self.days_since_discontent = 0
+	_pause_sources.clear()
+	_apply_pause()
 	
 	
 func  end():
@@ -31,26 +32,22 @@ func  end():
 	self.current_time = 0
 	for timer in timers:
 		timer.stop()
-	for timer in timers_s:
-		timer.stop()
 	self.timers.clear()
+	_pause_sources.clear()
+	_apply_pause()
 
-func pause():
-	self.paused = true
-	for timer in self.timers:
-		timer.paused = true
+func pause(source: Variant = &"global") -> void:
+	_pause_sources[source] = true
+	_apply_pause()
 
-func resume():
-	self.paused = false
+func resume(source: Variant = &"global") -> void:
+	_pause_sources.erase(source)
+	_apply_pause()
+
+func _apply_pause() -> void:
+	self.paused = not _pause_sources.is_empty()
 	for timer in self.timers:
-		timer.paused = false
-	for timer in self.timers_s:
-		timer.paused = false
-		
-func get_timer(seconds) -> SceneTreeTimer:
-	var timer = get_tree().create_timer(seconds, false)
-	self.timers_s.append(timer)
-	return timer
+		timer.paused = self.paused
 
 func add_timer(timer: Timer):
 	self.timers.append(timer)

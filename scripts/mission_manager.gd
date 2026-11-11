@@ -55,7 +55,7 @@ func _process(_delta: float) -> void:
 		if mission.resolved():
 			resolve_mision(mission)
 	 
-func load_missions(path: String) -> void:
+func load_missions(path: String) -> bool:
 	set_process(false)
 	
 	last_checked_second = -1
@@ -69,7 +69,7 @@ func load_missions(path: String) -> void:
 	var file = FileAccess.open(path, FileAccess.READ)
 	if file == null:
 		push_error("No se pudo abrir el CSV: " + path)
-		return
+		return false
 		
 	# Saltar cabecera
 	file.get_csv_line()
@@ -108,8 +108,12 @@ func load_missions(path: String) -> void:
 		scheduled_missions[mission.start].append(mission)
 	
 	file.close()
+	if scheduled_missions.is_empty():
+		push_error("No hay misiones válidas en el CSV: " + path)
+		return false
 	TimeManager.run()
 	set_process(true)
+	return true
 	
 	
 	
@@ -129,7 +133,9 @@ func get_test_mission() -> Mission:
 	mission.start = 0
 	mission.success_text = "Todo ha salido a pedir de Millhouse"
 	mission.failed_text = "Ay caramba"
-	scheduled_missions[mission.start] = mission
+	if not scheduled_missions.has(mission.start):
+		scheduled_missions[mission.start] = []
+	scheduled_missions[mission.start].append(mission)
 	return mission
 
 func deploy_mission(mission: Mission):

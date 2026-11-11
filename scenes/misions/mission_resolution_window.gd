@@ -13,7 +13,7 @@ func _ready() -> void:
 	self.hide()
 
 func show_mission(new_mission: Mission) -> void:
-	TimeManager.pause()
+	TimeManager.pause(self)
 	self.mission = new_mission
 	print("Mission resolution window: show mission [%s]" % self.mission.status)
 	title_label.text = self.mission.titulo
@@ -29,7 +29,7 @@ func show_mission(new_mission: Mission) -> void:
 	self.show()
 
 func _on_end_mission_button_pressed() -> void:
-	TimeManager.resume()
+	TimeManager.resume(self)
 	MissionManager.review_mision(self.mission)
 	self.mission = null
 	self.hide()

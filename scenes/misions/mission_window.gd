@@ -14,7 +14,7 @@ func _ready() -> void:
 	self.hide()
 
 func show_mission(new_mission: Mission) -> void:
-	TimeManager.pause()
+	TimeManager.pause(self)
 	audio_stream_player.play()
 
 	print("Mission window: show mission [%s]" % new_mission.titulo)
@@ -43,11 +43,11 @@ func show_mission(new_mission: Mission) -> void:
 func _on_send_pressed() -> void:
 	MissionManager.send_agents(self.mission)
 	self.mission = null
-	TimeManager.resume()
+	TimeManager.resume(self)
 	self.hide()
 
 func _on_close_mission_button_pressed() -> void:
-	TimeManager.resume()
+	TimeManager.resume(self)
 	self.hide()
 
 func update_send_button() -> void:

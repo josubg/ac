@@ -30,25 +30,25 @@ var strike_3 = 10
 
 var rey: int : 
 	set(value):
-		rey = clamp(int(value), -1, 101)
+		rey = clampi(int(value), 0, 100)
 		rey_updated.emit(rey)
 		check_factions()
 
 var nobleza: int : 
 	set(value):
-		nobleza = clamp(int(value), -1, 101)
+		nobleza = clampi(int(value), 0, 100)
 		nobleza_updated.emit(nobleza)
 		check_factions()
 
 var clero: int : 
 	set(value):
-		clero = clamp(int(value), -1, 101)
+		clero = clampi(int(value), 0, 100)
 		clero_updated.emit(clero)
 		check_factions()
 
 var descontento: int :
 	set(value):
-		descontento = clamp(value, -1, 101)
+		descontento = clampi(int(value), 0, 100)
 		descontentoy_updated.emit(descontento)
 		check_factions()
 
@@ -83,7 +83,7 @@ func failed_mission(mission):
 
 func check_factions():
 	if started:
-		if rey <= 0 or clero <= 0 or nobleza <= 0 or descontento > 99:
+		if rey <= 0 or clero <= 0 or nobleza <= 0 or descontento >= 100:
 			MissionManager.end()
 			GameManager.go_to_gameover()
 			started = false

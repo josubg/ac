@@ -20,7 +20,7 @@ extends Node
 #Buildings
 @onready var buildings_container: Node2D = $Buildings
 @onready var building_node_scene: PackedScene = load(
-	"res://scenes/buildings/BuildingNode.tscn"
+	"res://scenes/buildings/buildingNode.tscn"
 )
 @onready var properties_button: Button = $CanvasLayerMission/VBoxContainer/HBoxContainer/PanelContainer2/HBoxContainer/PropertiesButton
 @onready var properties_window: PropertiesWindow = $CanvasLayerMission/PropertiesWindow
@@ -66,14 +66,18 @@ func _process(_delta):
 			GameManager.go_to_gameend()
 
 func _input(event: InputEvent) -> void:
-	if event is InputEventKey and event.pressed:
-		if monja_mensaje:
-			monja_speak.ocultar()
-			TimeManager.resume()
-			monja_mensaje = false
+	if monja_mensaje:
+		var closes_message: bool = (
+			(event is InputEventKey or event is InputEventMouseButton)
+			and event.pressed
+		)
+		if closes_message:
+			_close_monja_message()
+			get_viewport().set_input_as_handled()
+		return
 
-	elif event is InputEventMouseButton and event.pressed:
-		if monja_mensaje:
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		if _is_pointer_over_ui():
 			return
 		var mouse_world: Vector2 = (
 			get_viewport().get_canvas_transform().affine_inverse()
@@ -95,19 +99,30 @@ func _input(event: InputEvent) -> void:
 
 		for result in results:
 			var collider = result["collider"]
-
-			if collider.get_script() == preload(
-				"res://scenes/buildings/building_node.gd"
-			):
+			if collider is BuildingNode:
 				_on_building_pressed(collider.building)
+				get_viewport().set_input_as_handled()
 				break
 
-		if monja_mensaje:
-			monja_speak.ocultar()
-			TimeManager.resume()
-			monja_mensaje = false
-			set_process_input(false)
-			
+# Los clics en edificios se procesan en _input (antes que la interfaz), así que hay
+# que descartar a mano los que caen sobre una ventana o un control de la UI.
+func _is_pointer_over_ui() -> bool:
+	for window: Control in [mission_window, mission_resolution_window, building_window, properties_window]:
+		if window.visible:
+			return true
+	var hovered: Control = get_viewport().gui_get_hovered_control()
+	return hovered != null and hovered != buttons_layer
+
+func _show_monja_message(text: String) -> void:
+	TimeManager.pause(monja_speak)
+	monja_speak.mensaje(text)
+	monja_mensaje = true
+
+func _close_monja_message() -> void:
+	monja_speak.ocultar()
+	TimeManager.resume(monja_speak)
+	monja_mensaje = false
+
 func mission_added(mission: Mission) -> void:
 	print("Main: Mision added:  [%s]" % mission.titulo)
 	var button: MissionButton = mission_button_scene.instantiate()
@@ -115,12 +130,29 @@ func mission_added(mission: Mission) -> void:
 	buttons_layer.add_child(button)
 	var vp_size = get_viewport().get_visible_rect().size
 	var pos = Vector2((mission.x / BASE_RES.x) * vp_size.x,(mission.y / BASE_RES.y) * vp_size.y)
+	pos = _free_button_position(pos, button)
 	button.position = pos
 	print("Main: [X %s, Y %s] --> [X %s, Y %s]" % 
 		[mission.x,mission.y,pos.x,pos.y])
 	button.mission = mission
 	button.mission_pressed.connect(_on_mission_pressed)
 	
+# Varias misiones comparten coordenadas en el CSV; si el sitio está ocupado por
+# otro lacre, se coloca alrededor para que no se tapen.
+func _free_button_position(pos: Vector2, new_button: MissionButton) -> Vector2:
+	const MIN_DISTANCE := 48.0
+	var candidate := pos
+	for attempt in 12:
+		var taken := false
+		for other in buttons:
+			if other != new_button and other.position.distance_to(candidate) < MIN_DISTANCE:
+				taken = true
+				break
+		if not taken:
+			return candidate
+		candidate = pos + Vector2.RIGHT.rotated(attempt * TAU / 6.0) * MIN_DISTANCE * (1 + attempt / 6)
+	return candidate
+
 func mission_updated(mission: Mission):
 	for button in buttons: 
 		if button.mission == mission: 
@@ -195,55 +227,28 @@ func _unhandled_input(event):
 
 func rey_strikes(number):
 	if number == 1:
-		TimeManager.pause()
-		monja_speak.mensaje("Excelencia, el Rey le ha enviado un mensaje: \n Por vuestras infinitas gestiones me quedo sin monterías, sin comedias y, lo que más duele, sin comediantas. Si he de ser rey de papeles y despachos, será porque vos habéis matado el campo, el teatro y la risa.")
-		monja_mensaje = true
-		set_process_input(true)		
+		_show_monja_message("Excelencia, el Rey le ha enviado un mensaje: \n Por vuestras infinitas gestiones me quedo sin monterías, sin comedias y, lo que más duele, sin comediantas. Si he de ser rey de papeles y despachos, será porque vos habéis matado el campo, el teatro y la risa.")
 	if number == 2:
-		TimeManager.pause()
-		monja_speak.mensaje("Excelencia, el Rey le ha enviado un mensaje: \n Conde Duque, vuestras faltas me persiguen aun en mis horas de reposo. Ni del gobierno hallo en vuestras manos sosiego, pues con vuestro desgobierno no hay oro, ni plata, ni tiempo para que yo me pueda dedicar a mis reales asuntos.")
-		monja_mensaje = true
-		set_process_input(true)	
+		_show_monja_message("Excelencia, el Rey le ha enviado un mensaje: \n Conde Duque, vuestras faltas me persiguen aun en mis horas de reposo. Ni del gobierno hallo en vuestras manos sosiego, pues con vuestro desgobierno no hay oro, ni plata, ni tiempo para que yo me pueda dedicar a mis reales asuntos.")
 	if number == 3:
-		TimeManager.pause()
-		monja_speak.mensaje("Excelencia, el Rey le ha enviado un mensaje: \n Gaspar, quedáis libres de vuestro oficio y de la carga que os pesaba. Podéis largaros de la Corte y ocuparos en vuestros propios enredos, que seguro no faltan. Bien os agradezco los servicios, aunque más me alegro de no veros más por aquí: que vuestra ausencia será el mayor favor que me hagáis.")	
-		monja_mensaje = true
-		set_process_input(true)	
+		_show_monja_message("Excelencia, el Rey le ha enviado un mensaje: \n Gaspar, quedáis libres de vuestro oficio y de la carga que os pesaba. Podéis largaros de la Corte y ocuparos en vuestros propios enredos, que seguro no faltan. Bien os agradezco los servicios, aunque más me alegro de no veros más por aquí: que vuestra ausencia será el mayor favor que me hagáis.")
 
 
 func nobleza_strikes(number):
 	if number == 1:
-		TimeManager.pause()
-		monja_speak.mensaje("Excelencia, hasta el caballerizo del príncipe —que apenas sabe leer— murmura que la próxima vez os negará el saludo. ¡Ni las bestias quieren ya vuestra sombra!")
-		monja_mensaje = true
-		set_process_input(true)		
+		_show_monja_message("Excelencia, hasta el caballerizo del príncipe —que apenas sabe leer— murmura que la próxima vez os negará el saludo. ¡Ni las bestias quieren ya vuestra sombra!")
 	if number == 2:
-		TimeManager.pause()
-		monja_speak.mensaje("Excelencia, en los festejos de los Grandes se comenta que vuestra silla queda vacía. El vino corre, la música suena, pero vos no sois convidado, pues vuestra privanza huele a podredumbre.")
-		monja_mensaje = true
-		set_process_input(true)	
+		_show_monja_message("Excelencia, en los festejos de los Grandes se comenta que vuestra silla queda vacía. El vino corre, la música suena, pero vos no sois convidado, pues vuestra privanza huele a podredumbre.")
 	if number == 3:
-		TimeManager.pause()
-		monja_speak.mensaje("Excelencia, han llegado cartas con firmas tan gruesas como los sellos de la Corte. Todas dicen lo mismo: que vuestra presencia es peste, y que no sois bienvenido en palacio. El papel arde fácil, y ya sabéis lo que sigue al fuego…")	
-		monja_mensaje = true
-		set_process_input(true)	
+		_show_monja_message("Excelencia, han llegado cartas con firmas tan gruesas como los sellos de la Corte. Todas dicen lo mismo: que vuestra presencia es peste, y que no sois bienvenido en palacio. El papel arde fácil, y ya sabéis lo que sigue al fuego…")
 		
 func iglesia_strikes(number):
 	if number == 1:
-		TimeManager.pause()
-		monja_speak.mensaje("Las faltas que pesan sobre vuestra sombra no se borran con silencios ni favores. Bien sabéis que cada yerro exige su precio, y que serán muchas las misas que habrán de pagarse para redimir lo que vuestra mano ha sembrado.")
-		monja_mensaje = true
-		set_process_input(true)		
+		_show_monja_message("Las faltas que pesan sobre vuestra sombra no se borran con silencios ni favores. Bien sabéis que cada yerro exige su precio, y que serán muchas las misas que habrán de pagarse para redimir lo que vuestra mano ha sembrado.")
 	if number == 2:
-		TimeManager.pause()
-		monja_speak.mensaje("Las faltas que pesan sobre vuestra conciencia no se lavan con oro ni con palabras. Bien sabéis que la Santa Madre Iglesia, espejo de Dios en la tierra, exige más que misas: pide discreción, recogimiento y penitencia verdadera Os conviene, pues, abrazar el cilicio y la flagelación, pues solo con sangre y silencio podrá vuestra alma congraciarse con la Iglesia, y en ello con el mismo Dios.")
-		monja_mensaje = true
-		set_process_input(true)	
+		_show_monja_message("Las faltas que pesan sobre vuestra conciencia no se lavan con oro ni con palabras. Bien sabéis que la Santa Madre Iglesia, espejo de Dios en la tierra, exige más que misas: pide discreción, recogimiento y penitencia verdadera Os conviene, pues, abrazar el cilicio y la flagelación, pues solo con sangre y silencio podrá vuestra alma congraciarse con la Iglesia, y en ello con el mismo Dios.")
 	if number == 3:
-		TimeManager.pause()
-		monja_speak.mensaje("Ya no basta con misas ni con cilicios: todos saben lo que sois. Brujo de medianoche, judeizante de día, amigo de luteranos y mahometanos siempre. La Iglesia observa, y el fuego siempre aguarda paciente. Conviene que os guardéis con Dios, porque las lenguas son brasas y las brasas se han tornado para su Excelencia en una hoguera.")	
-		monja_mensaje = true
-		set_process_input(true)	
+		_show_monja_message("Ya no basta con misas ni con cilicios: todos saben lo que sois. Brujo de medianoche, judeizante de día, amigo de luteranos y mahometanos siempre. La Iglesia observa, y el fuego siempre aguarda paciente. Conviene que os guardéis con Dios, porque las lenguas son brasas y las brasas se han tornado para su Excelencia en una hoguera.")
 
 func create_buildings() -> void:
 	var vp_size = get_viewport().get_visible_rect().size
