@@ -8,7 +8,7 @@ extends Node
 ## cambia y alguna referencia desaparece, ese efecto simplemente no se dispara.
 
 const GOOD := Color(1.0, 0.85, 0.45)       # dorado: favorable
-const BAD := Color(0.95, 0.32, 0.28)       # carmesí: desfavorable
+const BAD := Color(1.0, 0.5, 0.45)         # carmesí claro: legible sobre marrón
 const DANGER_THRESHOLD := 20               # == Player.strike_2
 const DESCONTENTO_VIGNETTE_FROM := 60.0
 
@@ -23,6 +23,17 @@ var _watched_mission: Mission
 var _last_day := -1
 var _vignette: ColorRect
 var _vignette_value := 0.0
+var _vignette_tw: Tween
+var _pending_deltas := {}        # stat -> [delta acumulado, pasivo]
+var _pending_strikes := []       # [nivel, stat] del mismo frame
+var _was_paused := false
+
+
+## true durante el cambio de día: TimeManager (autoload) procesa antes que
+## MainJuice, así que si last_day ya cambió y nosotros aún no, el cambio que
+## llega es pasivo (renta, influencia diaria, +1 de Descontento).
+func _is_passive() -> bool:
+	return TimeManager.last_day != _last_day and _last_day != -1
 
 
 func setup(main_node: Node) -> void:
@@ -87,6 +98,11 @@ func _exit_tree() -> void:
 
 
 func _process(_delta: float) -> void:
+	# Pausa (ventanas, monja): los bucles de aviso se detienen para no latir
+	# junto al texto que se está leyendo.
+	if TimeManager.paused != _was_paused:
+		_was_paused = TimeManager.paused
+		_set_loops_paused(_was_paused)
 	# Paso de los días: TimeManager no emite señal, se mira last_day.
 	if TimeManager.last_day != _last_day:
 		var first := _last_day == -1
@@ -109,6 +125,7 @@ func _on_mission_added(mission: Mission) -> void:
 	if button == null:
 		return
 	_button_pos[mission] = Juice.screen_center(button)
+	button.set_meta(&"juice_silent", true)   # la ventana ya suena al abrirse
 	Juice.drop_in(button)
 	_after(0.18, func():
 		var p: Vector2 = _button_pos.get(mission, Vector2.ZERO)
@@ -126,17 +143,19 @@ func _on_mission_updated(mission: Mission) -> void:
 	match mission.status:
 		Mission.MISSION_STATUS.warning:
 			# A punto de caducar: late como un corazón; un roce de papel avisa.
-			Juice.pulse_loop(button, true)
+			_apply_lacre_state(button, mission)
 			Juice.sfx(&"paper", -6.0, 0.8)
 		Mission.MISSION_STATUS.on_course:
 			# Enviada: el sello golpea el papel y deja un anillo de tinta.
 			Juice.pulse_loop(button, false)
+			_apply_lacre_state(button, mission)
 			Juice.squash(button)
 			Juice.burst(pos, &"stamp")
 			Juice.ripple(pos, 1.0, 0.7)
 			Juice.sfx(&"seal", 0.0, 0.9)
 		Mission.MISSION_STATUS.succeded, Mission.MISSION_STATUS.failed:
 			# Resuelta: brilla de vez en cuando para invitar a abrirla.
+			_apply_lacre_state(button, mission)
 			Juice.pop(button, 0.25)
 			Juice.burst(pos, &"glint")
 			Juice.sfx(&"paper", -4.0, 1.2)
@@ -155,6 +174,35 @@ func _on_mission_closed(mission: Mission) -> void:
 		Juice.sfx(&"crack", -1.0)
 		Juice.shake(0.18)
 		Juice.grade_pulse(0.25, 0.1, 0.8)
+
+
+## Con "reducir movimiento" el parpadeo del lacre (AnimationPlayer "blink" de
+## MissionButton, alfa 1→0 a 2 Hz) se sustituye por un tinte fijo; sin él,
+## se deja la animación original. No se toca la escena ni su script.
+func _apply_lacre_state(button: MissionButton, mission: Mission) -> void:
+	var anim: AnimationPlayer = button.get_node_or_null(^"AnimationPlayer")
+	var calm := Juice.reduce_motion or not Juice.enabled
+	match mission.status:
+		Mission.MISSION_STATUS.warning:
+			Juice.pulse_loop(button, true)
+			if anim and calm:
+				anim.stop()
+				button.modulate = Color.WHITE
+				button.self_modulate = Color(1.35, 0.8, 0.75) if Juice.enabled else Color.WHITE
+			elif anim and not anim.is_playing():
+				button.self_modulate = Color.WHITE
+				anim.play(&"blink")
+		Mission.MISSION_STATUS.on_course:
+			if anim and calm:
+				anim.stop()
+				button.modulate = Color(1, 1, 1, 0.8)
+			elif anim and not anim.is_playing():
+				anim.play(&"blink")
+				anim.speed_scale = 0.5
+		_:
+			Juice.pulse_loop(button, false)
+			button.self_modulate = Color.WHITE
+			button.modulate = Color.WHITE
 
 
 func _start_glint(mission: Mission) -> void:
@@ -187,17 +235,58 @@ func _on_stat(value: int, stat: StringName) -> void:
 	var bar: ProgressBar = _bars.get(stat)
 	if bar == null or not is_instance_valid(bar):
 		return
-	var good := delta < 0 if stat == &"descontento" else delta > 0
-	var color := GOOD if good else BAD
-	Juice.flash(bar, Color(1.5, 1.35, 0.9) if good else Color(1.6, 0.6, 0.55), 0.5)
-	if absi(delta) >= 2:
-		var pos := Juice.screen_center(bar) + Vector2(bar.size.x * 0.25, -bar.size.y * 0.6)
-		Juice.float_text(pos, ("+%d" if delta > 0 else "−%d") % absi(delta), color)
-	if absi(delta) >= 10:
-		Juice.pop(bar, 0.06, 0.3)
 	if stat == &"descontento":
 		_update_vignette(value)
 	_update_danger()
+	_queue_delta(stat, delta)
+
+
+## Agrupa los cambios de un mismo frame (varias facciones/edificios a la vez)
+## en un solo efecto por barra.
+func _queue_delta(stat: StringName, delta: int) -> void:
+	if _pending_deltas.is_empty():
+		_flush_deltas.call_deferred()
+	var entry: Array = _pending_deltas.get(stat, [0, _is_passive()])
+	entry[0] += delta
+	_pending_deltas[stat] = entry
+
+
+func _flush_deltas() -> void:
+	var deltas := _pending_deltas
+	_pending_deltas = {}
+	if not is_inside_tree():   # la escena ya se cerró (derrota, menú)
+		return
+	for stat in deltas:
+		var delta: int = deltas[stat][0]
+		var passive: bool = deltas[stat][1]
+		if delta == 0:
+			continue
+		if stat == &"riqueza":
+			_riqueza_feedback(delta, passive)
+			continue
+		var bar: ProgressBar = _bars.get(stat)
+		if bar == null or not is_instance_valid(bar):
+			continue
+		var good := delta < 0 if stat == &"descontento" else delta > 0
+		var color := GOOD if good else BAD
+		var text := ("+%d" if delta > 0 else "−%d") % absi(delta)
+		if passive:
+			# Cambio diario: solo un número pequeño y discreto, sin destello.
+			if absi(delta) >= 2:
+				Juice.float_text(_text_pos(bar), text, Color(color, 0.8), 18)
+			continue
+		Juice.flash(bar, Color(1.5, 1.35, 0.9) if good else Color(1.6, 0.6, 0.55), 0.5)
+		Juice.float_text(_text_pos(bar), text, color)
+		if absi(delta) >= 10:
+			Juice.pop(bar, 0.06, 0.3)
+
+
+## Posición del número flotante: a la derecha de la barra; las de la franja
+## superior lo dejan caer hacia abajo para no salirse de la pantalla.
+func _text_pos(node: Control) -> Vector2:
+	var c := Juice.screen_center(node)
+	var below := c.y < get_viewport().get_visible_rect().size.y * 0.25
+	return c + Vector2(node.size.x * 0.5 + 34.0, 30.0 if below else 0.0)
 
 
 ## Barra en zona de peligro (< 20, el segundo aviso): late en rojo.
@@ -206,15 +295,26 @@ func _update_danger(force: bool = false) -> void:
 		var bar: ProgressBar = _bars.get(stat)
 		if bar == null or not is_instance_valid(bar):
 			continue
-		var danger: bool = _last[stat] < DANGER_THRESHOLD
+		var danger: bool = _last[stat] < DANGER_THRESHOLD and Juice.enabled
 		if danger == bar.has_meta(&"_juice_danger") and not force:
 			continue
+		if bar.has_meta(&"_juice_danger_tw"):
+			var old: Tween = bar.get_meta(&"_juice_danger_tw")
+			if old:
+				old.kill()
+			bar.remove_meta(&"_juice_danger_tw")
 		if danger:
 			bar.set_meta(&"_juice_danger", true)
-			var tw := bar.create_tween().set_loops()
-			tw.tween_property(bar, ^"modulate", Color(1.35, 0.7, 0.65), 0.5)
-			tw.tween_property(bar, ^"modulate", Color.WHITE, 0.7)
-			bar.set_meta(&"_juice_danger_tw", tw)
+			if Juice.reduce_motion:
+				# Sin latido: tinte fijo.
+				bar.modulate = Color(1.3, 0.75, 0.7)
+			else:
+				var tw := bar.create_tween().set_loops()
+				tw.tween_property(bar, ^"modulate", Color(1.35, 0.7, 0.65), 0.5)
+				tw.tween_property(bar, ^"modulate", Color.WHITE, 0.7)
+				bar.set_meta(&"_juice_danger_tw", tw)
+				if TimeManager.paused:
+					tw.pause()
 		elif bar.has_meta(&"_juice_danger"):
 			bar.remove_meta(&"_juice_danger")
 			var tw: Tween = bar.get_meta(&"_juice_danger_tw")
@@ -226,6 +326,31 @@ func _update_danger(force: bool = false) -> void:
 
 ## Umbral cruzado (Player emite *_strike justo antes de que salga la monja).
 func _on_strike(level: int, stat: StringName) -> void:
+	# Un mismo suceso puede cruzar varios umbrales en el mismo frame: se agrupan
+	# y solo suena/tiembla el más grave (los destellos de barra sí, todos).
+	var bar: ProgressBar = _bars.get(stat)
+	if bar and is_instance_valid(bar):
+		Juice.flash(bar, Color(1.8, 0.4, 0.35), 0.9)
+	if _pending_strikes.is_empty():
+		_flush_strikes.call_deferred()
+	_pending_strikes.append([level, stat])
+
+
+func _flush_strikes() -> void:
+	var worst: Array = []
+	if not is_inside_tree():   # la escena ya se cerró (derrota, menú)
+		_pending_strikes.clear()
+		return
+	var priority := {&"rey": 3, &"clero": 2, &"nobleza": 1}
+	for s in _pending_strikes:
+		if worst.is_empty() or s[0] > worst[0] or (s[0] == worst[0] and priority[s[1]] > priority[worst[1]]):
+			worst = s
+	_pending_strikes.clear()
+	if not worst.is_empty():
+		_strike_feedback(worst[0], worst[1])
+
+
+func _strike_feedback(level: int, stat: StringName) -> void:
 	var bar: ProgressBar = _bars.get(stat)
 	if bar and is_instance_valid(bar):
 		Juice.flash(bar, Color(1.8, 0.4, 0.35), 0.9)
@@ -290,6 +415,29 @@ func _build_vignette() -> void:
 
 func _on_settings_changed() -> void:
 	_update_vignette(_last.get(&"descontento", 0), true)
+	_update_danger(true)
+	# Relanzar los avisos de lacres en el modo nuevo.
+	for mission in _button_pos.keys():
+		var button := _button_for(mission)
+		if button:
+			_apply_lacre_state(button, mission)
+
+
+func _set_loops_paused(paused: bool) -> void:
+	var tweens: Array = []
+	for stat in _bars:
+		var bar: ProgressBar = _bars[stat]
+		if bar and is_instance_valid(bar) and bar.has_meta(&"_juice_danger_tw"):
+			tweens.append(bar.get_meta(&"_juice_danger_tw"))
+	for button in main.get(&"buttons"):
+		if is_instance_valid(button) and button.has_meta(&"_juice_loop"):
+			tweens.append(button.get_meta(&"_juice_loop"))
+	for tw in tweens:
+		if tw and tw.is_valid():
+			if paused:
+				tw.pause()
+			else:
+				tw.play()
 
 
 func _update_vignette(value: float, instant: bool = false) -> void:
@@ -306,7 +454,10 @@ func _update_vignette(value: float, instant: bool = false) -> void:
 		_vignette_value = target
 		mat.set_shader_parameter(&"intensity", target)
 		return
+	if _vignette_tw and _vignette_tw.is_valid():
+		_vignette_tw.kill()
 	var tw := _vignette.create_tween()
+	_vignette_tw = tw
 	tw.tween_method(func(v: float):
 		_vignette_value = v
 		mat.set_shader_parameter(&"intensity", v), _vignette_value, target, 0.8)
@@ -321,17 +472,27 @@ func _on_riqueza(value: int) -> void:
 	_check_buildings()
 	if delta == 0:
 		return
+	_queue_delta(&"riqueza", delta)
+
+
+func _riqueza_feedback(delta: int, passive: bool) -> void:
 	var label: Control = main.get(&"riqueza_label")
 	var pos := Juice.screen_center(label) if label else Vector2(120, 40)
+	# Debajo del contador, para no tapar la cifra que cambia.
+	var text_pos := pos + Vector2(0, 46)
+	if passive:
+		# Renta diaria: solo el número, pequeño y sin sonido (pasa cada 10 s).
+		Juice.float_text(text_pos, ("+%d" if delta > 0 else "−%d") % absi(delta), Color(GOOD if delta > 0 else BAD, 0.8), 18)
+		return
 	if delta > 0:
-		# Renta diaria: monedas y tintineo.
-		Juice.burst(pos, &"coins", clampf(delta / 20.0, 0.5, 1.5))
-		Juice.float_text(pos + Vector2(0, 34), "+%d" % delta, GOOD)
+		# Ingreso extraordinario: monedas y tintineo.
+		Juice.burst(pos, &"coins", clampf(delta / 200.0, 0.5, 1.5))
+		Juice.float_text(text_pos, "+%d" % delta, GOOD)
 		Juice.sfx(&"coin", -4.0)
 		if label:
 			Juice.pop(label, 0.2)
 	else:
-		Juice.float_text(pos + Vector2(0, 34), "−%d" % -delta, BAD)
+		Juice.float_text(text_pos, "−%d" % -delta, BAD)
 		Juice.sfx(&"coin", -2.0, 0.75)
 		if label:
 			Juice.flash(label, Color(1.6, 0.6, 0.5), 0.5)

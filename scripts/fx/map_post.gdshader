@@ -7,7 +7,7 @@ shader_type canvas_item;
 //  - Viñeta de Descontento (tinte en los bordes, con latido opcional).
 //  - Grano de papel muy sutil.
 
-uniform sampler2D screen_texture : hint_screen_texture, filter_linear_mipmap;
+uniform sampler2D screen_texture : hint_screen_texture, filter_linear;
 uniform vec2 aspect = vec2(1.7778, 1.0);
 
 // x, y en SCREEN_UV; z = edad 0..1; w = fuerza (0 = inactiva)

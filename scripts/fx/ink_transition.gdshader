@@ -8,6 +8,8 @@ uniform vec4 ink_color : source_color = vec4(0.07, 0.045, 0.03, 1.0);
 uniform vec4 edge_color : source_color = vec4(0.32, 0.18, 0.08, 1.0);
 uniform vec2 aspect = vec2(1.7778, 1.0);
 uniform float seed = 0.0;
+// Movimiento reducido: fundido simple, sin barrido.
+uniform bool plain = false;
 
 float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
 float noise(vec2 p) {
@@ -23,6 +25,9 @@ float fbm(vec2 p) {
 }
 
 void fragment() {
+	if (plain) {
+		COLOR = vec4(ink_color.rgb, progress * ink_color.a);
+	} else {
 	vec2 p = (UV - 0.5) * aspect;
 	// Distancia al centro deformada por ruido: borde de mancha que se corre.
 	float field = length(p) / length(aspect * 0.5) + (fbm(p * 5.0 + seed) - 0.5) * 0.55;
@@ -32,4 +37,5 @@ void fragment() {
 	float rim = smoothstep(r - 0.06, r, field) * (1.0 - smoothstep(r, r + 0.05, field));
 	vec3 col = mix(ink_color.rgb, edge_color.rgb, rim * 0.8);
 	COLOR = vec4(col, a * ink_color.a);
+	}
 }

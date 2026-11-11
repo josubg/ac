@@ -54,6 +54,10 @@ var _overlay_layer: CanvasLayer
 var _overlay: ColorRect
 var _edge: ColorRect
 var _toast: Label
+var _toast_box: PanelContainer
+var _toast_tw: Tween
+var _grade_tw: Tween
+var _edge_tw: Tween
 var _players: Array[AudioStreamPlayer] = []
 var _next_player := 0
 var _trauma := 0.0
@@ -81,7 +85,18 @@ func _ready() -> void:
 		add_child(player)
 		_players.append(player)
 	get_tree().node_added.connect(_on_node_added)
+	_warm_up.call_deferred()
 	_connect_game_manager.call_deferred()
+
+
+## Precalienta los materiales de partículas (evita el tirón del primer uso).
+func _warm_up() -> void:
+	for kind in JuiceParticles.kinds():
+		var p := JuiceParticles.make_burst(kind, 0.05)
+		p.position = Vector2(-2000, -2000)
+		_fx_layer.add_child(p)
+		p.emitting = true
+		get_tree().create_timer(1.0).timeout.connect(p.queue_free)
 
 
 func _connect_game_manager() -> void:
@@ -169,15 +184,26 @@ func _build_layers() -> void:
 	_overlay.visible = false
 	_overlay_layer.add_child(_overlay)
 
+	# Aviso con fondo propio, bajo la franja superior de la interfaz.
+	_toast_box = PanelContainer.new()
+	_toast_box.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var box_style := StyleBoxFlat.new()
+	box_style.bg_color = Color(0.13, 0.08, 0.05, 0.92)
+	box_style.border_color = Color(0.72, 0.56, 0.3)
+	box_style.set_border_width_all(2)
+	box_style.set_corner_radius_all(4)
+	box_style.content_margin_left = 22
+	box_style.content_margin_right = 22
+	box_style.content_margin_top = 8
+	box_style.content_margin_bottom = 8
+	_toast_box.add_theme_stylebox_override(&"panel", box_style)
+	_toast_box.modulate.a = 0.0
+	_overlay_layer.add_child(_toast_box)
 	_toast = Label.new()
-	_toast.set_anchors_preset(Control.PRESET_CENTER_TOP)
 	_toast.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_toast.position = Vector2(-300, 24)
-	_toast.size = Vector2(600, 40)
-	_toast.label_settings = _label_settings(26, Color(1, 0.95, 0.85))
-	_toast.modulate.a = 0.0
+	_toast.label_settings = _label_settings(24, Color(1, 0.95, 0.85))
 	_toast.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_overlay_layer.add_child(_toast)
+	_toast_box.add_child(_toast)
 
 
 func _make_vignette_material() -> ShaderMaterial:
@@ -218,7 +244,7 @@ func _process(delta: float) -> void:
 		var size := vp.get_visible_rect().size
 		var offset := Vector2(
 			sin(_shake_time * 47.0) + 0.5 * sin(_shake_time * 91.0),
-			cos(_shake_time * 53.0) + 0.5 * sin(_shake_time * 79.0)) * 9.0 * amount
+			cos(_shake_time * 53.0) + 0.5 * sin(_shake_time * 79.0)) * 4.0 * amount
 		var rot := sin(_shake_time * 37.0) * 0.004 * amount
 		var zoom := 1.0 + 0.012 * amount   # oculta los bordes del mapa
 		var xf := Transform2D(rot, Vector2(zoom, zoom), 0.0, Vector2.ZERO)
@@ -254,7 +280,10 @@ func grade_pulse(desat: float = 0.6, sepia_amount: float = 0.4, time: float = 1.
 	if _post == null or not enabled:
 		return
 	_grade = Vector2(maxf(_grade.x, desat), maxf(_grade.y, sepia_amount))
+	if _grade_tw and _grade_tw.is_valid():
+		_grade_tw.kill()
 	var tw := create_tween()
+	_grade_tw = tw
 	tw.tween_property(self, ^"_grade", Vector2.ZERO, time).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 
 
@@ -283,7 +312,7 @@ func _apply_post() -> void:
 	_post.set_shader_parameter(&"ripples", data)
 	_post.set_shader_parameter(&"desaturate", clampf(_base_grade.x + _grade.x, 0.0, 1.0))
 	_post.set_shader_parameter(&"sepia", clampf(_base_grade.y + _grade.y, 0.0, 1.0))
-	_post.set_shader_parameter(&"grain_speed", 0.0 if reduce_motion else 1.0)
+	_post.set_shader_parameter(&"grain_speed", 0.0 if reduce_motion or OS.has_feature("web") else 1.0)
 	_post.set_shader_parameter(&"grain", 0.03 if enabled else 0.0)
 
 
@@ -352,6 +381,7 @@ func pulse_loop(node: CanvasItem, on: bool, strength: float = 0.12, period: floa
 		node.remove_meta(&"_juice_loop")
 		_restore_scale(node)
 	if not on or not enabled:
+		node.self_modulate = Color.WHITE
 		return
 	_capture_base(node)
 	var tw := node.create_tween().set_loops()
@@ -362,8 +392,10 @@ func pulse_loop(node: CanvasItem, on: bool, strength: float = 0.12, period: floa
 			.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
 		tw.tween_interval(period * 0.5)
 	else:
-		tw.tween_property(node, ^"self_modulate", Color(1.4, 0.75, 0.7), period * 0.3)
-		tw.tween_property(node, ^"self_modulate", Color.WHITE, period * 0.7)
+		# Movimiento reducido: sin latido ni parpadeo, un tinte fijo.
+		tw.kill()
+		node.self_modulate = Color(1.35, 0.8, 0.75)
+		return
 	node.set_meta(&"_juice_loop", tw)
 
 
@@ -391,7 +423,11 @@ func fade_in(node: CanvasItem, time: float = 0.3, offset: Vector2 = Vector2.ZERO
 	var tw := node.create_tween().set_parallel(true)
 	tw.tween_property(node, ^"modulate:a", 1.0, time).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	if offset != Vector2.ZERO and motion_enabled() and "position" in node:
-		var target: Vector2 = node.position
+		# Destino fijo guardado la primera vez: si se reabre a mitad del tween,
+		# no se acumula el desplazamiento.
+		if not node.has_meta(&"_juice_fade_pos"):
+			node.set_meta(&"_juice_fade_pos", node.position)
+		var target: Vector2 = node.get_meta(&"_juice_fade_pos")
 		node.position = target + offset
 		tw.tween_property(node, ^"position", target, time).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 
@@ -499,10 +535,9 @@ func _fx_parent(top: bool) -> Node:
 ## top = true: por encima de todo (efectos que salen de una ventana abierta).
 ## Por defecto, en la capa del mundo, que las ventanas tapan.
 func burst(screen_pos: Vector2, kind: StringName, amount: float = 1.0, top: bool = false) -> void:
-	if not enabled:
-		return
-	var calm := 0.6 if reduce_motion else 1.0
-	var p := JuiceParticles.make_burst(kind, amount * calm, calm)
+	if not enabled or reduce_motion:
+		return   # con movimiento reducido no hay partículas volando
+	var p := JuiceParticles.make_burst(kind, amount)
 	p.position = screen_pos
 	_fx_parent(top).add_child(p)
 	p.emitting = true
@@ -520,7 +555,8 @@ func float_text(screen_pos: Vector2, text: String, color: Color, size: int = 26,
 	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_fx_parent(top).add_child(label)
 	label.reset_size()
-	label.position = screen_pos - label.size * 0.5
+	var vp := get_viewport().get_visible_rect().size
+	label.position = (screen_pos - label.size * 0.5).clamp(Vector2(4, 4), vp - label.size - Vector2(4, 4))
 	var tw := label.create_tween().set_parallel(true)
 	if motion_enabled():
 		tw.tween_property(label, ^"position:y", label.position.y - 46.0, 1.1) \
@@ -560,8 +596,13 @@ func vignette_flash(color: Color = Color(0.45, 0.02, 0.02), time: float = 0.9, s
 	var mat := _edge.material as ShaderMaterial
 	mat.set_shader_parameter(&"tint", color)
 	_edge.visible = true
+	if _edge_tw and _edge_tw.is_valid():
+		_edge_tw.kill()
+	var start: float = mat.get_shader_parameter(&"intensity")
+	strength = maxf(strength, start)
 	var tw := _edge.create_tween()
-	tw.tween_method(func(v: float): mat.set_shader_parameter(&"intensity", v), 0.0, strength, time * 0.2)
+	_edge_tw = tw
+	tw.tween_method(func(v: float): mat.set_shader_parameter(&"intensity", v), start, strength, time * 0.2)
 	tw.tween_method(func(v: float): mat.set_shader_parameter(&"intensity", v), strength, 0.0, time * 0.8)
 	tw.tween_callback(func(): _edge.visible = false)
 
@@ -569,10 +610,16 @@ func vignette_flash(color: Color = Color(0.45, 0.02, 0.02), time: float = 0.9, s
 ## Aviso breve en la parte superior.
 func toast(text: String) -> void:
 	_toast.text = text
-	var tw := _toast.create_tween()
-	tw.tween_property(_toast, ^"modulate:a", 1.0, 0.15)
-	tw.tween_interval(1.4)
-	tw.tween_property(_toast, ^"modulate:a", 0.0, 0.4)
+	_toast_box.reset_size()
+	var vp := get_viewport().get_visible_rect().size
+	_toast_box.position = Vector2((vp.x - _toast_box.size.x) * 0.5, vp.y * 0.09)
+	if _toast_tw and _toast_tw.is_valid():
+		_toast_tw.kill()
+	var tw := _toast_box.create_tween()
+	_toast_tw = tw
+	tw.tween_property(_toast_box, ^"modulate:a", 1.0, 0.15)
+	tw.tween_interval(1.6)
+	tw.tween_property(_toast_box, ^"modulate:a", 0.0, 0.4)
 
 
 # --- Transiciones de escena y ambiente -----------------------------------------
@@ -592,6 +639,7 @@ func _on_scene_changed(scene_name: String) -> void:
 	var ink := _overlay.material as ShaderMaterial
 	ink.set_shader_parameter(&"seed", randf() * 100.0)
 	ink.set_shader_parameter(&"progress", 1.0)
+	ink.set_shader_parameter(&"plain", reduce_motion)
 	_overlay.visible = true
 	var time := 0.9 if scene_name != "GameOver" else 1.6
 	if reduce_motion:
@@ -678,7 +726,8 @@ func _on_button_hover(button: BaseButton, inside: bool) -> void:
 func _on_button_down(button: BaseButton) -> void:
 	if not _valid(button):
 		return
-	sfx(&"click", -4.0, 1.0, 0.08)
+	if not button.has_meta(&"juice_silent"):
+		sfx(&"click", -4.0, 1.0, 0.08)
 	if not motion_enabled() or button.has_meta(&"_juice_loop"):
 		return
 	var tw := _scale_tween(button)

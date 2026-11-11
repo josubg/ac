@@ -149,7 +149,7 @@ Leyenda. **Estado**: ✅ implementado en el prototipo · 🔸 propuesto.
 | La monja entra deslizándose y el bocadillo sube con un fundido + roce de papel | baja | `fade_in()` con offset; sin desplazamiento si se reduce el movimiento | S | I | ✅ |
 | Sello del remitente (corona, cruz, escudo) en el bocadillo | baja | `TextureRect` + `pop()`; requiere arte | M | R | 🔸 |
 
-![](13_rey_umbral.jpg) ![](14_monja.jpg) ![](gif_05_avisos.gif)
+![](13_iglesia_umbral.jpg) ![](14_monja.jpg) ![](gif_05_avisos.gif)
 
 ### 2.9 Descontento alto
 
@@ -336,3 +336,56 @@ Por orden de impacto/coste:
 7. *Glow* real: se descartó el HDR 2D global porque cambiaba el color de la
    interfaz. Si se quiere, la alternativa es un `SubViewport` solo para el
    mundo con HDR y glow, y la interfaz fuera de él.
+
+## 6. Revisión tras la fusión en `refact` y auditoría externa
+
+**Revisión con la UI nueva.**
+- Todos los efectos funcionan con las escenas rediseñadas (capturas regeneradas).
+- Las partículas y los números del mundo se dibujan ahora en `JuiceWorldFx`, dentro de `CanvasLayerMission` y justo antes de la monja: quedan por debajo de las ventanas. Antes salían por encima: era el aviso de UI.
+- El éxito y el fracaso salen del lacre decorativo de la carta, no del texto. Ese lacre se estampa al abrir la carta.
+- El velo de la monja entra sin desplazarse.
+
+**Propiedades que listó el auditor:**
+1. La lectura manda.
+2. Proporcionalidad.
+3. Baja frecuencia.
+4. Cada efecto informa.
+5. Agrupar sucesos simultáneos.
+6. Pausa coherente.
+7. Coherencia temática.
+8. Lenguaje visual consistente.
+9. Accesibilidad.
+10. Audio controlado.
+11. Robustez.
+12. Rendimiento.
+
+**Corregido:**
+- **Cambios diarios** (renta, influencia, +1 de Descontento): se detectan como pasivos y solo muestran un número pequeño, sin sonido, partículas ni destello.
+- **Cambios simultáneos:** se agrupan por barra en un único número.
+- **Umbrales en un mismo frame:** se agrupan y solo suena, tiembla y vela el más grave.
+- **Reducir movimiento:**
+  - el parpadeo del lacre (`blink`) se para y pasa a un tinte fijo;
+  - el latido del aviso y de las barras en peligro pasa a un tinte fijo;
+  - no hay partículas;
+  - la transición es un fundido simple.
+  - Al cambiar el ajuste, todo se reevalúa.
+- **Bucles en pausa:** los de aviso se detienen mientras hay una ventana o la monja abierta.
+- **Tweens que se pisaban:** `grade_pulse`, `vignette_flash`, `toast` y la viñeta matan el anterior.
+- **Números flotantes:** se acotan a la pantalla, se colocan junto a la barra y el de los Reales va bajo el contador.
+- **Contraste:** el rojo de los números es más claro.
+- **Aviso de F10:** tiene panel propio bajo la franja superior.
+- **Clic del lacre:** silenciado, porque la ventana ya suena al abrirse.
+- **`fade_in`:** ya no acumula desplazamiento si se reabre a mitad.
+- **Temblor:** baja de 9 a 4 px.
+- **Partículas:** se precalientan.
+- **Postprocesado:** `filter_linear` en lugar de mipmaps, y grano estático en la web.
+
+**Descartado:**
+- **Foley grabado:** sin descargas en esta sesión; queda la vía de `assets/vfx/sfx/`.
+- **Volver a `CPUParticles2D` en la web:** el director retiró esa restricción; el precalentado cubre el tirón.
+
+**Abierto (fuera del área de VFX):**
+- Opciones visibles de «Reducir movimiento», «Efectos activados» y volumen de efectos en el menú de Opciones (UI): las API son `Juice.set_reduce_motion(bool)`, `Juice.enabled` y `Juice.sfx_volume_db`, o el bus «Efectos».
+- **Bug de juego:** varios avisos de la monja en el mismo frame se sobrescriben; habría que encolarlos en `main.gd`.
+- `main.gd:mission_updated` llama a `set_warning()` también en curso.
+- El formato `%i` de `game_end.gd`.
