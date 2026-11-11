@@ -19,12 +19,12 @@ func show_mission(new_mission: Mission) -> void:
 	title_label.text = self.mission.titulo
 	description_label.text = self.mission.mision
 	if self.mission.success():
-		outcome_label.text = "Misión completada con Exito"
-		outcome_label.add_theme_color_override("font_color",Color.GREEN)
+		outcome_label.text = "Misión completada con éxito"
+		outcome_label.add_theme_color_override("font_color", Color("2e5530"))
 		outcome_description.text = mission.success_text +"\n"+ get_results_text(mission)
 	else:
-		outcome_label.text = "La misión ha sido un Fracaso"
-		outcome_label.add_theme_color_override("font_color",Color.DARK_RED)
+		outcome_label.text = "La misión ha sido un fracaso"
+		outcome_label.add_theme_color_override("font_color", Color("7e1a16"))
 		outcome_description.text = mission.failed_text
 	self.show()
 

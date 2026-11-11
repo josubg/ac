@@ -1,107 +1,107 @@
 [gd_scene format=3 uid="uid://jvho4fxquili"]
 
 [ext_resource type="Script" uid="uid://m61d06e3bm43" path="res://scenes/misions/mission_resolution_window.gd" id="1_80knw"]
-[ext_resource type="Texture2D" uid="uid://d046e3k84whiw" path="res://sprites/frame.png" id="2_80knw"]
-[ext_resource type="FontFile" uid="uid://b16lx41ih565r" path="res://resources/Bastarda-K.ttf" id="3_jrjin"]
-[ext_resource type="FontFile" uid="uid://b5p2nwegcv016" path="res://resources/AlbertText-Bold.ttf" id="4_80knw"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_filhx"]
-bg_color = Color(0, 0, 0, 1)
-border_width_left = 10
-border_width_top = 10
-border_width_right = 10
-border_width_bottom = 10
-border_color = Color(0, 0, 0, 1)
-border_blend = true
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_filhx"]
-texture = ExtResource("2_80knw")
-texture_margin_left = 25.0
-texture_margin_top = 25.0
-texture_margin_right = 25.0
-texture_margin_bottom = 25.0
-
-[sub_resource type="LabelSettings" id="LabelSettings_540ay"]
-font = ExtResource("3_jrjin")
-font_size = 32
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jrjin"]
-bg_color = Color(0.19, 0.19, 0.19, 1)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
+[ext_resource type="Texture2D" uid="uid://7pvuqc44x556" path="res://sprites/lacre_mision.png" id="2_lacre"]
+[ext_resource type="Texture2D" path="res://assets/ui/icons/fleur-de-lys.svg" id="3_flor"]
 
 [node name="Panel" type="Panel" unique_id=1021064680]
-anchors_preset = -1
-anchor_right = 0.39000002
-anchor_bottom = 0.40500003
-offset_right = -748.80005
-offset_bottom = -648.00006
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_filhx")
 script = ExtResource("1_80knw")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=1499410861]
+custom_minimum_size = Vector2(900, 0)
 layout_mode = 0
-offset_right = 750.0
-offset_bottom = 649.0
-theme_override_styles/panel = SubResource("StyleBoxTexture_filhx")
+offset_right = 900.0
+offset_bottom = 740.0
+theme_type_variation = &"PanelPergamino"
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=1242032649]
 layout_mode = 2
-theme_override_constants/margin_left = 35
-theme_override_constants/margin_top = 35
-theme_override_constants/margin_right = 35
-theme_override_constants/margin_bottom = 35
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer" unique_id=436861984]
 layout_mode = 2
+theme_override_constants/separation = 10
 
 [node name="TitleLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=514950865]
 layout_mode = 2
+theme_type_variation = &"TituloCarta"
 text = "Título"
-label_settings = SubResource("LabelSettings_540ay")
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Filete" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 12
+
+[node name="Izq" type="HSeparator" parent="PanelContainer/MarginContainer/VBoxContainer/Filete"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Flor" type="TextureRect" parent="PanelContainer/MarginContainer/VBoxContainer/Filete"]
+self_modulate = Color(0.66, 0.52, 0.23, 1)
+custom_minimum_size = Vector2(22, 22)
+layout_mode = 2
+texture = ExtResource("3_flor")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Der" type="HSeparator" parent="PanelContainer/MarginContainer/VBoxContainer/Filete"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+size_flags_vertical = 4
 
 [node name="DescriptionLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1613043368]
+modulate = Color(1, 1, 1, 0.72)
 layout_mode = 2
-text = "Texto de resolución, dependiendo de si hay ido bien o mal. 
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent magna urna, vehicula sit amet scelerisque id, molestie at magna. Quisque feugiat justo et pulvinar ultricies. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In blandit nibh nulla, vitae ornare felis tincidunt sit amet. Praesent sed elit facilisis, tristique orci nec, lacinia dolor. Duis vel hendrerit eros. In quis sem iaculis, mattis dui at, egestas leo. Aenean bibendum venenatis sem. "
-autowrap_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Texto de la misión."
+autowrap_mode = 3
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=681161932]
 layout_mode = 2
 size_flags_vertical = 3
-size_flags_stretch_ratio = 2.27
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_bottom = 5
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_bottom = 0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer" unique_id=562677451]
 layout_mode = 2
+theme_override_constants/separation = 8
 
 [node name="OutcomeLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer" unique_id=1981233414]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("4_80knw")
-theme_override_font_sizes/font_size = 26
-text = "Misión completada con éxito"
+theme_type_variation = &"SubtituloCarta"
+text = "Misión cumplida"
 horizontal_alignment = 1
 
 [node name="OutcomeDescription" type="RichTextLabel" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer" unique_id=841521273]
 layout_mode = 2
 size_flags_vertical = 3
 bbcode_enabled = true
-text = "El rey está satisfecho
-"
+text = "El Rey está satisfecho."
 
 [node name="EndMissionButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer" unique_id=461725715]
+custom_minimum_size = Vector2(300, 54)
 layout_mode = 2
-theme_override_fonts/font = ExtResource("3_jrjin")
-theme_override_font_sizes/font_size = 24
-theme_override_styles/normal = SubResource("StyleBoxFlat_jrjin")
+size_flags_horizontal = 4
 text = "Cerrar"
+
+[node name="Lacre" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = -34.0
+offset_top = -30.0
+offset_right = 90.0
+offset_bottom = 94.0
+rotation = -0.2
+pivot_offset = Vector2(62, 62)
+mouse_filter = 2
+texture = ExtResource("2_lacre")
+expand_mode = 1
+stretch_mode = 5
 
 [connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/EndMissionButton" to="." method="_on_end_mission_button_pressed"]
