@@ -23,6 +23,9 @@ static func apply_saved() -> void:
 	TranslationServer.set_locale(locale)
 
 static func set_and_save(locale: String) -> void:
+	if locale not in SUPPORTED:
+		push_warning("LocaleSettings: idioma no soportado '%s'" % locale)
+		return
 	TranslationServer.set_locale(locale)
 	var cfg := ConfigFile.new()
 	cfg.load(SETTINGS_PATH)

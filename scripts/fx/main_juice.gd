@@ -269,7 +269,7 @@ func _flush_deltas() -> void:
 			continue
 		var good := delta < 0 if stat == &"descontento" else delta > 0
 		var color := GOOD if good else BAD
-		var text := ("+%d" if delta > 0 else "−%d") % absi(delta)
+		var text := ("+%d" if delta > 0 else "–%d") % absi(delta)
 		if passive:
 			# Cambio diario: solo un número pequeño y discreto, sin destello.
 			if absi(delta) >= 2:
@@ -482,7 +482,7 @@ func _riqueza_feedback(delta: int, passive: bool) -> void:
 	var text_pos := pos + Vector2(0, 46)
 	if passive:
 		# Renta diaria: solo el número, pequeño y sin sonido (pasa cada 10 s).
-		Juice.float_text(text_pos, ("+%d" if delta > 0 else "−%d") % absi(delta), Color(GOOD if delta > 0 else BAD, 0.8), 18)
+		Juice.float_text(text_pos, ("+%d" if delta > 0 else "–%d") % absi(delta), Color(GOOD if delta > 0 else BAD, 0.8), 18)
 		return
 	if delta > 0:
 		# Ingreso extraordinario: monedas y tintineo.
@@ -492,7 +492,7 @@ func _riqueza_feedback(delta: int, passive: bool) -> void:
 		if label:
 			Juice.pop(label, 0.2)
 	else:
-		Juice.float_text(text_pos, "−%d" % -delta, BAD)
+		Juice.float_text(text_pos, "–%d" % -delta, BAD)
 		Juice.sfx(&"coin", -2.0, 0.75)
 		if label:
 			Juice.flash(label, Color(1.6, 0.6, 0.5), 0.5)
