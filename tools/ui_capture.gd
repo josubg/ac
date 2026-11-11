@@ -126,8 +126,20 @@ func _run() -> void:
 		await _goto("res://scenes/game_over.tscn")
 		await _wait(3.6)
 		await _shot("12_derrota")
+		var go = current_scene
+		go.get_node("Label").hide()
+		go.get_node("LabelGO").show()
+		go.get_node("AnimationPlayer").stop()
+		go.get_node("LabelGO").modulate = Color.WHITE
+		await _shot("12b_derrota_final")
 		await _goto("res://scenes/game_end.tscn")
 		await _wait(3.6)
 		await _shot("13_victoria")
+		var fin = current_scene
+		fin.get_node("Label").hide()
+		fin.get_node("LabelGO").show()
+		fin.get_node("AnimationPlayer").stop()
+		fin.get_node("LabelGO").modulate = Color.WHITE
+		await _shot("13b_victoria_final")
 
 	quit()
