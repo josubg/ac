@@ -21,6 +21,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
+Ajustes="*res://scripts/ajustes.gd"
 GameManager="*res://scripts/game_manager.gd"
 MissionManager="*res://scripts/mission_manager.gd"
 Player="*res://scripts/player.gd"
@@ -33,6 +34,10 @@ window/size/viewport_width=1920
 window/size/viewport_height=1080
 window/size/mode=2
 window/stretch/mode="canvas_items"
+
+[gui]
+
+theme/custom="res://assets/ui/theme/cuatro_cortes.tres"
 
 [input]
 
@@ -48,3 +53,7 @@ skip_intro={
 
 locale/translations=PackedStringArray("res://resources/i18n/rosetta.es.translation", "res://resources/i18n/rosetta.en.translation")
 locale/fallback="es"
+
+[rendering]
+
+environment/defaults/default_clear_color=Color(0.086, 0.055, 0.035, 1)

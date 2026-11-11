@@ -9,7 +9,7 @@ extends SceneTree
 const ROSETTA := "res://resources/i18n/rosetta.csv"
 const LOCALES := ["es", "en"]
 # Textos de escena que no se traducen a propósito (símbolos o marcadores que el código sobrescribe).
-const SCENE_TEXT_WHITELIST := ["X", "0", "TIME LABEL"]
+const SCENE_TEXT_WHITELIST := ["X", "0", "TIME LABEL", "Español", "English", "Domingo, 1 de Enero de 1640"]
 # Keys que se construyen en código a partir de un prefijo.
 const DYNAMIC_PREFIXES := {"AGENT_FACTION_": ["NOBLE", "RELIGIOSA", "MALECHOR"]}
 

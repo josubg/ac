@@ -20,11 +20,11 @@ func show_mission(new_mission: Mission) -> void:
 	description_label.text = self.mission.mision
 	if self.mission.success():
 		outcome_label.text = "UI_RESOLUTION_SUCCESS"
-		outcome_label.add_theme_color_override("font_color",Color.GREEN)
+		outcome_label.add_theme_color_override("font_color",Color("2e5530"))
 		outcome_description.text = tr(mission.success_text) +"\n"+ get_results_text(mission)
 	else:
 		outcome_label.text = "UI_RESOLUTION_FAILURE"
-		outcome_label.add_theme_color_override("font_color",Color.DARK_RED)
+		outcome_label.add_theme_color_override("font_color",Color("7e1a16"))
 		outcome_description.text = mission.failed_text
 	self.show()
 

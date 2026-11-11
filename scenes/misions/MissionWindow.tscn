@@ -1,102 +1,120 @@
 [gd_scene format=3 uid="uid://hfvv1kukfi5c"]
 
 [ext_resource type="Script" uid="uid://b4vfbvoub2w7g" path="res://scenes/misions/mission_window.gd" id="1_4fb1n"]
-[ext_resource type="Texture2D" uid="uid://d046e3k84whiw" path="res://sprites/frame.png" id="2_353q8"]
-[ext_resource type="FontFile" uid="uid://b16lx41ih565r" path="res://resources/Bastarda-K.ttf" id="3_filhx"]
 [ext_resource type="AudioStream" uid="uid://dfqxrd4o4u128" path="res://resources/mision_papel.mp3" id="4_yrtqx"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_filhx"]
-bg_color = Color(0, 0, 0, 1)
-border_width_left = 10
-border_width_top = 10
-border_width_right = 10
-border_width_bottom = 10
-border_color = Color(0, 0, 0, 1)
-border_blend = true
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_filhx"]
-texture = ExtResource("2_353q8")
-texture_margin_left = 25.0
-texture_margin_top = 25.0
-texture_margin_right = 25.0
-texture_margin_bottom = 25.0
-
-[sub_resource type="LabelSettings" id="LabelSettings_540ay"]
-font = ExtResource("3_filhx")
-font_size = 32
-
-[sub_resource type="Theme" id="Theme_yrtqx"]
+[ext_resource type="Texture2D" uid="uid://7pvuqc44x556" path="res://sprites/lacre_mision.png" id="5_lacre"]
+[ext_resource type="Texture2D" path="res://assets/ui/icons/fleur-de-lys.svg" id="6_flor"]
+[ext_resource type="Texture2D" path="res://assets/ui/icons/quill-ink.svg" id="7_pluma"]
 
 [node name="Panel" type="Panel" unique_id=1198513917]
-anchors_preset = -1
-anchor_right = 0.39000002
-anchor_bottom = 0.40500003
-offset_right = -748.80005
-offset_bottom = -648.00006
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme_override_styles/panel = SubResource("StyleBoxFlat_filhx")
 script = ExtResource("1_4fb1n")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=632641278]
+custom_minimum_size = Vector2(900, 0)
 layout_mode = 0
-offset_right = 750.0
-offset_bottom = 649.0
-theme_override_styles/panel = SubResource("StyleBoxTexture_filhx")
+offset_right = 900.0
+offset_bottom = 740.0
+theme_type_variation = &"PanelPergamino"
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=102503588]
 layout_mode = 2
-theme_override_constants/margin_left = 35
-theme_override_constants/margin_top = 35
-theme_override_constants/margin_right = 35
-theme_override_constants/margin_bottom = 35
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer" unique_id=1971283872]
 layout_mode = 2
+theme_override_constants/separation = 10
 
 [node name="TitleLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=984847803]
 layout_mode = 2
+theme_type_variation = &"TituloCarta"
 text = "MISSION_001_TITLE"
-label_settings = SubResource("LabelSettings_540ay")
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Filete" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 12
+
+[node name="Izq" type="HSeparator" parent="PanelContainer/MarginContainer/VBoxContainer/Filete"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Flor" type="TextureRect" parent="PanelContainer/MarginContainer/VBoxContainer/Filete"]
+self_modulate = Color(0.66, 0.52, 0.23, 1)
+custom_minimum_size = Vector2(22, 22)
+layout_mode = 2
+texture = ExtResource("6_flor")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Der" type="HSeparator" parent="PanelContainer/MarginContainer/VBoxContainer/Filete"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+size_flags_vertical = 4
 
 [node name="DescriptionLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=183806906]
 layout_mode = 2
 text = "MISSION_001_BODY"
-autowrap_mode = 2
+autowrap_mode = 3
+
+[node name="Indicacion" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 10
+theme_type_variation = &"NotaCarta"
+text = "UI_MISSION_DRAG_HINT"
+horizontal_alignment = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1071925167]
 layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 2.27
-theme_override_constants/margin_top = 50
+theme_override_constants/margin_top = 0
 
 [node name="AgentRoast" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer" unique_id=2032614169]
-custom_minimum_size = Vector2(784, 210)
+custom_minimum_size = Vector2(0, 170)
 layout_mode = 2
 size_flags_vertical = 0
-theme = SubResource("Theme_yrtqx")
+theme_override_constants/separation = 18
 alignment = 1
 
 [node name="Send" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1556539309]
+custom_minimum_size = Vector2(340, 54)
 layout_mode = 2
+size_flags_horizontal = 4
 text = "UI_MISSION_SEND"
+icon = ExtResource("7_pluma")
+
+[node name="Lacre" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = -34.0
+offset_top = -30.0
+offset_right = 90.0
+offset_bottom = 94.0
+rotation = -0.2
+pivot_offset = Vector2(62, 62)
+mouse_filter = 2
+texture = ExtResource("5_lacre")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="CloseMissionButton" type="Button" parent="." unique_id=1300608335]
 layout_mode = 0
-offset_left = 766.0
-offset_top = 58.30002
-offset_right = 853.0
-offset_bottom = 89.30002
-theme_override_colors/font_color = Color(0.87, 0.13920002, 0.13920002, 1)
+offset_left = 772.0
+offset_top = 40.0
+offset_right = 862.0
+offset_bottom = 76.0
+focus_mode = 0
+theme_type_variation = &"BotonTinta"
 text = "UI_CLOSE"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=936578291]
 stream = ExtResource("4_yrtqx")
 volume_db = -3.817
+bus = &"Efectos"
 
 [connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/Send" to="." method="_on_send_pressed"]
 [connection signal="pressed" from="CloseMissionButton" to="." method="_on_close_mission_button_pressed"]

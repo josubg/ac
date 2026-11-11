@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://b1fnk4f66ycn4" path="res://scenes/play_scenes/main.gd" id="1_53356"]
 [ext_resource type="Texture2D" uid="uid://deluds7e5l7hg" path="res://resources/Mapa.png" id="1_ig7tw"]
-[ext_resource type="FontFile" uid="uid://b16lx41ih565r" path="res://resources/Bastarda-K.ttf" id="2_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://cqhiguhygaf3d" path="res://scenes/agents/Monja_Speak.tscn" id="3_iml5s"]
 [ext_resource type="Texture2D" uid="uid://cm5n4rm6uvxua" path="res://sprites/CuatroCortes burgués gris.png" id="5_5e6os"]
 [ext_resource type="PackedScene" uid="uid://jvho4fxquili" path="res://scenes/misions/MissionResolutionWindow.tscn" id="5_bd1e2"]
@@ -18,14 +17,62 @@
 [ext_resource type="AudioStream" uid="uid://8t8xayoaqkv1" path="res://resources/furiosos.mp3" id="15_eq487"]
 [ext_resource type="PackedScene" uid="uid://b1m6fhr2enk04" path="res://scenes/buildings/PropertiesWindow.tscn" id="15_sm81j"]
 
-[sub_resource type="Theme" id="Theme_ig7tw"]
+[ext_resource type="Texture2D" path="res://assets/ui/icons/two-coins.svg" id="ui_coins"]
+[ext_resource type="Texture2D" path="res://assets/ui/icons/family-house.svg" id="ui_house"]
+[ext_resource type="Texture2D" path="res://assets/ui/icons/pitchfork.svg" id="ui_pitchfork"]
+[ext_resource type="Texture2D" path="res://assets/ui/icons/crown.svg" id="ui_crown"]
+[ext_resource type="Texture2D" path="res://assets/ui/icons/church.svg" id="ui_church"]
+[ext_resource type="Texture2D" path="res://assets/ui/icons/crested-helmet.svg" id="ui_helmet"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0xm2m"]
-bg_color = Color(0.9529412, 0.79607844, 0.54509807, 1)
+[sub_resource type="StyleBoxEmpty" id="Margen_izq"]
+content_margin_left = 28.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ig7tw"]
+[sub_resource type="StyleBoxEmpty" id="Margen_der"]
+content_margin_right = 28.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h2yge"]
+[sub_resource type="StyleBoxFlat" id="Relleno_rey"]
+bg_color = Color(0.72, 0.57, 0.25, 1)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+expand_margin_left = -2.0
+expand_margin_top = -2.0
+expand_margin_right = -2.0
+expand_margin_bottom = -2.0
+
+[sub_resource type="StyleBoxFlat" id="Relleno_nobleza"]
+bg_color = Color(0.2, 0.33, 0.55, 1)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+expand_margin_left = -2.0
+expand_margin_top = -2.0
+expand_margin_right = -2.0
+expand_margin_bottom = -2.0
+
+[sub_resource type="StyleBoxFlat" id="Relleno_iglesia"]
+bg_color = Color(0.42, 0.24, 0.45, 1)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+expand_margin_left = -2.0
+expand_margin_top = -2.0
+expand_margin_right = -2.0
+expand_margin_bottom = -2.0
+
+[sub_resource type="StyleBoxFlat" id="Relleno_descontento"]
+bg_color = Color(0.5, 0.36, 0.22, 1)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+expand_margin_left = -2.0
+expand_margin_top = -2.0
+expand_margin_right = -2.0
+expand_margin_bottom = -2.0
 
 [node name="Main" type="Node" unique_id=161793424]
 script = ExtResource("1_53356")
@@ -39,6 +86,14 @@ texture = ExtResource("1_ig7tw")
 
 [node name="CanvasLayerMission" type="CanvasLayer" parent="." unique_id=1196988158]
 
+[node name="FondoSuperior" type="Panel" parent="CanvasLayerMission"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 86.0
+grow_horizontal = 2
+mouse_filter = 2
+theme_type_variation = &"PanelCueroSuperior"
+
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayerMission" unique_id=1392911685]
 anchors_preset = 15
 anchor_right = 1.0
@@ -46,103 +101,145 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+theme_override_constants/separation = 4
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayerMission/VBoxContainer" unique_id=1531970683]
+custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.1
+theme_override_constants/separation = 0
 
 [node name="PanelContainer2" type="PanelContainer" parent="CanvasLayerMission/VBoxContainer/HBoxContainer" unique_id=428825306]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.7
+theme_override_styles/panel = SubResource("Margen_izq")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayerMission/VBoxContainer/HBoxContainer/PanelContainer2" unique_id=970515754]
 layout_mode = 2
-size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="IconoReales" type="TextureRect" parent="CanvasLayerMission/VBoxContainer/HBoxContainer/PanelContainer2/HBoxContainer"]
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("ui_coins")
+expand_mode = 1
+stretch_mode = 5
+self_modulate = Color(0.79, 0.65, 0.35, 1)
 
 [node name="RiquezaLabel" type="Label" parent="CanvasLayerMission/VBoxContainer/HBoxContainer/PanelContainer2/HBoxContainer" unique_id=1727946555]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.5
-theme_override_fonts/font = ExtResource("2_0xm2m")
-theme_override_font_sizes/font_size = 30
+theme_type_variation = &"CifraCuero"
 text = "0"
-horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Label2" type="Label" parent="CanvasLayerMission/VBoxContainer/HBoxContainer/PanelContainer2/HBoxContainer" unique_id=1168184487]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.5
-theme_override_fonts/font = ExtResource("2_0xm2m")
-theme_override_font_sizes/font_size = 30
+theme_type_variation = &"EtiquetaCuero"
 text = "UI_HUD_CURRENCY"
+vertical_alignment = 1
 
 [node name="RiquezaModLabel" type="Label" parent="CanvasLayerMission/VBoxContainer/HBoxContainer/PanelContainer2/HBoxContainer" unique_id=647929499]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.5
-theme_override_fonts/font = ExtResource("2_0xm2m")
-theme_override_font_sizes/font_size = 24
+theme_type_variation = &"NotaCuero"
 text = "UI_HUD_INCOME_ZERO"
+vertical_alignment = 1
 
 [node name="PropertiesButton" type="Button" parent="CanvasLayerMission/VBoxContainer/HBoxContainer/PanelContainer2/HBoxContainer" unique_id=1622359107]
 layout_mode = 2
+size_flags_vertical = 4
+focus_mode = 0
+theme_type_variation = &"BotonCuero"
 text = "UI_HUD_PROPERTIES"
+icon = ExtResource("ui_house")
 
 [node name="AspectRatioContainer2" type="AspectRatioContainer" parent="CanvasLayerMission/VBoxContainer/HBoxContainer" unique_id=1425957261]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_stretch_ratio = 2.0
+size_flags_stretch_ratio = 0.6
+mouse_filter = 2
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayerMission/VBoxContainer/HBoxContainer" unique_id=1025136496]
 layout_mode = 2
 size_flags_horizontal = 3
-color = Color(0, 0, 0, 1)
+size_flags_stretch_ratio = 1.4
+mouse_filter = 2
+color = Color(0, 0, 0, 0)
+
+[node name="Cartela" type="Panel" parent="CanvasLayerMission/VBoxContainer/HBoxContainer/ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 6.0
+offset_top = 12.0
+offset_right = -6.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_type_variation = &"PanelCartelaSimple"
 
 [node name="TimeLabel" type="Label" parent="CanvasLayerMission/VBoxContainer/HBoxContainer/ColorRect" unique_id=1250890169]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -45.0
-offset_top = -11.5
-offset_right = 45.0
-offset_bottom = 11.5
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 10.0
+offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "TIME LABEL"
+theme_type_variation = &"Fecha"
+text = "Domingo, 1 de Enero de 1640"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="AspectRatioContainer" type="AspectRatioContainer" parent="CanvasLayerMission/VBoxContainer/HBoxContainer" unique_id=1718956094]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_stretch_ratio = 2.0
+size_flags_stretch_ratio = 0.6
+mouse_filter = 2
 
 [node name="PanelContainer" type="PanelContainer" parent="CanvasLayerMission/VBoxContainer/HBoxContainer" unique_id=81533192]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.7
+theme_override_styles/panel = SubResource("Margen_der")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayerMission/VBoxContainer/HBoxContainer/PanelContainer" unique_id=1374093878]
 layout_mode = 2
-size_flags_horizontal = 3
+theme_override_constants/separation = 12
+
+[node name="IconoDescontento" type="TextureRect" parent="CanvasLayerMission/VBoxContainer/HBoxContainer/PanelContainer/HBoxContainer"]
+custom_minimum_size = Vector2(34, 34)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("ui_pitchfork")
+expand_mode = 1
+stretch_mode = 5
+self_modulate = Color(0.79, 0.65, 0.35, 1)
 
 [node name="Label" type="Label" parent="CanvasLayerMission/VBoxContainer/HBoxContainer/PanelContainer/HBoxContainer" unique_id=50788767]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.5
-theme_override_fonts/font = ExtResource("2_0xm2m")
-theme_override_font_sizes/font_size = 30
+theme_type_variation = &"EtiquetaCuero"
 text = "FACTION_DISCONTENT"
-horizontal_alignment = 2
+vertical_alignment = 1
 
 [node name="DescontentoBar" type="ProgressBar" parent="CanvasLayerMission/VBoxContainer/HBoxContainer/PanelContainer/HBoxContainer" unique_id=1073088674]
+custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 1
+size_flags_vertical = 4
+theme_override_styles/fill = SubResource("Relleno_descontento")
+value = 50.0
 
 [node name="ColorRect2" type="ColorRect" parent="CanvasLayerMission/VBoxContainer/HBoxContainer" unique_id=1498697415]
 layout_mode = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0)
 
 [node name="ButtonsLayer" type="Control" parent="CanvasLayerMission/VBoxContainer" unique_id=1635859801]
 clip_contents = true
@@ -150,87 +247,56 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="PanelContainer3" type="PanelContainer" parent="CanvasLayerMission/VBoxContainer" unique_id=77112156]
+custom_minimum_size = Vector2(0, 220)
 layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.25
 mouse_filter = 2
-theme = SubResource("Theme_ig7tw")
-theme_override_styles/panel = SubResource("StyleBoxFlat_0xm2m")
+theme_type_variation = &"PanelCueroInferior"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayerMission/VBoxContainer/PanelContainer3" unique_id=1042827270]
 layout_mode = 2
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayerMission/VBoxContainer/PanelContainer3/VBoxContainer" unique_id=1002860872]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="Panel" type="Panel" parent="CanvasLayerMission/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer2" unique_id=383172208]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_ig7tw")
-
-[node name="Label" type="Label" parent="CanvasLayerMission/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer2/Panel" unique_id=954913158]
 visible = false
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-theme_override_fonts/font = ExtResource("2_0xm2m")
-theme_override_font_sizes/font_size = 30
-text = "UI_HUD_AGENTS"
-
-[node name="Panel2" type="Panel" parent="CanvasLayerMission/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer2" unique_id=510034660]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.3
-theme_override_styles/panel = SubResource("StyleBoxFlat_h2yge")
-
-[node name="Label" type="Label" parent="CanvasLayerMission/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer2/Panel2" unique_id=2061347100]
-visible = false
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-theme_override_fonts/font = ExtResource("2_0xm2m")
-theme_override_font_sizes/font_size = 30
-text = "UI_HUD_GAME_TITLE"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayerMission/VBoxContainer/PanelContainer3/VBoxContainer" unique_id=171273088]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_constants/separation = 24
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayerMission/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer" unique_id=393417894]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_constants/margin_left = 12
-theme_override_constants/margin_right = 12
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_right = 8
 
 [node name="agent_panel" type="HBoxContainer" parent="CanvasLayerMission/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/MarginContainer" unique_id=785870184]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_constants/separation = 10
+theme_override_constants/separation = 14
 
 [node name="noble" parent="CanvasLayerMission/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/MarginContainer/agent_panel" unique_id=1829217481 instance=ExtResource("8_uynio")]
 layout_mode = 2
-full_name = "AGENT_PACA_NAME"
+full_name = "Paca"
 faction = "Noble"
 
 [node name="noble2" parent="CanvasLayerMission/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/MarginContainer/agent_panel" unique_id=745214462 instance=ExtResource("8_uynio")]
 layout_mode = 2
-full_name = "AGENT_JUANITO_NAME"
+full_name = "Juanito"
 assigned_texture = ExtResource("6_k70x2")
 available_texture = ExtResource("5_nck21")
 faction = "Malechor"
 
 [node name="noble3" parent="CanvasLayerMission/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/MarginContainer/agent_panel" unique_id=550789337 instance=ExtResource("8_uynio")]
 layout_mode = 2
-full_name = "AGENT_AMPARO_NAME"
+full_name = "Amparo"
 assigned_texture = ExtResource("5_5e6os")
 available_texture = ExtResource("6_uynio")
 faction = "Religiosa"
 
 [node name="noble4" parent="CanvasLayerMission/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/MarginContainer/agent_panel" unique_id=1171050576 instance=ExtResource("8_uynio")]
 layout_mode = 2
-full_name = "AGENT_SOR_MARIA_NAME"
+full_name = "Sor María"
 assigned_texture = ExtResource("10_iml5s")
 available_texture = ExtResource("9_jeb2x")
 faction = "Religiosa"
@@ -238,107 +304,141 @@ faction = "Religiosa"
 [node name="influence_panel" type="Panel" parent="CanvasLayerMission/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer" unique_id=136169952]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.3
+size_flags_stretch_ratio = 0.5
+mouse_filter = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayerMission/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/influence_panel" unique_id=2099970989]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = 6.0
+offset_right = -20.0
+offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 6
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayerMission/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/influence_panel/VBoxContainer" unique_id=455633233]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_constants/separation = 12
+
+[node name="Icono" type="TextureRect" parent="CanvasLayerMission/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/influence_panel/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("ui_crown")
+expand_mode = 1
+stretch_mode = 5
+self_modulate = Color(0.79, 0.65, 0.35, 1)
 
 [node name="Label" type="Label" parent="CanvasLayerMission/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/influence_panel/VBoxContainer/HBoxContainer" unique_id=1631883771]
+custom_minimum_size = Vector2(130, 0)
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.5
-theme_override_fonts/font = ExtResource("2_0xm2m")
-theme_override_font_sizes/font_size = 30
+theme_type_variation = &"EtiquetaCuero"
 text = "FACTION_KING"
-horizontal_alignment = 2
+vertical_alignment = 1
 
 [node name="ReyBar" type="ProgressBar" parent="CanvasLayerMission/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/influence_panel/VBoxContainer/HBoxContainer" unique_id=761219526]
+custom_minimum_size = Vector2(0, 26)
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 1
+size_flags_vertical = 4
+theme_override_styles/fill = SubResource("Relleno_rey")
+value = 50.0
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayerMission/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/influence_panel/VBoxContainer" unique_id=566949717]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_constants/separation = 12
+
+[node name="Icono" type="TextureRect" parent="CanvasLayerMission/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/influence_panel/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("ui_helmet")
+expand_mode = 1
+stretch_mode = 5
+self_modulate = Color(0.79, 0.65, 0.35, 1)
 
 [node name="Label" type="Label" parent="CanvasLayerMission/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/influence_panel/VBoxContainer/HBoxContainer2" unique_id=2080281476]
+custom_minimum_size = Vector2(130, 0)
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.5
-theme_override_fonts/font = ExtResource("2_0xm2m")
-theme_override_font_sizes/font_size = 30
+theme_type_variation = &"EtiquetaCuero"
 text = "FACTION_NOBILITY"
-horizontal_alignment = 2
+vertical_alignment = 1
 
 [node name="NoblezaBar" type="ProgressBar" parent="CanvasLayerMission/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/influence_panel/VBoxContainer/HBoxContainer2" unique_id=1383041120]
+custom_minimum_size = Vector2(0, 26)
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 1
+size_flags_vertical = 4
+theme_override_styles/fill = SubResource("Relleno_nobleza")
+value = 50.0
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="CanvasLayerMission/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/influence_panel/VBoxContainer" unique_id=1964300955]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_constants/separation = 12
+
+[node name="Icono" type="TextureRect" parent="CanvasLayerMission/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/influence_panel/VBoxContainer/HBoxContainer3"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("ui_church")
+expand_mode = 1
+stretch_mode = 5
+self_modulate = Color(0.79, 0.65, 0.35, 1)
 
 [node name="Label" type="Label" parent="CanvasLayerMission/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/influence_panel/VBoxContainer/HBoxContainer3" unique_id=1734900502]
+custom_minimum_size = Vector2(130, 0)
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.5
-theme_override_fonts/font = ExtResource("2_0xm2m")
-theme_override_font_sizes/font_size = 30
+theme_type_variation = &"EtiquetaCuero"
 text = "FACTION_CLERGY"
-horizontal_alignment = 2
+vertical_alignment = 1
 
 [node name="CleroBar" type="ProgressBar" parent="CanvasLayerMission/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/influence_panel/VBoxContainer/HBoxContainer3" unique_id=1367975720]
+custom_minimum_size = Vector2(0, 26)
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 1
+size_flags_vertical = 4
+theme_override_styles/fill = SubResource("Relleno_iglesia")
+value = 50.0
 
 [node name="MonjaSpeak" parent="CanvasLayerMission" unique_id=1120191490 instance=ExtResource("3_iml5s")]
 
 [node name="MissionResolutionWindow" parent="CanvasLayerMission" unique_id=571209422 instance=ExtResource("5_bd1e2")]
 visible = false
-offset_left = 643.0
-offset_top = 135.0
-offset_right = -105.80005
-offset_bottom = -302.40002
+offset_left = 510.0
+offset_top = 104.0
+offset_right = 510.0
+offset_bottom = 104.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
 [node name="MissionWindow" parent="CanvasLayerMission" unique_id=174071430 instance=ExtResource("7_td746")]
 visible = false
-offset_left = 568.0
-offset_top = 137.0
-offset_right = -180.80005
-offset_bottom = -300.40002
-metadata/_edit_use_anchors_ = true
+offset_left = 510.0
+offset_top = 104.0
+offset_right = 510.0
+offset_bottom = 104.0
 
 [node name="BuildingWindow" parent="CanvasLayerMission" unique_id=1054651019 instance=ExtResource("14_3nlru")]
-offset_left = -133.0
-offset_top = -221.0
-offset_right = -133.0
-offset_bottom = -221.0
 
 [node name="PropertiesWindow" parent="CanvasLayerMission" unique_id=934365827 instance=ExtResource("15_sm81j")]
 visible = false
-offset_left = -1.0
-offset_top = -2.0
-offset_right = -1.0
-offset_bottom = -2.0
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1628111680]
 stream = ExtResource("14_2j01o")
 volume_db = -5.0
 autoplay = true
+bus = &"Musica"
 
 [node name="AudioDescontento" type="AudioStreamPlayer" parent="." unique_id=244490919]
 stream = ExtResource("15_eq487")
 volume_db = -16.0
+bus = &"Efectos"

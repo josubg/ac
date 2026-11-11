@@ -1,39 +1,14 @@
 [gd_scene format=3 uid="uid://br54s0faogtns"]
 
 [ext_resource type="Script" uid="uid://735046um6sp1" path="res://scenes/menu_inicio.gd" id="1_bnklu"]
-[ext_resource type="Texture2D" uid="uid://c6660qm8o0ff5" path="res://sprites/CuatroCortes píldora Negro 690x400 marco old.png" id="1_wkv36"]
 [ext_resource type="Texture2D" uid="uid://deluds7e5l7hg" path="res://resources/Mapa.png" id="2_bnklu"]
-[ext_resource type="FontFile" uid="uid://b16lx41ih565r" path="res://resources/Bastarda-K.ttf" id="2_ylpju"]
-[ext_resource type="Texture2D" uid="uid://d046e3k84whiw" path="res://sprites/frame.png" id="5_01a6i"]
-[ext_resource type="FontFile" uid="uid://b5p2nwegcv016" path="res://resources/AlbertText-Bold.ttf" id="6_v4dt1"]
+[ext_resource type="Texture2D" path="res://assets/ui/textures/vineta.png" id="5_vineta"]
+[ext_resource type="Texture2D" path="res://assets/ui/icons/fleur-de-lys.svg" id="6_flor"]
 [ext_resource type="Texture2D" uid="uid://b83ccg136y4qp" path="res://resources/LogoMadrid.svg" id="7_5p85s"]
 [ext_resource type="Texture2D" uid="uid://7pvuqc44x556" path="res://sprites/lacre_mision.png" id="7_5psen"]
 [ext_resource type="AudioStream" uid="uid://cdy22wr1w0ecr" path="res://resources/intro.wav" id="8_euaya"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d6xxl"]
-bg_color = Color(0.050554395, 0.030409938, 0.010180563, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bnklu"]
-bg_color = Color(0.050980393, 0.03137255, 0.011764706, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_01a6i"]
-bg_color = Color(0.050980393, 0.03137255, 0.011764706, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v4dt1"]
-bg_color = Color(0.050980393, 0.03137255, 0.011764706, 1)
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_v4dt1"]
-texture = ExtResource("5_01a6i")
-texture_margin_left = 25.0
-texture_margin_top = 177.0
-texture_margin_right = 25.0
-texture_margin_bottom = 167.0
-axis_stretch_horizontal = 2
-axis_stretch_vertical = 2
-
-[sub_resource type="Theme" id="Theme_5psen"]
-
-[sub_resource type="FontVariation" id="FontVariation_5psen"]
+[sub_resource type="ButtonGroup" id="ButtonGroup_idioma"]
 
 [node name="MenuInicio" type="Control" unique_id=1775949271]
 layout_mode = 3
@@ -54,16 +29,34 @@ layer = 0
 [node name="BackgroundLayer" type="Node2D" parent="CanvasLayer/Parallax2D" unique_id=851066690]
 
 [node name="Background" type="Sprite2D" parent="CanvasLayer/Parallax2D/BackgroundLayer" unique_id=467389821]
-modulate = Color(0.5370987, 0.5370987, 0.5370987, 0.36862746)
+modulate = Color(0.55, 0.45, 0.36, 1)
 position = Vector2(957, 540)
 scale = Vector2(1.25, 1.25)
 texture = ExtResource("2_bnklu")
 
+[node name="Vineta" type="TextureRect" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("5_vineta")
+expand_mode = 1
+
 [node name="Label" type="Label" parent="." unique_id=1983590420]
 layout_mode = 1
-offset_right = 185.0
-offset_bottom = 49.0
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = -48.0
+offset_right = 400.0
+offset_bottom = -16.0
+grow_vertical = 0
+theme_type_variation = &"NotaCuero"
 text = "UI_MENU_VERSION"
+vertical_alignment = 2
 
 [node name="CanvasLayer2" type="CanvasLayer" parent="." unique_id=1004538075]
 follow_viewport_enabled = true
@@ -89,63 +82,96 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_constants/margin_left = 600
-theme_override_constants/margin_top = 40
-theme_override_constants/margin_right = 600
-theme_override_constants/margin_bottom = 100
+theme_override_constants/margin_left = 720
+theme_override_constants/margin_top = 60
+theme_override_constants/margin_right = 720
+theme_override_constants/margin_bottom = 40
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer2/Control/MarginContainer" unique_id=1360099885]
-clip_contents = true
 layout_mode = 2
-theme_override_constants/separation = 30
+theme_override_constants/separation = 16
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer2/Control/MarginContainer/VBoxContainer" unique_id=1491440884]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_constants/margin_left = 50
-theme_override_constants/margin_top = 50
-theme_override_constants/margin_right = 50
+theme_override_constants/margin_left = -300
+theme_override_constants/margin_top = 90
+theme_override_constants/margin_right = -300
 theme_override_constants/margin_bottom = 20
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer2/Control/MarginContainer/VBoxContainer/MarginContainer" unique_id=2064506606]
+[node name="Rotulo" type="RichTextLabel" parent="CanvasLayer2/Control/MarginContainer/VBoxContainer/MarginContainer"]
+auto_translate_mode = 2
 layout_mode = 2
-size_flags_horizontal = 4
 size_flags_vertical = 4
-texture = ExtResource("1_wkv36")
-expand_mode = 2
-stretch_mode = 3
+mouse_filter = 2
+auto_translate_mode = 2
+theme_type_variation = &"Rotulo"
+bbcode_enabled = true
+text = "[center][color=#c0392b]C[/color]uatro [color=#c0392b]C[/color]ortes
+[i]Madrid, MDCXL[/i][/center]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="Filete" type="HBoxContainer" parent="CanvasLayer2/Control/MarginContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 14
+
+[node name="Izq" type="HSeparator" parent="CanvasLayer2/Control/MarginContainer/VBoxContainer/Filete"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="Flor" type="TextureRect" parent="CanvasLayer2/Control/MarginContainer/VBoxContainer/Filete"]
+self_modulate = Color(0.79, 0.65, 0.35, 1)
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+texture = ExtResource("6_flor")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Der" type="HSeparator" parent="CanvasLayer2/Control/MarginContainer/VBoxContainer/Filete"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
 
 [node name="NewGameButton" type="Button" parent="CanvasLayer2/Control/MarginContainer/VBoxContainer" unique_id=166001896]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_ylpju")
-theme_override_font_sizes/font_size = 50
-theme_override_styles/normal = SubResource("StyleBoxFlat_d6xxl")
+theme_type_variation = &"BotonMenu"
 text = "UI_MENU_NEW_GAME"
 
 [node name="TutorialButton" type="Button" parent="CanvasLayer2/Control/MarginContainer/VBoxContainer" unique_id=1346130070]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_ylpju")
-theme_override_font_sizes/font_size = 50
-theme_override_styles/normal = SubResource("StyleBoxFlat_bnklu")
+theme_type_variation = &"BotonMenu"
 text = "UI_MENU_TUTORIAL"
+
+[node name="OptionsButton" type="Button" parent="CanvasLayer2/Control/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"BotonMenu"
+text = "UI_MENU_OPTIONS"
 
 [node name="CreditsButton" type="Button" parent="CanvasLayer2/Control/MarginContainer/VBoxContainer" unique_id=853728562]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_ylpju")
-theme_override_font_sizes/font_size = 50
-theme_override_styles/normal = SubResource("StyleBoxFlat_01a6i")
+theme_type_variation = &"BotonMenu"
 text = "UI_MENU_CREDITS"
 
 [node name="ExitButton" type="Button" parent="CanvasLayer2/Control/MarginContainer/VBoxContainer" unique_id=1266093841]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_ylpju")
-theme_override_font_sizes/font_size = 50
-theme_override_styles/normal = SubResource("StyleBoxFlat_v4dt1")
+theme_type_variation = &"BotonMenu"
 text = "UI_MENU_EXIT"
 
 [node name="CreditosCanvas" type="CanvasLayer" parent="." unique_id=1392105101]
 layer = 2
 visible = false
+
+[node name="Velo" type="ColorRect" parent="CreditosCanvas"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.08, 0.05, 0.03, 0.6)
 
 [node name="PanelContainer" type="PanelContainer" parent="CreditosCanvas" unique_id=1682528996]
 anchors_preset = 8
@@ -161,7 +187,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxTexture_v4dt1")
+theme_type_variation = &"PanelPergamino"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CreditosCanvas/PanelContainer" unique_id=238671535]
 layout_mode = 2
@@ -170,37 +196,27 @@ layout_mode = 2
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.12
-theme = SubResource("Theme_5psen")
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_fonts/font = ExtResource("6_v4dt1")
-theme_override_font_sizes/font_size = 50
+theme_type_variation = &"TituloCarta"
+theme_override_font_sizes/font_size = 52
 text = "UI_CREDITS_TITLE"
 horizontal_alignment = 1
 
 [node name="RichTextLabel" type="RichTextLabel" parent="CreditosCanvas/PanelContainer/VBoxContainer" unique_id=1907287183]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_font_sizes/normal_font_size = 18
-theme_override_font_sizes/bold_font_size = 18
-theme_override_font_sizes/bold_italics_font_size = 18
-theme_override_font_sizes/italics_font_size = 18
-theme_override_font_sizes/mono_font_size = 18
+fit_content = true
 bbcode_enabled = true
 text = "UI_CREDITS_TEAM"
 
 [node name="RichTextLabel2" type="RichTextLabel" parent="CreditosCanvas/PanelContainer/VBoxContainer" unique_id=1585768802]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_font_sizes/normal_font_size = 18
-theme_override_font_sizes/bold_font_size = 18
-theme_override_font_sizes/bold_italics_font_size = 18
-theme_override_font_sizes/italics_font_size = 18
-theme_override_font_sizes/mono_font_size = 18
+fit_content = true
 bbcode_enabled = true
 text = "UI_CREDITS_SOURCES"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CreditosCanvas/PanelContainer/VBoxContainer" unique_id=1143915300]
-custom_minimum_size = Vector2(0, 150)
+custom_minimum_size = Vector2(0, 110)
 layout_mode = 2
 
 [node name="Control" type="Control" parent="CreditosCanvas/PanelContainer/VBoxContainer/HBoxContainer" unique_id=951076729]
@@ -222,15 +238,21 @@ offset_right = 1404.0
 offset_bottom = 174.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme_override_colors/font_color = Color(0.88, 0, 0, 1)
-theme_override_fonts/font = SubResource("FontVariation_5psen")
-theme_override_font_sizes/font_size = 20
+theme_type_variation = &"BotonTinta"
 text = "UI_CLOSE"
 icon_alignment = 2
 
 [node name="TutorialCanvas" type="CanvasLayer" parent="." unique_id=1285537298]
 layer = 2
 visible = false
+
+[node name="Velo" type="ColorRect" parent="TutorialCanvas"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.08, 0.05, 0.03, 0.6)
 
 [node name="PanelContainer" type="PanelContainer" parent="TutorialCanvas" unique_id=1841360596]
 anchors_preset = 8
@@ -246,7 +268,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxTexture_v4dt1")
+theme_type_variation = &"PanelPergamino"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="TutorialCanvas/PanelContainer" unique_id=2085755324]
 layout_mode = 2
@@ -255,10 +277,8 @@ layout_mode = 2
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.12
-theme = SubResource("Theme_5psen")
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_fonts/font = ExtResource("6_v4dt1")
-theme_override_font_sizes/font_size = 50
+theme_type_variation = &"TituloCarta"
+theme_override_font_sizes/font_size = 52
 text = "UI_TUTORIAL_TITLE"
 horizontal_alignment = 1
 
@@ -271,11 +291,6 @@ theme_override_constants/margin_right = 50
 [node name="RichTextLabel" type="RichTextLabel" parent="TutorialCanvas/PanelContainer/VBoxContainer/MarginContainer" unique_id=1679191829]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_font_sizes/normal_font_size = 18
-theme_override_font_sizes/bold_font_size = 18
-theme_override_font_sizes/bold_italics_font_size = 18
-theme_override_font_sizes/italics_font_size = 18
-theme_override_font_sizes/mono_font_size = 18
 bbcode_enabled = true
 text = "UI_TUTORIAL_BODY"
 
@@ -286,11 +301,159 @@ offset_right = 1404.0
 offset_bottom = 174.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme_override_colors/font_color = Color(0.88, 0, 0, 1)
-theme_override_fonts/font = SubResource("FontVariation_5psen")
-theme_override_font_sizes/font_size = 20
+theme_type_variation = &"BotonTinta"
 text = "UI_CLOSE"
 icon_alignment = 2
+
+[node name="OpcionesCanvas" type="CanvasLayer" parent="."]
+layer = 2
+visible = false
+
+[node name="Velo" type="ColorRect" parent="OpcionesCanvas"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.08, 0.05, 0.03, 0.6)
+
+[node name="PanelContainer" type="PanelContainer" parent="OpcionesCanvas"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -250.0
+offset_right = 400.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"PanelPergamino"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="OpcionesCanvas/PanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Cabecera" type="HBoxContainer" parent="OpcionesCanvas/PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Titulo" type="Label" parent="OpcionesCanvas/PanelContainer/VBoxContainer/Cabecera"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"TituloCarta"
+theme_override_font_sizes/font_size = 52
+text = "UI_OPTIONS_TITLE"
+
+[node name="CerrarButton" type="Button" parent="OpcionesCanvas/PanelContainer/VBoxContainer/Cabecera"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_type_variation = &"BotonTinta"
+text = "UI_CLOSE"
+
+[node name="HSeparator" type="HSeparator" parent="OpcionesCanvas/PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Ajustes" type="GridContainer" parent="OpcionesCanvas/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/h_separation = 24
+theme_override_constants/v_separation = 18
+columns = 2
+
+[node name="EtiquetaIdioma" type="Label" parent="OpcionesCanvas/PanelContainer/VBoxContainer/Ajustes"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"SubtituloCarta"
+theme_override_colors/font_color = Color(0.169, 0.106, 0.071, 1)
+theme_override_font_sizes/font_size = 26
+text = "UI_OPTIONS_LANGUAGE"
+
+[node name="Idioma" type="HBoxContainer" parent="OpcionesCanvas/PanelContainer/VBoxContainer/Ajustes"]
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="Espanol" type="Button" parent="OpcionesCanvas/PanelContainer/VBoxContainer/Ajustes/Idioma"]
+auto_translate_mode = 2
+custom_minimum_size = Vector2(190, 54)
+layout_mode = 2
+auto_translate_mode = 2
+theme_type_variation = &"BotonOpcion"
+toggle_mode = true
+button_pressed = true
+button_group = SubResource("ButtonGroup_idioma")
+text = "Español"
+metadata/locale = "es"
+
+[node name="English" type="Button" parent="OpcionesCanvas/PanelContainer/VBoxContainer/Ajustes/Idioma"]
+auto_translate_mode = 2
+custom_minimum_size = Vector2(190, 54)
+layout_mode = 2
+auto_translate_mode = 2
+theme_type_variation = &"BotonOpcion"
+toggle_mode = true
+button_group = SubResource("ButtonGroup_idioma")
+text = "English"
+metadata/locale = "en"
+
+[node name="EtiquetaGeneral" type="Label" parent="OpcionesCanvas/PanelContainer/VBoxContainer/Ajustes"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"SubtituloCarta"
+theme_override_colors/font_color = Color(0.169, 0.106, 0.071, 1)
+theme_override_font_sizes/font_size = 26
+text = "UI_OPTIONS_VOLUME_MASTER"
+
+[node name="VolumenGeneral" type="HSlider" parent="OpcionesCanvas/PanelContainer/VBoxContainer/Ajustes"]
+custom_minimum_size = Vector2(398, 40)
+layout_mode = 2
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.05
+value = 1.0
+
+[node name="EtiquetaMusica" type="Label" parent="OpcionesCanvas/PanelContainer/VBoxContainer/Ajustes"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"SubtituloCarta"
+theme_override_colors/font_color = Color(0.169, 0.106, 0.071, 1)
+theme_override_font_sizes/font_size = 26
+text = "UI_OPTIONS_VOLUME_MUSIC"
+
+[node name="VolumenMusica" type="HSlider" parent="OpcionesCanvas/PanelContainer/VBoxContainer/Ajustes"]
+custom_minimum_size = Vector2(398, 40)
+layout_mode = 2
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.05
+value = 1.0
+
+[node name="EtiquetaEfectos" type="Label" parent="OpcionesCanvas/PanelContainer/VBoxContainer/Ajustes"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"SubtituloCarta"
+theme_override_colors/font_color = Color(0.169, 0.106, 0.071, 1)
+theme_override_font_sizes/font_size = 26
+text = "UI_OPTIONS_VOLUME_SFX"
+
+[node name="VolumenEfectos" type="HSlider" parent="OpcionesCanvas/PanelContainer/VBoxContainer/Ajustes"]
+custom_minimum_size = Vector2(398, 40)
+layout_mode = 2
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.05
+value = 1.0
+
+[node name="EtiquetaPantalla" type="Label" parent="OpcionesCanvas/PanelContainer/VBoxContainer/Ajustes"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"SubtituloCarta"
+theme_override_colors/font_color = Color(0.169, 0.106, 0.071, 1)
+theme_override_font_sizes/font_size = 26
+text = "UI_OPTIONS_FULLSCREEN"
+
+[node name="PantallaCompleta" type="CheckBox" parent="OpcionesCanvas/PanelContainer/VBoxContainer/Ajustes"]
+layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1911391086]
 layout_mode = 0
@@ -304,10 +467,13 @@ expand_mode = 2
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=373944624]
 stream = ExtResource("8_euaya")
 autoplay = true
+bus = &"Musica"
 
 [connection signal="pressed" from="CanvasLayer2/Control/MarginContainer/VBoxContainer/NewGameButton" to="." method="_on_new_game_button_pressed"]
 [connection signal="pressed" from="CanvasLayer2/Control/MarginContainer/VBoxContainer/TutorialButton" to="." method="_on_tutorial_button_pressed"]
 [connection signal="pressed" from="CanvasLayer2/Control/MarginContainer/VBoxContainer/CreditsButton" to="." method="_on_credits_button_pressed"]
 [connection signal="pressed" from="CanvasLayer2/Control/MarginContainer/VBoxContainer/ExitButton" to="." method="_on_exit_button_pressed"]
+[connection signal="pressed" from="CanvasLayer2/Control/MarginContainer/VBoxContainer/OptionsButton" to="." method="_on_options_button_pressed"]
+[connection signal="pressed" from="OpcionesCanvas/PanelContainer/VBoxContainer/Cabecera/CerrarButton" to="." method="_on_options_close_pressed"]
 [connection signal="pressed" from="CreditosCanvas/Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="TutorialCanvas/Button" to="." method="_on_button_pressed_tutorial"]

@@ -1,8 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://drsp4gsey6m01"]
+[gd_scene format=3 uid="uid://drsp4gsey6m01"]
 
 [ext_resource type="Script" uid="uid://bggdh3ueqdk7a" path="res://scenes/game_end.gd" id="1_hr20t"]
-[ext_resource type="FontFile" uid="uid://b5p2nwegcv016" path="res://resources/AlbertText-Bold.ttf" id="2_tqrak"]
 [ext_resource type="AudioStream" uid="uid://c4b811k1fw816" path="res://resources/victoria_1.mp3" id="3_hr20t"]
+
+[ext_resource type="Texture2D" uid="uid://deluds7e5l7hg" path="res://resources/Mapa.png" id="ui_mapa"]
+[ext_resource type="Texture2D" path="res://assets/ui/textures/vineta.png" id="ui_vineta"]
 
 [sub_resource type="Animation" id="Animation_sf2on"]
 length = 8.0
@@ -85,7 +87,32 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-color = Color(0, 0, 0, 1)
+color = Color(0.086, 0.055, 0.035, 1)
+
+[node name="Plano" type="TextureRect" parent="."]
+modulate = Color(0.32, 0.24, 0.18, 0.55)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("ui_mapa")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Vineta" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("ui_vineta")
+expand_mode = 1
+
 
 [node name="Label" type="Label" parent="."]
 modulate = Color(1, 1, 1, 0)
@@ -95,9 +122,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_fonts/font = ExtResource("2_tqrak")
-theme_override_font_sizes/font_size = 60
+offset_left = 240.0
+offset_right = -240.0
+theme_type_variation = &"Soneto"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
@@ -109,9 +136,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_colors/font_color = Color(0.13499998, 0.9, 0, 1)
-theme_override_fonts/font = ExtResource("2_tqrak")
-theme_override_font_sizes/font_size = 130
+theme_type_variation = &"TitularFinal"
 text = "GAME_END_TITLE"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -126,3 +151,4 @@ libraries = {
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_hr20t")
+bus = &"Musica"
