@@ -21,6 +21,8 @@ extends Node
 ##   float_text(screen_pos, text, c)  número flotante (+5, −10)
 ##   sfx(name, volume_db, pitch)      sonido (ver JuiceSfx)
 ##   vignette_flash(color, time)      velo de color en los bordes de la pantalla
+##   ripple(screen_pos, strength)     onda de tinta que deforma el mapa (postprocesado)
+##   grade_pulse(desat, sepia, time)  el mapa pierde color un instante (postprocesado)
 ##   attach_main(main)                engancha el feedback de la partida (MainJuice)
 
 signal settings_changed
@@ -58,14 +60,23 @@ var _shake_time := 0.0
 var _shaking := false
 var _ambient: Node = null
 var _loading := true
+var _post: ShaderMaterial = null     # postprocesado del mapa (lo registra MainJuice)
+var _ripples: Array = []             # [pos_uv, age, strength, duration]
+var _grade := Vector2.ZERO           # desaturación/sepia transitorias
+var _base_grade := Vector2.ZERO      # desaturación/sepia de fondo (Descontento)
+
+## Bus de audio para los efectos (lo crea ui-redesign; si no existe, Master).
+const SFX_BUS := &"Efectos"
 
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	_load_settings()
 	_build_layers()
+	var bus := SFX_BUS if AudioServer.get_bus_index(SFX_BUS) != -1 else &"Master"
 	for i in 8:
 		var player := AudioStreamPlayer.new()
+		player.bus = bus
 		add_child(player)
 		_players.append(player)
 	get_tree().node_added.connect(_on_node_added)
@@ -150,7 +161,10 @@ func _build_layers() -> void:
 	_overlay = ColorRect.new()
 	_overlay.set_anchors_preset(Control.PRESET_FULL_RECT)
 	_overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_overlay.color = Color(0.09, 0.06, 0.04, 0.0)
+	var ink := ShaderMaterial.new()
+	ink.shader = load("res://scripts/fx/ink_transition.gdshader")
+	ink.set_shader_parameter(&"progress", 0.0)
+	_overlay.material = ink
 	_overlay.visible = false
 	_overlay_layer.add_child(_overlay)
 
@@ -193,6 +207,7 @@ func shake(intensity: float = 0.3) -> void:
 
 
 func _process(delta: float) -> void:
+	_process_post(delta)
 	if _trauma > 0.0:
 		_shaking = true
 		_shake_time += delta
@@ -210,6 +225,65 @@ func _process(delta: float) -> void:
 		vp.canvas_transform = xf
 	elif _shaking:
 		_reset_canvas()
+
+
+# --- Postprocesado del mapa -----------------------------------------------------
+
+## MainJuice registra aquí el material de map_post.gdshader.
+func register_post(material: ShaderMaterial) -> void:
+	_post = material
+	_ripples.clear()
+	_grade = Vector2.ZERO
+	_base_grade = Vector2.ZERO
+	_apply_post()
+
+
+## Onda de tinta que se expande desde screen_pos (coordenadas de pantalla).
+func ripple(screen_pos: Vector2, strength: float = 1.0, duration: float = 0.7) -> void:
+	if _post == null or not motion_enabled():
+		return
+	var size := get_viewport().get_visible_rect().size
+	if _ripples.size() >= 4:
+		_ripples.pop_front()
+	_ripples.append([screen_pos / size, 0.0, strength, duration])
+
+
+## El mapa pierde color (desaturación) y vira a sepia, y se recupera en `time`.
+func grade_pulse(desat: float = 0.6, sepia_amount: float = 0.4, time: float = 1.2) -> void:
+	if _post == null or not enabled:
+		return
+	_grade = Vector2(maxf(_grade.x, desat), maxf(_grade.y, sepia_amount))
+	var tw := create_tween()
+	tw.tween_property(self, ^"_grade", Vector2.ZERO, time).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+
+
+## Gradación de fondo (persistente), p. ej. según el Descontento.
+func set_base_grade(desat: float, sepia_amount: float) -> void:
+	_base_grade = Vector2(desat, sepia_amount) if enabled else Vector2.ZERO
+
+
+func _process_post(delta: float) -> void:
+	if _post == null or not is_instance_valid(_post):
+		return
+	for r in _ripples:
+		r[1] += delta / r[3]
+	_ripples = _ripples.filter(func(r): return r[1] < 1.0)
+	_apply_post()
+
+
+func _apply_post() -> void:
+	var data := PackedVector4Array()
+	for i in 4:
+		if i < _ripples.size():
+			var r = _ripples[i]
+			data.append(Vector4(r[0].x, r[0].y, r[1], r[2]))
+		else:
+			data.append(Vector4.ZERO)
+	_post.set_shader_parameter(&"ripples", data)
+	_post.set_shader_parameter(&"desaturate", clampf(_base_grade.x + _grade.x, 0.0, 1.0))
+	_post.set_shader_parameter(&"sepia", clampf(_base_grade.y + _grade.y, 0.0, 1.0))
+	_post.set_shader_parameter(&"grain_speed", 0.0 if reduce_motion else 1.0)
+	_post.set_shader_parameter(&"grain", 0.03 if enabled else 0.0)
 
 
 func _reset_canvas() -> void:
@@ -417,7 +491,7 @@ func burst(screen_pos: Vector2, kind: StringName, amount: float = 1.0) -> void:
 	p.position = screen_pos
 	_fx_layer.add_child(p)
 	p.emitting = true
-	var life := p.lifetime * (1.0 + p.lifetime_randomness) + 0.3
+	var life: float = p.get_meta(&"juice_life", 2.0)
 	get_tree().create_timer(life, true, false, true).timeout.connect(p.queue_free)
 
 
@@ -489,19 +563,27 @@ func toast(text: String) -> void:
 # --- Transiciones de escena y ambiente -----------------------------------------
 
 func _on_scene_changed(scene_name: String) -> void:
+	_post = null
+	_ripples.clear()
 	_trauma = 0.0
 	_reset_canvas()
 	for child in _fx_layer.get_children():
 		child.queue_free()
 	if not enabled:
 		return
-	# Fundido desde sepia oscuro: suaviza el corte seco de change_scene_to_file.
+	# Mancha de tinta que se retira desde el centro: suaviza el corte seco de
+	# change_scene_to_file. Con movimiento reducido, más rápida.
+	var ink := _overlay.material as ShaderMaterial
+	ink.set_shader_parameter(&"seed", randf() * 100.0)
+	ink.set_shader_parameter(&"progress", 1.0)
 	_overlay.visible = true
-	_overlay.color.a = 1.0
+	var time := 0.9 if scene_name != "GameOver" else 1.6
+	if reduce_motion:
+		time *= 0.6
 	var tw := _overlay.create_tween()
-	tw.tween_interval(0.05)
-	tw.tween_property(_overlay, ^"color:a", 0.0, 0.7 if scene_name != "GameOver" else 1.4) \
-		.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tw.tween_interval(0.08)
+	tw.tween_method(func(v: float): ink.set_shader_parameter(&"progress", v), 1.0, 0.0, time) \
+		.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
 	tw.tween_callback(func(): _overlay.visible = false)
 	match scene_name:
 		"GameOver":

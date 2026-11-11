@@ -26,8 +26,9 @@ monja) y **decide** con calma. Por eso el juice debe ser:
    se guarda en `user://juice.cfg`; en la web se activa por defecto si el
    navegador declara `prefers-reduced-motion`). Con él activado no hay temblor
    de pantalla ni escalados o desplazamientos: los pops pasan a ser destellos de
-   color, las entradas pasan a ser fundidos, la viñeta deja de latir y las
-   partículas se reducen al 60 % y van más lentas. `Juice.enabled = false`
+   color, las entradas pasan a ser fundidos, la viñeta deja de latir, no hay
+   ondas de tinta en el mapa, el grano queda estático y las partículas se
+   reducen al 60 % y van más lentas. `Juice.enabled = false`
    apaga todo el juice (visual y sonoro) sin tocar el juego.
 2. **No tapar textos largos.** El temblor solo mueve el *mundo* (mapa y
    edificios); la interfaz (ventanas, barras, la monja) nunca tiembla. La
@@ -40,9 +41,15 @@ monja) y **decide** con calma. Por eso el juice debe ser:
    nuevos de la partida (no caducan lacres ni pasan días). El brillo de los
    lacres resueltos se detiene mientras haya pausa. Los tweens de interfaz
    (hover, ventanas) sí funcionan en pausa, porque responden al jugador.
-4. **Web primero.** Solo `CPUParticles2D`, `Tween` y un shader `canvas_item`
-   trivial: funcionan en Compatibility/WebGL2. Cero assets externos: los
-   sonidos y las texturas se sintetizan (ver `assets/vfx/CREDITS.md`).
+4. **Calidad antes que rendimiento web** (corrección del director: se quita la
+   restricción a WebGL2). Se usan `GPUParticles2D` con `ParticleProcessMaterial`
+   (turbulencia, estelas, mezcla aditiva), un **postprocesado del mundo** con
+   `hint_screen_texture` (ondas de tinta, gradación de color, viñeta y grano) y
+   una **transición de mancha de tinta** con ruido fbm. Se probó también el
+   *glow* HDR 2D (`WorldEnvironment` + `use_hdr_2d`) y se descartó porque
+   lavaba los colores de las barras de la interfaz. Todo sigue ejecutándose
+   también con `gl_compatibility`. Cero assets externos: los sonidos y las
+   texturas se sintetizan (ver `assets/vfx/CREDITS.md`).
 5. **Desacoplado.** Toda la lógica está en `scripts/fx/`. El juego solo tiene
    **una línea nueva** (`Juice.attach_main(self)` en `main.gd`) y un autoload.
 
@@ -57,7 +64,8 @@ Leyenda. **Estado**: ✅ implementado en el prototipo · 🔸 propuesto.
 | Efecto | Intensidad | Técnica | Coste | Prioridad | Estado |
 |---|---|---|---|---|---|
 | El lacre cae desde 1,8× con transparencia y se asienta con rebote (`TRANS_BACK`) | media | `Tween` sobre scale/self_modulate, compensando la posición porque el botón está a escala 0,12 | S | I | ✅ |
-| Polvo sepia al tocar el mapa + golpe sordo de sello | baja | `CPUParticles2D` «dust» + `seal` sintetizado | S | I | ✅ |
+| Polvo sepia al tocar el mapa + golpe sordo de sello | baja | `GPUParticles2D` «dust» (turbulencia) + `seal` sintetizado | S | I | ✅ |
+| Onda de tinta suave que deforma el mapa alrededor del lacre | baja | `Juice.ripple()` → `map_post.gdshader` | S | R | ✅ |
 | Si aparecen varios el mismo día, escalonar 0,15 s | baja | `Tween` con `set_delay` | S | O | 🔸 |
 
 ![](gif_01_lacres.gif)
@@ -68,7 +76,7 @@ Leyenda. **Estado**: ✅ implementado en el prototipo · 🔸 propuesto.
 |---|---|---|---|---|---|
 | Aviso: el lacre late como un corazón (además del parpadeo que ya existía) | media | `Tween` en bucle sobre la escala; con movimiento reducido, latido de color | S | I | ✅ |
 | Aviso: roce de papel grave | baja | `paper` con pitch 0,8 | S | R | ✅ |
-| Caduca: el lacre se resquebraja (esquirlas de cera que caen) + crujido + temblor mínimo del mapa | media | `CPUParticles2D` «wax» con gravedad y rotación, `crack`, `shake(0.18)` | S | I | ✅ |
+| Caduca: el lacre se resquebraja (esquirlas de cera que caen) + crujido + temblor mínimo del mapa | media | `GPUParticles2D` «wax» con gravedad y rotación, `crack`, `shake(0.18)` | S | I | ✅ |
 | Caduca: mancha de cera que queda en el mapa y se desvanece en 3 s | baja | `Sprite2D` + `Tween` | S | O | 🔸 |
 | Cuenta atrás visual (anillo que se vacía alrededor del lacre) | media | shader de arco o `TextureProgressBar` | M | R | 🔸 (cambia el layout del botón: coordinar con ui-redesign) |
 
@@ -90,7 +98,8 @@ Leyenda. **Estado**: ✅ implementado en el prototipo · 🔸 propuesto.
 
 | Efecto | Intensidad | Técnica | Coste | Prioridad | Estado |
 |---|---|---|---|---|---|
-| El lacre pasa a azul con un golpe de sello: *squash*, anillo de tinta y golpe | media | `squash()` + `CPUParticles2D` «stamp» + `seal` | S | I | ✅ |
+| El lacre pasa a azul con un golpe de sello: *squash*, anillo de tinta y golpe | media | `squash()` + `GPUParticles2D` «stamp» + `seal` | S | I | ✅ |
+| La onda del sello recorre el mapa | baja | `ripple()` (postprocesado) | S | R | ✅ |
 | Botón «Enviar»: hover y pulsación (como todos los botones) | baja | hover/pulsación global | S | I | ✅ |
 | Los retratos «viajan» desde la ventana hasta el lacre | media | `Tween` de copias de los `TextureRect` | M | O | 🔸 |
 
@@ -101,7 +110,7 @@ Leyenda. **Estado**: ✅ implementado en el prototipo · 🔸 propuesto.
 | Efecto | Intensidad | Técnica | Coste | Prioridad | Estado |
 |---|---|---|---|---|---|
 | Ya existe: parpadeo lento azul (`AnimationPlayer`) | — | — | — | — | (existente) |
-| Huellas o pequeño rastro de tinta que avanza alrededor del lacre | baja | `CPUParticles2D` continuo y local | S | O | 🔸 |
+| Huellas o pequeño rastro de tinta que avanza alrededor del lacre | baja | `GPUParticles2D` continuo y local | S | O | 🔸 |
 
 ### 2.6 Éxito o fracaso al abrir el lacre
 
@@ -109,8 +118,8 @@ Leyenda. **Estado**: ✅ implementado en el prototipo · 🔸 propuesto.
 |---|---|---|---|---|---|
 | Al resolverse: el lacre da un pop y suelta un destello; luego brilla cada 1,8 s para invitar a abrirlo (se detiene en pausa) | baja | `pop()` + «glint» con `Timer` | S | I | ✅ |
 | La ventana entra con un fundido y un leve escalado (0,96 → 1) | baja | `window_in()` en `visibility_changed` | S | I | ✅ |
-| **Éxito**: destellos dorados que salen del rótulo del resultado + campanilla + pop del rótulo | media | «gold» + `chime` | S | I | ✅ |
-| **Fracaso**: la tinta se derrama + esquirlas de cera + golpe sordo + temblor mínimo del mapa + aplastamiento del rótulo | media | «ink» + «wax» + `thud` + `shake(0.15)` | S | I | ✅ |
+| **Éxito**: destellos dorados con estela y mezcla aditiva que salen del rótulo del resultado + campanilla + pop del rótulo | media | «gold» (`GPUParticles2D`, trails, turbulencia) + `chime` | S | I | ✅ |
+| **Fracaso**: la tinta se derrama + esquirlas de cera + golpe sordo + temblor mínimo del mapa + el mapa pierde color un instante + aplastamiento del rótulo | media | «ink» + «wax» + `thud` + `shake(0.15)` + `grade_pulse()` | S | I | ✅ |
 | Animación de lacre partiéndose en dos mitades al abrir | alta | 2 sprites + `AnimationPlayer` (requiere arte) | L | O | 🔸 |
 
 ![](gif_02_mision_exito.gif) ![](08_fracaso_tinta.jpg)
@@ -136,6 +145,7 @@ Leyenda. **Estado**: ✅ implementado en el prototipo · 🔸 propuesto.
 | **La Iglesia**: campana grave y velo morado | media | `toll` + `vignette_flash` | S | I | ✅ |
 | **La Nobleza**: portazo y velo azul oscuro | media | `thud` + `vignette_flash` | S | I | ✅ |
 | Destello carmesí en la barra que ha cruzado | baja | `flash()` | S | I | ✅ |
+| El mundo se apaga: desaturación y sepia del mapa que se recuperan en 1,6 s + onda de tinta desde el centro | media | `grade_pulse()` + `ripple()` (postprocesado) | S | R | ✅ |
 | La monja entra deslizándose y el bocadillo sube con un fundido + roce de papel | baja | `fade_in()` con offset; sin desplazamiento si se reduce el movimiento | S | I | ✅ |
 | Sello del remitente (corona, cruz, escudo) en el bocadillo | baja | `TextureRect` + `pop()`; requiere arte | M | R | 🔸 |
 
@@ -145,9 +155,11 @@ Leyenda. **Estado**: ✅ implementado en el prototipo · 🔸 propuesto.
 
 | Efecto | Intensidad | Técnica | Coste | Prioridad | Estado |
 |---|---|---|---|---|---|
-| Viñeta rojiza en los bordes del mapa que crece a partir de 60 y late lentamente (sin latido si se reduce el movimiento). Va **bajo la interfaz** | proporcional | `ColorRect` + `vignette.gdshader` (WebGL2) | S | I | ✅ |
+| Viñeta rojiza en los bordes del mapa que crece a partir de 60 y late lentamente (sin latido si se reduce el movimiento). Va **bajo la interfaz** | proporcional | `map_post.gdshader` (uniforms `tint`, `intensity`, `pulse`) | S | I | ✅ |
+| Madrid se apaga: el mapa pierde color y vira a sepia en proporción al Descontento | proporcional | `set_base_grade()` (postprocesado) | S | R | ✅ |
+| Grano de papel muy sutil y animado (estático si se reduce el movimiento) | muy baja | `map_post.gdshader` | S | O | ✅ |
 | Se mantiene el audio `furiosos.mp3` que ya existe | — | — | — | — | (existente) |
-| Humo o antorchas en los barrios con Descontento > 85 | media | `CPUParticles2D` local | M | O | 🔸 |
+| Humo o antorchas en los barrios con Descontento > 85 | media | `GPUParticles2D` local | M | O | 🔸 |
 
 ![](12_descontento_alto.jpg)
 
@@ -175,8 +187,8 @@ Leyenda. **Estado**: ✅ implementado en el prototipo · 🔸 propuesto.
 
 | Efecto | Intensidad | Técnica | Coste | Prioridad | Estado |
 |---|---|---|---|---|---|
-| Fundido desde sepia oscuro al cambiar de escena (en lugar del corte seco) | baja | `ColorRect` en una capa propia + `Tween` | S | I | ✅ |
-| **Derrota**: campana grave y ceniza que cae detrás del soneto | media | `CPUParticles2D` ambiente «ash», insertado detrás del texto | S | R | ✅ |
+| Al cambiar de escena, una mancha de tinta que se retira desde el centro con bordes irregulares y quemados (en lugar del corte seco) | media | `ink_transition.gdshader` (ruido fbm) + `Tween` | S | I | ✅ |
+| **Derrota**: campana grave y ceniza que cae detrás del soneto | media | `GPUParticles2D` ambiente «ash», insertado detrás del texto | S | R | ✅ |
 | **Victoria**: campanilla y motas doradas que flotan detrás del soneto | media | ambiente «motes» | S | R | ✅ |
 | Fundido de salida (antes del cambio) | baja | requiere que `GameManager._change_scene_to_file` espere a un `await Juice.fade_out()` | S | R | 🔸 (toca GameManager) |
 
@@ -207,8 +219,10 @@ Leyenda. **Estado**: ✅ implementado en el prototipo · 🔸 propuesto.
 | `scripts/fx/juice.gd` | Autoload `Juice`: API, ajustes, capas propias (FX y overlay), hover de botones, transiciones y ambientes |
 | `scripts/fx/main_juice.gd` | Feedback de la partida; lo crea `Juice.attach_main()` |
 | `scripts/fx/juice_sfx.gd` | `JuiceSfx`: síntesis de sonidos (o el fichero de `assets/vfx/sfx/` si existe) |
-| `scripts/fx/juice_particles.gd` | `JuiceParticles`: ráfagas y ambientes `CPUParticles2D` con texturas procedurales |
-| `scripts/fx/vignette.gdshader` | Viñeta de bordes (WebGL2) |
+| `scripts/fx/juice_particles.gd` | `JuiceParticles`: ráfagas y ambientes `GPUParticles2D` con texturas procedurales |
+| `scripts/fx/map_post.gdshader` | Postprocesado del mundo: ondas de tinta, desaturación/sepia, viñeta de Descontento y grano |
+| `scripts/fx/ink_transition.gdshader` | Transición de mancha de tinta entre escenas |
+| `scripts/fx/vignette.gdshader` | Velo de bordes de los umbrales (capa superior) |
 | `scripts/fx/dev/juice_showcase*.{tscn,gd}` | Demo automática para revisar y capturar (no forma parte del juego) |
 | `docs/.gdignore` | Evita que Godot importe y exporte las capturas |
 | `assets/vfx/CREDITS.md` | Recursos y licencias |
@@ -228,6 +242,9 @@ Juice.burst(Juice.screen_center(node), &"gold")   # dust, wax, ink, gold, coins,
 Juice.float_text(pos, "+5", Color.GOLD)
 Juice.sfx(&"bell", -6.0)               # seal, crack, paper, coin, click, thud, chime, bell, toll
 Juice.vignette_flash(Color(.45, .02, .02))
+Juice.ripple(screen_pos, 1.0)          # onda de tinta en el mapa (postprocesado)
+Juice.grade_pulse(0.6, 0.4, 1.2)       # el mapa pierde color y se recupera
+Juice.set_base_grade(desat, sepia)     # gradación de fondo (Descontento)
 Juice.reduce_motion = true             # o set_reduce_motion(); F10 lo alterna
 Juice.enabled = false                  # apaga todo el juice
 ```
@@ -273,6 +290,8 @@ son defensivas). Conviene mantener los nombres o avisar.
 - La línea de `main.gd` va justo después de
   `properties_button.pressed.connect(...)`, que no cambia en esos arreglos, así
   que la fusión es limpia.
+- Los sonidos salen por el bus «Efectos» que crea `ui-redesign` en
+  `default_bus_layout.tres`; si no existe, por Master.
 - El clamp nuevo de `Player` (0..100) no afecta: los deltas se calculan con el
   valor emitido.
 
@@ -314,4 +333,6 @@ Por orden de impacto/coste:
    se parte en dos: necesitan arte.
 6. Sustituir la síntesis por grabaciones CC0 (Kenney RPG Audio) si se prefiere
    un sonido más orgánico: basta con dejar los ficheros en `assets/vfx/sfx/`.
-7. Bus de audio «SFX» propio para separar el volumen del juice del de la música.
+7. *Glow* real: se descartó el HDR 2D global porque cambiaba el color de la
+   interfaz. Si se quiere, la alternativa es un `SubViewport` solo para el
+   mundo con HDR y glow, y la interfaz fuera de él.

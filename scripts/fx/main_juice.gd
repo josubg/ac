@@ -110,7 +110,9 @@ func _on_mission_added(mission: Mission) -> void:
 	_button_pos[mission] = Juice.screen_center(button)
 	Juice.drop_in(button)
 	_after(0.18, func():
-		Juice.burst(_button_pos.get(mission, Vector2.ZERO), &"dust")
+		var p: Vector2 = _button_pos.get(mission, Vector2.ZERO)
+		Juice.burst(p, &"dust")
+		Juice.ripple(p, 0.6, 0.6)
 		Juice.sfx(&"seal", -3.0))
 
 
@@ -130,6 +132,7 @@ func _on_mission_updated(mission: Mission) -> void:
 			Juice.pulse_loop(button, false)
 			Juice.squash(button)
 			Juice.burst(pos, &"stamp")
+			Juice.ripple(pos, 1.0, 0.7)
 			Juice.sfx(&"seal", 0.0, 0.9)
 		Mission.MISSION_STATUS.succeded, Mission.MISSION_STATUS.failed:
 			# Resuelta: brilla de vez en cuando para invitar a abrirla.
@@ -147,8 +150,10 @@ func _on_mission_closed(mission: Mission) -> void:
 		# Caducada: el lacre se resquebraja.
 		Juice.burst(pos, &"wax")
 		Juice.burst(pos, &"dust", 0.6)
+		Juice.ripple(pos, 0.8, 0.6)
 		Juice.sfx(&"crack", -1.0)
 		Juice.shake(0.18)
+		Juice.grade_pulse(0.25, 0.1, 0.8)
 
 
 func _start_glint(mission: Mission) -> void:
@@ -223,6 +228,10 @@ func _on_strike(level: int, stat: StringName) -> void:
 	var bar: ProgressBar = _bars.get(stat)
 	if bar and is_instance_valid(bar):
 		Juice.flash(bar, Color(1.8, 0.4, 0.35), 0.9)
+	# El mundo pierde el color un instante y una onda recorre el mapa.
+	var center: Vector2 = get_viewport().get_visible_rect().size * 0.5
+	Juice.ripple(center, 1.5 + 0.5 * level, 1.1)
+	Juice.grade_pulse(0.45 + 0.15 * level, 0.35, 1.6)
 	match stat:
 		&"rey":    # el Rey se enfada: temblor sutil + golpe
 			Juice.shake(0.25 + 0.15 * level)
@@ -241,14 +250,23 @@ func _on_strike(level: int, stat: StringName) -> void:
 # --- Descontento ---------------------------------------------------------------
 
 func _build_vignette() -> void:
-	# Bajo la interfaz (en el lienzo del mapa) para no oscurecer textos ni barras.
-	_vignette = Juice.make_vignette_rect()
-	_vignette.name = "DescontentoVignette"
+	# Postprocesado del mundo: bajo la interfaz (en el lienzo del mapa) para no
+	# tocar textos ni barras. Incluye la viñeta del Descontento, las ondas de
+	# tinta, la gradación de color y el grano.
+	_vignette = ColorRect.new()
+	_vignette.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var mat := ShaderMaterial.new()
+	mat.shader = load("res://scripts/fx/map_post.gdshader")
+	_vignette.material = mat
+	_vignette.name = "JuicePost"
 	var size: Vector2 = get_viewport().get_visible_rect().size
 	_vignette.position = Vector2(-40, -40)
 	_vignette.size = size + Vector2(80, 80)
 	_vignette.z_index = 50
 	main.add_child.call_deferred(_vignette)
+	var vp_size: Vector2 = get_viewport().get_visible_rect().size
+	mat.set_shader_parameter(&"aspect", Vector2(vp_size.x / vp_size.y, 1.0))
+	Juice.register_post(mat)
 	_update_vignette(Player.descontento, true)
 	Juice.settings_changed.connect(_on_settings_changed)
 
@@ -265,6 +283,8 @@ func _update_vignette(value: float, instant: bool = false) -> void:
 		target = clampf((value - DESCONTENTO_VIGNETTE_FROM) / (100.0 - DESCONTENTO_VIGNETTE_FROM), 0.0, 1.0)
 	var mat := _vignette.material as ShaderMaterial
 	mat.set_shader_parameter(&"pulse", 0.0 if Juice.reduce_motion else clampf(target * 1.5, 0.0, 1.0))
+	# Con Descontento alto Madrid se apaga: menos color y algo de sepia.
+	Juice.set_base_grade(target * 0.35, target * 0.25)
 	if instant:
 		_vignette_value = target
 		mat.set_shader_parameter(&"intensity", target)
@@ -317,6 +337,7 @@ func _check_buildings() -> void:
 					Juice.squash(node)
 					Juice.burst(pos, &"gold")
 					Juice.burst(pos, &"stamp", 0.7)
+					Juice.ripple(pos, 1.0, 0.7)
 				Juice.sfx(&"seal")
 				Juice.sfx(&"chime", -8.0, 1.25))
 			var window: Control = main.get(&"building_window")
@@ -391,6 +412,7 @@ func _resolution_feedback(window: Control) -> void:
 			Juice.burst(pos, &"wax", 0.6)
 			Juice.sfx(&"thud", -4.0)
 			Juice.shake(0.15)
+			Juice.grade_pulse(0.35, 0.2, 1.0)
 			if outcome:
 				Juice.squash(outcome))
 
