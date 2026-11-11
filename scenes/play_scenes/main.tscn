@@ -129,6 +129,8 @@ stretch_mode = 5
 self_modulate = Color(0.79, 0.65, 0.35, 1)
 
 [node name="RiquezaLabel" type="Label" parent="CanvasLayerMission/VBoxContainer/HBoxContainer/PanelContainer2/HBoxContainer" unique_id=1727946555]
+mouse_filter = 0
+tooltip_text = "UI_HUD_TIP_WEALTH"
 layout_mode = 2
 theme_type_variation = &"CifraCuero"
 text = "0"
@@ -229,6 +231,7 @@ text = "FACTION_DISCONTENT"
 vertical_alignment = 1
 
 [node name="DescontentoBar" type="ProgressBar" parent="CanvasLayerMission/VBoxContainer/HBoxContainer/PanelContainer/HBoxContainer" unique_id=1073088674]
+tooltip_text = "UI_HUD_TIP_DISCONTENT"
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -342,6 +345,7 @@ text = "FACTION_KING"
 vertical_alignment = 1
 
 [node name="ReyBar" type="ProgressBar" parent="CanvasLayerMission/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/influence_panel/VBoxContainer/HBoxContainer" unique_id=761219526]
+tooltip_text = "UI_HUD_TIP_KING"
 custom_minimum_size = Vector2(0, 26)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -372,6 +376,7 @@ text = "FACTION_NOBILITY"
 vertical_alignment = 1
 
 [node name="NoblezaBar" type="ProgressBar" parent="CanvasLayerMission/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/influence_panel/VBoxContainer/HBoxContainer2" unique_id=1383041120]
+tooltip_text = "UI_HUD_TIP_NOBILITY"
 custom_minimum_size = Vector2(0, 26)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -402,6 +407,7 @@ text = "FACTION_CLERGY"
 vertical_alignment = 1
 
 [node name="CleroBar" type="ProgressBar" parent="CanvasLayerMission/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/influence_panel/VBoxContainer/HBoxContainer3" unique_id=1367975720]
+tooltip_text = "UI_HUD_TIP_CLERGY"
 custom_minimum_size = Vector2(0, 26)
 layout_mode = 2
 size_flags_horizontal = 3

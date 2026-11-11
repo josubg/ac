@@ -23,6 +23,9 @@ extends Control
 	$OpcionesCanvas/PanelContainer/VBoxContainer/Ajustes/VolumenEfectos: "Efectos",
 }
 @onready var pantalla_completa: CheckBox = $OpcionesCanvas/PanelContainer/VBoxContainer/Ajustes/PantallaCompleta
+@onready var reducir_movimiento: CheckBox = $OpcionesCanvas/PanelContainer/VBoxContainer/Ajustes/ReducirMovimiento
+@onready var boton_nueva_partida: Button = $CanvasLayer2/Control/MarginContainer/VBoxContainer/NewGameButton
+@onready var boton_opciones: Button = $CanvasLayer2/Control/MarginContainer/VBoxContainer/OptionsButton
 
 # Contrato compartido con la localización (ver resources/i18n): user://settings.cfg
 
@@ -34,6 +37,8 @@ func _ready() -> void:
 	for slider in deslizadores:
 		slider.value_changed.connect(func(v: float): Ajustes.set_volume(deslizadores[slider], v))
 	pantalla_completa.toggled.connect(Ajustes.set_fullscreen)
+	reducir_movimiento.toggled.connect(Juice.set_reduce_motion)
+	boton_nueva_partida.grab_focus.call_deferred()
 
 func _process(delta: float) -> void:
 	if not mouse_parallax_enabled:
@@ -88,7 +93,7 @@ func _unhandled_input(event):
 	if event is InputEventKey:
 		if event.pressed and event.keycode == KEY_ESCAPE:
 			if opciones.visible:
-				opciones.visible = false
+				_on_options_close_pressed()
 			elif $CreditosCanvas.visible:
 				$CreditosCanvas.visible = false
 			elif $TutorialCanvas.visible:
@@ -115,11 +120,16 @@ func _on_options_button_pressed() -> void:
 		slider.set_value_no_signal(Ajustes.get_volume(deslizadores[slider]))
 	pantalla_completa.set_pressed_no_signal(
 		DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN)
+	reducir_movimiento.set_pressed_no_signal(Juice.reduce_motion)
 	opciones.visible = true
+	for boton in botones_idioma:
+		if boton.button_pressed:
+			boton.grab_focus()
 
 
 func _on_options_close_pressed() -> void:
 	opciones.visible = false
+	boton_opciones.grab_focus()
 
 
 func _on_idioma_pressed(locale: String) -> void:

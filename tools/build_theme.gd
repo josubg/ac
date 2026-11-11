@@ -253,6 +253,12 @@ func _build() -> void:
 	t.set_stylebox("hover_pressed", "Button", lacre_p)
 	t.set_stylebox("disabled", "Button", lacre_d)
 	t.set_stylebox("focus", "Button", foco)
+	# Foco sobre pergamino: el oro no contrasta, se usa un filete de lacre
+	var foco_carta := _flat(Color(0, 0, 0, 0), LACRE, 2, 6)
+	foco_carta.expand_margin_left = 4
+	foco_carta.expand_margin_right = 4
+	foco_carta.expand_margin_top = 4
+	foco_carta.expand_margin_bottom = 4
 	t.set_font("font", "Button", fell_versalitas)
 	t.set_font_size("font_size", "Button", 26)
 	t.set_color("font_color", "Button", PERGAMINO_CLARO)
@@ -260,11 +266,11 @@ func _build() -> void:
 	t.set_color("font_pressed_color", "Button", PERGAMINO)
 	t.set_color("font_hover_pressed_color", "Button", PERGAMINO)
 	t.set_color("font_focus_color", "Button", PERGAMINO_CLARO)
-	t.set_color("font_disabled_color", "Button", Color(PERGAMINO_CLARO, 0.7))
+	t.set_color("font_disabled_color", "Button", Color(TINTA, 0.75))
 	t.set_color("icon_normal_color", "Button", PERGAMINO_CLARO)
 	t.set_color("icon_hover_color", "Button", Color.WHITE)
 	t.set_color("icon_pressed_color", "Button", PERGAMINO)
-	t.set_color("icon_disabled_color", "Button", Color(PERGAMINO_CLARO, 0.6))
+	t.set_color("icon_disabled_color", "Button", Color(TINTA, 0.6))
 	t.set_constant("h_separation", "Button", 10)
 	t.set_constant("icon_max_width", "Button", 26)
 
@@ -285,6 +291,7 @@ func _build() -> void:
 	t.set_color("font_hover_pressed_color", "BotonTinta", LACRE)
 	t.set_color("font_focus_color", "BotonTinta", TINTA)
 	t.set_color("font_disabled_color", "BotonTinta", Color(TINTA, 0.4))
+	t.set_stylebox("focus", "BotonTinta", foco_carta)
 
 	# Opción conmutable (selector de idioma): tinta en reposo, lacre al elegirla
 	_variation("BotonOpcion", "Button")
@@ -298,6 +305,9 @@ func _build() -> void:
 	t.set_color("font_pressed_color", "BotonOpcion", PERGAMINO_CLARO)
 	t.set_color("font_hover_pressed_color", "BotonOpcion", Color.WHITE)
 	t.set_color("font_focus_color", "BotonOpcion", TINTA)
+	t.set_stylebox("focus", "BotonOpcion", foco_carta)
+	t.set_stylebox("disabled", "BotonOpcion", _flat(Color(0, 0, 0, 0), Color(TINTA, 0.25), 1, 4, Vector4(16, 4, 16, 6)))
+	t.set_color("font_disabled_color", "BotonOpcion", Color(TINTA, 0.4))
 
 	# Sobre cuero: filete de oro
 	_variation("BotonCuero", "Button")
@@ -314,6 +324,9 @@ func _build() -> void:
 	t.set_color("icon_normal_color", "BotonCuero", ORO_CLARO)
 	t.set_color("icon_hover_color", "BotonCuero", PERGAMINO_CLARO)
 	t.set_constant("icon_max_width", "BotonCuero", 24)
+	t.set_stylebox("disabled", "BotonCuero", cuero_n)
+	t.set_color("font_disabled_color", "BotonCuero", Color(PERGAMINO, 0.45))
+	t.set_color("icon_disabled_color", "BotonCuero", Color(ORO_CLARO, 0.4))
 
 	# Menú principal: rótulos sobre el plano oscurecido
 	_variation("BotonMenu", "Button")
@@ -327,6 +340,8 @@ func _build() -> void:
 	t.set_stylebox("hover_pressed", "BotonMenu", lacre_p)
 	t.set_font_size("font_size", "BotonMenu", 40)
 	t.set_color("font_color", "BotonMenu", PERGAMINO)
+	t.set_stylebox("disabled", "BotonMenu", menu_n)
+	t.set_color("font_disabled_color", "BotonMenu", Color(PERGAMINO, 0.4))
 
 	# --- Barras de influencia
 	var barra_fondo := _flat(Color("140c07"), Color(ORO, 0.7), 1, 2)
@@ -358,15 +373,16 @@ func _build() -> void:
 	t.set_icon("grabber", "HSlider", load(TEX + "tirador_lacre.png"))
 	t.set_icon("grabber_highlight", "HSlider", load(TEX + "tirador_lacre_hover.png"))
 	t.set_constant("center_grabber", "HSlider", 0)
-	t.set_stylebox("focus", "HSlider", StyleBoxEmpty.new())
+	t.set_stylebox("focus", "HSlider", foco_carta)
 
 	# --- Casillas
 	t.set_icon("checked", "CheckBox", load(TEX + "casilla_marcada.png"))
 	t.set_icon("unchecked", "CheckBox", load(TEX + "casilla.png"))
 	t.set_icon("checked_disabled", "CheckBox", load(TEX + "casilla_marcada.png"))
 	t.set_icon("unchecked_disabled", "CheckBox", load(TEX + "casilla.png"))
-	for st in ["normal", "hover", "pressed", "hover_pressed", "focus", "disabled"]:
+	for st in ["normal", "hover", "pressed", "hover_pressed", "disabled"]:
 		t.set_stylebox(st, "CheckBox", StyleBoxEmpty.new())
+	t.set_stylebox("focus", "CheckBox", foco_carta)
 	t.set_constant("icon_max_width", "CheckBox", 0)
 	t.set_constant("h_separation", "CheckBox", 12)
 	t.set_font("font", "CheckBox", garamond)

@@ -82,6 +82,8 @@ func _run() -> void:
 	if _want("main"):
 		gm.start_game()
 		await process_frame
+		if lang != "":
+			TranslationServer.set_locale(lang)
 		await process_frame
 		var main = current_scene
 		await _wait(1.0)
@@ -101,6 +103,12 @@ func _run() -> void:
 		main.get_node("CanvasLayerMission/MissionWindow").show_mission(m0)
 		await _wait(0.4)
 		await _shot("06_mision")
+		# Peor caso de texto: título y cuerpo más largos de rosetta
+		var mw = main.get_node("CanvasLayerMission/MissionWindow")
+		mw.title_label.text = "MISSION_031_TITLE"
+		mw.description_label.text = "MISSION_034_BODY"
+		await _wait(0.2)
+		await _shot("06b_mision_larga")
 		main.get_node("CanvasLayerMission/MissionWindow").hide()
 
 		m0.status = m0.MISSION_STATUS.succeded
@@ -112,6 +120,10 @@ func _run() -> void:
 		m0.status = m0.MISSION_STATUS.failed
 		res.show_mission(m0)
 		await _shot("08_resolucion_fracaso")
+		res.description_label.text = "MISSION_034_BODY"
+		res.title_label.text = "MISSION_031_TITLE"
+		await _wait(0.2)
+		await _shot("08b_resolucion_larga")
 		res.hide()
 
 		var bw = main.get_node("CanvasLayerMission/BuildingWindow")

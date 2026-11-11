@@ -6,11 +6,27 @@
 [ext_resource type="Texture2D" path="res://assets/ui/icons/fleur-de-lys.svg" id="6_flor"]
 [ext_resource type="Texture2D" path="res://assets/ui/icons/quill-ink.svg" id="7_pluma"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_texto"]
+content_margin_right = 18.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_titulo"]
+content_margin_left = 110.0
+content_margin_right = 110.0
+
 [node name="Panel" type="Panel" unique_id=1198513917]
 script = ExtResource("1_4fb1n")
 
+[node name="Velo" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = -3000.0
+offset_top = -3000.0
+offset_right = 3000.0
+offset_bottom = 3000.0
+mouse_filter = 2
+color = Color(0.08, 0.05, 0.03, 0.42)
+
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=632641278]
-custom_minimum_size = Vector2(900, 0)
+custom_minimum_size = Vector2(900, 740)
 layout_mode = 0
 offset_right = 900.0
 offset_bottom = 740.0
@@ -30,6 +46,7 @@ theme_override_constants/separation = 10
 [node name="TitleLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=984847803]
 layout_mode = 2
 theme_type_variation = &"TituloCarta"
+theme_override_styles/normal = SubResource("StyleBoxEmpty_titulo")
 text = "MISSION_001_TITLE"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -58,24 +75,32 @@ custom_minimum_size = Vector2(160, 0)
 layout_mode = 2
 size_flags_vertical = 4
 
-[node name="DescriptionLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=183806906]
+[node name="Texto" type="ScrollContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="DescriptionLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/Texto" unique_id=183806906]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxEmpty_texto")
 text = "MISSION_001_BODY"
 autowrap_mode = 3
 
 [node name="Indicacion" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 10
 theme_type_variation = &"NotaCarta"
 text = "UI_MISSION_DRAG_HINT"
 horizontal_alignment = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1071925167]
 layout_mode = 2
+theme_override_constants/margin_left = 90
 theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 90
 
 [node name="AgentRoast" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer" unique_id=2032614169]
-custom_minimum_size = Vector2(0, 170)
+custom_minimum_size = Vector2(0, 140)
 layout_mode = 2
 size_flags_vertical = 0
 theme_override_constants/separation = 18

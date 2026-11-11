@@ -12,6 +12,15 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_1q5kb")
 
+[node name="Velo" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = -3000.0
+offset_top = -3000.0
+offset_right = 3000.0
+offset_bottom = 3000.0
+mouse_filter = 2
+color = Color(0.08, 0.05, 0.03, 0.42)
+
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=1133400675]
 layout_mode = 1
 anchors_preset = 8

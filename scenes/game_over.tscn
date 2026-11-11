@@ -153,3 +153,22 @@ libraries = {
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_tbwuq")
 bus = &"Musica"
+
+[node name="Pista" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -760.0
+offset_top = -84.0
+offset_right = -56.0
+offset_bottom = -44.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_type_variation = &"NotaCuero"
+theme_override_font_sizes/font_size = 22
+text = "UI_END_SKIP_HINT"
+horizontal_alignment = 2
+

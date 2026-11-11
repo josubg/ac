@@ -1,7 +1,7 @@
 class_name MissionWindow extends Control 
 
 @onready var title_label: Label = $PanelContainer/MarginContainer/VBoxContainer/TitleLabel
-@onready var description_label: Label = $PanelContainer/MarginContainer/VBoxContainer/DescriptionLabel
+@onready var description_label: Label = $PanelContainer/MarginContainer/VBoxContainer/Texto/DescriptionLabel
 @onready var agent_roast: HBoxContainer = $PanelContainer/MarginContainer/VBoxContainer/MarginContainer/AgentRoast
 @onready var audio_stream_player: AudioStreamPlayer = $AudioStreamPlayer
 @onready var send_button: Button = $PanelContainer/MarginContainer/VBoxContainer/Send

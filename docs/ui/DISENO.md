@@ -54,3 +54,11 @@ python3 tools/ui_textures.py
 ```
 
 Capturas antes/después en `docs/ui/antes` y `docs/ui/despues`.
+
+## Reglas añadidas tras la auditoría externa
+- Toda ventana modal lleva un `Velo` (ColorRect nogal al 42 %, `mouse_filter = IGNORE`) como primer hijo; Juice anima solo el `PanelContainer`.
+- Los textos de longitud variable (cuerpo de misión) van en un `ScrollContainer` dentro de una carta de alto fijo; la carta nunca crece por encima del HUD.
+- El botón «Cerrar» posicionado a mano usa `grow_horizontal = 0` (crece hacia la izquierda) y los títulos de carta reservan su hueco con margen lateral.
+- Foco de teclado: oro sobre cuero (`Button`), filete de lacre sobre pergamino (`BotonTinta`, `BotonOpcion`, `HSlider`, `CheckBox`). El menú enfoca «Nueva partida» al entrar y Opciones su idioma activo.
+- Texto desactivado sobre lacre: tinta al 75 % (antes pergamino al 70 %, contraste ≈2:1).
+- `ui_capture.gd -- --lang=en` genera las capturas en inglés en `docs/ui/ingles/`; incluye el peor caso de texto (`06b`, `08b`).
