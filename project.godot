@@ -27,6 +27,7 @@ MissionManager="*res://scripts/mission_manager.gd"
 Player="*res://scripts/player.gd"
 TimeManager="*res://scripts/time_manager.gd"
 BuildingManager="*uid://so6s2pbny1ci"
+Juice="*res://scripts/fx/juice.gd"
 
 [display]
 
