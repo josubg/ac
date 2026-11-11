@@ -1,8 +1,9 @@
 [gd_scene format=3 uid="uid://co0n44fpalaa3"]
 
 [ext_resource type="Script" uid="uid://bvevcxi33qmy4" path="res://scenes/logos_intro.gd" id="1_38les"]
-[ext_resource type="Texture2D" uid="uid://b83ccg136y4qp" path="res://resources/LogoMadrid.svg" id="1_d8l21"]
+[ext_resource type="Texture2D" path="res://assets/ui/logos/LogoMadrid_negativo.svg" id="1_d8l21"]
 [ext_resource type="Texture2D" uid="uid://deluds7e5l7hg" path="res://resources/Mapa.png" id="2_7rqhc"]
+[ext_resource type="Texture2D" path="res://assets/ui/textures/vineta.png" id="3_vineta"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_38les"]
 load_path = "res://.godot/imported/LogoNosolorol.png-a66bb002ea1ff31539b5aec0b4a96964.ctex"
@@ -60,10 +61,17 @@ _data = {
 script = ExtResource("1_38les")
 
 [node name="Background" type="Sprite2D" parent="." unique_id=1497510048]
-modulate = Color(0.5370987, 0.5370987, 0.5370987, 0.36862746)
+modulate = Color(0.32, 0.24, 0.18, 0.55)
 position = Vector2(957, 540)
 scale = Vector2(1.25, 1.25)
 texture = ExtResource("2_7rqhc")
+
+[node name="Vineta" type="TextureRect" parent="."]
+offset_right = 1920.0
+offset_bottom = 1080.0
+mouse_filter = 2
+texture = ExtResource("3_vineta")
+expand_mode = 1
 
 [node name="ComunidadLogo" type="TextureRect" parent="." unique_id=1181338522]
 anchors_preset = 8
@@ -71,15 +79,17 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 701.5
-offset_top = 204.5
-offset_right = 1221.5
-offset_bottom = 880.5
+offset_left = 840.0
+offset_top = 384.0
+offset_right = 1080.0
+offset_bottom = 696.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = ExtResource("1_d8l21")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=468348904]
 modulate = Color(1, 1, 1, 0)
