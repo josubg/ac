@@ -13,9 +13,16 @@ extends Control
 @onready var parallax : Parallax2D = $CanvasLayer/Parallax2D
 @onready var opciones: CanvasLayer = $OpcionesCanvas
 @onready var botones_idioma: Array[Button] = [
-	$OpcionesCanvas/PanelContainer/VBoxContainer/Idioma/Espanol,
-	$OpcionesCanvas/PanelContainer/VBoxContainer/Idioma/English,
+	$OpcionesCanvas/PanelContainer/VBoxContainer/Ajustes/Idioma/Espanol,
+	$OpcionesCanvas/PanelContainer/VBoxContainer/Ajustes/Idioma/English,
 ]
+## Deslizador -> bus de audio
+@onready var deslizadores: Dictionary[HSlider, String] = {
+	$OpcionesCanvas/PanelContainer/VBoxContainer/Ajustes/VolumenGeneral: "Master",
+	$OpcionesCanvas/PanelContainer/VBoxContainer/Ajustes/VolumenMusica: "Musica",
+	$OpcionesCanvas/PanelContainer/VBoxContainer/Ajustes/VolumenEfectos: "Efectos",
+}
+@onready var pantalla_completa: CheckBox = $OpcionesCanvas/PanelContainer/VBoxContainer/Ajustes/PantallaCompleta
 
 # Contrato compartido con la localización (ver resources/i18n): user://settings.cfg
 const SETTINGS_PATH := "user://settings.cfg"
@@ -27,6 +34,9 @@ func _ready() -> void:
 	for boton in botones_idioma:
 		boton.pressed.connect(_on_idioma_pressed.bind(String(boton.get_meta("locale"))))
 	_marcar_idioma(TranslationServer.get_locale().substr(0, 2))
+	for slider in deslizadores:
+		slider.value_changed.connect(func(v: float): Ajustes.set_volume(deslizadores[slider], v))
+	pantalla_completa.toggled.connect(Ajustes.set_fullscreen)
 
 func _process(delta: float) -> void:
 	if not mouse_parallax_enabled:
@@ -104,6 +114,10 @@ func _on_button_pressed_tutorial() -> void:
 
 func _on_options_button_pressed() -> void:
 	_marcar_idioma(TranslationServer.get_locale().substr(0, 2))
+	for slider in deslizadores:
+		slider.set_value_no_signal(Ajustes.get_volume(deslizadores[slider]))
+	pantalla_completa.set_pressed_no_signal(
+		DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN)
 	opciones.visible = true
 
 

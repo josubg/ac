@@ -151,3 +151,4 @@ libraries = {
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_hr20t")
+bus = &"Musica"

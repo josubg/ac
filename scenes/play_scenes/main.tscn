@@ -436,7 +436,9 @@ visible = false
 stream = ExtResource("14_2j01o")
 volume_db = -5.0
 autoplay = true
+bus = &"Musica"
 
 [node name="AudioDescontento" type="AudioStreamPlayer" parent="." unique_id=244490919]
 stream = ExtResource("15_eq487")
 volume_db = -16.0
+bus = &"Efectos"

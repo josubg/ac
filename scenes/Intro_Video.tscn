@@ -109,5 +109,6 @@ libraries/ = SubResource("AnimationLibrary_scbl5")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1045579135]
 stream = ExtResource("3_86yvy")
+bus = &"Musica"
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

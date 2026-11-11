@@ -114,6 +114,7 @@ text = "Cerrar"
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=936578291]
 stream = ExtResource("4_yrtqx")
 volume_db = -3.817
+bus = &"Efectos"
 
 [connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/Send" to="." method="_on_send_pressed"]
 [connection signal="pressed" from="CloseMissionButton" to="." method="_on_close_mission_button_pressed"]
