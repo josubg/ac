@@ -277,26 +277,26 @@ theme_override_constants/separation = 14
 
 [node name="noble" parent="CanvasLayerMission/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/MarginContainer/agent_panel" unique_id=1829217481 instance=ExtResource("8_uynio")]
 layout_mode = 2
-full_name = "Paca"
+full_name = "AGENT_PACA_NAME"
 faction = "Noble"
 
 [node name="noble2" parent="CanvasLayerMission/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/MarginContainer/agent_panel" unique_id=745214462 instance=ExtResource("8_uynio")]
 layout_mode = 2
-full_name = "Juanito"
+full_name = "AGENT_JUANITO_NAME"
 assigned_texture = ExtResource("6_k70x2")
 available_texture = ExtResource("5_nck21")
 faction = "Malechor"
 
 [node name="noble3" parent="CanvasLayerMission/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/MarginContainer/agent_panel" unique_id=550789337 instance=ExtResource("8_uynio")]
 layout_mode = 2
-full_name = "Amparo"
+full_name = "AGENT_AMPARO_NAME"
 assigned_texture = ExtResource("5_5e6os")
 available_texture = ExtResource("6_uynio")
 faction = "Religiosa"
 
 [node name="noble4" parent="CanvasLayerMission/VBoxContainer/PanelContainer3/VBoxContainer/HBoxContainer/MarginContainer/agent_panel" unique_id=1171050576 instance=ExtResource("8_uynio")]
 layout_mode = 2
-full_name = "Sor María"
+full_name = "AGENT_SOR_MARIA_NAME"
 assigned_texture = ExtResource("10_iml5s")
 available_texture = ExtResource("9_jeb2x")
 faction = "Religiosa"

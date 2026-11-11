@@ -29,8 +29,6 @@ UI_HUD_CURRENCY,Reales,Reales
 UI_HUD_INCOME_ZERO,(+0/día),(+0/day)
 UI_HUD_PROPERTIES,Mis Propiedades,My Properties
 FACTION_DISCONTENT,Descontento,Discontent
-UI_HUD_AGENTS,Agentes de la Corona,Agents of the Crown
-UI_HUD_GAME_TITLE,Cuatro Cortes,Cuatro Cortes
 AGENT_PACA_NAME,Paca,Paca
 AGENT_JUANITO_NAME,Juanito,Juanito
 AGENT_AMPARO_NAME,Amparo,Amparo
@@ -257,3 +255,10 @@ BUILDING_TABERNA_FUNDADORES_DESC,"La Taberna de los Fundadores, situada en la an
 UI_MONJA_CONTINUE,Pulsad cualquier tecla o haced clic para continuar,Press any key or click to continue
 UI_PROPERTIES_SUMMARY,"Cada propiedad os rinde reales y favor todos los días. Si la donáis, pasa a su facción a cambio de un favor inmediato.","Each property yields you reales and favour every day. If you donate it, it passes to its faction in exchange for an immediate favour."
 UI_MISSION_DRAG_HINT,Arrastrad aquí los retratos de los agentes que enviaréis,Drag here the portraits of the agents you will send
+UI_MENU_OPTIONS,Opciones,Options
+UI_OPTIONS_TITLE,Opciones,Options
+UI_OPTIONS_LANGUAGE,Idioma,Language
+UI_OPTIONS_VOLUME_MASTER,Volumen general,Master volume
+UI_OPTIONS_VOLUME_MUSIC,Música,Music
+UI_OPTIONS_VOLUME_SFX,Efectos,Sound effects
+UI_OPTIONS_FULLSCREEN,Pantalla completa,Fullscreen

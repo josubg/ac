@@ -25,9 +25,6 @@ extends Control
 @onready var pantalla_completa: CheckBox = $OpcionesCanvas/PanelContainer/VBoxContainer/Ajustes/PantallaCompleta
 
 # Contrato compartido con la localización (ver resources/i18n): user://settings.cfg
-const SETTINGS_PATH := "user://settings.cfg"
-const SETTINGS_SECTION := "settings"
-const LOCALE_KEY := "locale"
 
 
 func _ready() -> void:
@@ -126,13 +123,7 @@ func _on_options_close_pressed() -> void:
 
 
 func _on_idioma_pressed(locale: String) -> void:
-	TranslationServer.set_locale(locale)
-	var cfg := ConfigFile.new()
-	cfg.load(SETTINGS_PATH) # si no existe, se crea al guardar
-	cfg.set_value(SETTINGS_SECTION, LOCALE_KEY, locale)
-	var err := cfg.save(SETTINGS_PATH)
-	if err != OK:
-		push_error("MenuInicio: no se pudo guardar el idioma (%s)" % error_string(err))
+	LocaleSettings.set_and_save(locale)
 
 
 func _marcar_idioma(locale: String) -> void:
