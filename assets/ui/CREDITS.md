@@ -10,6 +10,7 @@ Cada carpeta incluye su `OFL.txt`.
 |---|---|---|---|
 | `fonts/imfellenglishsc/IMFeENsc28P.ttf` | IM Fell English SC | Igino Marini | https://github.com/google/fonts/tree/main/ofl/imfellenglishsc |
 | `fonts/imfellenglish/IMFeENrm28P.ttf`, `IMFeENit28P.ttf` | IM Fell English (redonda y cursiva) | Igino Marini | https://github.com/google/fonts/tree/main/ofl/imfellenglish |
+| `fonts/imfellfrenchcanon/` | IM Fell French Canon (redonda y cursiva) | Igino Marini | https://github.com/google/fonts/tree/main/ofl/imfellfrenchcanon |
 | `fonts/ebgaramond/EBGaramond-VF.ttf` | EB Garamond (variable) | The EB Garamond Project Authors (Georg Duffner, Octavio Pardo) | https://github.com/google/fonts/tree/main/ofl/ebgaramond |
 | `fonts/unifrakturmaguntia/UnifrakturMaguntia-Book.ttf` | UnifrakturMaguntia | j. 'mach' wust, Peter Wiegel | https://github.com/google/fonts/tree/main/ofl/unifrakturmaguntia |
 

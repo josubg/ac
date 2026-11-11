@@ -55,7 +55,7 @@ func _run() -> void:
 
 	if _want("logos"):
 		await _goto("res://scenes/logos_intro.tscn")
-		await _wait(2.5)
+		await _wait(2.0)
 		await _shot("01_logos")
 
 	if _want("menu"):
