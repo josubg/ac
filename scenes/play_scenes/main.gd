@@ -58,6 +58,7 @@ func _ready() -> void:
 	
 	monja_speak.ocultar()
 	properties_button.pressed.connect(_on_properties_button_pressed)
+	Juice.attach_main(self) # FX: feedback de la partida (scripts/fx/main_juice.gd)
 
 func _process(_delta):
 	if GameManager.playing():
