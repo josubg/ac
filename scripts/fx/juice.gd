@@ -577,13 +577,16 @@ func _label_settings(size: int, color: Color) -> LabelSettings:
 	return ls
 
 
-## Reproduce un sonido de JuiceSfx con una pequeña variación de tono.
+## Reproduce una grabación de JuiceSfx con una pequeña variación de tono.
 func sfx(sound: StringName, volume_db: float = 0.0, pitch: float = 1.0, variation: float = 0.04) -> void:
 	if not enabled:
 		return
+	var stream := JuiceSfx.get_stream(sound)
+	if stream == null:
+		return
 	var player := _players[_next_player]
 	_next_player = (_next_player + 1) % _players.size()
-	player.stream = JuiceSfx.get_stream(sound)
+	player.stream = stream
 	player.volume_db = sfx_volume_db + volume_db
 	player.pitch_scale = pitch * randf_range(1.0 - variation, 1.0 + variation)
 	player.play()

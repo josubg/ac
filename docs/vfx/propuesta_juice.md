@@ -48,8 +48,9 @@ monja) y **decide** con calma. Por eso el juice debe ser:
    una **transición de mancha de tinta** con ruido fbm. Se probó también el
    *glow* HDR 2D (`WorldEnvironment` + `use_hdr_2d`) y se descartó porque
    lavaba los colores de las barras de la interfaz. Todo sigue ejecutándose
-   también con `gl_compatibility`. Cero assets externos: los sonidos y las
-   texturas se sintetizan (ver `assets/vfx/CREDITS.md`).
+   también con `gl_compatibility`. Los sonidos son grabaciones CC0 de Freesound
+   y Kenney (`assets/vfx/sfx/`, 144 KB en total); las texturas de partículas se
+   generan por código (ver `assets/vfx/CREDITS.md`).
 5. **Desacoplado.** Toda la lógica está en `scripts/fx/`. El juego solo tiene
    **una línea nueva** (`Juice.attach_main(self)` en `main.gd`) y un autoload.
 
@@ -64,7 +65,7 @@ Leyenda. **Estado**: ✅ implementado en el prototipo · 🔸 propuesto.
 | Efecto | Intensidad | Técnica | Coste | Prioridad | Estado |
 |---|---|---|---|---|---|
 | El lacre cae desde 1,8× con transparencia y se asienta con rebote (`TRANS_BACK`) | media | `Tween` sobre scale/self_modulate, compensando la posición porque el botón está a escala 0,12 | S | I | ✅ |
-| Polvo sepia al tocar el mapa + golpe sordo de sello | baja | `GPUParticles2D` «dust» (turbulencia) + `seal` sintetizado | S | I | ✅ |
+| Polvo sepia al tocar el mapa + golpe sordo de sello | baja | `GPUParticles2D` «dust» (turbulencia) + sonido `seal` (lacre grabado) | S | I | ✅ |
 | Onda de tinta suave que deforma el mapa alrededor del lacre | baja | `Juice.ripple()` → `map_post.gdshader` | S | R | ✅ |
 | Si aparecen varios el mismo día, escalonar 0,15 s | baja | `Tween` con `set_delay` | S | O | 🔸 |
 
@@ -218,7 +219,7 @@ Leyenda. **Estado**: ✅ implementado en el prototipo · 🔸 propuesto.
 |---|---|
 | `scripts/fx/juice.gd` | Autoload `Juice`: API, ajustes, capas propias (FX y overlay), hover de botones, transiciones y ambientes |
 | `scripts/fx/main_juice.gd` | Feedback de la partida; lo crea `Juice.attach_main()` |
-| `scripts/fx/juice_sfx.gd` | `JuiceSfx`: síntesis de sonidos (o el fichero de `assets/vfx/sfx/` si existe) |
+| `scripts/fx/juice_sfx.gd` | `JuiceSfx`: carga las grabaciones CC0 de `assets/vfx/sfx/` |
 | `scripts/fx/juice_particles.gd` | `JuiceParticles`: ráfagas y ambientes `GPUParticles2D` con texturas procedurales |
 | `scripts/fx/map_post.gdshader` | Postprocesado del mundo: ondas de tinta, desaturación/sepia, viñeta de Descontento y grano |
 | `scripts/fx/ink_transition.gdshader` | Transición de mancha de tinta entre escenas |
@@ -331,8 +332,8 @@ Por orden de impacto/coste:
    (`Juice.set_reduce_motion(toggled)`): lo debería colocar `ui-redesign`.
 5. Cuenta atrás visual en el lacre, sellos de remitente en la monja y lacre que
    se parte en dos: necesitan arte.
-6. Sustituir la síntesis por grabaciones CC0 (Kenney RPG Audio) si se prefiere
-   un sonido más orgánico: basta con dejar los ficheros en `assets/vfx/sfx/`.
+6. Afinar la mezcla de las grabaciones en el juego real (volúmenes en las
+   llamadas a `Juice.sfx`) y, si hace falta, bajar los originales WAV de Freesound.
 7. *Glow* real: se descartó el HDR 2D global porque cambiaba el color de la
    interfaz. Si se quiere, la alternativa es un `SubViewport` solo para el
    mundo con HDR y glow, y la interfaz fuera de él.
@@ -381,7 +382,6 @@ Por orden de impacto/coste:
 - **Postprocesado:** `filter_linear` en lugar de mipmaps, y grano estático en la web.
 
 **Descartado:**
-- **Foley grabado:** sin descargas en esta sesión; queda la vía de `assets/vfx/sfx/`.
 - **Volver a `CPUParticles2D` en la web:** el director retiró esa restricción; el precalentado cubre el tirón.
 
 **Abierto (fuera del área de VFX):**
