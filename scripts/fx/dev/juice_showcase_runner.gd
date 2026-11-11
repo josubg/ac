@@ -136,9 +136,10 @@ func _run() -> void:
 	await _shot("12_descontento_alto")
 
 	# 10. El Rey cruza el umbral: temblor, velo rojo y monja.
-	Player.rey = 35
+	# El Rey ya cruzó su primer umbral con el fracaso: ahora la Iglesia.
+	Player.clero = 35
 	await _wait(0.12)
-	await _shot("13_rey_umbral")
+	await _shot("13_iglesia_umbral")
 	await _wait(1.2)
 	await _shot("14_monja")
 	_close_monja_legacy()
@@ -168,6 +169,9 @@ func _run() -> void:
 
 
 func _close_monja_legacy() -> void:
+	if main and is_instance_valid(main) and main.monja_mensaje and main.has_method("_close_monja_message"):
+		main._close_monja_message()
+		return
 	if main and is_instance_valid(main) and main.monja_mensaje:
 		main.monja_speak.ocultar()
 		main.monja_mensaje = false

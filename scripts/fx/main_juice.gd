@@ -65,6 +65,7 @@ func setup(main_node: Node) -> void:
 		monja.get_node(^"Label").visibility_changed.connect(_on_monja_visibility.bind(monja))
 
 	_build_vignette()
+	_build_world_fx()
 	_update_danger(true)
 
 
@@ -249,6 +250,22 @@ func _on_strike(level: int, stat: StringName) -> void:
 
 # --- Descontento ---------------------------------------------------------------
 
+## Capa de efectos del mundo dentro de la interfaz, justo antes de la monja y
+## de las ventanas: las partículas de lacres, edificios y barras quedan por
+## encima del HUD pero por debajo de cualquier ventana abierta.
+func _build_world_fx() -> void:
+	var monja: Node = main.get(&"monja_speak")
+	var ui_layer: Node = monja.get_parent() if monja else null
+	if ui_layer == null:
+		return
+	var host := Control.new()
+	host.name = "JuiceWorldFx"
+	host.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	ui_layer.add_child.call_deferred(host)
+	ui_layer.move_child.call_deferred(host, monja.get_index())
+	Juice.register_world_fx(host)
+
+
 func _build_vignette() -> void:
 	# Postprocesado del mundo: bajo la interfaz (en el lienzo del mapa) para no
 	# tocar textos ni barras. Incluye la viñeta del Descontento, las ondas de
@@ -386,35 +403,52 @@ func _on_window_visibility(window: Control, key: StringName) -> void:
 		return
 	var panel: CanvasItem = window.get_node_or_null(^"PanelContainer")
 	Juice.window_in(panel if panel else window)
+	# El lacre decorativo de la carta (rediseño de UI) se estampa al abrirla.
+	var seal: CanvasItem = window.get_node_or_null(^"Lacre")
+	if seal and key != &"mission_resolution_window":
+		_after(0.08, func():
+			Juice.drop_in(seal, 0.35)
+			Juice.sfx(&"seal", -10.0, 1.1))
 	match key:
 		&"mission_window":
 			_watch_mission(window.get(&"mission"))
 		&"mission_resolution_window":
-			_resolution_feedback(window)
+			_resolution_feedback(window, seal)
 
 
-func _resolution_feedback(window: Control) -> void:
+## Resultado: los efectos salen del lacre de la carta (esquina), no del texto,
+## para no tapar el rótulo ni la descripción.
+func _resolution_feedback(window: Control, seal: CanvasItem) -> void:
 	var mission: Mission = window.get(&"mission")
 	var outcome: Control = window.get(&"outcome_label")
 	if mission == null:
 		return
 	_after(0.2, func():
-		var pos := Juice.screen_center(outcome) if outcome else window.get_viewport_rect().size * 0.5
+		var pos: Vector2
+		if seal:
+			pos = Juice.screen_center(seal)
+		elif outcome:
+			pos = Juice.screen_center(outcome)
+		else:
+			pos = window.get_viewport_rect().size * 0.5
 		if mission.success():
 			# Éxito: el lacre se abre con destellos dorados y una campanilla.
-			Juice.burst(pos, &"gold", 1.4)
+			Juice.burst(pos, &"gold", 1.2, true)
 			Juice.sfx(&"chime", -4.0)
+			if seal:
+				Juice.pop(seal, 0.2)
 			if outcome:
-				Juice.pop(outcome, 0.18)
+				Juice.flash(outcome, Color(1.4, 1.3, 1.0), 0.6)
 		else:
-			# Fracaso: la tinta se derrama y suena un golpe sordo.
-			Juice.burst(pos, &"ink", 1.3)
-			Juice.burst(pos, &"wax", 0.6)
-			Juice.sfx(&"thud", -4.0)
+			# Fracaso: el lacre se quiebra y la tinta se derrama.
+			Juice.burst(pos, &"wax", 1.0, true)
+			Juice.burst(pos, &"ink", 0.8, true)
+			Juice.sfx(&"crack", -3.0, 0.9)
+			Juice.sfx(&"thud", -6.0)
 			Juice.shake(0.15)
 			Juice.grade_pulse(0.35, 0.2, 1.0)
-			if outcome:
-				Juice.squash(outcome))
+			if seal:
+				Juice.squash(seal))
 
 
 ## Huecos de agentes: se escucha agents_changed de la misión abierta.
@@ -447,10 +481,10 @@ func _snapshot_slots(feedback: bool) -> void:
 			if agent != null:
 				# Agente colocado: el retrato se asienta en el hueco.
 				Juice.squash(slot, 0.35)
-				Juice.burst(pos, &"dust", 0.8)
+				Juice.burst(pos, &"dust", 0.8, true)
 				Juice.sfx(&"seal", -8.0, 1.4)
 			else:
-				Juice.burst(pos, &"dust", 0.4)
+				Juice.burst(pos, &"dust", 0.4, true)
 				Juice.sfx(&"paper", -10.0, 1.3)
 		_slot_agents[slot] = agent
 
@@ -465,7 +499,7 @@ func _on_monja_visibility(monja: Node) -> void:
 	if nun:
 		Juice.fade_in(nun, 0.35, Vector2(-30, 0))
 	if scroll:
-		Juice.fade_in(scroll, 0.3, Vector2(0, 14))
+		Juice.fade_in(scroll, 0.3)   # velo a pantalla completa: sin desplazar
 	Juice.fade_in(label, 0.3, Vector2(0, 14))
 
 

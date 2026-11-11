@@ -49,6 +49,7 @@ var reduce_motion: bool = false:
 		settings_changed.emit()
 
 var _fx_layer: CanvasLayer
+var _world_fx: CanvasItem = null   # capa de efectos del mundo, bajo las ventanas
 var _overlay_layer: CanvasLayer
 var _overlay: ColorRect
 var _edge: ColorRect
@@ -483,27 +484,41 @@ func screen_center(node: CanvasItem) -> Vector2:
 
 ## Ráfaga de partículas en una posición de pantalla. kind: dust, wax, ink,
 ## gold, coins, glint, stamp. amount escala la densidad.
-func burst(screen_pos: Vector2, kind: StringName, amount: float = 1.0) -> void:
+## Contenedor para los efectos del mundo (lacres, edificios, barras): debe
+## estar por debajo de las ventanas y de la monja. Lo registra MainJuice.
+func register_world_fx(host: CanvasItem) -> void:
+	_world_fx = host
+
+
+func _fx_parent(top: bool) -> Node:
+	if not top and _world_fx != null and is_instance_valid(_world_fx) and _world_fx.is_inside_tree():
+		return _world_fx
+	return _fx_layer
+
+
+## top = true: por encima de todo (efectos que salen de una ventana abierta).
+## Por defecto, en la capa del mundo, que las ventanas tapan.
+func burst(screen_pos: Vector2, kind: StringName, amount: float = 1.0, top: bool = false) -> void:
 	if not enabled:
 		return
 	var calm := 0.6 if reduce_motion else 1.0
 	var p := JuiceParticles.make_burst(kind, amount * calm, calm)
 	p.position = screen_pos
-	_fx_layer.add_child(p)
+	_fx_parent(top).add_child(p)
 	p.emitting = true
 	var life: float = p.get_meta(&"juice_life", 2.0)
 	get_tree().create_timer(life, true, false, true).timeout.connect(p.queue_free)
 
 
 ## Texto flotante (+5, −10…) que sube y se desvanece.
-func float_text(screen_pos: Vector2, text: String, color: Color, size: int = 26) -> void:
+func float_text(screen_pos: Vector2, text: String, color: Color, size: int = 26, top: bool = false) -> void:
 	if not enabled:
 		return
 	var label := Label.new()
 	label.text = text
 	label.label_settings = _label_settings(size, color)
 	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_fx_layer.add_child(label)
+	_fx_parent(top).add_child(label)
 	label.reset_size()
 	label.position = screen_pos - label.size * 0.5
 	var tw := label.create_tween().set_parallel(true)
@@ -564,6 +579,7 @@ func toast(text: String) -> void:
 
 func _on_scene_changed(scene_name: String) -> void:
 	_post = null
+	_world_fx = null
 	_ripples.clear()
 	_trauma = 0.0
 	_reset_canvas()
