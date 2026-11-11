@@ -262,6 +262,19 @@ func _build() -> void:
 	t.set_color("font_focus_color", "BotonTinta", TINTA)
 	t.set_color("font_disabled_color", "BotonTinta", Color(TINTA, 0.4))
 
+	# Opción conmutable (selector de idioma): tinta en reposo, lacre al elegirla
+	_variation("BotonOpcion", "Button")
+	t.set_stylebox("normal", "BotonOpcion", tinta_n)
+	t.set_stylebox("hover", "BotonOpcion", tinta_h)
+	t.set_stylebox("pressed", "BotonOpcion", lacre_n)
+	t.set_stylebox("hover_pressed", "BotonOpcion", lacre_h)
+	t.set_font_size("font_size", "BotonOpcion", 26)
+	t.set_color("font_color", "BotonOpcion", TINTA)
+	t.set_color("font_hover_color", "BotonOpcion", LACRE)
+	t.set_color("font_pressed_color", "BotonOpcion", PERGAMINO_CLARO)
+	t.set_color("font_hover_pressed_color", "BotonOpcion", Color.WHITE)
+	t.set_color("font_focus_color", "BotonOpcion", TINTA)
+
 	# Sobre cuero: filete de oro
 	_variation("BotonCuero", "Button")
 	var cuero_n := _flat(Color(NOGAL, 0.0), Color(ORO, 0.8), 1, 4, Vector4(14, 3, 14, 5))

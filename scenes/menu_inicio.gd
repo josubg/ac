@@ -11,6 +11,23 @@ extends Control
 
 
 @onready var parallax : Parallax2D = $CanvasLayer/Parallax2D
+@onready var opciones: CanvasLayer = $OpcionesCanvas
+@onready var botones_idioma: Array[Button] = [
+	$OpcionesCanvas/PanelContainer/VBoxContainer/Idioma/Espanol,
+	$OpcionesCanvas/PanelContainer/VBoxContainer/Idioma/English,
+]
+
+# Contrato compartido con la localización (ver resources/i18n): user://settings.cfg
+const SETTINGS_PATH := "user://settings.cfg"
+const SETTINGS_SECTION := "settings"
+const LOCALE_KEY := "locale"
+
+
+func _ready() -> void:
+	for boton in botones_idioma:
+		boton.pressed.connect(_on_idioma_pressed.bind(String(boton.get_meta("locale"))))
+	_marcar_idioma(TranslationServer.get_locale().substr(0, 2))
+
 func _process(delta: float) -> void:
 	if not mouse_parallax_enabled:
 		return
@@ -63,8 +80,12 @@ func _on_new_game_button_pressed() -> void:
 func _unhandled_input(event):
 	if event is InputEventKey:
 		if event.pressed and event.keycode == KEY_ESCAPE:
-			if $CreditosCanvas.visible:
+			if opciones.visible:
+				opciones.visible = false
+			elif $CreditosCanvas.visible:
 				$CreditosCanvas.visible = false
+			elif $TutorialCanvas.visible:
+				$TutorialCanvas.visible = false
 			else:
 				get_tree().quit()
 
@@ -79,3 +100,27 @@ func _on_tutorial_button_pressed() -> void:
 
 func _on_button_pressed_tutorial() -> void:
 	$TutorialCanvas.visible = false
+
+
+func _on_options_button_pressed() -> void:
+	_marcar_idioma(TranslationServer.get_locale().substr(0, 2))
+	opciones.visible = true
+
+
+func _on_options_close_pressed() -> void:
+	opciones.visible = false
+
+
+func _on_idioma_pressed(locale: String) -> void:
+	TranslationServer.set_locale(locale)
+	var cfg := ConfigFile.new()
+	cfg.load(SETTINGS_PATH) # si no existe, se crea al guardar
+	cfg.set_value(SETTINGS_SECTION, LOCALE_KEY, locale)
+	var err := cfg.save(SETTINGS_PATH)
+	if err != OK:
+		push_error("MenuInicio: no se pudo guardar el idioma (%s)" % error_string(err))
+
+
+func _marcar_idioma(locale: String) -> void:
+	for boton in botones_idioma:
+		boton.set_pressed_no_signal(boton.get_meta("locale") == locale)

@@ -209,7 +209,7 @@ def main():
     os.makedirs(OUT, exist_ok=True)
     o = lambda n: os.path.join(OUT, n)
     # Carta grande (ventanas de misión, créditos, tutorial, edificio)
-    parchment_panel(o("pergamino_carta.png"), 768, 768, 4, 9, 60, 28)
+    parchment_panel(o("pergamino_carta.png"), 1024, 1024, 4, 9, 64, 28)
     # Cartela pequeña (fecha, fichas, mensajes cortos)
     parchment_panel(o("pergamino_cartela.png"), 256, 128, 2, 4, 22, 9, double=False, corners=False, ox=300, oy=200)
     # Ficha sin marco (filas de propiedades)

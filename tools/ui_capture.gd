@@ -67,6 +67,10 @@ func _run() -> void:
 		menu.get_node("TutorialCanvas").visible = false
 		menu.get_node("CreditosCanvas").visible = true
 		await _shot("04_creditos")
+		menu.get_node("CreditosCanvas").visible = false
+		menu._on_options_button_pressed()
+		await _shot("04b_opciones")
+		menu.opciones.visible = false
 
 	if _want("main"):
 		gm.start_game()

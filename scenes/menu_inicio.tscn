@@ -9,6 +9,8 @@
 [ext_resource type="Texture2D" uid="uid://7pvuqc44x556" path="res://sprites/lacre_mision.png" id="7_5psen"]
 [ext_resource type="AudioStream" uid="uid://cdy22wr1w0ecr" path="res://resources/intro.wav" id="8_euaya"]
 
+[sub_resource type="ButtonGroup" id="ButtonGroup_idioma"]
+
 [node name="MenuInicio" type="Control" unique_id=1775949271]
 layout_mode = 3
 anchors_preset = 15
@@ -137,6 +139,11 @@ text = "Nueva partida"
 layout_mode = 2
 theme_type_variation = &"BotonMenu"
 text = "Cómo se juega"
+
+[node name="OptionsButton" type="Button" parent="CanvasLayer2/Control/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"BotonMenu"
+text = "UI_MENU_OPTIONS"
 
 [node name="CreditsButton" type="Button" parent="CanvasLayer2/Control/MarginContainer/VBoxContainer" unique_id=853728562]
 layout_mode = 2
@@ -315,6 +322,88 @@ theme_type_variation = &"BotonTinta"
 text = "Cerrar"
 icon_alignment = 2
 
+[node name="OpcionesCanvas" type="CanvasLayer" parent="."]
+layer = 2
+visible = false
+
+[node name="Velo" type="ColorRect" parent="OpcionesCanvas"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.08, 0.05, 0.03, 0.6)
+
+[node name="PanelContainer" type="PanelContainer" parent="OpcionesCanvas"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -380.0
+offset_top = -170.0
+offset_right = 380.0
+offset_bottom = 170.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"PanelPergamino"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="OpcionesCanvas/PanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Cabecera" type="HBoxContainer" parent="OpcionesCanvas/PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Titulo" type="Label" parent="OpcionesCanvas/PanelContainer/VBoxContainer/Cabecera"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"TituloCarta"
+theme_override_font_sizes/font_size = 52
+text = "UI_OPTIONS_TITLE"
+
+[node name="CerrarButton" type="Button" parent="OpcionesCanvas/PanelContainer/VBoxContainer/Cabecera"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_type_variation = &"BotonTinta"
+text = "UI_CLOSE"
+
+[node name="HSeparator" type="HSeparator" parent="OpcionesCanvas/PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Idioma" type="HBoxContainer" parent="OpcionesCanvas/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+theme_override_constants/separation = 18
+
+[node name="Etiqueta" type="Label" parent="OpcionesCanvas/PanelContainer/VBoxContainer/Idioma"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"SubtituloCarta"
+theme_override_colors/font_color = Color(0.169, 0.106, 0.071, 1)
+text = "UI_OPTIONS_LANGUAGE"
+
+[node name="Espanol" type="Button" parent="OpcionesCanvas/PanelContainer/VBoxContainer/Idioma"]
+custom_minimum_size = Vector2(190, 54)
+layout_mode = 2
+auto_translate_mode = 2
+theme_type_variation = &"BotonOpcion"
+toggle_mode = true
+button_pressed = true
+button_group = SubResource("ButtonGroup_idioma")
+text = "Español"
+metadata/locale = "es"
+
+[node name="English" type="Button" parent="OpcionesCanvas/PanelContainer/VBoxContainer/Idioma"]
+custom_minimum_size = Vector2(190, 54)
+layout_mode = 2
+auto_translate_mode = 2
+theme_type_variation = &"BotonOpcion"
+toggle_mode = true
+button_group = SubResource("ButtonGroup_idioma")
+text = "English"
+metadata/locale = "en"
+
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1911391086]
 layout_mode = 0
 offset_left = 134.0
@@ -332,5 +421,7 @@ autoplay = true
 [connection signal="pressed" from="CanvasLayer2/Control/MarginContainer/VBoxContainer/TutorialButton" to="." method="_on_tutorial_button_pressed"]
 [connection signal="pressed" from="CanvasLayer2/Control/MarginContainer/VBoxContainer/CreditsButton" to="." method="_on_credits_button_pressed"]
 [connection signal="pressed" from="CanvasLayer2/Control/MarginContainer/VBoxContainer/ExitButton" to="." method="_on_exit_button_pressed"]
+[connection signal="pressed" from="CanvasLayer2/Control/MarginContainer/VBoxContainer/OptionsButton" to="." method="_on_options_button_pressed"]
+[connection signal="pressed" from="OpcionesCanvas/PanelContainer/VBoxContainer/Cabecera/CerrarButton" to="." method="_on_options_close_pressed"]
 [connection signal="pressed" from="CreditosCanvas/Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="TutorialCanvas/Button" to="." method="_on_button_pressed_tutorial"]
