@@ -49,7 +49,7 @@ size_flags_horizontal = 6
 size_flags_stretch_ratio = 20.0
 theme_override_fonts/font = ExtResource("2_8o0vv")
 theme_override_font_sizes/font_size = 37
-text = "Convento de San Placido"
+text = "BUILDING_SAN_PLACIDO_NAME"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -76,22 +76,22 @@ theme_override_constants/margin_right = 20
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_font_sizes/normal_font_size = 20
-text = "El Convento de San Plácido, fundado en 1624 por Jerónimo de Villanueva para una comunidad de monjas benedictinas, es uno de los edificios religiosos más singulares del Madrid de los Austrias. Su iglesia, construida en el siglo XVII bajo la dirección de fray Lorenzo de San Nicolás, conserva intacta su arquitectura de transición entre el Renacimiento y el Barroco. Sin embargo, la fama del convento se debe también al célebre proceso inquisitorial que lo sacudió en 1628, cuando varias religiosas, incluida su fundadora Teresa Valle de la Cerda, afirmaron sufrir posesiones demoníacas y protagonizaron episodios místicos que suscitaron una gran controversia. La Inquisición investigó el caso y procesó a las monjas, a sus confesores y a diversos personajes vinculados al convento, entre ellos su protector Jerónimo de Villanueva. El principal acusado fue fray Francisco García Calderón, confesor de la comunidad, condenado finalmente por delitos relacionados con las corrientes alumbradistas y por conductas impropias en el ejercicio de su ministerio."
+text = "BUILDING_SAN_PLACIDO_DESC"
 
 [node name="CostLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1417822382]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
-text = "Coste: 25000 reales"
+text = "UI_BUILDING_COST"
 horizontal_alignment = 1
 
 [node name="IncomeLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1706378300]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
-text = "Ganancias: 100 reales/año"
+text = "UI_BUILDING_INCOME"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="BuyButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1496953470]
 layout_mode = 2
 theme_override_font_sizes/font_size = 26
-text = "Comprar"
+text = "UI_BUILDING_BUY"

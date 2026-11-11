@@ -2,10 +2,10 @@ extends Control
 
 
 @export var paragraphs := [
-	"No me destierran, sigo en mi destino, la Corte me sostiene en su quimera;\n mas veo al Reino hundirse en su carrera,\n pues manda el oro más que el buen camino.",
-	"De Valido pasé a señor divino, con títulos, favores y bandera;\n pero la nave imperial ya desespera, se pudre el mástil, se corrompe el lino.",
-	"Los grandes callan, el vulgo se lamenta,\n España se consume en su desgracia,\n la gloria antigua es sombra que se ausenta.",
-	"Y yo, aún con poder, guardo mi audacia:\n si el Imperio se hunde y nada lo sustenta,\n no es mi caída: es su propia falacia."
+	"GAME_END_1",
+	"GAME_END_2",
+	"GAME_END_3",
+	"GAME_END_4"
 ]
 
 @export var fade_duration := 1.0        # segundos para aparecer/desaparecer

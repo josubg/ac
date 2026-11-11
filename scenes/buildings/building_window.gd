@@ -28,8 +28,8 @@ func refresh() -> void:
 	name_label.text = building.building_name
 	building_image.texture = building.image
 	descr_label.text = building.description
-	cost_label.text = "Coste: %d" % building.purchase_cost
-	income_label.text = "Ingresos: %d por día" % building.income_per_turn
+	cost_label.text = tr("UI_BUILDING_COST") % building.purchase_cost
+	income_label.text = tr("UI_BUILDING_INCOME") % building.income_per_turn
 
 	var can_buy := (
 		building.available
@@ -41,15 +41,15 @@ func refresh() -> void:
 	buy_button.disabled = not can_buy
 
 	if building.owner == Building.Owner.PLAYER:
-		buy_button.text = "Ya es tuyo"
+		buy_button.text = "UI_BUILDING_OWNED"
 	elif building.status == Building.Status.DESTROYED:
-		buy_button.text = "Destruido"
+		buy_button.text = "UI_BUILDING_DESTROYED"
 	elif not building.available:
-		buy_button.text = "No disponible"
+		buy_button.text = "UI_BUILDING_UNAVAILABLE"
 	elif Player.riqueza < building.purchase_cost:
-		buy_button.text = "Fondos insuficientes"
+		buy_button.text = "UI_BUILDING_NO_FUNDS"
 	else:
-		buy_button.text = "Comprar"
+		buy_button.text = "UI_BUILDING_BUY"
 
 func _on_close_pressed() -> void:
 	hide()

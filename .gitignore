@@ -3,3 +3,4 @@
 /android/
 dist
 dist.zip
+resources/i18n/*.translation

@@ -157,7 +157,7 @@ func update_riqueza(value):
 func update_mod_riqueza():
 	var breakdown = BuildingManager.get_player_income_breakdown()
 	if breakdown != {}:
-		riqueza_mod_label.text = "(+"+str(breakdown["total"])+"/día)"
+		riqueza_mod_label.text = tr("UI_HUD_INCOME_PER_DAY") % breakdown["total"]
 	
 func update_descontento(value):
 	descontento_bar.value = value
@@ -196,17 +196,17 @@ func _unhandled_input(event):
 func rey_strikes(number):
 	if number == 1:
 		TimeManager.pause()
-		monja_speak.mensaje("Excelencia, el Rey le ha enviado un mensaje: \n Por vuestras infinitas gestiones me quedo sin monterías, sin comedias y, lo que más duele, sin comediantas. Si he de ser rey de papeles y despachos, será porque vos habéis matado el campo, el teatro y la risa.")
+		monja_speak.mensaje("MONJA_REY_1")
 		monja_mensaje = true
 		set_process_input(true)		
 	if number == 2:
 		TimeManager.pause()
-		monja_speak.mensaje("Excelencia, el Rey le ha enviado un mensaje: \n Conde Duque, vuestras faltas me persiguen aun en mis horas de reposo. Ni del gobierno hallo en vuestras manos sosiego, pues con vuestro desgobierno no hay oro, ni plata, ni tiempo para que yo me pueda dedicar a mis reales asuntos.")
+		monja_speak.mensaje("MONJA_REY_2")
 		monja_mensaje = true
 		set_process_input(true)	
 	if number == 3:
 		TimeManager.pause()
-		monja_speak.mensaje("Excelencia, el Rey le ha enviado un mensaje: \n Gaspar, quedáis libres de vuestro oficio y de la carga que os pesaba. Podéis largaros de la Corte y ocuparos en vuestros propios enredos, que seguro no faltan. Bien os agradezco los servicios, aunque más me alegro de no veros más por aquí: que vuestra ausencia será el mayor favor que me hagáis.")	
+		monja_speak.mensaje("MONJA_REY_3")	
 		monja_mensaje = true
 		set_process_input(true)	
 
@@ -214,34 +214,34 @@ func rey_strikes(number):
 func nobleza_strikes(number):
 	if number == 1:
 		TimeManager.pause()
-		monja_speak.mensaje("Excelencia, hasta el caballerizo del príncipe —que apenas sabe leer— murmura que la próxima vez os negará el saludo. ¡Ni las bestias quieren ya vuestra sombra!")
+		monja_speak.mensaje("MONJA_NOBLEZA_1")
 		monja_mensaje = true
 		set_process_input(true)		
 	if number == 2:
 		TimeManager.pause()
-		monja_speak.mensaje("Excelencia, en los festejos de los Grandes se comenta que vuestra silla queda vacía. El vino corre, la música suena, pero vos no sois convidado, pues vuestra privanza huele a podredumbre.")
+		monja_speak.mensaje("MONJA_NOBLEZA_2")
 		monja_mensaje = true
 		set_process_input(true)	
 	if number == 3:
 		TimeManager.pause()
-		monja_speak.mensaje("Excelencia, han llegado cartas con firmas tan gruesas como los sellos de la Corte. Todas dicen lo mismo: que vuestra presencia es peste, y que no sois bienvenido en palacio. El papel arde fácil, y ya sabéis lo que sigue al fuego…")	
+		monja_speak.mensaje("MONJA_NOBLEZA_3")	
 		monja_mensaje = true
 		set_process_input(true)	
 		
 func iglesia_strikes(number):
 	if number == 1:
 		TimeManager.pause()
-		monja_speak.mensaje("Las faltas que pesan sobre vuestra sombra no se borran con silencios ni favores. Bien sabéis que cada yerro exige su precio, y que serán muchas las misas que habrán de pagarse para redimir lo que vuestra mano ha sembrado.")
+		monja_speak.mensaje("MONJA_IGLESIA_1")
 		monja_mensaje = true
 		set_process_input(true)		
 	if number == 2:
 		TimeManager.pause()
-		monja_speak.mensaje("Las faltas que pesan sobre vuestra conciencia no se lavan con oro ni con palabras. Bien sabéis que la Santa Madre Iglesia, espejo de Dios en la tierra, exige más que misas: pide discreción, recogimiento y penitencia verdadera Os conviene, pues, abrazar el cilicio y la flagelación, pues solo con sangre y silencio podrá vuestra alma congraciarse con la Iglesia, y en ello con el mismo Dios.")
+		monja_speak.mensaje("MONJA_IGLESIA_2")
 		monja_mensaje = true
 		set_process_input(true)	
 	if number == 3:
 		TimeManager.pause()
-		monja_speak.mensaje("Ya no basta con misas ni con cilicios: todos saben lo que sois. Brujo de medianoche, judeizante de día, amigo de luteranos y mahometanos siempre. La Iglesia observa, y el fuego siempre aguarda paciente. Conviene que os guardéis con Dios, porque las lenguas son brasas y las brasas se han tornado para su Excelencia en una hoguera.")	
+		monja_speak.mensaje("MONJA_IGLESIA_3")	
 		monja_mensaje = true
 		set_process_input(true)	
 

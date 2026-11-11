@@ -58,14 +58,14 @@ layout_mode = 2
 
 [node name="TitleLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=984847803]
 layout_mode = 2
-text = "Título"
+text = "MISSION_001_TITLE"
 label_settings = SubResource("LabelSettings_540ay")
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="DescriptionLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=183806906]
 layout_mode = 2
-text = "Excelencia, traigo nuevas que podrían agitar las aguas de la Corte: se murmura que el acero que dio muerte al Conde de Villamediana no fue movido por razón de Estado, sino por celos de amante despechado. El testimonio es reciente, y aún incierto, mas es cosa grave. ¿Ordenáis que se envíe discreto pesquisidor a indagar, o que se deje el rumor morir por sí solo?"
+text = "MISSION_001_BODY"
 autowrap_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1071925167]
@@ -83,7 +83,7 @@ alignment = 1
 
 [node name="Send" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1556539309]
 layout_mode = 2
-text = "Enviar espias"
+text = "UI_MISSION_SEND"
 
 [node name="CloseMissionButton" type="Button" parent="." unique_id=1300608335]
 layout_mode = 0
@@ -92,7 +92,7 @@ offset_top = 58.30002
 offset_right = 853.0
 offset_bottom = 89.30002
 theme_override_colors/font_color = Color(0.87, 0.13920002, 0.13920002, 1)
-text = "Cerrar"
+text = "UI_CLOSE"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=936578291]
 stream = ExtResource("4_yrtqx")
