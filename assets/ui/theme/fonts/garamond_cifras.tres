@@ -1,0 +1,12 @@
+[gd_resource type="FontVariation" format=3]
+
+[ext_resource type="FontFile" path="res://assets/ui/fonts/ebgaramond/EBGaramond-VF.ttf" id="1_1s728"]
+
+[resource]
+base_font = ExtResource("1_1s728")
+variation_opentype = {
+2003265652: 600
+}
+opentype_features = {
+1819178349: 1
+}
