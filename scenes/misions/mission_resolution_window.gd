@@ -19,11 +19,11 @@ func show_mission(new_mission: Mission) -> void:
 	title_label.text = self.mission.titulo
 	description_label.text = self.mission.mision
 	if self.mission.success():
-		outcome_label.text = "Misión completada con Exito"
+		outcome_label.text = "UI_RESOLUTION_SUCCESS"
 		outcome_label.add_theme_color_override("font_color",Color.GREEN)
-		outcome_description.text = mission.success_text +"\n"+ get_results_text(mission)
+		outcome_description.text = tr(mission.success_text) +"\n"+ get_results_text(mission)
 	else:
-		outcome_label.text = "La misión ha sido un Fracaso"
+		outcome_label.text = "UI_RESOLUTION_FAILURE"
 		outcome_label.add_theme_color_override("font_color",Color.DARK_RED)
 		outcome_description.text = mission.failed_text
 	self.show()
@@ -37,19 +37,19 @@ func _on_end_mission_button_pressed() -> void:
 func get_results_text(mission: Mission) -> String:
 	var text = "\n"
 	if mission.rey > 0:
-		text = text + "El Rey está satisfecho. \n"
+		text = text + tr("RESULT_KING_PLEASED") + " \n"
 	elif  mission.rey < 0:
-		text = text + "El Rey no está satisfecho. \n"
+		text = text + tr("RESULT_KING_DISPLEASED") + " \n"
 	if mission.clero > 0:
-		text = text + "La Iglesia está complacida. \n" 
+		text = text + tr("RESULT_CHURCH_PLEASED") + " \n" 
 	elif mission.clero < 0:
-		text = text + "Hemos ofendido a la Iglesia. \n" 
+		text = text + tr("RESULT_CHURCH_OFFENDED") + " \n" 
 	if mission.nobleza > 0:
-		text = text + "La Nobleza está satisfecha. \n" 
+		text = text + tr("RESULT_NOBILITY_PLEASED") + " \n" 
 	elif mission.nobleza < 0:
-		text = text + "Algunos nobles se han resentido de nuestros actos. \n" 
+		text = text + tr("RESULT_NOBILITY_RESENTFUL") + " \n" 
 	if mission.descontento < 0:
-		text = text + "El descontento popular se ha incrementado. \n" 
+		text = text + tr("RESULT_DISCONTENT_UP") + " \n" 
 	elif mission.descontento > 0:
-		text = text + "El descontento popular se ha reducido. \n" 
+		text = text + tr("RESULT_DISCONTENT_DOWN") + " \n" 
 	return text

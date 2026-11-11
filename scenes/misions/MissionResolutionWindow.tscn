@@ -61,16 +61,14 @@ layout_mode = 2
 
 [node name="TitleLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=514950865]
 layout_mode = 2
-text = "Título"
+text = "MISSION_001_TITLE"
 label_settings = SubResource("LabelSettings_540ay")
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="DescriptionLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1613043368]
 layout_mode = 2
-text = "Texto de resolución, dependiendo de si hay ido bien o mal. 
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent magna urna, vehicula sit amet scelerisque id, molestie at magna. Quisque feugiat justo et pulvinar ultricies. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In blandit nibh nulla, vitae ornare felis tincidunt sit amet. Praesent sed elit facilisis, tristique orci nec, lacinia dolor. Duis vel hendrerit eros. In quis sem iaculis, mattis dui at, egestas leo. Aenean bibendum venenatis sem. "
+text = "MISSION_001_BODY"
 autowrap_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=681161932]
@@ -87,21 +85,20 @@ layout_mode = 2
 layout_mode = 2
 theme_override_fonts/font = ExtResource("4_80knw")
 theme_override_font_sizes/font_size = 26
-text = "Misión completada con éxito"
+text = "UI_RESOLUTION_SUCCESS"
 horizontal_alignment = 1
 
 [node name="OutcomeDescription" type="RichTextLabel" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer" unique_id=841521273]
 layout_mode = 2
 size_flags_vertical = 3
 bbcode_enabled = true
-text = "El rey está satisfecho
-"
+text = "MISSION_001_SUCCESS"
 
 [node name="EndMissionButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer" unique_id=461725715]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_jrjin")
 theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_jrjin")
-text = "Cerrar"
+text = "UI_CLOSE"
 
 [connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/EndMissionButton" to="." method="_on_end_mission_button_pressed"]

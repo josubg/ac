@@ -1,10 +1,10 @@
 extends Control
 
 @export var paragraphs := [
-	"Me echan de la corte, ¡vaya desatino!, que ayer mandaba yo sobre la tierra;\n hoy mando solo al burro que me lleva, camino de destierro, peregrino.",
-	"De Valido pasé a vecino indigno, sin Corte, sin poder, sin tanta guerra;\n y aunque mi honra se arruga y se destierra,\n me queda lengua para hacer el pino.",
-	"Los grandes ríen, el vulgo se carcajea, \ndicen que el Conde-Duque ya no vale, \nque su privanza fue comedia fea.",
-	"Mas yo respondo, con sorna y con detalle:\n si el Reino arde y la Corte tambalea,\n ¡no fue mi culpa, fue su carnaval de baile!"
+	"GAME_OVER_1",
+	"GAME_OVER_2",
+	"GAME_OVER_3",
+	"GAME_OVER_4"
 ]
 
 @export var fade_duration := 1.0        # segundos para aparecer/desaparecer

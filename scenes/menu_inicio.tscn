@@ -63,8 +63,7 @@ texture = ExtResource("2_bnklu")
 layout_mode = 1
 offset_right = 185.0
 offset_bottom = 49.0
-text = "Versión 0.4 - 04/11/2026
-"
+text = "UI_MENU_VERSION"
 
 [node name="CanvasLayer2" type="CanvasLayer" parent="." unique_id=1004538075]
 follow_viewport_enabled = true
@@ -121,28 +120,28 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("2_ylpju")
 theme_override_font_sizes/font_size = 50
 theme_override_styles/normal = SubResource("StyleBoxFlat_d6xxl")
-text = "Nueva Partida"
+text = "UI_MENU_NEW_GAME"
 
 [node name="TutorialButton" type="Button" parent="CanvasLayer2/Control/MarginContainer/VBoxContainer" unique_id=1346130070]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_ylpju")
 theme_override_font_sizes/font_size = 50
 theme_override_styles/normal = SubResource("StyleBoxFlat_bnklu")
-text = "Tutorial"
+text = "UI_MENU_TUTORIAL"
 
 [node name="CreditsButton" type="Button" parent="CanvasLayer2/Control/MarginContainer/VBoxContainer" unique_id=853728562]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_ylpju")
 theme_override_font_sizes/font_size = 50
 theme_override_styles/normal = SubResource("StyleBoxFlat_01a6i")
-text = "Créditos"
+text = "UI_MENU_CREDITS"
 
 [node name="ExitButton" type="Button" parent="CanvasLayer2/Control/MarginContainer/VBoxContainer" unique_id=1266093841]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_ylpju")
 theme_override_font_sizes/font_size = 50
 theme_override_styles/normal = SubResource("StyleBoxFlat_v4dt1")
-text = "Salir"
+text = "UI_MENU_EXIT"
 
 [node name="CreditosCanvas" type="CanvasLayer" parent="." unique_id=1392105101]
 layer = 2
@@ -175,7 +174,7 @@ theme = SubResource("Theme_5psen")
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("6_v4dt1")
 theme_override_font_sizes/font_size = 50
-text = "Créditos"
+text = "UI_CREDITS_TITLE"
 horizontal_alignment = 1
 
 [node name="RichTextLabel" type="RichTextLabel" parent="CreditosCanvas/PanelContainer/VBoxContainer" unique_id=1907287183]
@@ -187,12 +186,7 @@ theme_override_font_sizes/bold_italics_font_size = 18
 theme_override_font_sizes/italics_font_size = 18
 theme_override_font_sizes/mono_font_size = 18
 bbcode_enabled = true
-text = "		[b]Programación:[/b] Juan Sixto y Manuel J. Sueiro
-		[b]Arte e Ilustraciones:[/b] Rocío Peirano y Andy Iglesias
-		[b]Diseño de Narrativa:[/b] Héctor Gómez, Pablo C. Ganter y Pablo Sixto
-		[b]Diseño de Música:[/b] Elena Alonso y Paula Torres
-		[b]Diseño de Interfaces:[/b] Josu Bermúdez
-		[b]Publicación:[/b] Nosolorol SL"
+text = "UI_CREDITS_TEAM"
 
 [node name="RichTextLabel2" type="RichTextLabel" parent="CreditosCanvas/PanelContainer/VBoxContainer" unique_id=1585768802]
 layout_mode = 2
@@ -203,12 +197,7 @@ theme_override_font_sizes/bold_italics_font_size = 18
 theme_override_font_sizes/italics_font_size = 18
 theme_override_font_sizes/mono_font_size = 18
 bbcode_enabled = true
-text = "		Versión adaptada de:
-		[i]\"De esperar, sentir, morir, adorar\" (Juan Hidalgo, 1614–1685) [/i]
-
-		Plano de la Villa de Madrid de 1622 de:
-		[i]Antonio Mancinelli (Dominio público) [/i]
-"
+text = "UI_CREDITS_SOURCES"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CreditosCanvas/PanelContainer/VBoxContainer" unique_id=1143915300]
 custom_minimum_size = Vector2(0, 150)
@@ -236,7 +225,7 @@ size_flags_vertical = 4
 theme_override_colors/font_color = Color(0.88, 0, 0, 1)
 theme_override_fonts/font = SubResource("FontVariation_5psen")
 theme_override_font_sizes/font_size = 20
-text = "Cerrar"
+text = "UI_CLOSE"
 icon_alignment = 2
 
 [node name="TutorialCanvas" type="CanvasLayer" parent="." unique_id=1285537298]
@@ -270,7 +259,7 @@ theme = SubResource("Theme_5psen")
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("6_v4dt1")
 theme_override_font_sizes/font_size = 50
-text = "TUTORIAL"
+text = "UI_TUTORIAL_TITLE"
 horizontal_alignment = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="TutorialCanvas/PanelContainer/VBoxContainer" unique_id=312108455]
@@ -288,16 +277,7 @@ theme_override_font_sizes/bold_italics_font_size = 18
 theme_override_font_sizes/italics_font_size = 18
 theme_override_font_sizes/mono_font_size = 18
 bbcode_enabled = true
-text = "[b]Cómo jugar esta demo:[/b]
-Decide entre alternativas, gestiona recursos humanos y políticos, y observa las consecuencias de tus elecciones.
-
-• [b]Estate atento a los rumores[/b] que surgen por la ciudad de Madrid. Podrás acceder a ellos clickando sobre el lacre rojo que aparece en el mapa. 
-• [b]Envía a tus agentes a investigar[/b], los tienes en la barra de abajo, para obtener información y resolver la situación. Solo tienes que arrastrar su retrato al cuadro de las misiones. Pero ten en cuenta que cada agente tiene un origen distinto (Religioso, Malechor, Noble...) y eso influye en sus posibilidades de éxito. 
-• [b]Gestiona tu reputación[/b] con la Familia Real, la Iglesia y la Nobleza; perder influencia con una facción puede ser mortal.
-
-Observa además el [b]marcador de descontento[/b],  un descuido y podrían volverse contra ti.
-
-¡Madrid depende de ti!"
+text = "UI_TUTORIAL_BODY"
 
 [node name="Button" type="Button" parent="TutorialCanvas" unique_id=684014007]
 offset_left = 1334.0
@@ -309,7 +289,7 @@ size_flags_vertical = 4
 theme_override_colors/font_color = Color(0.88, 0, 0, 1)
 theme_override_fonts/font = SubResource("FontVariation_5psen")
 theme_override_font_sizes/font_size = 20
-text = "Cerrar"
+text = "UI_CLOSE"
 icon_alignment = 2
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1911391086]

@@ -36,7 +36,7 @@ var available: bool:
 
 func _ready() -> void:
 	label.text = full_name
-	label_2.text = faction
+	label_2.text = "AGENT_FACTION_" + faction.to_upper()
 	portrait.texture = available_texture
 	if not mouse_entered.is_connected(_on_mouse_entered):
 		mouse_entered.connect(_on_mouse_entered)

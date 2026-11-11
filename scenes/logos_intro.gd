@@ -4,6 +4,7 @@ extends Node2D
 
 
 func _ready() -> void:
+	LocaleSettings.apply_saved()
 	animation_player.play("fade")
 	await animation_player.animation_finished
 	GameManager.go_to_menu()

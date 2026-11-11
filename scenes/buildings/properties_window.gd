@@ -45,10 +45,10 @@ func refresh() -> void:
 
 		# Ingresos
 		var income_label := Label.new()
-		income_label.text = "Ingresos diarios: %d" % building.income_per_turn
+		income_label.text = tr("UI_PROPERTIES_DAILY_INCOME") % building.income_per_turn
 		info.add_child(income_label)
 		var influence_label := Label.new()
-		influence_label.text = "Influencia diaria: +%d (%s)" % [building.influence_per_turn,_get_faction_name(building.faction_influence)]
+		influence_label.text = tr("UI_PROPERTIES_DAILY_INFLUENCE") % [building.influence_per_turn,tr(_get_faction_name(building.faction_influence))]
 		info.add_child(influence_label)
 		
 		# Controles de donación
@@ -60,25 +60,25 @@ func refresh() -> void:
 		var can_donate = true
 		match building.faction_influence:
 			&"rey":
-				faction_label.text = "Facción: Rey"
+				faction_label.text = "UI_PROPERTIES_FACTION_KING"
 			&"nobleza":
-				faction_label.text = "Facción: Nobleza"
+				faction_label.text = "UI_PROPERTIES_FACTION_NOBILITY"
 			&"clero":
-				faction_label.text = "Facción: Clero"
+				faction_label.text = "UI_PROPERTIES_FACTION_CLERGY"
 			&"descontento":
-				faction_label.text = "Facción: Descontento"
+				faction_label.text = "UI_PROPERTIES_FACTION_DISCONTENT"
 			_:
-				faction_label.text = "Sin facción asignada"
+				faction_label.text = "UI_PROPERTIES_NO_FACTION_ASSIGNED"
 				can_donate = false
 
 		donation_controls.add_child(faction_label)
 
 		# Botón Donar
 		var donate_button := Button.new()
-		donate_button.text = "Donar"
+		donate_button.text = "UI_PROPERTIES_DONATE"
 		donate_button.disabled = not can_donate
 		if not can_donate:
-			donate_button.text = "Sin facción"
+			donate_button.text = "FACTION_NONE"
 
 		donation_controls.add_child(donate_button)
 
@@ -90,7 +90,7 @@ func refresh() -> void:
 
 	# Total de ingresos
 	var total_label := Label.new()
-	total_label.text = "INGRESOS TOTALES DIARIOS: %d" % total_income
+	total_label.text = tr("UI_PROPERTIES_TOTAL_INCOME") % total_income
 	total_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	total_label.add_theme_font_size_override("font_size", 20)
 
@@ -114,12 +114,12 @@ func _on_donate_pressed(building_id: String) -> void:
 func _get_faction_name(faction: StringName) -> String:
 	match faction:
 		&"rey":
-			return "Rey"
+			return "FACTION_KING"
 		&"nobleza":
-			return "Nobleza"
+			return "FACTION_NOBILITY"
 		&"clero":
-			return "Clero"
+			return "FACTION_CLERGY"
 		&"descontento":
-			return "Descontento"
+			return "FACTION_DISCONTENT"
 		_:
-			return "Sin facción"
+			return "FACTION_NONE"

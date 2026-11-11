@@ -1,11 +1,11 @@
 extends Control
 
 @export var paragraphs := [
-	"Año del Señor de 1640.",
-	"En la augusta corte de Su Majestad Felipe IV, el Imperio Español, otrora vasto y temido, comienza a crujir bajo el peso de su propia grandeza. ",
-	"En medio de tales turbulencias, el conde-duque de Olivares, valido de Su Majestad y guardián de los secretos del reino, gobierna no sólo con la pluma y la espada, sino con el silencio y la sospecha.",
-	"Su deber es sostener el velo de la influencia y el descontento. Pues en Madrid, cuatro fuerzas invisibles mueven los hilos del poder: la Iglesia, la Nobleza, la Burguesía, y la Plebe.",
-	"Entre ellos, el conde-duque ha de tejer su red de mentiras y verdades, sabiendo que en la corte de España, la lealtad es una moneda tan rara como el oro que falta en sus cofres."
+	"INTRO_1",
+	"INTRO_2",
+	"INTRO_3",
+	"INTRO_4",
+	"INTRO_5"
 ]
 
 @export var fade_duration := 1.0        # segundos para aparecer/desaparecer

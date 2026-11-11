@@ -30,7 +30,7 @@ alignment = 1
 
 [node name="TitleLabel" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer" unique_id=233161069]
 layout_mode = 2
-text = "Titulo de la movida"
+text = "UI_PROPERTIES_TITLE"
 
 [node name="CloseButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer" unique_id=730012105]
 layout_mode = 2

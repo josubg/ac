@@ -11,9 +11,9 @@ var days_since_discontent: int = 0
 var _pause_sources: Dictionary = {}
 
 
-var dias = [ "Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"]
-var meses =["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre",
- "Octubre", "Noviembre", "Diciembre"]
+var dias = [ "DAY_SUNDAY", "DAY_MONDAY", "DAY_TUESDAY", "DAY_WEDNESDAY", "DAY_THURSDAY", "DAY_FRIDAY", "DAY_SATURDAY"]
+var meses =["MONTH_JANUARY", "MONTH_FEBRUARY", "MONTH_MARCH", "MONTH_APRIL", "MONTH_MAY", "MONTH_JUNE", "MONTH_JULY", "MONTH_AUGUST", "MONTH_SEPTEMBER",
+ "MONTH_OCTOBER", "MONTH_NOVEMBER", "MONTH_DECEMBER"]
 var timers : Array[Timer] = []
 
 var last_day: int = -1
@@ -64,10 +64,10 @@ func _process(delta):
 func get_date():
 	var date_map = get_date_map()
 	
-	return "%s, %s de %s de %s" % [
-		dias[date_map["weekday"]],
+	return tr("DATE_FORMAT") % [
+		tr(dias[date_map["weekday"]]),
 		date_map["day"],
-		meses[date_map["month"]- 1],
+		tr(meses[date_map["month"]- 1]),
 		date_map["year"],
 	]
 
