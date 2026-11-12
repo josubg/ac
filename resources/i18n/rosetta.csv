@@ -272,3 +272,10 @@ UI_HUD_TIP_CLERGY,"Favor de la Iglesia. Si llega a cero, caéis en desgracia.","
 UI_HUD_TIP_DISCONTENT,"Descontento del pueblo. Si llega al 100 %, caéis en desgracia.","Popular discontent. If it reaches 100%, you fall from grace."
 UI_HUD_TIP_WEALTH,Reales disponibles y lo que os rinden cada día vuestras propiedades.,Reales in hand and what your properties yield each day.
 UI_END_SKIP_HINT,Espacio o Intro para continuar,Space or Enter to continue
+UI_PAUSE_TITLE,En pausa,Paused
+UI_PAUSE_RESUME,Continuar,Resume
+UI_PAUSE_QUIT,Salir al menú,Quit to menu
+UI_PAUSE_QUIT_CONFIRM,¿Salir? Se perderá la partida,Quit? This game will be lost
+UI_PAUSE_BUTTON,Pausa,Pause
+UI_PAUSE_BUTTON_TIP,Detener el tiempo y abrir el menú (Esc),Stop time and open the menu (Esc)
+UI_HUD_PAUSED,El tiempo está detenido,Time is stopped

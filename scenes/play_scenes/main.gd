@@ -235,8 +235,7 @@ func _on_mission_pressed(mission: Mission) -> void:
 func _unhandled_input(event):
 	if event is InputEventKey:
 		if event.pressed and event.keycode == KEY_ESCAPE:
-			MissionManager.end()
-			GameManager.go_to_menu()
+			$PauseMenu.open()
 
 func rey_strikes(number):
 	if number == 1:

@@ -98,6 +98,15 @@ func _run() -> void:
 		await _wait(0.5)
 		tm.pause()
 		await _shot("05_juego")
+		var pausa = main.get_node("PauseMenu")
+		pausa.open()
+		await _wait(0.3)
+		await _shot("05b_pausa")
+		pausa._on_options_pressed()
+		await _wait(0.2)
+		await _shot("05c_pausa_opciones")
+		pausa.close()
+		tm.pause()
 
 		var m0 = deployed[0]
 		main.get_node("CanvasLayerMission/MissionWindow").show_mission(m0)

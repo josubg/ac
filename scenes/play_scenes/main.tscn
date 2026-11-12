@@ -23,6 +23,8 @@
 [ext_resource type="Texture2D" path="res://assets/ui/icons/crown.svg" id="ui_crown"]
 [ext_resource type="Texture2D" path="res://assets/ui/icons/church.svg" id="ui_church"]
 [ext_resource type="Texture2D" path="res://assets/ui/icons/crested-helmet.svg" id="ui_helmet"]
+[ext_resource type="PackedScene" path="res://scenes/ui/pause_menu.tscn" id="30_pausa"]
+[ext_resource type="Script" path="res://scenes/ui/pause_indicator.gd" id="31_pausado"]
 
 [sub_resource type="StyleBoxEmpty" id="Margen_izq"]
 content_margin_left = 28.0
@@ -197,6 +199,35 @@ theme_type_variation = &"Fecha"
 text = "Domingo, 1 de enero de 1640"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="PausedLabel" type="Label" parent="CanvasLayerMission/HUD/TopBar/DatePanel"]
+visible = false
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 2.0
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+theme_type_variation = &"NotaCuero"
+theme_override_colors/font_color = Color(0.902, 0.827, 0.659, 1)
+theme_override_colors/font_outline_color = Color(0.086, 0.055, 0.035, 0.9)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 22
+text = "UI_HUD_PAUSED"
+horizontal_alignment = 1
+script = ExtResource("31_pausado")
+
+[node name="PauseButton" type="Button" parent="CanvasLayerMission/HUD/TopBar"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_vertical = 4
+tooltip_text = "UI_PAUSE_BUTTON_TIP"
+theme_type_variation = &"BotonCuero"
+text = "UI_PAUSE_BUTTON"
 
 [node name="SpacerRight" type="AspectRatioContainer" parent="CanvasLayerMission/HUD/TopBar" unique_id=1718956094]
 layout_mode = 2
@@ -438,6 +469,8 @@ offset_bottom = 104.0
 [node name="PropertiesWindow" parent="CanvasLayerMission" unique_id=934365827 instance=ExtResource("15_sm81j")]
 visible = false
 
+[node name="PauseMenu" parent="." instance=ExtResource("30_pausa")]
+
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1628111680]
 stream = ExtResource("14_2j01o")
 volume_db = -5.0
@@ -448,3 +481,5 @@ bus = &"Musica"
 stream = ExtResource("15_eq487")
 volume_db = -16.0
 bus = &"Efectos"
+
+[connection signal="pressed" from="CanvasLayerMission/HUD/TopBar/PauseButton" to="PauseMenu" method="toggle"]
