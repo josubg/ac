@@ -29,6 +29,7 @@ var status: AGENT_STATUS = AGENT_STATUS.AVAILABLE :
 			$Portrait.texture = self.available_texture
 		else:
 			$Portrait.texture = self.assigned_texture
+		_show_availability()
 
 var available: bool: 
 	get():
@@ -38,10 +39,18 @@ func _ready() -> void:
 	label.text = full_name
 	label_2.text = "AGENT_FACTION_" + faction.to_upper()
 	portrait.texture = available_texture
+	_show_availability()
 	if not mouse_entered.is_connected(_on_mouse_entered):
 		mouse_entered.connect(_on_mouse_entered)
 	if not mouse_exited.is_connected(_on_mouse_exited):
 		mouse_exited.connect(_on_mouse_exited)
+
+## Presentación: un agente ocupado se ve apagado, con cursor de prohibido y un aviso.
+func _show_availability() -> void:
+	var free := status == AGENT_STATUS.AVAILABLE
+	$Portrait.self_modulate = Color.WHITE if free else Color(0.55, 0.5, 0.45)
+	mouse_default_cursor_shape = Control.CURSOR_DRAG if free else Control.CURSOR_FORBIDDEN
+	tooltip_text = "" if free else "UI_AGENT_BUSY"
 
 func unselect():
 	# When agent is removed from unstarted mission
@@ -91,11 +100,5 @@ func hide_stats():
 	tween.tween_property(stats_panel, "modulate:a", 0.0, 0.3)
 	tween.finished.connect(func(): stats_panel.visible = false)
 	
-func generate_drag_portrait():
-	var preview = TextureRect.new()
-	preview.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	preview.texture = portrait.texture
-	preview.custom_minimum_size = Vector2(64, 64)  # opcional
-	preview.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT
-	preview.z_index= 1000
-	return preview
+func generate_drag_portrait() -> Control:
+	return DragPreview.build(portrait.texture)

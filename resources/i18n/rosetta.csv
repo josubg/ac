@@ -279,3 +279,4 @@ UI_PAUSE_QUIT_CONFIRM,¿Salir? Se perderá la partida,Quit? This game will be lo
 UI_PAUSE_BUTTON,Pausa,Pause
 UI_PAUSE_BUTTON_TIP,Detener el tiempo y abrir el menú (Esc),Stop time and open the menu (Esc)
 UI_HUD_PAUSED,El tiempo está detenido,Time is stopped
+UI_AGENT_BUSY,Este agente ya está en una misión,This agent is already on a mission

@@ -112,6 +112,23 @@ func _run() -> void:
 		main.get_node("CanvasLayerMission/MissionWindow").show_mission(m0)
 		await _wait(0.4)
 		await _shot("06_mision")
+		# Arrastre simulado: huecos iluminados, uno bajo el cursor, un agente ocupado
+		var slots = main.get_node("CanvasLayerMission/MissionWindow").agent_roster.get_children()
+		for sl in slots:
+			sl._set_frame(sl.FRAME_READY)
+		slots[1]._set_frame(slots[1].FRAME_HOVER)
+		var paca = main.find_child("Paca", true, false)
+		var juanito = main.find_child("Juanito", true, false)
+		juanito.status = juanito.AGENT_STATUS.ASSIGNED
+		var vista: Control = DragPreview.build(paca.portrait.texture)
+		main.get_node("CanvasLayerMission").add_child(vista)
+		vista.position = slots[1].get_global_rect().get_center() + Vector2(40, 30)
+		await _wait(0.2)
+		await _shot("06c_arrastre")
+		vista.queue_free()
+		for sl in slots:
+			sl._set_frame(sl.FRAME_IDLE)
+		juanito.status = juanito.AGENT_STATUS.AVAILABLE
 		# Peor caso de texto: título y cuerpo más largos de rosetta
 		var mw = main.get_node("CanvasLayerMission/MissionWindow")
 		mw.title_label.text = "MISSION_031_TITLE"
