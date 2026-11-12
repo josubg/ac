@@ -13,7 +13,14 @@ var mission: Mission
 func _pressed() -> void:
 	emit_signal("mission_pressed", mission)
 	
+## Con «reducir movimiento» el lacre no parpadea: se queda iluminado.
+const STEADY_HIGHLIGHT := Color(1.25, 1.12, 1.0)
+
 func start_blinking() -> void:
+	if not Juice.motion_enabled():
+		anim.stop()
+		modulate = STEADY_HIGHLIGHT
+		return
 	if anim.is_playing():
 		return
 	anim.play("blink")
@@ -22,6 +29,7 @@ func start_blinking() -> void:
 	
 func stop_blinking() -> void:
 	anim.stop()
+	modulate = Color.WHITE
 
 func set_on_course() -> void:
 	start_blinking()

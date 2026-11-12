@@ -41,3 +41,9 @@ Escaneos de ambientCG (https://ambientcg.com, licencia https://docs.ambientcg.co
 | `textures/src/Leather026_1K-JPG_Color.jpg` | https://ambientcg.com/view?id=Leather026 |
 
 Las texturas finales de `textures/*.png` (pergamino, cuero, botones de lacre, viñeta) se generan a partir de esos escaneos con `tools/ui_textures.py`; son obra derivada propia del proyecto.
+
+## Ilustraciones derivadas
+
+| Fichero | Origen | Licencia |
+|---|---|---|
+| `resources/villa_olivares.png` | Composición de `resources/mercado.png` (patio porticado) y `resources/jardin.png` (parterre), ilustraciones originales del juego; se quitan los puestos y el rótulo «Mercado». Script: `tools/villa_olivares.py`. | Arte propio del proyecto |
