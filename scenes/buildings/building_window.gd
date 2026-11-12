@@ -28,8 +28,8 @@ func refresh() -> void:
 	name_label.text = building.building_name
 	building_image.texture = building.image
 	descr_label.text = building.description
-	cost_label.text = tr("UI_BUILDING_COST") % building.purchase_cost
-	income_label.text = tr("UI_BUILDING_INCOME") % building.income_per_turn
+	cost_label.text = tr("UI_BUILDING_COST") % LocaleSettings.format_int(building.purchase_cost)
+	income_label.text = tr("UI_BUILDING_INCOME") % LocaleSettings.format_int(building.income_per_turn)
 
 	var can_buy := (
 		building.available

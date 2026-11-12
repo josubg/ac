@@ -45,7 +45,7 @@ func refresh() -> void:
 
 		# Ingresos
 		var income_label := Label.new()
-		income_label.text = tr("UI_PROPERTIES_DAILY_INCOME") % building.income_per_turn
+		income_label.text = tr("UI_PROPERTIES_DAILY_INCOME") % LocaleSettings.format_int(building.income_per_turn)
 		info.add_child(income_label)
 		var influence_label := Label.new()
 		influence_label.text = tr("UI_PROPERTIES_DAILY_INFLUENCE") % [building.influence_per_turn,tr(_get_faction_name(building.faction_influence))]
@@ -90,7 +90,7 @@ func refresh() -> void:
 
 	# Total de ingresos
 	var total_label := Label.new()
-	total_label.text = tr("UI_PROPERTIES_TOTAL_INCOME") % total_income
+	total_label.text = tr("UI_PROPERTIES_TOTAL_INCOME") % LocaleSettings.format_int(total_income)
 	total_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	total_label.add_theme_font_size_override("font_size", 20)
 

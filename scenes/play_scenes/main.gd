@@ -192,13 +192,13 @@ func update_clero(value):
 	_update_color(clero_bar, value,false)
 
 func update_riqueza(value):
-	riqueza_label.text = str(value)
+	riqueza_label.text = LocaleSettings.format_int(value)
 	update_mod_riqueza()
 	
 func update_mod_riqueza():
 	var breakdown = BuildingManager.get_player_income_breakdown()
 	if breakdown != {}:
-		riqueza_mod_label.text = tr("UI_HUD_INCOME_PER_DAY") % breakdown["total"]
+		riqueza_mod_label.text = tr("UI_HUD_INCOME_PER_DAY") % LocaleSettings.format_int(breakdown["total"])
 	
 func update_descontento(value):
 	descontento_bar.value = value

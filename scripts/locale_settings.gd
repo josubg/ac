@@ -31,3 +31,17 @@ static func set_and_save(locale: String) -> void:
 	cfg.load(SETTINGS_PATH)
 	cfg.set_value(SECTION, KEY, locale)
 	cfg.save(SETTINGS_PATH)
+
+
+## Entero con separador de millares según el idioma: en «2,500»; es «2500» y «12.500»
+## (en español los números de cuatro cifras no llevan separador).
+static func format_int(value: int) -> String:
+	var digits := str(absi(value))
+	var english := TranslationServer.get_locale().begins_with("en")
+	if english or digits.length() > 4:
+		var sep := "," if english else "."
+		var i := digits.length() - 3
+		while i > 0:
+			digits = digits.insert(i, sep)
+			i -= 3
+	return ("-" if value < 0 else "") + digits
