@@ -55,14 +55,14 @@ func setup(main_node: Node) -> void:
 	Player.rey_updated.connect(_on_stat.bind(&"rey"))
 	Player.nobleza_updated.connect(_on_stat.bind(&"nobleza"))
 	Player.clero_updated.connect(_on_stat.bind(&"clero"))
-	Player.descontentoy_updated.connect(_on_stat.bind(&"descontento"))
+	Player.descontento_updated.connect(_on_stat.bind(&"descontento"))
 	Player.riqueza_updated.connect(_on_riqueza)
 	Player.rey_strike.connect(_on_strike.bind(&"rey"))
 	Player.noble_strike.connect(_on_strike.bind(&"nobleza"))
 	Player.iglesia_strike.connect(_on_strike.bind(&"clero"))
 	MissionManager.added_mission.connect(_on_mission_added)
 	MissionManager.warning_mission.connect(_on_mission_updated)
-	MissionManager.clossed_mission.connect(_on_mission_closed)
+	MissionManager.closed_mission.connect(_on_mission_closed)
 
 	# Ventanas (aparecen con show()/hide()).
 	for key in [&"mission_window", &"mission_resolution_window", &"building_window", &"properties_window"]:
@@ -84,12 +84,12 @@ func _exit_tree() -> void:
 	# Las señales de autoloads sobreviven a la escena: desconectar.
 	for pair in [
 		[Player.rey_updated, _on_stat], [Player.nobleza_updated, _on_stat],
-		[Player.clero_updated, _on_stat], [Player.descontentoy_updated, _on_stat],
+		[Player.clero_updated, _on_stat], [Player.descontento_updated, _on_stat],
 		[Player.riqueza_updated, _on_riqueza], [Player.rey_strike, _on_strike],
 		[Player.noble_strike, _on_strike], [Player.iglesia_strike, _on_strike],
 		[MissionManager.added_mission, _on_mission_added],
 		[MissionManager.warning_mission, _on_mission_updated],
-		[MissionManager.clossed_mission, _on_mission_closed],
+		[MissionManager.closed_mission, _on_mission_closed],
 	]:
 		var sig: Signal = pair[0]
 		for c in sig.get_connections():
@@ -631,7 +631,7 @@ func _on_agents_changed() -> void:
 
 func _snapshot_slots(feedback: bool) -> void:
 	var window: Node = main.get(&"mission_window")
-	var roast: Node = window.get(&"agent_roast") if window else null
+	var roast: Node = window.get(&"agent_roster") if window else null
 	if roast == null:
 		return
 	for slot in roast.get_children():

@@ -20,14 +20,14 @@ extends Node
 #Buildings
 @onready var buildings_container: Node2D = $Buildings
 @onready var building_node_scene: PackedScene = load(
-	"res://scenes/buildings/buildingNode.tscn"
+	"res://scenes/buildings/building_node.tscn"
 )
 @onready var properties_button: Button = $CanvasLayerMission/HUD/TopBar/WealthPanel/WealthRow/PropertiesButton
 @onready var properties_window: PropertiesWindow = $CanvasLayerMission/PropertiesWindow
 
 @onready var building_window: Control = $CanvasLayerMission/BuildingWindow
 
-@onready var mission_button_scene: PackedScene = load("res://scenes/misions/MissionButton.tscn")
+@onready var mission_button_scene: PackedScene = load("res://scenes/missions/mission_button.tscn")
 const BASE_RES = Vector2(1920, 1080)
 
 var buttons: Array[MissionButton]= []
@@ -39,7 +39,7 @@ func _ready() -> void:
 	Player.clero_updated.connect(update_clero)
 	Player.nobleza_updated.connect(update_nobleza)
 	Player.rey_updated.connect(update_rey)
-	Player.descontentoy_updated.connect(update_descontento)
+	Player.descontento_updated.connect(update_descontento)
 	Player.rey_strike.connect(rey_strikes)
 	Player.noble_strike.connect(nobleza_strikes)
 	Player.iglesia_strike.connect(iglesia_strikes)
@@ -47,7 +47,7 @@ func _ready() -> void:
 	
 	MissionManager.added_mission.connect(mission_added)
 	MissionManager.warning_mission.connect(mission_updated)
-	MissionManager.clossed_mission.connect(mission_removed)
+	MissionManager.closed_mission.connect(mission_removed)
 	
 	create_buildings()
 

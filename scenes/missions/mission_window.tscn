@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://hfvv1kukfi5c"]
 
-[ext_resource type="Script" uid="uid://b4vfbvoub2w7g" path="res://scenes/misions/mission_window.gd" id="1_4fb1n"]
+[ext_resource type="Script" uid="uid://b4vfbvoub2w7g" path="res://scenes/missions/mission_window.gd" id="1_4fb1n"]
 [ext_resource type="AudioStream" uid="uid://dfqxrd4o4u128" path="res://resources/mision_papel.mp3" id="4_yrtqx"]
 [ext_resource type="Texture2D" uid="uid://7pvuqc44x556" path="res://sprites/lacre_mision.png" id="5_lacre"]
 [ext_resource type="Texture2D" path="res://assets/ui/icons/fleur-de-lys.svg" id="6_flor"]
@@ -99,7 +99,7 @@ theme_override_constants/margin_left = 90
 theme_override_constants/margin_top = 0
 theme_override_constants/margin_right = 90
 
-[node name="AgentRoast" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer" unique_id=2032614169]
+[node name="AgentRoster" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer" unique_id=2032614169]
 custom_minimum_size = Vector2(0, 140)
 layout_mode = 2
 size_flags_vertical = 0

@@ -5,7 +5,7 @@ enum State { NONE, INTRO, MENU, PLAYING, GAMEOVER }
 var state : State = State.NONE
 
 # Rutas a escenas (ajusta según tu proyecto)
-@export var intro_scene_path  : String = "res://scenes/Intro_Video.tscn"
+@export var intro_scene_path  : String = "res://scenes/intro_video.tscn"
 @export var logo_scene_path : String = "res://scenes/logos_intro.tscn"
 @export var menu_scene_path   : String = "res://scenes/menu_inicio.tscn"
 @export var game_scene_path   : String = "res://scenes/play_scenes/main.tscn"

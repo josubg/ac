@@ -9,7 +9,7 @@ var agent: Agent
 func _ready() -> void:
 	self.set_drag_forwarding(self.drag,self.can_drop_data,self.drop_data)
 
-func drag(_possition):
+func drag(_position):
 	var old_agent = self.agent
 	var drag_portrait = self.agent.generate_drag_portrait()
 	set_drag_preview(drag_portrait)

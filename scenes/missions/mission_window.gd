@@ -2,12 +2,12 @@ class_name MissionWindow extends Control
 
 @onready var title_label: Label = $PanelContainer/MarginContainer/VBoxContainer/TitleLabel
 @onready var description_label: Label = $PanelContainer/MarginContainer/VBoxContainer/Texto/DescriptionLabel
-@onready var agent_roast: HBoxContainer = $PanelContainer/MarginContainer/VBoxContainer/MarginContainer/AgentRoast
+@onready var agent_roster: HBoxContainer = $PanelContainer/MarginContainer/VBoxContainer/MarginContainer/AgentRoster
 @onready var audio_stream_player: AudioStreamPlayer = $AudioStreamPlayer
 @onready var send_button: Button = $PanelContainer/MarginContainer/VBoxContainer/Send
 
 
-const AGENT_SLOT = preload("res://scenes/agents/AgentSlot.tscn")
+const AGENT_SLOT = preload("res://scenes/agents/agent_slot.tscn")
 var mission : Mission
 
 func _ready() -> void:
@@ -23,8 +23,8 @@ func show_mission(new_mission: Mission) -> void:
 		if mission and mission.agents_changed.is_connected(update_send_button):
 			mission.agents_changed.disconnect(update_send_button)
 		
-		for agent_slot in agent_roast.get_children():
-			agent_roast.remove_child(agent_slot)
+		for agent_slot in agent_roster.get_children():
+			agent_roster.remove_child(agent_slot)
 			agent_slot.queue_free()
 
 		mission = new_mission
@@ -35,7 +35,7 @@ func show_mission(new_mission: Mission) -> void:
 		for x in mission.slots:
 			var agent_slot = AGENT_SLOT.instantiate()
 			agent_slot.mission = mission
-			agent_roast.add_child(agent_slot)
+			agent_roster.add_child(agent_slot)
 
 	send_button.disabled = mission.agents.is_empty()
 	self.show()

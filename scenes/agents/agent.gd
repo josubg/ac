@@ -5,7 +5,7 @@ enum AGENT_STATUS {AVAILABLE, DRAGGED, ASSIGNED, DEPLOYED, RESTING}
 @export var full_name: String
 @export var assigned_texture: Texture2D
 @export var available_texture: Texture2D
-@export var biografy: String
+@export var biography: String
 @export var rest_time: int = 30
 @export_enum(Factions.noble, Factions.cura, Factions.malechor) var faction: String
 

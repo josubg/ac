@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://7pvuqc44x556" path="res://sprites/lacre_mision.png" id="1_5a82t"]
 [ext_resource type="Texture2D" uid="uid://ejtx3jg7mryc" path="res://sprites/lacre_mision_on.png" id="2_6ex2o"]
-[ext_resource type="Script" uid="uid://5yqjmn56hfb7" path="res://scenes/misions/mission_button.gd" id="3_flque"]
+[ext_resource type="Script" uid="uid://5yqjmn56hfb7" path="res://scenes/missions/mission_button.gd" id="3_flque"]
 [ext_resource type="Texture2D" uid="uid://ca1s175fwtsq4" path="res://sprites/lacre azul.png" id="4_flque"]
 [ext_resource type="Texture2D" uid="uid://dmxepurr6fgom" path="res://sprites/lacre  brillo azul.png" id="5_g23r0"]
 

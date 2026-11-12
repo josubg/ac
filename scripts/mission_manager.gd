@@ -2,7 +2,7 @@ extends Node
 
 signal added_mission(mission: Mission)
 signal warning_mission(mission: Mission)
-signal clossed_mission(mission: Mission)
+signal closed_mission(mission: Mission)
 
 var scheduled_missions: Dictionary = {}
 var active_missions  = {}
@@ -53,7 +53,7 @@ func _process(_delta: float) -> void:
 			mission.resolve_mission()
 
 		if mission.resolved():
-			resolve_mision(mission)
+			resolve_mission(mission)
 	 
 func load_missions(path: String) -> bool:
 	set_process(false)
@@ -154,7 +154,7 @@ func expire_mission(mission: Mission):
 	active_missions.erase(mission)
 	mission.status = Mission.MISSION_STATUS.expired
 	Player.failed_mission(mission)
-	clossed_mission.emit(mission)
+	closed_mission.emit(mission)
 	DebugLog.log("Mission Manager: Expired mision: [%s]" % mission.titulo)
 	
 func send_agents(mission: Mission):
@@ -164,20 +164,20 @@ func send_agents(mission: Mission):
 	warning_mission.emit(mission)
 	DebugLog.log("Mission Manager: Agents sent: [%s]" % mission.titulo)
 	
-func resolve_mision(mission: Mission) -> void:
+func resolve_mission(mission: Mission) -> void:
 	warning_mission.emit(mission)
 	on_course_missions.erase(mission)
 	review_missions.append(mission)
 	if mission.success():
-		Player.successul_mission(mission)
+		Player.successful_mission(mission)
 	else:
 		Player.failed_mission(mission)
 	DebugLog.log("Mission Manager: Mission Acomplished: [%s]" % mission.titulo)
 	
-func review_mision(mission: Mission) -> void:
+func review_mission(mission: Mission) -> void:
 	review_missions.erase(mission)
 	mission.send_agents_home()
-	clossed_mission.emit(mission)
+	closed_mission.emit(mission)
 	DebugLog.log("Mission Manager: Reviewed mision: [%s]" % mission.titulo)
 
 func end():

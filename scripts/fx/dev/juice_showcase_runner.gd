@@ -67,7 +67,7 @@ func _run() -> void:
 	await _shot("03_ventana_entra")
 	await _wait(0.4)
 	var agents := main.find_children("*", "Agent", true, false)
-	var roast: Node = main.mission_window.agent_roast
+	var roast: Node = main.mission_window.agent_roster
 	for i in mini(2, roast.get_child_count()):
 		roast.get_child(i).drop_data(Vector2.ZERO, agents[i])
 		await _wait(0.12)
@@ -83,7 +83,7 @@ func _run() -> void:
 
 	# 5. Resultado: éxito.
 	b.status = Mission.MISSION_STATUS.succeded
-	MissionManager.resolve_mision(b)
+	MissionManager.resolve_mission(b)
 	await _wait(0.25)
 	await _shot("06_barras_y_lacre_resuelto")
 	await _wait(1.2)
@@ -100,7 +100,7 @@ func _run() -> void:
 	MissionManager.send_agents(c)
 	await _wait(0.6)
 	c.status = Mission.MISSION_STATUS.failed
-	MissionManager.resolve_mision(c)
+	MissionManager.resolve_mission(c)
 	await _wait(0.8)
 	main._on_mission_pressed(c)
 	await _wait(0.4)

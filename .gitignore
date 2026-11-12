@@ -4,3 +4,6 @@
 dist
 dist.zip
 resources/i18n/*.translation
+
+# Copias temporales del editor
+*.tmp

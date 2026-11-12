@@ -30,7 +30,7 @@ func show_mission(new_mission: Mission) -> void:
 
 func _on_end_mission_button_pressed() -> void:
 	TimeManager.resume(self)
-	MissionManager.review_mision(self.mission)
+	MissionManager.review_mission(self.mission)
 	self.mission = null
 	self.hide()
 

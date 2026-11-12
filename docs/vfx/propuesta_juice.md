@@ -268,12 +268,12 @@ con el `AnimationPlayer` del lacre (que anima `modulate`; el juice usa
 | Momento | Señal o fuente existente | Lee de `main.gd` |
 |---|---|---|
 | Aparece, aviso, en curso, resuelta | `MissionManager.added_mission`, `warning_mission` (+ `mission.status`) | `buttons` |
-| Caduca / cerrada | `MissionManager.clossed_mission` | — |
-| Barras | `Player.rey_updated`, `nobleza_updated`, `clero_updated`, `descontentoy_updated` | `rey_bar`, `nobleza_bar`, `clero_bar`, `descontento_bar` |
+| Caduca / cerrada | `MissionManager.closed_mission` | — |
+| Barras | `Player.rey_updated`, `nobleza_updated`, `clero_updated`, `descontento_updated` | `rey_bar`, `nobleza_bar`, `clero_bar`, `descontento_bar` |
 | Umbrales | `Player.rey_strike`, `noble_strike`, `iglesia_strike` | — |
 | Riqueza, compra, donación | `Player.riqueza_updated` + `BuildingManager.buildings[*].owner` | `riqueza_label`, `buildings_container`, `building_window` |
 | Ventanas | `visibility_changed` de `mission_window`, `mission_resolution_window`, `building_window`, `properties_window` | ídem + `PanelContainer` hijo |
-| Agentes en huecos | `Mission.agents_changed` de la misión abierta | `mission_window.agent_roast` |
+| Agentes en huecos | `Mission.agents_changed` de la misión abierta | `mission_window.agent_roster` |
 | Monja | `visibility_changed` de `monja_speak/Label` | `monja_speak` |
 | Días | `TimeManager.last_day` (sondeo en `_process`) | `time_label` |
 | Transiciones y finales | `GameManager.scene_changed`, `game_started` | — |
@@ -323,7 +323,7 @@ Al terminar, el ajuste de reducir movimiento queda guardado en
 Por orden de impacto/coste:
 
 1. Arrastre de agentes (inclinación + tela) y resalte del hueco válido: dos
-   líneas en `Agent.gd` / `agent_slot.gd`.
+   líneas en `agent.gd` / `agent_slot.gd`.
 2. Fundido de **salida** entre escenas: `await Juice.fade_out()` en
    `GameManager._change_scene_to_file`.
 3. Barras y riqueza que se animan hasta el valor nuevo (tocar `update_*` en

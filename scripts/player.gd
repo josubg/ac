@@ -3,7 +3,7 @@ extends Node
 signal rey_updated(value)
 signal clero_updated(value)
 signal nobleza_updated(value)
-signal descontentoy_updated(value)
+signal descontento_updated(value)
 signal riqueza_updated(value)
 
 signal rey_strike(n : int)
@@ -49,7 +49,7 @@ var clero: int :
 var descontento: int :
 	set(value):
 		descontento = clampi(int(value), 0, 100)
-		descontentoy_updated.emit(descontento)
+		descontento_updated.emit(descontento)
 		check_factions()
 
 var riqueza: int :
@@ -67,7 +67,7 @@ func start():
 	self.riqueza = 0
 	BuildingManager.buy_building("0")
 	
-func successul_mission(mission: Mission):
+func successful_mission(mission: Mission):
 	DebugLog.log("Player: Succesfull mission: ", mission)
 	clero += mission.clero * bono
 	rey += mission.rey * bono

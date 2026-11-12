@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://jvho4fxquili"]
 
-[ext_resource type="Script" uid="uid://m61d06e3bm43" path="res://scenes/misions/mission_resolution_window.gd" id="1_80knw"]
+[ext_resource type="Script" uid="uid://m61d06e3bm43" path="res://scenes/missions/mission_resolution_window.gd" id="1_80knw"]
 [ext_resource type="Texture2D" uid="uid://7pvuqc44x556" path="res://sprites/lacre_mision.png" id="2_lacre"]
 [ext_resource type="Texture2D" path="res://assets/ui/icons/fleur-de-lys.svg" id="3_flor"]
 
