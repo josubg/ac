@@ -194,7 +194,7 @@ offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"Fecha"
-text = "Domingo, 1 de Enero de 1640"
+text = "Domingo, 1 de enero de 1640"
 horizontal_alignment = 1
 vertical_alignment = 1
 

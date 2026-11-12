@@ -14,7 +14,7 @@ extends SceneTree
 const ROSETTA := "res://resources/i18n/rosetta.csv"
 const LOCALES := ["es", "en"]
 # Textos de escena que no se traducen a propósito (símbolos o marcadores que el código sobrescribe).
-const SCENE_TEXT_WHITELIST := ["X", "0", "TIME LABEL", "Español", "English", "Domingo, 1 de Enero de 1640", "[center][color=#c0392b]C[/color]uatro [color=#c0392b]C[/color]ortes\n[i]Madrid, MDCXL[/i][/center]"]
+const SCENE_TEXT_WHITELIST := ["X", "0", "TIME LABEL", "Español", "English", "Domingo, 1 de enero de 1640", "[center][color=#c0392b]C[/color]uatro [color=#c0392b]C[/color]ortes\n[i]Madrid, MDCXL[/i][/center]"]
 # Filas cuyo inglés es igual al español a propósito (nombres propios, préstamos).
 const IDENTICAL_OK := ["UI_MENU_TUTORIAL", "UI_TUTORIAL_TITLE", "AGENT_PACA_NAME", "AGENT_JUANITO_NAME",
 	"AGENT_AMPARO_NAME", "AGENT_FACTION_NOBLE", "MISSION_022_TITLE"]
