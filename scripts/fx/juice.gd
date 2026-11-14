@@ -49,7 +49,8 @@ var reduce_motion: bool = false:
 		settings_changed.emit()
 
 var _fx_layer: CanvasLayer
-var _world_fx: CanvasItem = null   # capa de efectos del mundo, bajo las ventanas
+var _world_fx: CanvasItem = null   # partículas del mapa: bajo el HUD y las ventanas
+var _text_fx: CanvasItem = null    # números flotantes del HUD: sobre el HUD, bajo las ventanas
 var _overlay_layer: CanvasLayer
 var _overlay: ColorRect
 var _edge: ColorRect
@@ -60,6 +61,7 @@ var _grade_tw: Tween
 var _edge_tw: Tween
 var _players: Array[AudioStreamPlayer] = []
 var _next_player := 0
+var _last_sfx := {}                  # sonido -> ms de la última vez
 var _trauma := 0.0
 var _shake_time := 0.0
 var _shaking := false
@@ -69,6 +71,8 @@ var _post: ShaderMaterial = null     # postprocesado del mapa (lo registra MainJ
 var _ripples: Array = []             # [pos_uv, age, strength, duration]
 var _grade := Vector2.ZERO           # desaturación/sepia transitorias
 var _base_grade := Vector2.ZERO      # desaturación/sepia de fondo (Descontento)
+var _fx_time := 0.0                  # reloj del postprocesado (se para en pausa)
+var _frozen := false                 # menú de pausa abierto: efectos congelados
 
 ## Bus de audio para los efectos (lo crea ui-redesign; si no existe, Master).
 const SFX_BUS := &"Efectos"
@@ -79,6 +83,7 @@ func _ready() -> void:
 	_load_settings()
 	_build_layers()
 	var bus := SFX_BUS if AudioServer.get_bus_index(SFX_BUS) != -1 else &"Master"
+	_ensure_limiter(bus)
 	for i in 8:
 		var player := AudioStreamPlayer.new()
 		player.bus = bus
@@ -87,6 +92,25 @@ func _ready() -> void:
 	get_tree().node_added.connect(_on_node_added)
 	_warm_up.call_deferred()
 	_connect_game_manager.call_deferred()
+
+
+## Las cachés estáticas (sonidos, texturas) viven fuera del árbol: se vacían
+## al salir para no dejar recursos vivos al cerrar el juego.
+func _exit_tree() -> void:
+	JuiceSfx.clear_cache()
+	JuiceParticles.clear_cache()
+
+
+## Limitador al final del bus de efectos: si coinciden varios sonidos (umbral +
+## monja + lacre) el pico se queda en -1 dBFS en vez de saturar.
+func _ensure_limiter(bus: StringName) -> void:
+	var idx := AudioServer.get_bus_index(bus)
+	for i in AudioServer.get_bus_effect_count(idx):
+		if AudioServer.get_bus_effect(idx, i) is AudioEffectHardLimiter:
+			return
+	var limiter := AudioEffectHardLimiter.new()
+	limiter.ceiling_db = -1.0
+	AudioServer.add_bus_effect(idx, limiter)
 
 
 ## Precalienta los materiales de partículas (evita el tirón del primer uso).
@@ -235,7 +259,7 @@ func shake(intensity: float = 0.3) -> void:
 
 func _process(delta: float) -> void:
 	_process_post(delta)
-	if _trauma > 0.0:
+	if _trauma > 0.0 and not _frozen:
 		_shaking = true
 		_shake_time += delta
 		_trauma = maxf(0.0, _trauma - delta * 1.4)
@@ -293,8 +317,9 @@ func set_base_grade(desat: float, sepia_amount: float) -> void:
 
 
 func _process_post(delta: float) -> void:
-	if _post == null or not is_instance_valid(_post):
+	if _post == null or not is_instance_valid(_post) or _frozen:
 		return
+	_fx_time += delta
 	for r in _ripples:
 		r[1] += delta / r[3]
 	_ripples = _ripples.filter(func(r): return r[1] < 1.0)
@@ -312,6 +337,7 @@ func _apply_post() -> void:
 	_post.set_shader_parameter(&"ripples", data)
 	_post.set_shader_parameter(&"desaturate", clampf(_base_grade.x + _grade.x, 0.0, 1.0))
 	_post.set_shader_parameter(&"sepia", clampf(_base_grade.y + _grade.y, 0.0, 1.0))
+	_post.set_shader_parameter(&"fx_time", _fx_time)
 	_post.set_shader_parameter(&"grain_speed", 0.0 if reduce_motion or OS.has_feature("web") else 1.0)
 	_post.set_shader_parameter(&"grain", 0.03 if enabled else 0.0)
 
@@ -522,14 +548,58 @@ func screen_center(node: CanvasItem) -> Vector2:
 ## gold, coins, glint, stamp. amount escala la densidad.
 ## Contenedor para los efectos del mundo (lacres, edificios, barras): debe
 ## estar por debajo de las ventanas y de la monja. Lo registra MainJuice.
-func register_world_fx(host: CanvasItem) -> void:
+func register_world_fx(host: CanvasItem, text_host: CanvasItem = null) -> void:
 	_world_fx = host
+	_text_fx = text_host
 
 
 func _fx_parent(top: bool) -> Node:
 	if not top and _world_fx != null and is_instance_valid(_world_fx) and _world_fx.is_inside_tree():
 		return _world_fx
 	return _fx_layer
+
+
+## Ráfaga dentro de una ventana, por DEBAJO de su texto: se cuelga de un
+## Node2D que es el primer hijo de `panel` (se dibuja tras el fondo del panel
+## y antes que sus etiquetas). Así la tinta o el lacre nunca tapan lo que se lee.
+func burst_under(panel: CanvasItem, screen_pos: Vector2, kind: StringName, amount: float = 1.0) -> void:
+	if not enabled or reduce_motion or not _valid(panel):
+		return
+	var host: Node2D = panel.get_node_or_null(^"JuiceUnderText")
+	if host == null:
+		host = Node2D.new()
+		host.name = "JuiceUnderText"
+		panel.add_child(host)
+		panel.move_child(host, 0)
+	# Más lentas y breves que en el mapa: se quedan alrededor del lacre, en el
+	# margen de la carta, sin llegar al texto.
+	var p := JuiceParticles.make_burst(kind, amount, 0.6)
+	p.lifetime *= 0.6
+	p.local_coords = true   # viajan con la ventana (que entra con un pequeño zoom)
+	host.add_child(p)
+	p.global_position = screen_pos
+	p.emitting = true
+	p.finished.connect(p.queue_free)
+
+
+## Menú de pausa: congela partículas, textos flotantes, ondas, grano y
+## temblor, y oculta la capa superior para que nada quede sobre el menú.
+func set_frozen(on: bool) -> void:
+	if _frozen == on:
+		return
+	_frozen = on
+	var mode := Node.PROCESS_MODE_DISABLED if on else Node.PROCESS_MODE_INHERIT
+	for host in [_world_fx, _text_fx]:
+		if host != null and is_instance_valid(host):
+			host.process_mode = mode
+	_fx_layer.process_mode = mode
+	_fx_layer.visible = not on
+	for tw in [_grade_tw, _edge_tw]:
+		if tw and tw.is_valid():
+			if on:
+				tw.pause()
+			else:
+				tw.play()
 
 
 ## top = true: por encima de todo (efectos que salen de una ventana abierta).
@@ -541,25 +611,29 @@ func burst(screen_pos: Vector2, kind: StringName, amount: float = 1.0, top: bool
 	p.position = screen_pos
 	_fx_parent(top).add_child(p)
 	p.emitting = true
-	var life: float = p.get_meta(&"juice_life", 2.0)
-	get_tree().create_timer(life, true, false, true).timeout.connect(p.queue_free)
+	# Se libera al acabar (no con un temporizador: congelada en pausa, espera).
+	p.finished.connect(p.queue_free)
 
 
 ## Texto flotante (+5, −10…) que sube y se desvanece.
-func float_text(screen_pos: Vector2, text: String, color: Color, size: int = 26, top: bool = false) -> void:
+## rise: desplazamiento vertical (negativo sube); 0 = solo se desvanece.
+func float_text(screen_pos: Vector2, text: String, color: Color, size: int = 26, top: bool = false, rise: float = -46.0) -> void:
 	if not enabled:
 		return
 	var label := Label.new()
 	label.text = text
 	label.label_settings = _label_settings(size, color)
 	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_fx_parent(top).add_child(label)
+	var text_parent := _fx_parent(top)
+	if not top and _text_fx != null and is_instance_valid(_text_fx) and _text_fx.is_inside_tree():
+		text_parent = _text_fx
+	text_parent.add_child(label)
 	label.reset_size()
 	var vp := get_viewport().get_visible_rect().size
 	label.position = (screen_pos - label.size * 0.5).clamp(Vector2(4, 4), vp - label.size - Vector2(4, 4))
 	var tw := label.create_tween().set_parallel(true)
-	if motion_enabled():
-		tw.tween_property(label, ^"position:y", label.position.y - 46.0, 1.1) \
+	if motion_enabled() and rise != 0.0:
+		tw.tween_property(label, ^"position:y", label.position.y + rise, 1.1) \
 			.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 	tw.tween_property(label, ^"modulate:a", 0.0, 0.5).set_delay(0.7)
 	tw.chain().tween_callback(label.queue_free)
@@ -584,6 +658,12 @@ func sfx(sound: StringName, volume_db: float = 0.0, pitch: float = 1.0, variatio
 	var stream := JuiceSfx.get_stream(sound)
 	if stream == null:
 		return
+	# El mismo sonido dos veces en 60 ms suena a eco (fase) y suma volumen:
+	# basta con uno.
+	var now := Time.get_ticks_msec()
+	if now - int(_last_sfx.get(sound, -1000)) < 60:
+		return
+	_last_sfx[sound] = now
 	var player := _players[_next_player]
 	_next_player = (_next_player + 1) % _players.size()
 	player.stream = stream
@@ -630,6 +710,7 @@ func toast(text: String) -> void:
 func _on_scene_changed(scene_name: String) -> void:
 	_post = null
 	_world_fx = null
+	_text_fx = null
 	_ripples.clear()
 	_trauma = 0.0
 	_reset_canvas()
@@ -654,10 +735,10 @@ func _on_scene_changed(scene_name: String) -> void:
 	tw.tween_callback(func(): _overlay.visible = false)
 	match scene_name:
 		"GameOver":
-			sfx(&"toll", -2.0, 0.9, 0.0)
+			sfx(&"toll", 0.0, 0.9, 0.0)
 			_start_ambient(&"ash", get_tree().current_scene)
 		"GameEnd":
-			sfx(&"chime", -4.0, 1.0, 0.0)
+			sfx(&"chime", -2.0, 1.0, 0.0)
 			_start_ambient(&"motes", get_tree().current_scene)
 		_:
 			_stop_ambient()

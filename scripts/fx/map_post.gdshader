@@ -22,6 +22,7 @@ uniform float intensity : hint_range(0.0, 1.0) = 0.0;
 uniform float pulse : hint_range(0.0, 1.0) = 0.0;
 
 uniform float grain : hint_range(0.0, 0.2) = 0.03;
+uniform float fx_time = 0.0;    // reloj propio (se para con el menú de pausa)
 uniform float grain_speed = 1.0; // 0 = grano estático (movimiento reducido)
 
 float hash(vec2 p) {
@@ -54,10 +55,10 @@ void fragment() {
 
 	vec2 v = (SCREEN_UV - 0.5) * vec2(1.6, 1.0);
 	float edge = smoothstep(0.3, 0.9, length(v));
-	float beat = 1.0 - pulse * 0.35 * (0.5 + 0.5 * sin(TIME * 2.4));
+	float beat = 1.0 - pulse * 0.35 * (0.5 + 0.5 * sin(fx_time * 2.4));
 	col = mix(col, tint.rgb, edge * intensity * beat * 0.9);
 
-	float g = hash(floor(SCREEN_UV * vec2(960.0, 540.0)) + floor(TIME * 12.0 * grain_speed)) - 0.5;
+	float g = hash(floor(SCREEN_UV * vec2(960.0, 540.0)) + floor(fx_time * 12.0 * grain_speed)) - 0.5;
 	col += g * grain;
 
 	COLOR = vec4(col, 1.0);

@@ -384,8 +384,59 @@ Por orden de impacto/coste:
 **Descartado:**
 - **Volver a `CPUParticles2D` en la web:** el director retiró esa restricción; el precalentado cubre el tirón.
 
-**Abierto (fuera del área de VFX):**
-- Opciones visibles de «Reducir movimiento», «Efectos activados» y volumen de efectos en el menú de Opciones (UI): las API son `Juice.set_reduce_motion(bool)`, `Juice.enabled` y `Juice.sfx_volume_db`, o el bus «Efectos».
-- **Bug de juego:** varios avisos de la monja en el mismo frame se sobrescriben; habría que encolarlos en `main.gd`.
-- `main.gd:mission_updated` llama a `set_warning()` también en curso.
-- El formato `%i` de `game_end.gd`.
+**Abierto en aquel momento (ya resuelto por otras sesiones):** opción visible de
+«Reducir movimiento» en Opciones (UI), cola de mensajes de la monja (lógica) y
+el formato `%i` de `game_end.gd`.
+
+## 7. Cierre de pendientes (menú de pausa, arrastre, cola de la monja y mezcla)
+
+**Nada tapa texto legible.** Orden de dibujo en `CanvasLayerMission`, de abajo arriba:
+
+| Capa | Qué contiene |
+|---|---|
+| `JuiceWorldFx` (antes de `FondoSuperior`) | partículas del mapa: lacres, edificios, monedas |
+| HUD | franjas, rótulos, barras |
+| `JuiceHudText` | los números que flotan sobre las barras |
+| monja y ventanas | — |
+
+- Dentro de las ventanas, el polvo, el lacre, la tinta y el oro salen con `Juice.burst_under()`. Van en un `Node2D`, primer hijo del `PanelContainer`, así que se dibujan bajo el texto. Además son más lentos y breves, y se quedan en el margen junto al lacre (`08_fracaso_tinta`).
+- Los números de las barras van sobre la propia barra, en el extremo del relleno, apartados del porcentaje. Antes se salían por el borde derecho de la pantalla.
+- Las monedas y la cifra de los Reales van bajo la franja superior y bajan en vez de subir.
+
+**Sombra del lacre.** Los sprites `lacre_mision.png` y `lacre_mision_on.png` traían la sombra cortada por el borde de la imagen: hasta 106/255 de alfa en el borde derecho, que se veía como una línea recta. Ahora solo los píxeles oscuros de la sombra se difuminan radialmente del 70 % al 100 % del radio. El lacre, su tamaño y el brillo azul quedan igual.
+
+**Menú de pausa.** `MainJuice` escucha la visibilidad de `PauseMenu` y llama a `Juice.set_frozen()`. Con el menú abierto:
+- se paran las partículas, los números flotantes, las ondas, el grano, el latido del Descontento (el shader usa `fx_time` en vez de `TIME`) y el temblor;
+- se oculta la capa superior;
+- los sonidos de los botones del menú siguen funcionando.
+
+Las ráfagas se liberan con `finished`, no con un temporizador, así que una ráfaga congelada sigue ahí al volver (`19_pausa_congelada`).
+
+**Arrastre de agentes.** UI ilumina el marco del hueco (`self_modulate`) y el juice aplasta el hueco y suena; no hay feedback duplicado.
+
+**Cola de la monja.** Cuando un mensaje cierra y el siguiente abre en el mismo frame, solo se anima el texto: el velo y la monja no parpadean.
+
+**Mezcla.** Medida con `ebur128` (máximo momentáneo y pico real):
+
+| | Antes | Ahora |
+|---|---|---|
+| Ficheros | entre -14 y -37 LUFS | -20 LUFS, pico real ≤ -1 dBTP |
+
+- Los transitorios (`crack`, `seal`, `click`) quedan limitados por el pico.
+- Música de partida: `intro_long` a -5 dB, unos -31 LUFS integrados. La UI de misión (`mision_papel`) suena a unos -22 LUFS.
+- Niveles efectivos con `sfx_volume_db` -6:
+
+| Momento | Nivel |
+|---|---|
+| Umbrales (`thud` 0, `toll` 0) | ≈ -26 |
+| Éxito (`chime` -2) | ≈ -28 |
+| Monja (`paper` -4) | ≈ -30 |
+| Lacre al aparecer (`seal` -4) | ≈ -32 |
+| Campanas del domingo | ≈ -38 |
+| Clic de botón | ≈ -38 |
+
+Todo pasa por el bus `Efectos` (deslizador de Opciones). Juice añade un `AudioEffectHardLimiter` a -1 dB al final del bus si no lo tiene, e ignora el mismo sonido repetido en menos de 60 ms, que sonaría con fase y sumaría volumen.
+
+**Cierre limpio.** Las cachés estáticas de sonidos y texturas se vacían al salir: los avisos de recursos vivos al cerrar bajan de 19 a 1.
+
+**Abierto fuera de VFX.** `main.gd:mission_updated` sigue llamando a `button.set_warning()` cuando la misión está en curso, porque el `else` es de `resolved()`. MainJuice no depende de ello: lee `mission.status`.

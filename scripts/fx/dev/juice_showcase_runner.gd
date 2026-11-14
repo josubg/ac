@@ -88,7 +88,7 @@ func _run() -> void:
 	await _shot("06_barras_y_lacre_resuelto")
 	await _wait(1.2)
 	main._on_mission_pressed(b)
-	await _wait(0.45)
+	await _wait(0.75)
 	await _shot("07_exito_dorado")
 	await _wait(1.0)
 	main.mission_resolution_window._on_end_mission_button_pressed()
@@ -103,7 +103,7 @@ func _run() -> void:
 	MissionManager.resolve_mission(c)
 	await _wait(0.8)
 	main._on_mission_pressed(c)
-	await _wait(0.4)
+	await _wait(0.5)
 	await _shot("08_fracaso_tinta")
 	await _wait(1.0)
 	_close_monja_legacy()
@@ -134,6 +134,18 @@ func _run() -> void:
 	Player.descontento = 88
 	await _wait(1.2)
 	await _shot("12_descontento_alto")
+
+	# 9b. Menú de pausa: los efectos en vuelo se congelan bajo el menú
+	# (la captura se toma 1 s después de abrirlo: las monedas siguen en el aire).
+	var pause_menu: Node = main.get_node_or_null(^"PauseMenu")
+	if pause_menu:
+		Player.riqueza += 800
+		await _wait(0.2)
+		pause_menu.open()
+		await _wait(1.0)
+		await _shot("19_pausa_congelada")
+		pause_menu.close()
+		await _wait(1.2)
 
 	# 10. El Rey cruza el umbral: temblor, velo rojo y monja.
 	# El Rey ya cruzó su primer umbral con el fracaso: ahora la Iglesia.

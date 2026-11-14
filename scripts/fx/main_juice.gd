@@ -27,6 +27,7 @@ var _vignette_tw: Tween
 var _pending_deltas := {}        # stat -> [delta acumulado, pasivo]
 var _pending_strikes := []       # [nivel, stat] del mismo frame
 var _was_paused := false
+var _monja_hidden_frame := -10
 
 
 ## true durante el cambio de día: TimeManager (autoload) procesa antes que
@@ -75,12 +76,18 @@ func setup(main_node: Node) -> void:
 	if monja and monja.has_node(^"Label"):
 		monja.get_node(^"Label").visibility_changed.connect(_on_monja_visibility.bind(monja))
 
+	# Menú de pausa (Esc): todo el juice se congela mientras está abierto.
+	var pause_menu: CanvasLayer = main.get_node_or_null(^"PauseMenu")
+	if pause_menu:
+		pause_menu.visibility_changed.connect(func(): Juice.set_frozen(pause_menu.visible))
+
 	_build_vignette()
 	_build_world_fx()
 	_update_danger(true)
 
 
 func _exit_tree() -> void:
+	Juice.set_frozen(false)
 	# Las señales de autoloads sobreviven a la escena: desconectar.
 	for pair in [
 		[Player.rey_updated, _on_stat], [Player.nobleza_updated, _on_stat],
@@ -131,7 +138,7 @@ func _on_mission_added(mission: Mission) -> void:
 		var p: Vector2 = _button_pos.get(mission, Vector2.ZERO)
 		Juice.burst(p, &"dust")
 		Juice.ripple(p, 0.6, 0.6)
-		Juice.sfx(&"seal", -3.0))
+		Juice.sfx(&"seal", -4.0))
 
 
 func _on_mission_updated(mission: Mission) -> void:
@@ -171,7 +178,7 @@ func _on_mission_closed(mission: Mission) -> void:
 		Juice.burst(pos, &"wax")
 		Juice.burst(pos, &"dust", 0.6)
 		Juice.ripple(pos, 0.8, 0.6)
-		Juice.sfx(&"crack", -1.0)
+		Juice.sfx(&"crack", 0.0)
 		Juice.shake(0.18)
 		Juice.grade_pulse(0.25, 0.1, 0.8)
 
@@ -273,20 +280,28 @@ func _flush_deltas() -> void:
 		if passive:
 			# Cambio diario: solo un número pequeño y discreto, sin destello.
 			if absi(delta) >= 2:
-				Juice.float_text(_text_pos(bar), text, Color(color, 0.8), 18)
+				Juice.float_text(_text_pos(bar), text, Color(color, 0.8), 18, false, -8.0)
 			continue
 		Juice.flash(bar, Color(1.5, 1.35, 0.9) if good else Color(1.6, 0.6, 0.55), 0.5)
-		Juice.float_text(_text_pos(bar), text, color)
+		Juice.float_text(_text_pos(bar), text, color, 26, false, -10.0)
 		if absi(delta) >= 10:
 			Juice.pop(bar, 0.06, 0.3)
 
 
-## Posición del número flotante: a la derecha de la barra; las de la franja
-## superior lo dejan caer hacia abajo para no salirse de la pantalla.
-func _text_pos(node: Control) -> Vector2:
-	var c := Juice.screen_center(node)
-	var below := c.y < get_viewport().get_visible_rect().size.y * 0.25
-	return c + Vector2(node.size.x * 0.5 + 34.0, 30.0 if below else 0.0)
+## Posición del número flotante: sobre la propia barra, en el extremo del
+## relleno, apartándose del porcentaje centrado. Nunca sale de la barra ni tapa
+## el rótulo de la fila (antes se salía por el borde derecho de la pantalla).
+func _text_pos(bar: ProgressBar) -> Vector2:
+	var c := Juice.screen_center(bar)
+	var half := bar.size.x * 0.5
+	var ratio := 0.0
+	if bar.max_value > bar.min_value:
+		ratio = (bar.value - bar.min_value) / (bar.max_value - bar.min_value)
+	var x := c.x - half + bar.size.x * ratio
+	var keep_out := 60.0   # el "45 %" va centrado en la barra
+	if absf(x - c.x) < keep_out:
+		x = c.x + keep_out + 20.0 if ratio >= 0.5 else c.x - keep_out - 20.0
+	return Vector2(clampf(x, c.x - half + 24.0, c.x + half - 24.0), c.y)
 
 
 ## Barra en zona de peligro (< 20, el segundo aviso): late en rojo.
@@ -361,34 +376,48 @@ func _strike_feedback(level: int, stat: StringName) -> void:
 	match stat:
 		&"rey":    # el Rey se enfada: temblor sutil + golpe
 			Juice.shake(0.25 + 0.15 * level)
-			Juice.sfx(&"thud", -2.0)
+			Juice.sfx(&"thud", 0.0)
 			Juice.vignette_flash(Color(0.45, 0.03, 0.02), 1.2, 0.5 + 0.15 * level)
 		&"clero":  # la Iglesia: campana grave
 			Juice.shake(0.1 + 0.08 * level)
-			Juice.sfx(&"toll", -3.0)
+			Juice.sfx(&"toll", 0.0)
 			Juice.vignette_flash(Color(0.18, 0.08, 0.2), 1.4, 0.45 + 0.15 * level)
 		&"nobleza":  # la Nobleza: portazo
 			Juice.shake(0.12 + 0.1 * level)
-			Juice.sfx(&"thud", -3.0, 1.15)
+			Juice.sfx(&"thud", -1.0, 1.15)
 			Juice.vignette_flash(Color(0.12, 0.1, 0.25), 1.1, 0.45 + 0.15 * level)
 
 
 # --- Descontento ---------------------------------------------------------------
 
-## Capa de efectos del mundo dentro de la interfaz, justo antes de la monja y
-## de las ventanas: las partículas de lacres, edificios y barras quedan por
-## encima del HUD pero por debajo de cualquier ventana abierta.
+## Dos capas dentro de la interfaz:
+## - JuiceWorldFx, antes de todo el HUD: las partículas del mapa (lacres,
+##   edificios, monedas) nunca pasan por encima de rótulos, cifras o barras;
+## - JuiceHudText, justo antes de la monja y las ventanas: los números que
+##   flotan sobre las barras se ven sobre el HUD pero quedan bajo cualquier
+##   ventana o mensaje abierto.
 func _build_world_fx() -> void:
 	var monja: Node = main.get(&"monja_speak")
 	var ui_layer: Node = monja.get_parent() if monja else null
 	if ui_layer == null:
 		return
+	var first_hud: Node = ui_layer.get_node_or_null(^"FondoSuperior")
+	if first_hud == null:
+		first_hud = ui_layer.get_node_or_null(^"HUD")
+	var world := _fx_host("JuiceWorldFx")
+	var text := _fx_host("JuiceHudText")
+	ui_layer.add_child.call_deferred(world)
+	ui_layer.move_child.call_deferred(world, first_hud.get_index() if first_hud else 0)
+	ui_layer.add_child.call_deferred(text)
+	ui_layer.move_child.call_deferred(text, monja.get_index() + 1)
+	Juice.register_world_fx(world, text)
+
+
+func _fx_host(host_name: String) -> Control:
 	var host := Control.new()
-	host.name = "JuiceWorldFx"
+	host.name = host_name
 	host.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	ui_layer.add_child.call_deferred(host)
-	ui_layer.move_child.call_deferred(host, monja.get_index())
-	Juice.register_world_fx(host)
+	return host
 
 
 func _build_vignette() -> void:
@@ -478,22 +507,27 @@ func _on_riqueza(value: int) -> void:
 func _riqueza_feedback(delta: int, passive: bool) -> void:
 	var label: Control = main.get(&"riqueza_label")
 	var pos := Juice.screen_center(label) if label else Vector2(120, 40)
-	# Debajo del contador, para no tapar la cifra que cambia.
-	var text_pos := pos + Vector2(0, 46)
+	# Todo por debajo de la franja superior: ni las monedas ni la cifra flotante
+	# pasan por encima del contador o de los rótulos de la barra.
+	var bar_bottom := pos.y + 30.0
+	var top_bar: Control = main.get_node_or_null(^"CanvasLayerMission/HUD/TopBar")
+	if top_bar:
+		bar_bottom = top_bar.get_global_rect().end.y
+	var text_pos := Vector2(pos.x, bar_bottom + 22.0)
 	if passive:
 		# Renta diaria: solo el número, pequeño y sin sonido (pasa cada 10 s).
-		Juice.float_text(text_pos, ("+%d" if delta > 0 else "–%d") % absi(delta), Color(GOOD if delta > 0 else BAD, 0.8), 18)
+		Juice.float_text(text_pos, ("+%d" if delta > 0 else "–%d") % absi(delta), Color(GOOD if delta > 0 else BAD, 0.8), 18, false, 16.0)
 		return
 	if delta > 0:
-		# Ingreso extraordinario: monedas y tintineo.
-		Juice.burst(pos, &"coins", clampf(delta / 200.0, 0.5, 1.5))
-		Juice.float_text(text_pos, "+%d" % delta, GOOD)
+		# Ingreso extraordinario: monedas que saltan bajo la franja y caen al mapa.
+		Juice.burst(Vector2(pos.x, bar_bottom + 70.0), &"coins", clampf(delta / 200.0, 0.5, 1.5))
+		Juice.float_text(text_pos, "+%d" % delta, GOOD, 26, false, 24.0)
 		Juice.sfx(&"coin", -4.0)
 		if label:
 			Juice.pop(label, 0.2)
 	else:
-		Juice.float_text(text_pos, "–%d" % -delta, BAD)
-		Juice.sfx(&"coin", -2.0, 0.75)
+		Juice.float_text(text_pos, "–%d" % -delta, BAD, 26, false, 24.0)
+		Juice.sfx(&"coin", -5.0, 0.75)
 		if label:
 			Juice.flash(label, Color(1.6, 0.6, 0.5), 0.5)
 
@@ -552,7 +586,7 @@ func _on_new_day() -> void:
 		tw.tween_property(label, ^"self_modulate:a", 1.0, 0.45)
 	if TimeManager.get_date_map().get("weekday", -1) == 0:
 		# Los domingos suenan las campanas de Madrid, lejanas.
-		Juice.sfx(&"bell", -16.0, 1.0, 0.0)
+		Juice.sfx(&"bell", -12.0, 1.0, 0.0)
 
 
 # --- Ventanas, agentes y monja --------------------------------------------------
@@ -581,6 +615,7 @@ func _on_window_visibility(window: Control, key: StringName) -> void:
 ## para no tapar el rótulo ni la descripción.
 func _resolution_feedback(window: Control, seal: CanvasItem) -> void:
 	var mission: Mission = window.get(&"mission")
+	var panel: CanvasItem = window.get_node_or_null(^"PanelContainer")
 	var outcome: Control = window.get(&"outcome_label")
 	if mission == null:
 		return
@@ -594,17 +629,17 @@ func _resolution_feedback(window: Control, seal: CanvasItem) -> void:
 			pos = window.get_viewport_rect().size * 0.5
 		if mission.success():
 			# Éxito: el lacre se abre con destellos dorados y una campanilla.
-			Juice.burst(pos, &"gold", 1.2, true)
-			Juice.sfx(&"chime", -4.0)
+			_burst_in(panel, pos, &"gold", 1.2)
+			Juice.sfx(&"chime", -2.0)
 			if seal:
 				Juice.pop(seal, 0.2)
 			if outcome:
 				Juice.flash(outcome, Color(1.4, 1.3, 1.0), 0.6)
 		else:
 			# Fracaso: el lacre se quiebra y la tinta se derrama.
-			Juice.burst(pos, &"wax", 1.0, true)
-			Juice.burst(pos, &"ink", 0.8, true)
-			Juice.sfx(&"crack", -3.0, 0.9)
+			_burst_in(panel, pos, &"wax", 1.0)
+			_burst_in(panel, pos, &"ink", 0.8)
+			Juice.sfx(&"crack", -1.0, 0.9)
 			Juice.sfx(&"thud", -6.0)
 			Juice.shake(0.15)
 			Juice.grade_pulse(0.35, 0.2, 1.0)
@@ -642,10 +677,10 @@ func _snapshot_slots(feedback: bool) -> void:
 			if agent != null:
 				# Agente colocado: el retrato se asienta en el hueco.
 				Juice.squash(slot, 0.35)
-				Juice.burst(pos, &"dust", 0.8, true)
+				_burst_in(window.get_node_or_null(^"PanelContainer"), pos, &"dust", 0.8)
 				Juice.sfx(&"seal", -8.0, 1.4)
 			else:
-				Juice.burst(pos, &"dust", 0.4, true)
+				_burst_in(window.get_node_or_null(^"PanelContainer"), pos, &"dust", 0.4)
 				Juice.sfx(&"paper", -10.0, 1.3)
 		_slot_agents[slot] = agent
 
@@ -653,18 +688,30 @@ func _snapshot_slots(feedback: bool) -> void:
 func _on_monja_visibility(monja: Node) -> void:
 	var label: CanvasItem = monja.get_node(^"Label")
 	if not label.visible:
+		_monja_hidden_frame = Engine.get_process_frames()
 		return
-	Juice.sfx(&"paper", -2.0, 0.85)
+	Juice.sfx(&"paper", -4.0, 0.85)
+	# Mensajes en cola (main.gd): se cierra uno y se abre el siguiente en el
+	# mismo frame. Entonces solo cambia el texto; el velo y la monja se quedan.
+	var chained := Engine.get_process_frames() - _monja_hidden_frame <= 1
 	var nun: CanvasItem = monja.get_node_or_null(^"TextureRect")
 	var scroll: CanvasItem = monja.get_node_or_null(^"TextureRect2")
-	if nun:
+	if nun and not chained:
 		Juice.fade_in(nun, 0.35, Vector2(-30, 0))
-	if scroll:
+	if scroll and not chained:
 		Juice.fade_in(scroll, 0.3)   # velo a pantalla completa: sin desplazar
 	Juice.fade_in(label, 0.3, Vector2(0, 14))
 
 
 # --- Utilidades ----------------------------------------------------------------
+
+## Efecto que sale de una ventana: bajo su texto si hay panel; si no, en la
+## capa del mundo (que la ventana tapa). Nunca por encima de lo que se lee.
+func _burst_in(panel: CanvasItem, pos: Vector2, kind: StringName, amount: float) -> void:
+	if panel:
+		Juice.burst_under(panel, pos, kind, amount)
+	else:
+		Juice.burst(pos, kind, amount)
 
 func _after(seconds: float, callback: Callable) -> void:
 	get_tree().create_timer(seconds).timeout.connect(func():

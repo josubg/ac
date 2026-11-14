@@ -27,3 +27,7 @@ static func get_stream(sound: StringName) -> AudioStream:
 		push_warning("JuiceSfx: falta el sonido %s en %s" % [sound, SFX_DIR])
 	_cache[sound] = stream
 	return stream
+
+
+static func clear_cache() -> void:
+	_cache.clear()

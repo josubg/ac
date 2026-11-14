@@ -262,3 +262,7 @@ static func _shard_texture() -> Texture2D:
 			var inside := Geometry2D.is_point_in_polygon(Vector2(x + 0.5, y + 0.5), pts)
 			img.set_pixel(x, y, Color(1, 1, 1, 1.0 if inside else 0.0))
 	return ImageTexture.create_from_image(img)
+
+
+static func clear_cache() -> void:
+	_textures.clear()
