@@ -5,8 +5,11 @@
 Todos son grabaciones **CC0 1.0** (dominio público: uso libre, también comercial,
 sin atribución obligatoria). Se apuntan igualmente para poder comprobarlos o
 bajar el original. Los de Freesound son las previsualizaciones HQ que la web
-sirve sin cuenta; se han recortado, pasado a mono y normalizado (pico entre
--10 y -2 dBFS) con ffmpeg, y codificado a Ogg Vorbis con oggenc.
+sirve sin cuenta. Se han recortado y pasado a mono con ffmpeg, se han
+normalizado a -20 LUFS de sonoridad momentánea máxima (pico real ≤ -1 dBTP; los
+transitorios quedan por debajo, limitados por el pico) y se han codificado a
+Ogg Vorbis con oggenc. La mezcla relativa está en las llamadas a `Juice.sfx`
+(ver `docs/vfx/propuesta_juice.md`, sección 7).
 
 | Fichero | Uso en el juego | Original | Autor | Licencia | Página |
 |---|---|---|---|---|---|
