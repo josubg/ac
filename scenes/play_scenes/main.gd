@@ -151,14 +151,26 @@ func mission_added(mission: Mission) -> void:
 	buttons.append(button)
 	buttons_layer.add_child(button)
 	var vp_size = get_viewport().get_visible_rect().size
-	var pos = Vector2((mission.x / BASE_RES.x) * vp_size.x,(mission.y / BASE_RES.y) * vp_size.y)
+	var screen_pos = Vector2((mission.x / BASE_RES.x) * vp_size.x,(mission.y / BASE_RES.y) * vp_size.y)
+	# El lacre se centra en su punto del mapa. ButtonsLayer empieza bajo la barra
+	# superior, así que se pasa de pantalla a coordenadas de la capa.
+	var seal_size: Vector2 = button.size * button.scale
+	var pos: Vector2 = screen_pos - buttons_layer.global_position - seal_size / 2.0
 	pos = _free_button_position(pos, button)
+	pos = _clamp_to_visible_map(pos, seal_size)
 	button.position = pos
 	DebugLog.log("Main: [X %s, Y %s] --> [X %s, Y %s]" % 
 		[mission.x,mission.y,pos.x,pos.y])
 	button.mission = mission
 	button.mission_pressed.connect(_on_mission_pressed)
 	
+## El lacre entero queda en la franja visible del mapa, entre la barra superior
+## y el panel de agentes: nunca se mete debajo del HUD.
+func _clamp_to_visible_map(pos: Vector2, seal_size: Vector2) -> Vector2:
+	const MARGIN := 8.0
+	var max_pos: Vector2 = buttons_layer.size - seal_size - Vector2.ONE * MARGIN
+	return pos.clamp(Vector2.ONE * MARGIN, max_pos.max(Vector2.ONE * MARGIN))
+
 # Varias misiones comparten coordenadas en el CSV; si el sitio está ocupado por
 # otro lacre, se coloca alrededor para que no se tapen.
 func _free_button_position(pos: Vector2, new_button: MissionButton) -> Vector2:
