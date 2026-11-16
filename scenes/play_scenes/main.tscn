@@ -15,7 +15,7 @@
 [ext_resource type="AudioStream" uid="uid://dsvh6bj3omnj3" path="res://resources/intro_long.wav" id="14_2j01o"]
 [ext_resource type="PackedScene" uid="uid://lrc86eeo27pf" path="res://scenes/buildings/building_window.tscn" id="14_3nlru"]
 [ext_resource type="Texture2D" uid="uid://q8ucpgw34518" path="res://sprites/juangomez.png" id="14_14ti4"]
-[ext_resource type="Texture2D" uid="uid://bvf0u0jlp3fil" path="res://sprites/juangomez gris.png" id="14_mmx0r"]
+[ext_resource type="Texture2D" uid="uid://bvf0u0jlp3fil" path="res://sprites/juangomez_gray.png" id="14_mmx0r"]
 [ext_resource type="AudioStream" uid="uid://8t8xayoaqkv1" path="res://resources/furiosos.mp3" id="15_eq487"]
 [ext_resource type="PackedScene" uid="uid://b1m6fhr2enk04" path="res://scenes/buildings/properties_window.tscn" id="15_sm81j"]
 [ext_resource type="PackedScene" uid="uid://d0r7il7mordng" path="res://scenes/agents/gomez_speak.tscn" id="20_4lpuf"]

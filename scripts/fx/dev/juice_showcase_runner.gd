@@ -181,10 +181,5 @@ func _run() -> void:
 
 
 func _close_monja_legacy() -> void:
-	if main and is_instance_valid(main) and main.monja_mensaje and main.has_method("_close_monja_message"):
-		main._close_monja_message()
-		return
-	if main and is_instance_valid(main) and main.monja_mensaje:
-		main.monja_speak.ocultar()
-		main.monja_mensaje = false
-		TimeManager.resume()
+	if main and is_instance_valid(main) and main.mensaje_en_pantalla:
+		main._close_message()

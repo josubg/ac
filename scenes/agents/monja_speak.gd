@@ -12,7 +12,5 @@ func mostrar():
 	$Label.show()
 	
 func mensaje(text:String):
-	print("Clave recibida: ", text)
-	print("Traducción encontrada: ", tr(text))
 	$Label.text = text
 	mostrar()

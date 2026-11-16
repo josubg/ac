@@ -17,7 +17,7 @@ const LOCALES := ["es", "en"]
 const SCENE_TEXT_WHITELIST := ["X", "0", "TIME LABEL", "Español", "English", "Domingo, 1 de enero de 1640", "[center][color=#c0392b]C[/color]uatro [color=#c0392b]C[/color]ortes\n[i]Madrid, MDCXL[/i][/center]"]
 # Filas cuyo inglés es igual al español a propósito (nombres propios, préstamos).
 const IDENTICAL_OK := ["UI_MENU_TUTORIAL", "UI_TUTORIAL_TITLE", "AGENT_PACA_NAME", "AGENT_JUANITO_NAME",
-	"AGENT_AMPARO_NAME", "AGENT_FACTION_NOBLE", "MISSION_022_TITLE"]
+	"AGENT_AMPARO_NAME", "AGENT_JUAN_GOMEZ_NAME", "AGENT_FACTION_NOBLE", "MISSION_022_TITLE"]
 # Keys que se construyen en código a partir de un prefijo.
 const DYNAMIC_PREFIXES := {"AGENT_FACTION_": ["NOBLE", "RELIGIOSA", "MALECHOR"]}
 

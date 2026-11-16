@@ -32,11 +32,12 @@ extends Node
 const BASE_RES = Vector2(1920, 1080)
 
 var buttons: Array[MissionButton]= []
-var monja_mensaje = false
-var gomez_mensaje := false
+# Mensajes con bocadillo (la monja, Juan Gómez...). Solo uno en pantalla: el
+# resto espera en una cola común como pares [personaje, clave].
+var mensaje_en_pantalla := false
+var cola_mensajes: Array = []
+var _hablante: Node = null
 var gomez_presentado := false
-var monja_cola: Array[String] = []
-var gomez_cola: Array[String] = []
 var descontento_playing = false
 
 func _ready() -> void:
@@ -75,25 +76,16 @@ func _process(_delta):
 			GameManager.go_to_gameend()
 
 func _input(event: InputEvent) -> void:
-	if monja_mensaje:
+	if mensaje_en_pantalla:
 		var closes_message: bool = (
 			(event is InputEventKey or event is InputEventMouseButton)
 			and event.pressed
 		)
 		if closes_message:
-			_close_monja_message()
+			_close_message()
 			get_viewport().set_input_as_handled()
 		return
-		
-	if gomez_mensaje:
-		var closes_message: bool = (
-			(event is InputEventKey or event is InputEventMouseButton)
-			and event.pressed
-		)
-		if closes_message:
-			_close_gomez_message()
-			get_viewport().set_input_as_handled()
-		return
+
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		if _is_pointer_over_ui():
 			return
@@ -131,22 +123,27 @@ func _is_pointer_over_ui() -> bool:
 	var hovered: Control = get_viewport().gui_get_hovered_control()
 	return hovered != null and hovered != buttons_layer
 
-# Si ya hay un mensaje en pantalla, el nuevo espera su turno.
 func _show_monja_message(text: String) -> void:
-	if monja_mensaje:
-		monja_cola.append(text)
-		return
-	TimeManager.pause(monja_speak)
-	monja_speak.mensaje(text)
-	monja_mensaje = true
+	_show_message(monja_speak, text)
 
-func _close_monja_message() -> void:
-	monja_speak.ocultar()
-	monja_mensaje = false
-	if not monja_cola.is_empty():
-		_show_monja_message(monja_cola.pop_front())
+# Si ya hay un mensaje en pantalla, sea de quien sea, el nuevo espera su turno.
+func _show_message(speaker: Node, text: String) -> void:
+	if mensaje_en_pantalla:
+		cola_mensajes.append([speaker, text])
 		return
-	TimeManager.resume(monja_speak)
+	TimeManager.pause(&"bocadillo")
+	_hablante = speaker
+	speaker.mensaje(text)
+	mensaje_en_pantalla = true
+
+func _close_message() -> void:
+	_hablante.ocultar()
+	mensaje_en_pantalla = false
+	if not cola_mensajes.is_empty():
+		var siguiente: Array = cola_mensajes.pop_front()
+		_show_message(siguiente[0], siguiente[1])
+		return
+	TimeManager.resume(&"bocadillo")
 
 func mission_added(mission: Mission) -> void:
 	DebugLog.log("Main: Mision added:  [%s]" % mission.titulo)
@@ -300,24 +297,8 @@ func _on_building_pressed(building: Building) -> void:
 func _on_properties_button_pressed() -> void:
 	properties_window.setup()
 
+# Juan Gómez se presenta el día en que se une (available_from_day = 5).
 func _show_gomez_message() -> void:
 	gomez_presentado = true
-	gomez_cola.append("GOMEZ_1")
-	gomez_cola.append("GOMEZ_2")
-	gomez_cola.append("GOMEZ_3")
-	_show_next_gomez_message()
-
-func _show_next_gomez_message() -> void:
-	if gomez_cola.is_empty():
-		gomez_mensaje = false
-		TimeManager.resume(gomez_speak)
-		return
-
-	TimeManager.pause(gomez_speak)
-	gomez_speak.mensaje(gomez_cola.pop_front())
-	gomez_mensaje = true
-
-func _close_gomez_message() -> void:
-	gomez_speak.ocultar()
-	gomez_mensaje = false
-	_show_next_gomez_message()
+	for key in ["GOMEZ_1", "GOMEZ_2", "GOMEZ_3"]:
+		_show_message(gomez_speak, key)

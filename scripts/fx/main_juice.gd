@@ -28,6 +28,7 @@ var _pending_deltas := {}        # stat -> [delta acumulado, pasivo]
 var _pending_strikes := []       # [nivel, stat] del mismo frame
 var _was_paused := false
 var _monja_hidden_frame := -10
+var _last_speaker: Node = null
 
 
 ## true durante el cambio de día: TimeManager (autoload) procesa antes que
@@ -71,10 +72,11 @@ func setup(main_node: Node) -> void:
 		if window:
 			window.visibility_changed.connect(_on_window_visibility.bind(window, key))
 
-	# Mensaje de la monja: monja_speak.mensaje() hace show() del Label.
-	var monja: Node = main.get(&"monja_speak")
-	if monja and monja.has_node(^"Label"):
-		monja.get_node(^"Label").visibility_changed.connect(_on_monja_visibility.bind(monja))
+	# Bocadillos (monja, Juan Gómez): mensaje() hace show() del Label.
+	for speaker_key in [&"monja_speak", &"gomez_speak"]:
+		var speaker: Node = main.get(speaker_key)
+		if speaker and speaker.has_node(^"Label"):
+			speaker.get_node(^"Label").visibility_changed.connect(_on_monja_visibility.bind(speaker))
 
 	# Menú de pausa (Esc): todo el juice se congela mientras está abierto.
 	var pause_menu: CanvasLayer = main.get_node_or_null(^"PauseMenu")
@@ -689,11 +691,13 @@ func _on_monja_visibility(monja: Node) -> void:
 	var label: CanvasItem = monja.get_node(^"Label")
 	if not label.visible:
 		_monja_hidden_frame = Engine.get_process_frames()
+		_last_speaker = monja
 		return
 	Juice.sfx(&"paper", -4.0, 0.85)
 	# Mensajes en cola (main.gd): se cierra uno y se abre el siguiente en el
-	# mismo frame. Entonces solo cambia el texto; el velo y la monja se quedan.
-	var chained := Engine.get_process_frames() - _monja_hidden_frame <= 1
+	# mismo frame. Si habla el mismo personaje, solo cambia el texto; el velo y
+	# el retrato se quedan.
+	var chained := Engine.get_process_frames() - _monja_hidden_frame <= 1 and _last_speaker == monja
 	var nun: CanvasItem = monja.get_node_or_null(^"TextureRect")
 	var scroll: CanvasItem = monja.get_node_or_null(^"TextureRect2")
 	if nun and not chained:
