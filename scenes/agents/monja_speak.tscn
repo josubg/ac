@@ -1,0 +1,142 @@
+[gd_scene format=3 uid="uid://cqhiguhygaf3d"]
+
+[ext_resource type="Texture2D" uid="uid://gois0e1yi5qq" path="res://sprites/monja.png" id="1_8rvmv"]
+[ext_resource type="Script" uid="uid://dswcfychuyb06" path="res://scenes/agents/monja_speak.gd" id="1_go6ub"]
+[ext_resource type="Texture2D" uid="uid://cugnwosdcn5vp" path="res://assets/ui/textures/vineta.png" id="3_vineta"]
+[ext_resource type="Texture2D" uid="uid://64s2b5rbk1j2" path="res://assets/ui/textures/marco_dorado.png" id="4_marco"]
+[ext_resource type="Texture2D" uid="uid://dxwr3t2gtpaye" path="res://assets/ui/textures/cola_bocadillo.png" id="5_cola"]
+[ext_resource type="Script" uid="uid://c1bupndok7yas" path="res://scenes/ui/bocadillo.gd" id="6_bocadillo"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_monja"]
+atlas = ExtResource("1_8rvmv")
+region = Rect2(70, 90, 2060, 2150)
+
+[sub_resource type="Gradient" id="Gradient_fondo"]
+colors = PackedColorArray(0.47, 0.33, 0.22, 1, 0.13, 0.08, 0.05, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_fondo"]
+gradient = SubResource("Gradient_fondo")
+fill = 1
+fill_from = Vector2(0.5, 0.35)
+fill_to = Vector2(1.1, 1.1)
+
+[node name="MonjaSpeak" type="Node" unique_id=1549428370]
+script = ExtResource("1_go6ub")
+
+[node name="TextureRect2" type="Control" parent="." unique_id=1150104573]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Velo" type="ColorRect" parent="TextureRect2" unique_id=1902634367]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.08, 0.05, 0.03, 0.5)
+
+[node name="VeloBorde" type="TextureRect" parent="TextureRect2" unique_id=545027863]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("3_vineta")
+expand_mode = 1
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=2099921406]
+offset_left = 110.0
+offset_top = 400.0
+offset_right = 420.0
+offset_bottom = 723.0
+mouse_filter = 2
+texture = SubResource("AtlasTexture_monja")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Fondo" type="TextureRect" parent="TextureRect" unique_id=102104148]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_fondo")
+
+[node name="Marco" type="NinePatchRect" parent="TextureRect" unique_id=151425203]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -6.0
+offset_top = -6.0
+offset_right = 6.0
+offset_bottom = 6.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_marco")
+patch_margin_left = 30
+patch_margin_top = 30
+patch_margin_right = 30
+patch_margin_bottom = 30
+
+[node name="Label" type="Label" parent="." unique_id=1062866101]
+offset_left = 480.0
+offset_top = 400.0
+offset_right = 1300.0
+offset_bottom = 700.0
+theme_type_variation = &"Bocadillo"
+text = "MONJA_REY_1"
+autowrap_mode = 3
+script = ExtResource("6_bocadillo")
+base_y = 690.0
+
+[node name="Cola" type="TextureRect" parent="Label" unique_id=117845088]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = -70.0
+offset_top = -128.0
+offset_right = 26.0
+offset_bottom = -54.0
+grow_vertical = 0
+mouse_filter = 2
+texture = ExtResource("5_cola")
+expand_mode = 1
+
+[node name="Pie" type="Label" parent="Label" unique_id=492363579]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -820.0
+offset_top = 12.0
+offset_bottom = 52.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_type_variation = &"NotaCuero"
+theme_override_colors/font_color = Color(0.902, 0.827, 0.659, 1)
+theme_override_colors/font_outline_color = Color(0.086, 0.055, 0.035, 0.9)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 22
+text = "UI_MONJA_CONTINUE"
+horizontal_alignment = 2

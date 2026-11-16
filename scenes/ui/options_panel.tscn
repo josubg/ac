@@ -1,0 +1,168 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/ui/options_panel.gd" id="1_opciones"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_idioma"]
+
+[node name="OptionsPanel" type="CanvasLayer"]
+layer = 2
+visible = false
+script = ExtResource("1_opciones")
+
+[node name="Velo" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.08, 0.05, 0.03, 0.6)
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -250.0
+offset_right = 400.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"PanelPergamino"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Cabecera" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Titulo" type="Label" parent="PanelContainer/VBoxContainer/Cabecera"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"TituloCarta"
+theme_override_font_sizes/font_size = 52
+text = "UI_OPTIONS_TITLE"
+
+[node name="CerrarButton" type="Button" parent="PanelContainer/VBoxContainer/Cabecera"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_type_variation = &"BotonTinta"
+text = "UI_CLOSE"
+
+[node name="HSeparator" type="HSeparator" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Ajustes" type="GridContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/h_separation = 24
+theme_override_constants/v_separation = 18
+columns = 2
+
+[node name="EtiquetaIdioma" type="Label" parent="PanelContainer/VBoxContainer/Ajustes"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"SubtituloCarta"
+theme_override_colors/font_color = Color(0.169, 0.106, 0.071, 1)
+theme_override_font_sizes/font_size = 26
+text = "UI_OPTIONS_LANGUAGE"
+
+[node name="Idioma" type="HBoxContainer" parent="PanelContainer/VBoxContainer/Ajustes"]
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="Espanol" type="Button" parent="PanelContainer/VBoxContainer/Ajustes/Idioma"]
+auto_translate_mode = 2
+custom_minimum_size = Vector2(190, 54)
+layout_mode = 2
+auto_translate_mode = 2
+theme_type_variation = &"BotonOpcion"
+toggle_mode = true
+button_pressed = true
+button_group = SubResource("ButtonGroup_idioma")
+text = "Español"
+metadata/locale = "es"
+
+[node name="English" type="Button" parent="PanelContainer/VBoxContainer/Ajustes/Idioma"]
+auto_translate_mode = 2
+custom_minimum_size = Vector2(190, 54)
+layout_mode = 2
+auto_translate_mode = 2
+theme_type_variation = &"BotonOpcion"
+toggle_mode = true
+button_group = SubResource("ButtonGroup_idioma")
+text = "English"
+metadata/locale = "en"
+
+[node name="EtiquetaGeneral" type="Label" parent="PanelContainer/VBoxContainer/Ajustes"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"SubtituloCarta"
+theme_override_colors/font_color = Color(0.169, 0.106, 0.071, 1)
+theme_override_font_sizes/font_size = 26
+text = "UI_OPTIONS_VOLUME_MASTER"
+
+[node name="VolumenGeneral" type="HSlider" parent="PanelContainer/VBoxContainer/Ajustes"]
+custom_minimum_size = Vector2(398, 40)
+layout_mode = 2
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.05
+value = 1.0
+
+[node name="EtiquetaMusica" type="Label" parent="PanelContainer/VBoxContainer/Ajustes"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"SubtituloCarta"
+theme_override_colors/font_color = Color(0.169, 0.106, 0.071, 1)
+theme_override_font_sizes/font_size = 26
+text = "UI_OPTIONS_VOLUME_MUSIC"
+
+[node name="VolumenMusica" type="HSlider" parent="PanelContainer/VBoxContainer/Ajustes"]
+custom_minimum_size = Vector2(398, 40)
+layout_mode = 2
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.05
+value = 1.0
+
+[node name="EtiquetaEfectos" type="Label" parent="PanelContainer/VBoxContainer/Ajustes"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"SubtituloCarta"
+theme_override_colors/font_color = Color(0.169, 0.106, 0.071, 1)
+theme_override_font_sizes/font_size = 26
+text = "UI_OPTIONS_VOLUME_SFX"
+
+[node name="VolumenEfectos" type="HSlider" parent="PanelContainer/VBoxContainer/Ajustes"]
+custom_minimum_size = Vector2(398, 40)
+layout_mode = 2
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.05
+value = 1.0
+
+[node name="EtiquetaPantalla" type="Label" parent="PanelContainer/VBoxContainer/Ajustes"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"SubtituloCarta"
+theme_override_colors/font_color = Color(0.169, 0.106, 0.071, 1)
+theme_override_font_sizes/font_size = 26
+text = "UI_OPTIONS_FULLSCREEN"
+
+[node name="PantallaCompleta" type="CheckBox" parent="PanelContainer/VBoxContainer/Ajustes"]
+layout_mode = 2
+
+[node name="EtiquetaMovimiento" type="Label" parent="PanelContainer/VBoxContainer/Ajustes"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"SubtituloCarta"
+theme_override_colors/font_color = Color(0.169, 0.106, 0.071, 1)
+theme_override_font_sizes/font_size = 26
+text = "UI_OPTIONS_REDUCE_MOTION"
+
+[node name="ReducirMovimiento" type="CheckBox" parent="PanelContainer/VBoxContainer/Ajustes"]
+layout_mode = 2
+tooltip_text = "UI_OPTIONS_REDUCE_MOTION_TIP"

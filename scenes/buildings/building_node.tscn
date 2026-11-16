@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://4cxpb4m84ky3"]
+
+[ext_resource type="Script" uid="uid://dg230j6w3k2lb" path="res://scenes/buildings/building_node.gd" id="1_tnbil"]
+[ext_resource type="Texture2D" uid="uid://dv2lurwjt5xn8" path="res://resources/teatro.png" id="2_f3di6"]
+[ext_resource type="Shader" path="res://assets/ui/shaders/edificio_grabado.gdshader" id="3_grabado"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_grabado"]
+shader = ExtResource("3_grabado")
+
+[sub_resource type="Gradient" id="Gradient_sombra"]
+offsets = PackedFloat32Array(0, 0.55, 1)
+colors = PackedColorArray(0.12, 0.06, 0.02, 0.55, 0.12, 0.06, 0.02, 0.28, 0.12, 0.06, 0.02, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_sombra"]
+gradient = SubResource("Gradient_sombra")
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_f3di6"]
+radius = 83.14
+
+[node name="Area2D" type="Area2D" unique_id=16144083]
+script = ExtResource("1_tnbil")
+
+[node name="Sombra" type="Sprite2D" parent="."]
+position = Vector2(4, 52)
+scale = Vector2(1.55, 0.5)
+texture = SubResource("GradientTexture2D_sombra")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1735519086]
+material = SubResource("ShaderMaterial_grabado")
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("2_f3di6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1350869507]
+position = Vector2(0.5, -7.5)
+shape = SubResource("CircleShape2D_f3di6")

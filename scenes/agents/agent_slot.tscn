@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://bofbbe8fovsty"]
+
+[ext_resource type="Script" uid="uid://4ci4tpmlah70" path="res://scenes/agents/agent_slot.gd" id="1_nk6sg"]
+[ext_resource type="Texture2D" uid="uid://dpepvovu2hs60" path="res://sprites/noble_empty.png" id="2_w188u"]
+[ext_resource type="Texture2D" path="res://assets/ui/textures/marco_dorado.png" id="3_marco"]
+
+[node name="AgentSlot" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.5258789e-05
+offset_right = -1620.0
+offset_bottom = -1275.8784
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.9933309, 0.96307784)
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_default_cursor_shape = 16
+script = ExtResource("1_nk6sg")
+void_texture = ExtResource("2_w188u")
+
+[node name="Portrait" type="TextureRect" parent="."]
+layout_mode = 2
+texture = ExtResource("2_w188u")
+expand_mode = 5
+
+[node name="Marco" type="NinePatchRect" parent="."]
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("3_marco")
+patch_margin_left = 22
+patch_margin_top = 22
+patch_margin_right = 22
+patch_margin_bottom = 22

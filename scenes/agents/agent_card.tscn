@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://b78s138cf5qgl"]
+
+[ext_resource type="PackedScene" uid="uid://dkahlsa41u8ph" path="res://scenes/agents/agent.tscn" id="1_fmyyw"]
+[ext_resource type="Texture2D" uid="uid://ba6me2bhqudbu" path="res://sprites/noble.png" id="2_6knku"]
+[ext_resource type="Texture2D" uid="uid://bhhgkmdfjiqe7" path="res://sprites/noble_gray.png" id="3_me3ck"]
+
+[node name="Panel" instance=ExtResource("1_fmyyw")]
+size_flags_horizontal = 1
+assigned_texture = ExtResource("3_me3ck")
+available_texture = ExtResource("2_6knku")
+
+[node name="StatsPanel" parent="." index="1"]
+visible = false
+
+[node name="Timer" type="Timer" parent="." index="2"]

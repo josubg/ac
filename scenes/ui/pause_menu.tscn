@@ -1,0 +1,80 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/ui/pause_menu.gd" id="1_pausa"]
+[ext_resource type="PackedScene" path="res://scenes/ui/options_panel.tscn" id="2_opciones"]
+[ext_resource type="Texture2D" path="res://assets/ui/icons/fleur-de-lys.svg" id="3_flor"]
+
+[node name="PauseMenu" type="CanvasLayer"]
+layer = 10
+script = ExtResource("1_pausa")
+
+[node name="Velo" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.086, 0.055, 0.035, 0.72)
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -200.0
+offset_right = 300.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"PanelPergamino"
+
+[node name="Margin" type="MarginContainer" parent="PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_right = 30
+
+[node name="Rows" type="VBoxContainer" parent="PanelContainer/Margin"]
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 18
+
+[node name="Title" type="Label" parent="PanelContainer/Margin/Rows"]
+layout_mode = 2
+theme_type_variation = &"TituloCarta"
+text = "UI_PAUSE_TITLE"
+horizontal_alignment = 1
+
+[node name="Fleuron" type="TextureRect" parent="PanelContainer/Margin/Rows"]
+self_modulate = Color(0.66, 0.52, 0.23, 1)
+custom_minimum_size = Vector2(0, 22)
+layout_mode = 2
+texture = ExtResource("3_flor")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ResumeButton" type="Button" parent="PanelContainer/Margin/Rows"]
+custom_minimum_size = Vector2(380, 58)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "UI_PAUSE_RESUME"
+
+[node name="OptionsButton" type="Button" parent="PanelContainer/Margin/Rows"]
+custom_minimum_size = Vector2(380, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_type_variation = &"BotonTinta"
+theme_override_font_sizes/font_size = 26
+text = "UI_MENU_OPTIONS"
+
+[node name="QuitButton" type="Button" parent="PanelContainer/Margin/Rows"]
+custom_minimum_size = Vector2(380, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_type_variation = &"BotonTinta"
+theme_override_font_sizes/font_size = 26
+text = "UI_PAUSE_QUIT"
+
+[node name="Options" parent="." instance=ExtResource("2_opciones")]
+layer = 11

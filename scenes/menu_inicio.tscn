@@ -1,0 +1,331 @@
+[gd_scene format=3 uid="uid://br54s0faogtns"]
+
+[ext_resource type="Script" uid="uid://735046um6sp1" path="res://scenes/menu_inicio.gd" id="1_bnklu"]
+[ext_resource type="Texture2D" uid="uid://deluds7e5l7hg" path="res://resources/Mapa.png" id="2_bnklu"]
+[ext_resource type="Texture2D" path="res://assets/ui/textures/vineta.png" id="5_vineta"]
+[ext_resource type="Texture2D" path="res://assets/ui/icons/fleur-de-lys.svg" id="6_flor"]
+[ext_resource type="Texture2D" uid="uid://b83ccg136y4qp" path="res://resources/LogoMadrid.svg" id="7_5p85s"]
+[ext_resource type="Texture2D" uid="uid://7pvuqc44x556" path="res://sprites/lacre_mision.png" id="7_5psen"]
+[ext_resource type="AudioStream" uid="uid://cdy22wr1w0ecr" path="res://resources/intro.wav" id="8_euaya"]
+[ext_resource type="PackedScene" path="res://scenes/ui/options_panel.tscn" id="20_opciones"]
+
+[node name="MenuInicio" type="Control" unique_id=1775949271]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_bnklu")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1032848463]
+layer = 0
+
+[node name="Parallax2D" type="Parallax2D" parent="CanvasLayer" unique_id=890121691]
+
+[node name="BackgroundLayer" type="Node2D" parent="CanvasLayer/Parallax2D" unique_id=851066690]
+
+[node name="Background" type="Sprite2D" parent="CanvasLayer/Parallax2D/BackgroundLayer" unique_id=467389821]
+modulate = Color(0.55, 0.45, 0.36, 1)
+position = Vector2(957, 540)
+scale = Vector2(1.25, 1.25)
+texture = ExtResource("2_bnklu")
+
+[node name="Vineta" type="TextureRect" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("5_vineta")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="." unique_id=1983590420]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = -48.0
+offset_right = 400.0
+offset_bottom = -16.0
+grow_vertical = 0
+theme_type_variation = &"NotaCuero"
+text = "UI_MENU_VERSION"
+vertical_alignment = 2
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="." unique_id=1004538075]
+follow_viewport_enabled = true
+
+[node name="Control" type="Control" parent="CanvasLayer2" unique_id=1555565266]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer2/Control" unique_id=1750363955]
+clip_contents = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -112.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 720
+theme_override_constants/margin_top = 60
+theme_override_constants/margin_right = 720
+theme_override_constants/margin_bottom = 40
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer2/Control/MarginContainer" unique_id=1360099885]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer2/Control/MarginContainer/VBoxContainer" unique_id=1491440884]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = -300
+theme_override_constants/margin_top = 90
+theme_override_constants/margin_right = -300
+theme_override_constants/margin_bottom = 20
+
+[node name="Rotulo" type="RichTextLabel" parent="CanvasLayer2/Control/MarginContainer/VBoxContainer/MarginContainer"]
+auto_translate_mode = 2
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+auto_translate_mode = 2
+theme_type_variation = &"Rotulo"
+bbcode_enabled = true
+text = "[center][color=#c0392b]C[/color]uatro [color=#c0392b]C[/color]ortes
+[i]Madrid, MDCXL[/i][/center]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="Filete" type="HBoxContainer" parent="CanvasLayer2/Control/MarginContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 14
+
+[node name="Izq" type="HSeparator" parent="CanvasLayer2/Control/MarginContainer/VBoxContainer/Filete"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="Flor" type="TextureRect" parent="CanvasLayer2/Control/MarginContainer/VBoxContainer/Filete"]
+self_modulate = Color(0.79, 0.65, 0.35, 1)
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+texture = ExtResource("6_flor")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Der" type="HSeparator" parent="CanvasLayer2/Control/MarginContainer/VBoxContainer/Filete"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="NewGameButton" type="Button" parent="CanvasLayer2/Control/MarginContainer/VBoxContainer" unique_id=166001896]
+layout_mode = 2
+theme_type_variation = &"BotonMenu"
+text = "UI_MENU_NEW_GAME"
+
+[node name="TutorialButton" type="Button" parent="CanvasLayer2/Control/MarginContainer/VBoxContainer" unique_id=1346130070]
+layout_mode = 2
+theme_type_variation = &"BotonMenu"
+text = "UI_MENU_TUTORIAL"
+
+[node name="OptionsButton" type="Button" parent="CanvasLayer2/Control/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"BotonMenu"
+text = "UI_MENU_OPTIONS"
+
+[node name="CreditsButton" type="Button" parent="CanvasLayer2/Control/MarginContainer/VBoxContainer" unique_id=853728562]
+layout_mode = 2
+theme_type_variation = &"BotonMenu"
+text = "UI_MENU_CREDITS"
+
+[node name="ExitButton" type="Button" parent="CanvasLayer2/Control/MarginContainer/VBoxContainer" unique_id=1266093841]
+layout_mode = 2
+theme_type_variation = &"BotonMenu"
+text = "UI_MENU_EXIT"
+
+[node name="CreditosCanvas" type="CanvasLayer" parent="." unique_id=1392105101]
+layer = 2
+visible = false
+
+[node name="Velo" type="ColorRect" parent="CreditosCanvas"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.08, 0.05, 0.03, 0.6)
+
+[node name="PanelContainer" type="PanelContainer" parent="CreditosCanvas" unique_id=1682528996]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -506.5
+offset_top = -499.0
+offset_right = 506.5
+offset_bottom = 498.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_type_variation = &"PanelPergamino"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CreditosCanvas/PanelContainer" unique_id=238671535]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CreditosCanvas/PanelContainer/VBoxContainer" unique_id=523205164]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.12
+theme_type_variation = &"TituloCarta"
+theme_override_font_sizes/font_size = 52
+text = "UI_CREDITS_TITLE"
+horizontal_alignment = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CreditosCanvas/PanelContainer/VBoxContainer" unique_id=1907287183]
+layout_mode = 2
+size_flags_vertical = 3
+fit_content = true
+bbcode_enabled = true
+text = "UI_CREDITS_TEAM"
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="CreditosCanvas/PanelContainer/VBoxContainer" unique_id=1585768802]
+layout_mode = 2
+size_flags_vertical = 3
+fit_content = true
+bbcode_enabled = true
+text = "UI_CREDITS_SOURCES"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CreditosCanvas/PanelContainer/VBoxContainer" unique_id=1143915300]
+custom_minimum_size = Vector2(0, 110)
+layout_mode = 2
+
+[node name="Control" type="Control" parent="CreditosCanvas/PanelContainer/VBoxContainer/HBoxContainer" unique_id=951076729]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="CreditosCanvas/PanelContainer/VBoxContainer/HBoxContainer" unique_id=1367844134]
+custom_maximum_size = Vector2(150, -1)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+texture = ExtResource("7_5p85s")
+expand_mode = 5
+
+[node name="Button" type="Button" parent="CreditosCanvas" unique_id=1700424614]
+offset_left = 1334.0
+offset_top = 138.0
+offset_right = 1394.0
+grow_horizontal = 0
+offset_bottom = 174.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_type_variation = &"BotonTinta"
+text = "UI_CLOSE"
+icon_alignment = 2
+
+[node name="TutorialCanvas" type="CanvasLayer" parent="." unique_id=1285537298]
+layer = 2
+visible = false
+
+[node name="Velo" type="ColorRect" parent="TutorialCanvas"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.08, 0.05, 0.03, 0.6)
+
+[node name="PanelContainer" type="PanelContainer" parent="TutorialCanvas" unique_id=1841360596]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -506.5
+offset_top = -453.5
+offset_right = 506.5
+offset_bottom = 446.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_type_variation = &"PanelPergamino"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TutorialCanvas/PanelContainer" unique_id=2085755324]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TutorialCanvas/PanelContainer/VBoxContainer" unique_id=1095293011]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.12
+theme_type_variation = &"TituloCarta"
+theme_override_font_sizes/font_size = 52
+text = "UI_TUTORIAL_TITLE"
+horizontal_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="TutorialCanvas/PanelContainer/VBoxContainer" unique_id=312108455]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_right = 50
+
+[node name="RichTextLabel" type="RichTextLabel" parent="TutorialCanvas/PanelContainer/VBoxContainer/MarginContainer" unique_id=1679191829]
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "UI_TUTORIAL_BODY"
+
+[node name="Button" type="Button" parent="TutorialCanvas" unique_id=684014007]
+offset_left = 1334.0
+offset_top = 138.0
+offset_right = 1394.0
+grow_horizontal = 0
+offset_bottom = 174.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_type_variation = &"BotonTinta"
+text = "UI_CLOSE"
+icon_alignment = 2
+
+[node name="OpcionesCanvas" parent="." instance=ExtResource("20_opciones")]
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1911391086]
+layout_mode = 0
+offset_left = 134.0
+offset_top = 1047.0
+offset_right = 634.0
+offset_bottom = 1547.0
+texture = ExtResource("7_5psen")
+expand_mode = 2
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=373944624]
+stream = ExtResource("8_euaya")
+autoplay = true
+bus = &"Musica"
+
+[connection signal="pressed" from="CanvasLayer2/Control/MarginContainer/VBoxContainer/NewGameButton" to="." method="_on_new_game_button_pressed"]
+[connection signal="pressed" from="CanvasLayer2/Control/MarginContainer/VBoxContainer/TutorialButton" to="." method="_on_tutorial_button_pressed"]
+[connection signal="pressed" from="CanvasLayer2/Control/MarginContainer/VBoxContainer/CreditsButton" to="." method="_on_credits_button_pressed"]
+[connection signal="pressed" from="CanvasLayer2/Control/MarginContainer/VBoxContainer/ExitButton" to="." method="_on_exit_button_pressed"]
+[connection signal="pressed" from="CanvasLayer2/Control/MarginContainer/VBoxContainer/OptionsButton" to="." method="_on_options_button_pressed"]
+[connection signal="pressed" from="CreditosCanvas/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="TutorialCanvas/Button" to="." method="_on_button_pressed_tutorial"]

@@ -1,0 +1,6 @@
+id, building_name, available, purchase_cost, income_per_turn, faction_influence, donation_influence, description,x,y,image
+0, "BUILDING_VILLA_OLIVARES_NAME", true, 0,100,0,0,"BUILDING_VILLA_OLIVARES_DESC",1780,560,"villa_olivares"
+1,"BUILDING_CARCEL_CORTE_NAME", true, 2500, 125, rey, rey, "BUILDING_CARCEL_CORTE_DESC",800,300,"teatro"
+2, "BUILDING_POZOS_NIEVE_NAME", true, 3500, 175, descontento, rey,"BUILDING_POZOS_NIEVE_DESC",1200,300,"jardin"
+3, "BUILDING_SAN_PLACIDO_NAME", true, 2000, 100, clero, clero,"BUILDING_SAN_PLACIDO_DESC",600,600,"convento"
+4, "BUILDING_TABERNA_FUNDADORES_NAME", true, 2000, 100, nobleza, nobleza,"BUILDING_TABERNA_FUNDADORES_DESC",1000,600,"mercado"

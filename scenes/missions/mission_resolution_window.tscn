@@ -1,0 +1,116 @@
+[gd_scene format=3 uid="uid://jvho4fxquili"]
+
+[ext_resource type="Script" uid="uid://m61d06e3bm43" path="res://scenes/missions/mission_resolution_window.gd" id="1_80knw"]
+[ext_resource type="Texture2D" uid="uid://7pvuqc44x556" path="res://sprites/lacre_mision.png" id="2_lacre"]
+[ext_resource type="Texture2D" path="res://assets/ui/icons/fleur-de-lys.svg" id="3_flor"]
+
+[node name="Panel" type="Panel" unique_id=1021064680]
+script = ExtResource("1_80knw")
+
+[node name="Velo" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = -3000.0
+offset_top = -3000.0
+offset_right = 3000.0
+offset_bottom = 3000.0
+mouse_filter = 2
+color = Color(0.08, 0.05, 0.03, 0.42)
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1499410861]
+custom_minimum_size = Vector2(900, 740)
+layout_mode = 0
+offset_right = 900.0
+offset_bottom = 740.0
+theme_type_variation = &"PanelPergamino"
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=1242032649]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer" unique_id=436861984]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="TitleLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=514950865]
+layout_mode = 2
+theme_type_variation = &"TituloCarta"
+text = "MISSION_001_TITLE"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Filete" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 12
+
+[node name="Izq" type="HSeparator" parent="PanelContainer/MarginContainer/VBoxContainer/Filete"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Flor" type="TextureRect" parent="PanelContainer/MarginContainer/VBoxContainer/Filete"]
+self_modulate = Color(0.66, 0.52, 0.23, 1)
+custom_minimum_size = Vector2(22, 22)
+layout_mode = 2
+texture = ExtResource("3_flor")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Der" type="HSeparator" parent="PanelContainer/MarginContainer/VBoxContainer/Filete"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="DescriptionLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1613043368]
+modulate = Color(1, 1, 1, 0.72)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "MISSION_001_BODY"
+autowrap_mode = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=681161932]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_bottom = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer" unique_id=562677451]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="OutcomeLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer" unique_id=1981233414]
+layout_mode = 2
+theme_type_variation = &"SubtituloCarta"
+text = "UI_RESOLUTION_SUCCESS"
+horizontal_alignment = 1
+
+[node name="OutcomeDescription" type="RichTextLabel" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer" unique_id=841521273]
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "MISSION_001_SUCCESS"
+
+[node name="EndMissionButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer" unique_id=461725715]
+custom_minimum_size = Vector2(300, 54)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "UI_CLOSE"
+
+[node name="Lacre" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = -34.0
+offset_top = -30.0
+offset_right = 90.0
+offset_bottom = 94.0
+rotation = -0.2
+pivot_offset = Vector2(62, 62)
+mouse_filter = 2
+texture = ExtResource("2_lacre")
+expand_mode = 1
+stretch_mode = 5
+
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/EndMissionButton" to="." method="_on_end_mission_button_pressed"]

@@ -1,0 +1,114 @@
+[gd_scene format=3 uid="uid://d1metcul8y0yi"]
+
+[ext_resource type="Script" uid="uid://blfwdxaq7el5v" path="res://scripts/intro_video.gd" id="1_m1no4"]
+[ext_resource type="AudioStream" uid="uid://cm06lmd3rlgf1" path="res://resources/intro 3.wav" id="3_86yvy"]
+
+[ext_resource type="Texture2D" uid="uid://deluds7e5l7hg" path="res://resources/Mapa.png" id="ui_mapa"]
+[ext_resource type="Texture2D" path="res://assets/ui/textures/vineta.png" id="ui_vineta"]
+
+[sub_resource type="Animation" id="Animation_sf2on"]
+length = 6.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Label:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2.0333333, 4.1, 6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_m1no4"]
+resource_name = "fade"
+length = 6.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Label:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0333333, 2.0333333, 4, 5.9333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_scbl5"]
+_data = {
+&"RESET": SubResource("Animation_sf2on"),
+&"fade": SubResource("Animation_m1no4")
+}
+
+[node name="IntroVideo" type="Control" unique_id=1339463182]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 1
+script = ExtResource("1_m1no4")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1467978364]
+layout_mode = 0
+offset_right = 1942.0
+offset_bottom = 1088.0
+color = Color(0.086, 0.055, 0.035, 1)
+
+[node name="Plano" type="TextureRect" parent="."]
+modulate = Color(0.32, 0.24, 0.18, 0.55)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("ui_mapa")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Vineta" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("ui_vineta")
+expand_mode = 1
+
+
+[node name="Label" type="Label" parent="." unique_id=468902299]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+offset_left = 240.0
+offset_right = -240.0
+mouse_filter = 1
+theme_type_variation = &"Soneto"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=384740143]
+libraries/ = SubResource("AnimationLibrary_scbl5")
+
+[node name="Timer" type="Timer" parent="." unique_id=569187770]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1045579135]
+stream = ExtResource("3_86yvy")
+bus = &"Musica"
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

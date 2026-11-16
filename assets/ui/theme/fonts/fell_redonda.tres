@@ -1,0 +1,6 @@
+[gd_resource type="FontVariation" format=3]
+
+[ext_resource type="FontFile" path="res://assets/ui/fonts/imfellenglish/IMFeENrm28P.ttf" id="1_2f7or"]
+
+[resource]
+base_font = ExtResource("1_2f7or")
