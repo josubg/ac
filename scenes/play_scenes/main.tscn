@@ -14,23 +14,36 @@
 [ext_resource type="Texture2D" uid="uid://bbpblvs7wbjch" path="res://sprites/monja_grey.png" id="10_iml5s"]
 [ext_resource type="AudioStream" uid="uid://dsvh6bj3omnj3" path="res://resources/intro_long.wav" id="14_2j01o"]
 [ext_resource type="PackedScene" uid="uid://lrc86eeo27pf" path="res://scenes/buildings/building_window.tscn" id="14_3nlru"]
+[ext_resource type="Texture2D" uid="uid://q8ucpgw34518" path="res://sprites/juangomez.png" id="14_14ti4"]
+[ext_resource type="Texture2D" uid="uid://bvf0u0jlp3fil" path="res://sprites/juangomez gris.png" id="14_mmx0r"]
 [ext_resource type="AudioStream" uid="uid://8t8xayoaqkv1" path="res://resources/furiosos.mp3" id="15_eq487"]
 [ext_resource type="PackedScene" uid="uid://b1m6fhr2enk04" path="res://scenes/buildings/properties_window.tscn" id="15_sm81j"]
-
-[ext_resource type="Texture2D" path="res://assets/ui/icons/two-coins.svg" id="ui_coins"]
-[ext_resource type="Texture2D" path="res://assets/ui/icons/family-house.svg" id="ui_house"]
-[ext_resource type="Texture2D" path="res://assets/ui/icons/pitchfork.svg" id="ui_pitchfork"]
-[ext_resource type="Texture2D" path="res://assets/ui/icons/crown.svg" id="ui_crown"]
-[ext_resource type="Texture2D" path="res://assets/ui/icons/church.svg" id="ui_church"]
-[ext_resource type="Texture2D" path="res://assets/ui/icons/crested-helmet.svg" id="ui_helmet"]
+[ext_resource type="PackedScene" uid="uid://d0r7il7mordng" path="res://scenes/agents/gomez_speak.tscn" id="20_4lpuf"]
 [ext_resource type="PackedScene" path="res://scenes/ui/pause_menu.tscn" id="30_pausa"]
-[ext_resource type="Script" path="res://scenes/ui/pause_indicator.gd" id="31_pausado"]
+[ext_resource type="Script" uid="uid://b2hux80fjfoq2" path="res://scenes/ui/pause_indicator.gd" id="31_pausado"]
+[ext_resource type="Texture2D" uid="uid://clkvmgg4nru67" path="res://assets/ui/icons/church.svg" id="ui_church"]
+[ext_resource type="Texture2D" uid="uid://cdlgc0oojth8f" path="res://assets/ui/icons/two-coins.svg" id="ui_coins"]
+[ext_resource type="Texture2D" uid="uid://c3sw1a4i2nrua" path="res://assets/ui/icons/crown.svg" id="ui_crown"]
+[ext_resource type="Texture2D" uid="uid://eowsjuyy615k" path="res://assets/ui/icons/crested-helmet.svg" id="ui_helmet"]
+[ext_resource type="Texture2D" uid="uid://bwvq0i52q4k6h" path="res://assets/ui/icons/family-house.svg" id="ui_house"]
+[ext_resource type="Texture2D" uid="uid://bs1fwrjnwtieb" path="res://assets/ui/icons/pitchfork.svg" id="ui_pitchfork"]
 
 [sub_resource type="StyleBoxEmpty" id="Margen_izq"]
 content_margin_left = 28.0
 
 [sub_resource type="StyleBoxEmpty" id="Margen_der"]
 content_margin_right = 28.0
+
+[sub_resource type="StyleBoxFlat" id="Relleno_descontento"]
+bg_color = Color(0.5, 0.36, 0.22, 1)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+expand_margin_left = -2.0
+expand_margin_top = -2.0
+expand_margin_right = -2.0
+expand_margin_bottom = -2.0
 
 [sub_resource type="StyleBoxFlat" id="Relleno_rey"]
 bg_color = Color(0.72, 0.57, 0.25, 1)
@@ -65,17 +78,6 @@ expand_margin_top = -2.0
 expand_margin_right = -2.0
 expand_margin_bottom = -2.0
 
-[sub_resource type="StyleBoxFlat" id="Relleno_descontento"]
-bg_color = Color(0.5, 0.36, 0.22, 1)
-corner_radius_top_left = 1
-corner_radius_top_right = 1
-corner_radius_bottom_right = 1
-corner_radius_bottom_left = 1
-expand_margin_left = -2.0
-expand_margin_top = -2.0
-expand_margin_right = -2.0
-expand_margin_bottom = -2.0
-
 [node name="Main" type="Node" unique_id=161793424]
 script = ExtResource("1_53356")
 
@@ -88,7 +90,7 @@ texture = ExtResource("1_ig7tw")
 
 [node name="CanvasLayerMission" type="CanvasLayer" parent="." unique_id=1196988158]
 
-[node name="FondoSuperior" type="Panel" parent="CanvasLayerMission"]
+[node name="FondoSuperior" type="Panel" parent="CanvasLayerMission" unique_id=235331095]
 anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 86.0
@@ -120,7 +122,8 @@ theme_override_styles/panel = SubResource("Margen_izq")
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="IconoReales" type="TextureRect" parent="CanvasLayerMission/HUD/TopBar/WealthPanel/WealthRow"]
+[node name="IconoReales" type="TextureRect" parent="CanvasLayerMission/HUD/TopBar/WealthPanel/WealthRow" unique_id=573425271]
+self_modulate = Color(0.79, 0.65, 0.35, 1)
 custom_minimum_size = Vector2(36, 36)
 layout_mode = 2
 size_flags_vertical = 4
@@ -128,12 +131,11 @@ mouse_filter = 2
 texture = ExtResource("ui_coins")
 expand_mode = 1
 stretch_mode = 5
-self_modulate = Color(0.79, 0.65, 0.35, 1)
 
 [node name="RiquezaLabel" type="Label" parent="CanvasLayerMission/HUD/TopBar/WealthPanel/WealthRow" unique_id=1727946555]
-mouse_filter = 0
-tooltip_text = "UI_HUD_TIP_WEALTH"
 layout_mode = 2
+tooltip_text = "UI_HUD_TIP_WEALTH"
+mouse_filter = 0
 theme_type_variation = &"CifraCuero"
 text = "0"
 vertical_alignment = 1
@@ -172,7 +174,7 @@ size_flags_stretch_ratio = 1.4
 mouse_filter = 2
 color = Color(0, 0, 0, 0)
 
-[node name="Cartela" type="Panel" parent="CanvasLayerMission/HUD/TopBar/DatePanel"]
+[node name="Cartela" type="Panel" parent="CanvasLayerMission/HUD/TopBar/DatePanel" unique_id=108676984]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -200,7 +202,7 @@ text = "Domingo, 1 de enero de 1640"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="PausedLabel" type="Label" parent="CanvasLayerMission/HUD/TopBar/DatePanel"]
+[node name="PausedLabel" type="Label" parent="CanvasLayerMission/HUD/TopBar/DatePanel" unique_id=1477599571]
 visible = false
 layout_mode = 1
 anchors_preset = 12
@@ -211,7 +213,6 @@ offset_top = 2.0
 offset_bottom = 32.0
 grow_horizontal = 2
 grow_vertical = 0
-mouse_filter = 2
 theme_type_variation = &"NotaCuero"
 theme_override_colors/font_color = Color(0.902, 0.827, 0.659, 1)
 theme_override_colors/font_outline_color = Color(0.086, 0.055, 0.035, 0.9)
@@ -221,7 +222,7 @@ text = "UI_HUD_PAUSED"
 horizontal_alignment = 1
 script = ExtResource("31_pausado")
 
-[node name="PauseButton" type="Button" parent="CanvasLayerMission/HUD/TopBar"]
+[node name="PauseButton" type="Button" parent="CanvasLayerMission/HUD/TopBar" unique_id=753332630]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 size_flags_vertical = 4
@@ -245,7 +246,8 @@ theme_override_styles/panel = SubResource("Margen_der")
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="IconoDescontento" type="TextureRect" parent="CanvasLayerMission/HUD/TopBar/DiscontentPanel/DiscontentRow"]
+[node name="IconoDescontento" type="TextureRect" parent="CanvasLayerMission/HUD/TopBar/DiscontentPanel/DiscontentRow" unique_id=1129678970]
+self_modulate = Color(0.79, 0.65, 0.35, 1)
 custom_minimum_size = Vector2(34, 34)
 layout_mode = 2
 size_flags_vertical = 4
@@ -253,7 +255,6 @@ mouse_filter = 2
 texture = ExtResource("ui_pitchfork")
 expand_mode = 1
 stretch_mode = 5
-self_modulate = Color(0.79, 0.65, 0.35, 1)
 
 [node name="DiscontentLabel" type="Label" parent="CanvasLayerMission/HUD/TopBar/DiscontentPanel/DiscontentRow" unique_id=50788767]
 layout_mode = 2
@@ -262,11 +263,11 @@ text = "FACTION_DISCONTENT"
 vertical_alignment = 1
 
 [node name="DescontentoBar" type="ProgressBar" parent="CanvasLayerMission/HUD/TopBar/DiscontentPanel/DiscontentRow" unique_id=1073088674]
-tooltip_text = "UI_HUD_TIP_DISCONTENT"
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
+tooltip_text = "UI_HUD_TIP_DISCONTENT"
 theme_override_styles/fill = SubResource("Relleno_descontento")
 value = 50.0
 
@@ -313,6 +314,7 @@ theme_override_constants/separation = 14
 layout_mode = 2
 full_name = "AGENT_PACA_NAME"
 faction = "Noble"
+available_from_day = 0
 
 [node name="Juanito" parent="CanvasLayerMission/HUD/BottomPanel/BottomRows/BottomBar/AgentMargin/AgentPanel" unique_id=745214462 instance=ExtResource("8_uynio")]
 layout_mode = 2
@@ -320,6 +322,7 @@ full_name = "AGENT_JUANITO_NAME"
 assigned_texture = ExtResource("6_k70x2")
 available_texture = ExtResource("5_nck21")
 faction = "Malechor"
+available_from_day = 0
 
 [node name="Amparo" parent="CanvasLayerMission/HUD/BottomPanel/BottomRows/BottomBar/AgentMargin/AgentPanel" unique_id=550789337 instance=ExtResource("8_uynio")]
 layout_mode = 2
@@ -334,6 +337,15 @@ full_name = "AGENT_SOR_MARIA_NAME"
 assigned_texture = ExtResource("10_iml5s")
 available_texture = ExtResource("9_jeb2x")
 faction = "Religiosa"
+available_from_day = 2
+
+[node name="JuanGomez" parent="CanvasLayerMission/HUD/BottomPanel/BottomRows/BottomBar/AgentMargin/AgentPanel" unique_id=1265986898 instance=ExtResource("8_uynio")]
+layout_mode = 2
+full_name = "AGENT_JUAN_GOMEZ_NAME"
+assigned_texture = ExtResource("14_mmx0r")
+available_texture = ExtResource("14_14ti4")
+faction = "Noble"
+available_from_day = 5
 
 [node name="InfluencePanel" type="Panel" parent="CanvasLayerMission/HUD/BottomPanel/BottomRows/BottomBar" unique_id=136169952]
 layout_mode = 2
@@ -358,7 +370,8 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 12
 
-[node name="KingIcon" type="TextureRect" parent="CanvasLayerMission/HUD/BottomPanel/BottomRows/BottomBar/InfluencePanel/InfluenceRows/KingRow"]
+[node name="KingIcon" type="TextureRect" parent="CanvasLayerMission/HUD/BottomPanel/BottomRows/BottomBar/InfluencePanel/InfluenceRows/KingRow" unique_id=679669070]
+self_modulate = Color(0.79, 0.65, 0.35, 1)
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 size_flags_vertical = 4
@@ -366,7 +379,6 @@ mouse_filter = 2
 texture = ExtResource("ui_crown")
 expand_mode = 1
 stretch_mode = 5
-self_modulate = Color(0.79, 0.65, 0.35, 1)
 
 [node name="KingLabel" type="Label" parent="CanvasLayerMission/HUD/BottomPanel/BottomRows/BottomBar/InfluencePanel/InfluenceRows/KingRow" unique_id=1631883771]
 custom_minimum_size = Vector2(130, 0)
@@ -376,11 +388,11 @@ text = "FACTION_KING"
 vertical_alignment = 1
 
 [node name="ReyBar" type="ProgressBar" parent="CanvasLayerMission/HUD/BottomPanel/BottomRows/BottomBar/InfluencePanel/InfluenceRows/KingRow" unique_id=761219526]
-tooltip_text = "UI_HUD_TIP_KING"
 custom_minimum_size = Vector2(0, 26)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
+tooltip_text = "UI_HUD_TIP_KING"
 theme_override_styles/fill = SubResource("Relleno_rey")
 value = 50.0
 
@@ -389,7 +401,8 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 12
 
-[node name="NobilityIcon" type="TextureRect" parent="CanvasLayerMission/HUD/BottomPanel/BottomRows/BottomBar/InfluencePanel/InfluenceRows/NobilityRow"]
+[node name="NobilityIcon" type="TextureRect" parent="CanvasLayerMission/HUD/BottomPanel/BottomRows/BottomBar/InfluencePanel/InfluenceRows/NobilityRow" unique_id=558101339]
+self_modulate = Color(0.79, 0.65, 0.35, 1)
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 size_flags_vertical = 4
@@ -397,7 +410,6 @@ mouse_filter = 2
 texture = ExtResource("ui_helmet")
 expand_mode = 1
 stretch_mode = 5
-self_modulate = Color(0.79, 0.65, 0.35, 1)
 
 [node name="NobilityLabel" type="Label" parent="CanvasLayerMission/HUD/BottomPanel/BottomRows/BottomBar/InfluencePanel/InfluenceRows/NobilityRow" unique_id=2080281476]
 custom_minimum_size = Vector2(130, 0)
@@ -407,11 +419,11 @@ text = "FACTION_NOBILITY"
 vertical_alignment = 1
 
 [node name="NoblezaBar" type="ProgressBar" parent="CanvasLayerMission/HUD/BottomPanel/BottomRows/BottomBar/InfluencePanel/InfluenceRows/NobilityRow" unique_id=1383041120]
-tooltip_text = "UI_HUD_TIP_NOBILITY"
 custom_minimum_size = Vector2(0, 26)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
+tooltip_text = "UI_HUD_TIP_NOBILITY"
 theme_override_styles/fill = SubResource("Relleno_nobleza")
 value = 50.0
 
@@ -420,7 +432,8 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 12
 
-[node name="ClergyIcon" type="TextureRect" parent="CanvasLayerMission/HUD/BottomPanel/BottomRows/BottomBar/InfluencePanel/InfluenceRows/ClergyRow"]
+[node name="ClergyIcon" type="TextureRect" parent="CanvasLayerMission/HUD/BottomPanel/BottomRows/BottomBar/InfluencePanel/InfluenceRows/ClergyRow" unique_id=1970701833]
+self_modulate = Color(0.79, 0.65, 0.35, 1)
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 size_flags_vertical = 4
@@ -428,7 +441,6 @@ mouse_filter = 2
 texture = ExtResource("ui_church")
 expand_mode = 1
 stretch_mode = 5
-self_modulate = Color(0.79, 0.65, 0.35, 1)
 
 [node name="ClergyLabel" type="Label" parent="CanvasLayerMission/HUD/BottomPanel/BottomRows/BottomBar/InfluencePanel/InfluenceRows/ClergyRow" unique_id=1734900502]
 custom_minimum_size = Vector2(130, 0)
@@ -438,15 +450,17 @@ text = "FACTION_CLERGY"
 vertical_alignment = 1
 
 [node name="CleroBar" type="ProgressBar" parent="CanvasLayerMission/HUD/BottomPanel/BottomRows/BottomBar/InfluencePanel/InfluenceRows/ClergyRow" unique_id=1367975720]
-tooltip_text = "UI_HUD_TIP_CLERGY"
 custom_minimum_size = Vector2(0, 26)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
+tooltip_text = "UI_HUD_TIP_CLERGY"
 theme_override_styles/fill = SubResource("Relleno_iglesia")
 value = 50.0
 
 [node name="MonjaSpeak" parent="CanvasLayerMission" unique_id=1120191490 instance=ExtResource("3_iml5s")]
+
+[node name="GomezSpeak" parent="CanvasLayerMission" unique_id=1549428370 instance=ExtResource("20_4lpuf")]
 
 [node name="MissionResolutionWindow" parent="CanvasLayerMission" unique_id=571209422 instance=ExtResource("5_bd1e2")]
 visible = false
@@ -469,7 +483,7 @@ offset_bottom = 104.0
 [node name="PropertiesWindow" parent="CanvasLayerMission" unique_id=934365827 instance=ExtResource("15_sm81j")]
 visible = false
 
-[node name="PauseMenu" parent="." instance=ExtResource("30_pausa")]
+[node name="PauseMenu" parent="." unique_id=937061112 instance=ExtResource("30_pausa")]
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1628111680]
 stream = ExtResource("14_2j01o")

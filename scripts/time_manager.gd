@@ -90,3 +90,9 @@ func get_date_map() -> Dictionary:
 	return Time.get_date_dict_from_unix_time(
 		start_date + int(elapsed_game_days * 86400)
 	)
+	
+func get_day() -> int:
+	return get_date_map()["day"]
+
+func get_elapsed_days() -> int:
+	return int(current_time / SECONDS_PER_GAME_DAY)

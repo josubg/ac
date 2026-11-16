@@ -15,6 +15,7 @@ extends Node
 @onready var active_missions: Dictionary[Mission, int] = {}
 @onready var active_mission_buttons: Dictionary[Mission, MissionButton] = {}
 @onready var monja_speak: Node = $CanvasLayerMission/MonjaSpeak
+@onready var gomez_speak: Node = $CanvasLayerMission/GomezSpeak
 @onready var audio_descontento: AudioStreamPlayer = $AudioDescontento
 
 #Buildings
@@ -32,7 +33,10 @@ const BASE_RES = Vector2(1920, 1080)
 
 var buttons: Array[MissionButton]= []
 var monja_mensaje = false
+var gomez_mensaje := false
+var gomez_presentado := false
 var monja_cola: Array[String] = []
+var gomez_cola: Array[String] = []
 var descontento_playing = false
 
 func _ready() -> void:
@@ -58,12 +62,15 @@ func _ready() -> void:
 	update_riqueza(Player.riqueza)
 	
 	monja_speak.ocultar()
+	gomez_speak.ocultar()
 	properties_button.pressed.connect(_on_properties_button_pressed)
 	Juice.attach_main(self) # FX: feedback de la partida (scripts/fx/main_juice.gd)
 
 func _process(_delta):
 	if GameManager.playing():
 		time_label.text = TimeManager.get_date()
+		if TimeManager.get_elapsed_days() >= 5 and not gomez_presentado:
+			_show_gomez_message()
 		if MissionManager.mission_count == 0:
 			GameManager.go_to_gameend()
 
@@ -77,7 +84,16 @@ func _input(event: InputEvent) -> void:
 			_close_monja_message()
 			get_viewport().set_input_as_handled()
 		return
-
+		
+	if gomez_mensaje:
+		var closes_message: bool = (
+			(event is InputEventKey or event is InputEventMouseButton)
+			and event.pressed
+		)
+		if closes_message:
+			_close_gomez_message()
+			get_viewport().set_input_as_handled()
+		return
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		if _is_pointer_over_ui():
 			return
@@ -283,3 +299,25 @@ func _on_building_pressed(building: Building) -> void:
 
 func _on_properties_button_pressed() -> void:
 	properties_window.setup()
+
+func _show_gomez_message() -> void:
+	gomez_presentado = true
+	gomez_cola.append("GOMEZ_1")
+	gomez_cola.append("GOMEZ_2")
+	gomez_cola.append("GOMEZ_3")
+	_show_next_gomez_message()
+
+func _show_next_gomez_message() -> void:
+	if gomez_cola.is_empty():
+		gomez_mensaje = false
+		TimeManager.resume(gomez_speak)
+		return
+
+	TimeManager.pause(gomez_speak)
+	gomez_speak.mensaje(gomez_cola.pop_front())
+	gomez_mensaje = true
+
+func _close_gomez_message() -> void:
+	gomez_speak.ocultar()
+	gomez_mensaje = false
+	_show_next_gomez_message()

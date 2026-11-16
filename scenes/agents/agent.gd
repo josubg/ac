@@ -8,6 +8,7 @@ enum AGENT_STATUS {AVAILABLE, DRAGGED, ASSIGNED, DEPLOYED, RESTING}
 @export var biography: String
 @export var rest_time: int = 30
 @export_enum(Factions.noble, Factions.cura, Factions.malechor) var faction: String
+@export var available_from_day: int = 1
 
 @onready var label: Label = $StatsPanel/Label
 @onready var portrait: TextureRect = $Portrait
@@ -35,10 +36,15 @@ var available: bool:
 	get():
 		return self.status == AGENT_STATUS.AVAILABLE
 
+func _process(_delta: float) -> void:
+	if not visible and TimeManager.get_elapsed_days() >= available_from_day:
+		show()
+		
 func _ready() -> void:
 	label.text = full_name
 	label_2.text = "AGENT_FACTION_" + faction.to_upper()
 	portrait.texture = available_texture
+	visible = TimeManager.get_elapsed_days() >= available_from_day
 	_show_availability()
 	if not mouse_entered.is_connected(_on_mouse_entered):
 		mouse_entered.connect(_on_mouse_entered)
