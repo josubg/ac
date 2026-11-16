@@ -389,12 +389,14 @@ func drop_in(node: CanvasItem, time: float = 0.45) -> void:
 		return
 	var tw := _scale_tween(node)
 	_set_rel_scale(Vector2.ONE * 1.8, node)
-	node.self_modulate.a = 0.0
-	tw.set_parallel(true)
 	tw.tween_method(_set_rel_scale.bind(node), Vector2.ONE * 1.8, Vector2.ONE, time) \
 		.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-	tw.tween_property(node, ^"self_modulate:a", 1.0, time * 0.5)
-	tw.chain().tween_callback(_restore_scale.bind(node))
+	tw.tween_callback(_restore_scale.bind(node))
+	# El fundido va en su propio tween: el hover del ratón reemplaza el tween de
+	# escala y, si compartieran tween, el lacre se quedaría medio transparente.
+	node.self_modulate.a = 0.0
+	var fade := node.create_tween()
+	fade.tween_property(node, ^"self_modulate:a", 1.0, time * 0.5)
 
 
 ## Latido continuo (on = true) o lo detiene (on = false).

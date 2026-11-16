@@ -76,7 +76,11 @@ func rested():
 	self.status = AGENT_STATUS.AVAILABLE
 
 func _notification(what: int) -> void:
-	if what == NOTIFICATION_DRAG_END and not get_viewport().gui_is_drag_successful():
+	# DRAG_END llega a todos los controles, no solo al arrastrado: sin comprobar
+	# DRAGGED, soltar cualquier agente en el vacío liberaba también a los que
+	# estaban de misión y volvían a la barra antes de resolverse.
+	if what == NOTIFICATION_DRAG_END and status == AGENT_STATUS.DRAGGED \
+			and not get_viewport().gui_is_drag_successful():
 		DebugLog.log("Agent: Drag failed [%s]" % self.full_name)
 		self.status = AGENT_STATUS.AVAILABLE
 
